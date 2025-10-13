@@ -1,1 +1,18 @@
 @import "tailwindcss";
+@theme {
+    /* Màu nền chính (toàn trang) */
+    --color-bg-primary: #F3EEE7;
+  
+    /* Màu chữ chính (text mặc định) */
+    --color-txt-primary: #404040;
+    /* Màu chữ xanh */
+    --color-txt-secondary:#2F5855;
+
+    /* Màu nền phụ (ví dụ: header, footer, hoặc section khác) */
+    --color-bg-secondary: #344D3B;
+  
+  }
+body 
+{
+    font-family: "Nunito Sans", sans-serif;
+}

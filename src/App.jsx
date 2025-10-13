@@ -1,59 +1,79 @@
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux';
-import {setLanguage} from './redux/actions/languageActions';
-import { useEffect } from 'react';
-import {Routes, Route} from 'react-router-dom';
-import {publicRoutes} from './routes';
-import MainLayout from './layouts/MainLayout';
-function App() {
-  // const {t, i18n} = useTranslation();
-  // const dispatch = useDispatch();
-  // const {language} = useSelector(state=>state.language);
-  // useEffect(()=>
-  // {
-  //   i18n.changeLanguage(language);
-  //   localStorage.setItem('language', language);
-  // },[language, i18n])
-  // const changeLanguage = (lang)=>{
-  //   dispatch(setLanguage(lang))
-  // }
-  return (
-    <>
-      <Routes>
-        {
-          publicRoutes.map((route, index)=>{
-            const Page = route.component;
-            let Layout = route.layout || MainLayout;
-            if(route.layout === null)
-              Layout = ({children})=><>{children}</>
-            return <Route key={index} path={route.path} element={<Layout><Page /></Layout>}/>
-          })
-        }
-      </Routes>
-    </>
-    // <div>
-    //   <h1 className="text-3xl font-bold underline text-red">
-    //     {t('welcome')}
-    //   </h1>
-    //   <button
-    //     onClick={() => changeLanguage("en")}
-    //     className={`px-4 py-2 mx-2 rounded ${
-    //       language === "en" ? "bg-blue-600 text-white" : "bg-gray-200"
-    //     }`}
-    //   >
-    //     English
-    //   </button>
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import MainLayout from "./layouts/MainLayout";
+import {publicRoutes} from "./routes/index";
 
-    //   <button
-    //     onClick={() => changeLanguage("vi")}
-    //     className={`px-4 py-2 mx-2 rounded ${
-    //       language === "vi" ? "bg-green-600 text-white" : "bg-gray-200"
-    //     }`}
-    //   >
-    //     Tiếng Việt
-    //   </button>
-    // </div>
-    )
+
+// 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
+function LanguageRedirect() {
+  const userLang = navigator.language.startsWith("vi") ? "vi" : "en";
+  return <Navigate to={`/${userLang}`} replace />;
 }
 
-export default App
+
+// 🧩 Đồng bộ i18n khi URL thay đổi (/:lng)
+function LanguageSync({ children }) {
+  const { lng } = useParams();
+  const { i18n } = useTranslation();
+  const { language } = useSelector((state) => state.language);
+
+  // Nếu URL có ngôn ngữ → ưu tiên dùng nó
+  useEffect(() => {
+    if (lng && i18n.language !== lng) {
+      i18n.changeLanguage(lng);
+    }
+  }, [lng, i18n]);
+
+  // Nếu Redux thay đổi → cập nhật và lưu localStorage
+  useEffect(() => {
+    console.log('test')
+    if (language && i18n.language !== language) {
+      i18n.changeLanguage(language);
+      localStorage.setItem("language", language);
+    }
+  }, [language, i18n]);
+
+  return children;
+}
+
+
+// 🧩 App chính
+export default function App() {
+  return (
+    <Routes>
+      {/* Nếu người dùng vào "/" → tự chuyển hướng */}
+      <Route path="/" element={<LanguageRedirect />} />
+
+      {/* Các route có prefix ngôn ngữ */}
+      <Route
+        path="/:lng/*"
+        element={
+          <LanguageSync>
+            <Routes>
+              {publicRoutes.map((route, index) => {
+                const Page = route.component;
+                const Layout = route.layout === null
+                  ? ({ children }) => <>{children}</>
+                  : route.layout || MainLayout;
+
+                return (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      <Layout>
+                        <Page />
+                      </Layout>
+                    }
+                  />
+                );
+              })}
+            </Routes>
+          </LanguageSync>
+        }
+      />
+    </Routes>
+  );
+}

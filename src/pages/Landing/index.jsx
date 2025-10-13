@@ -1,6 +1,8 @@
+import { useTranslation } from "react-i18next";
 function Landing() {
+    const {t} = useTranslation();
     return ( 
-        <div>Landing page</div>
+        <div>{t('welcome')}</div>
      );
 }
 
