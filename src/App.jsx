@@ -1,17 +1,15 @@
-import { Routes, Route, Navigate, useParams } from "react-router-dom";
+import { Routes, Route, Navigate, useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import MainLayout from "./layouts/MainLayout";
-import {publicRoutes} from "./routes/index";
-
+import { publicRoutes } from "./routes/index";
 
 // 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
 function LanguageRedirect() {
   const userLang = navigator.language.startsWith("vi") ? "vi" : "en";
   return <Navigate to={`/${userLang}`} replace />;
 }
-
 
 // 🧩 Đồng bộ i18n khi URL thay đổi (/:lng)
 function LanguageSync({ children }) {
@@ -28,7 +26,6 @@ function LanguageSync({ children }) {
 
   // Nếu Redux thay đổi → cập nhật và lưu localStorage
   useEffect(() => {
-    console.log('test')
     if (language && i18n.language !== language) {
       i18n.changeLanguage(language);
       localStorage.setItem("language", language);
@@ -38,6 +35,44 @@ function LanguageSync({ children }) {
   return children;
 }
 
+// 🧩 Component để xử lý routing với ngôn ngữ
+function LocalizedRoutes() {
+  const { lng } = useParams();
+
+  return (
+    <Routes>
+      {publicRoutes.map((route, index) => {
+        const Page = route.component;
+        const Layout = route.layout === null
+          ? ({ children }) => <>{children}</>
+          : route.layout || MainLayout;
+        
+        // Tạo path với prefix ngôn ngữ
+        const localizedPath = route.path === '' 
+          ? '' // Trang chủ không cần thêm path
+          : `${route.path}`; // Bỏ /* vì chúng ta sẽ xử lý nested routes riêng
+        
+        return (
+          <Route
+            key={index}
+            path={localizedPath}
+            element={
+              <Layout>
+                <Page />
+              </Layout>
+            }
+          />
+        );
+      })}
+      
+      {/* Redirect từ /:lng đến /:lng/ (trang chủ) */}
+      <Route 
+        path="" 
+        element={<Navigate to={`/${lng}`} replace />} 
+      />
+    </Routes>
+  );
+}
 
 // 🧩 App chính
 export default function App() {
@@ -51,26 +86,7 @@ export default function App() {
         path="/:lng/*"
         element={
           <LanguageSync>
-            <Routes>
-              {publicRoutes.map((route, index) => {
-                const Page = route.component;
-                const Layout = route.layout === null
-                  ? ({ children }) => <>{children}</>
-                  : route.layout || MainLayout;
-
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    }
-                  />
-                );
-              })}
-            </Routes>
+            <LocalizedRoutes />
           </LanguageSync>
         }
       />

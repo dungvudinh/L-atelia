@@ -4,5 +4,14 @@
     },
     "button":{
         "view_our_properties":"view our properties"
+    },
+    "our_philosophy":{
+        "title":"The L’atelia way",
+        "summary":"We’re enriching a beautiful city with high-quality real estate project", 
+        "desc_1":"Some of the most beautiful and promising homes in Sóller are barely inhabitable by modern standards.",
+        "desc_2":"A townhouse that’s architectural features have been left untouched for decades, maybe centuries. As long as the feeling inside is right and its character is intact (even if its floors and ceilings are not), we see a potential project.", 
+        "desc_3":"We strip everything back to the bare foundations to reveal hidden character, focusing only on the fundamentals – the feeling of the space, the way light passes through the rooms, the orientation, where the sun rises and sets.", 
+        "desc_4":"Each project presents a different challenge. Whether we’re renovating a run-down building or designing a new low-impact home, our philosophy is always the same. We use the finest natural materials from the island and partner with local contractors who understand the region’s history and can help us build a home that respects its surroundings.",
+        "desc_5":"At Berrow, we shape a bold new vision that transforms more than a century of stories into a modern home that will last for the next 100 years and beyond."
     }
 }

@@ -1,8 +1,17 @@
 {
     "hero":{
-        "subtitle":"Là một đội ngũ phát triển bất động sản có trụ sở tại Đà Nẵng. Chúng tôi tái tạo những bất động sản địa phương mang đậm câu chuyện và dấu ấn riêng, biến chúng thành những ngôi nhà cao cấp hoàn thiện dành cho khách hàng hiện đại."
+        "subtitle":"Là đội ngũ phát triển bất động sản trụ sở tại Đà Nẵng. Chúng tôi biến những bất động sản địa phương giàu truyền thống và cá tính thành những ngôi nhà hoàn thiện sang trọng cho người mua hiện đại."
     }, 
     "button":{
-        "view_our_properties":"xem các bất động sản của chúng tôi"
+        "view_our_properties":"Các dự án"
+    },
+    "our_philosophy":{
+        "title":"Giá trị của L'atelia", 
+        "summary":"“Kiến tạo những ngôi nhà độc bản”", 
+        "desc_1":"Dù chuyển đến Đà Nẵng từ Hà Nội, chúng tôi vẫn luôn lưu giữ những ký ức đẹp về nơi đây – thành phố của những kỳ nghỉ, của cảm hứng, và cũng là nơi chúng tôi chọn để xây dựng ngôi nhà đầu tiên của mình.", 
+        "desc_2":"Chúng tôi am hiểu Đà Nẵng một cách tường tận – từ những con người thân thiện đến những địa điểm đáng nhớ – và chúng tôi luôn hướng đến việc mang giá trị gia đình vào từng ngôi nhà mình xây dựng", 
+        "desc_3":"Với L’atelia, gia đình là trung tâm của mọi dự án. Khi bạn chọn mua nhà từ chúng tôi, bạn không chỉ nhận được một không gian sống, mà còn là cảm giác “đã đến nơi” – đã cập bến bờ biển của chúng tôi, đã đến với Đà Nẵng, và quan trọng nhất, đã bắt đầu một chương mới trong cuộc đời mình.", 
+        "desc_4":"Phần lớn các dự án của chúng tôi bắt đầu khi chưa có khách hàng cụ thể. Điều đó đồng nghĩa L’atelia chấp nhận rủi ro để đổi lấy sự tự do sáng tạo, biến những “viên ngọc thô” thành kiệt tác sống động.", 
+        "desc_5":"Với chúng tôi, mỗi bất động sản không chỉ là một giao dịch, mà là một đứa con tinh thần được hình thành từ tâm huyết, tình yêu và niềm tự hào của cả đội ngũ."
     }
 }

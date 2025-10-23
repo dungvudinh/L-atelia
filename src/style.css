@@ -7,7 +7,7 @@
     --color-txt-primary: #404040;
     /* Màu chữ xanh */
     --color-txt-secondary:#2F5855;
-
+    --color-txt-gray:#434343;
     /* Màu nền phụ (ví dụ: header, footer, hoặc section khác) */
     --color-bg-secondary: #344D3B;
     --font-subtitle: 'Cormorant Infant'
@@ -28,4 +28,27 @@ body
 /* Màu khi nút được chọn */
 .swiper-pagination-bullet-active {
   background-color: #FFFFFF !important; /* ví dụ: xanh đậm */
+}
+
+.scrollbar 
+{
+  direction: rtl;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+.scrollbar::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  /* -webkit-border-radius: 10px; */
+  /* border-radius: 10px; */
+}
+
+/* Handle */
+.scrollbar::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #2F5855;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
