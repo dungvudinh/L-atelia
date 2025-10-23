@@ -6,6 +6,7 @@ import Projects from '../pages/Projects';
 import PropertiesForRent from '../pages/PropertiesForRent'
 import Media from '../pages/Media';
 import MediaDetail from '../pages/MediaDetail';
+import About from '../pages/About';
 
 const publicRoutes = [
   {
@@ -35,6 +36,10 @@ const publicRoutes = [
   {
     path:routes.mediaDetail, 
     component:MediaDetail
+  }, 
+  {
+    path:routes.about, 
+    component:About
   }
 ];
 
