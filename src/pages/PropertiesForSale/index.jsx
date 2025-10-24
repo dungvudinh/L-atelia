@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {Sort,Adjust} from '../../assets/icons';
 import { ListFilter, MapPinPlusIcon } from "lucide-react";
@@ -8,7 +9,15 @@ import sale5 from '../../assets/images/sale_5.png'
 import sale6 from '../../assets/images/sale_6.png'
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
+import CustomSelect from "../../components/CustomSelect";
+ const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+    { value: 'option4', label: 'Option 4' },
+  ];
 function PropertiesForSale() {
+    const [selectedValue, setSelectedValue] = useState('');
     const {t} = useTranslation('propertiesForSale');
     return ( 
         <div className="mt-20">
@@ -23,9 +32,15 @@ function PropertiesForSale() {
                         </button>
                         <div className="border flex items-center border-txt-primary ml-8 p-2">
                             <MapPinPlusIcon width={20}/>
-                            <select name="" id="" className="outline-none text-[18px] ml-2">
+                            {/* <select name="" id="" className="outline-none text-[18px] ml-2">
                                 <option value="">Select your location</option>
-                            </select>
+                            </select> */}
+                             <CustomSelect
+        options={options}
+        value={selectedValue}
+        onChange={setSelectedValue}
+        placeholder="Choose an option"
+      />
                         </div>
                         <div className="border flex items-center border-txt-primary ml-8 p-2">
                             <Adjust />

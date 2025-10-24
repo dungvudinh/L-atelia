@@ -8,18 +8,19 @@ import aboutUs7 from '../../assets/images/about-us-7.png'
 import aboutUs8 from '../../assets/images/about-us-8.png'
 import aboutUs9 from '../../assets/images/about-us-9.png'
 import aboutUs10 from '../../assets/images/about-us-10.png'
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide,useSwiper  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { ArrowDown, ArrowRight, ArrowUp, Check } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUp, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import Footer from '../../layouts/components/Footer'
 const SLIDE_ITEMS = [
     {id:1, src:aboutUs7, name:'Rogier van den Brand', position:'Project Manager' },
     {id:2, src:aboutUs8,  name:'Rogier van den Brand', position:'Project Manager'}, 
     {id:3, src:aboutUs9,  name:'Rogier van den Brand', position:'Project Manager'},
     {id:4, src:aboutUs10,  name:'Rogier van den Brand', position:'Project Manager'},
+    {id:5, src:aboutUs10,  name:'Rogier van den Brand', position:'Project Manager'},
 ]
 function About()
 {
@@ -195,40 +196,42 @@ function About()
             </div>
             {/*  */}
             <div className='mt-20 flex justify-center mb-20'>
-                <div className='xl:max-w-screen-xl lg:max-w-[900px]'>
+                <div className='xl:max-w-screen-xl lg:max-w-[900px] relative'>
                     <Swiper
-                        modules={[Autoplay, Pagination, Navigation]}
-                        spaceBetween={20}
-                        slidesPerView={4}
-                        loop
-                        // autoplay={{
-                        //   delay: 4000,
-                        //   disableOnInteraction: false,
-                        // }}
-                        pagination={{ clickable: true }}
-                        navigation
-                        >
-                        {
-                            SLIDE_ITEMS.map(slideItem=>(
-                                <SwiperSlide key={slideItem.id}>
-    <div className="w-full h-[400px] relative">
-        <img
-            src={slideItem.src}
-            className="w-full h-full object-cover object-top"
-        />
-        <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4">
-            <h4 className='text-white'>{slideItem.name}</h4>
-            <p className='text-gray-300'>{slideItem.position}</p>
-        </div>
-    </div>
-</SwiperSlide>
-                            ))
-                        }
-                    </Swiper>
+        modules={[Autoplay, Pagination, Navigation]}
+        spaceBetween={20}
+        slidesPerView={4}
+        navigation={{
+            nextEl: '.custom-next-button',
+            prevEl: '.custom-prev-button',
+        }}
+    >
+        {
+            SLIDE_ITEMS.map(slideItem=>(
+                <SwiperSlide key={slideItem.id} className=''>
+                    <img
+                        src={slideItem.src}
+                        className="w-full h-[420px] object-cover object-top"
+                    />
+                    <div>
+                        <h4 className='text-[25px] font-semibold mt-4 font-subtitle text-txt-secondary'>{slideItem.name}</h4>
+                        <h4 className='text-[18px]'>Project Manager</h4>
+                    </div>
+                </SwiperSlide>
+            ))
+        }
+    </Swiper>
+                    <button className="custom-prev-button absolute -left-15 top-1/2 -translate-y-1/2 z-10 cursor-pointer">
+                        <ChevronLeft/>
+                    </button>
+                    <button className="custom-next-button absolute -right-15 top-1/2  -translate-y-1/2 z-10 cursor-pointer">
+                        <ChevronRight />
+                    </button>
                 </div>
             </div>
             <Footer withContact={false}/>
         </div>
     )
 }
+
 export default About;

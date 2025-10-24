@@ -10,6 +10,7 @@ import logoText from '../../assets/images/logo-text.png';
 import { ArrowRight } from "lucide-react";
 import img1 from '../../assets/images/img1.png';
 import Footer from "../../layouts/components/Footer";
+import { LocalizedLink } from "../../components/LocalizedLink";
 const SLIDE_ITEMS = [
     {id:1, src:slide1 },
     {id:2, src:slide1}, 
@@ -67,20 +68,18 @@ function Landing() {
                                 border border-txt-primary
                                 px-6 py-3
                                 cursor-pointer
-                                group
-                                transition-all duration-300
                                 uppercase
+                                group
+                                hover:bg-txt-secondary
+                                hover:text-bg-primary
                             "
                             >
                             {t('landing:button.view_our_properties')}
                             <ArrowRight
                                 className="
+                                group-hover:text-bg-primary
                                 text-txt-primary
                                 ml-4
-                                transform
-                                transition-transform
-                                duration-300
-                                group-hover:translate-x-2
                                 "
                             />
                         </button>
@@ -120,7 +119,7 @@ function Landing() {
                     </div>
                     {/* RIGHT */}
                     <div className="flex-basis basis-1/2">
-                        <img src={img1} alt="" className="w-full h-full"/>
+                        <img src={img1} alt="" className="w-full h-full object-cover"/>
                     </div>
                 </div>
             </div>
@@ -139,14 +138,20 @@ const FeatureProperties = ()=>
                     {/* LIST */}
                     <div>
                         <ul className="text-[40px] font-subtitle">
-                            <li className="mb-4">
-                                Cantonada
+                            <li className="mb-4 inline-block cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300">
+                                <LocalizedLink to={`/properties-for-sale/cantonada`}>
+                                    Cantonada
+                                </LocalizedLink>
                             </li>
-                            <li className="mb-4">
-                                Son Alba
-                            </li >
-                            <li>
-                                Vistavall
+                            <li className="mb-4 inline-block cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300">
+                                <LocalizedLink to={`/properties-for-sale/son-alba`}>
+                                    Son Alba
+                                </LocalizedLink>
+                            </li>
+                            <li className="inline-block cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300">
+                                <LocalizedLink to={`/properties-for-sale/vistavall`}>
+                                    Vistavall
+                                </LocalizedLink>
                             </li>
                         </ul>
                     </div>
@@ -154,16 +159,35 @@ const FeatureProperties = ()=>
                     <button className="border p-4 xl:mt-15 lg:mt-5 cursor-pointer">FOR RENT</button>
                 </div>
                 <div className="min-w-0 overflow-hidden">
-                    <Swiper modules={[Autoplay, Pagination, Navigation]} spaceBetween={30} slidesPerView={3} loop 
-                    pagination={{ clickable: true }}>
+                    <Swiper 
+                        modules={[Autoplay, Pagination, Navigation]} 
+                        spaceBetween={30} 
+                        slidesPerView={3} 
+                        loop 
+                        pagination={{ 
+                            clickable: true,
+                            renderBullet: function (index, className) {
+                                return `
+                                    <span class="${className} custom-bullet">
+                                    </span>
+                                `;
+                            },
+                            el: '.custom-pagination-wrapper' // Thêm element selector
+                        }}
+                    >
                         { 
                             SLIDE_ITEMS.map(slideItem=>(
                                 <SwiperSlide key={slideItem.id}> 
                                     <img src={slideItem.src} className="object-cover object-center" />
-                                </SwiperSlide> )) 
+                                </SwiperSlide> 
+                            )) 
                         } 
                     </Swiper>
-                    <p className="xl:mt-15 lg:mt-5 text-[18px]">
+    
+                    {/* Wrapper với margin-top */}
+                    <div className="custom-pagination-wrapper mt-8"></div>
+                    
+                    <p className="xl:mt-5 lg:mt-5 text-[18px]">
                         Set atop Valldemossa, Vistavall combines contemporary elegance with Mallorcan charm, offering panoramic views and year-round sunshine.
                     </p>
                 </div>

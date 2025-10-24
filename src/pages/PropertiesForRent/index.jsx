@@ -33,7 +33,7 @@ function PropertiesForRent() {
                                     {filterItem.title}
                                 </li>
                             ))
-                        }
+                        }a
                     </ul>
                     {/* MAIN */}
                     <div className="mt-10 flex gap-10">

@@ -4,7 +4,7 @@ import logo from '../../../assets/images/logo.png'
 import logoTextNoBg from '../../../assets/images/logo-text-no-bg.png'
 import { useTranslation } from "react-i18next";
 function Footer({withContact}) {
-    const [consent, setConsent] = useState(false);
+    const [consent, setConsent] = useState(true);
     const {t} = useTranslation('footer');
     return ( 
         <div className="pt-[100px] bg-bg-primary pb-[30px] md:px-[50px] md:py-[50px] flex justify-center">
@@ -48,7 +48,7 @@ function Footer({withContact}) {
                 {/* LOCATION */}
                 <div className="flex flex-col items-center xl:mt-20 text-txt-primary md:mt-10">
                     <img src={logo} alt="" className="w-[108px] text-center"/>
-                    <img src={logoTextNoBg} alt="" className="w-[211px] text-center"/>
+                    <img src={logoTextNoBg} alt="" className="w-[211px] text-center mb-4"/>
                     <p className="text-[18px] mb-2">Crafting luxury property</p>
                     <p className="text-[18px] mb-2">Da Nang City</p>
                     <p className="text-[18px]">©2025 L’atelia </p>
