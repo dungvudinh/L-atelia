@@ -6,7 +6,8 @@ const routes = {
     propertiesForRent:'properties-for-rent', 
     media:'media', 
     mediaDetail:'media/:mediaId', 
-    about:'about'
+    about:'about',
+    brochure:'projects/:projectId/view-brochure',
   };
   
   export default routes;

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
 @theme {
     /* Màu nền chính (toàn trang) */
     --color-bg-primary: #F3EEE7;

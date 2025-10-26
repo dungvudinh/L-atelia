@@ -1,5 +1,6 @@
 import project1 from '../../assets/images/projects/project1.png'
 import Footer from '../../layouts/components/Footer';
+import { LocalizedLink } from '../../components/LocalizedLink';
 const IMAGES = [
     { id: 1, src: '../../assets/images/projects/project1.png', alt: "Project 1", title: "Modern Villa" },
     { id: 2, src: '../../assets/images/projects/project2.png', alt: "Project 2", title: "Luxury Apartment" },
@@ -22,13 +23,16 @@ function Projects() {
                     {/* LIST IMAGES */}
                     <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
                         {IMAGES.map((image) => (
-                            <div key={image.id} className="group relative overflow-hidden  shadow-lg hover:shadow-xl transition-all duration-300">
-                                <img 
-                                    src={project1} 
-                                    alt={image.alt}
-                                    className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
-                                />
-                                <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px]'>FOR RENT</button>
+                            <div key={image.id} className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300
+                            cursor-pointer">
+                                <LocalizedLink to={`/projects/${image.title}/view-brochure`}>
+                                    <img 
+                                        src={project1} 
+                                        alt={image.alt}
+                                        className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                    <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px]'>FOR RENT</button>
+                                </LocalizedLink>
                             </div>
                         ))}
                     </div>
