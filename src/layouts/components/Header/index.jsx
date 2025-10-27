@@ -11,7 +11,7 @@ const MENU_ITEMS = [
     {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
     {id:4, title:'about us', to:'/about'}, 
     {id:5, title:'media', to:'/media'}, 
-    {id:6, title:'contact', to:''}
+    {id:6, title:'contact', to:'/contact'}
 ]
 
 function Header() {

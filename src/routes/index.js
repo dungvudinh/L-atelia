@@ -8,6 +8,7 @@ import Media from '../pages/Media';
 import MediaDetail from '../pages/MediaDetail';
 import About from '../pages/About';
 import Brochure from '../pages/Brochure';
+import Contact from '../pages/Contact';
 
 const publicRoutes = [
   {
@@ -49,6 +50,10 @@ const publicRoutes = [
   {
     path:routes.propertiesForRentDetail,
     component:PropertiesForRent
+  }, 
+  {
+    path:routes.contact, 
+    component:Contact
   }
 ];
 

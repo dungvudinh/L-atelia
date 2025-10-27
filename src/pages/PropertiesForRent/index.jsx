@@ -2,12 +2,25 @@ import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../layouts/components/Footer";
 import { Datepicker } from 'flowbite-react';
-import { CalendarClock, ArrowDown,GroupSearch, Group,Face,Bed, Sort,AddLocation, Distance, FilterList, Payments, PaymentArrowDown, PageInfo, Apartment, ChairUmbrella, Villa, SourceEnvironment } from "../../assets/icons";
+import { CalendarClock, ArrowDown,GroupSearch, Group,Face,Bed, Sort,AddLocation, Distance, 
+    FilterList, Payments, PaymentArrowDown, PageInfo, Apartment, ChairUmbrella, Villa, SourceEnvironment, Star, 
+    OutdoorGrill,
+    AddGroupOff,
+    Balcony,
+    ACUnit,
+    CarLock,
+    Exercise,
+    DishWasher,
+    FamilyRestRoom,
+    VapeFree,
+    BeachAccess} from "../../assets/icons";
 import PropertiesForRent1 from '../../assets/images/properties-for-rent-1.png';
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Wifi } from "lucide-react";
 import { Swiper, SwiperSlide,useSwiper  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 const theme = {
     popup: {
       footer: {
@@ -41,6 +54,8 @@ function PropertiesForRent() {
     const [showSelectLocation, setShowSelectLocation] = useState(false);
     const [showSortingOptions, setShowSortingOptions] = useState(false);
     const [showPropertiesOptions, setShowPropertiesOptions] = useState(false);
+    const [consent, setConsent] = useState(true);
+        const {t} = useTranslation('footer');
     const params = useParams();
     console.log(params)
     return ( 
@@ -242,7 +257,7 @@ function PropertiesForRent() {
                 </div>
             </div>
                 {/* LIST ITEM */}
-                {!params.propertyId && (
+                {!params.propertyId ? (
                     <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
                         <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
                             <div className="cursor-pointer bg-bg-primary">
@@ -300,61 +315,250 @@ function PropertiesForRent() {
                             </div>
                         </div>
                     </div>
-                )}
-                <div className="mb-40">
-                    <div className="bg-bg-primary">
-                        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
-                            <div className="flex gap-5">
-                                <div className="flex-basis basis-2/3">
-                                    <img src={PropertiesForRent1} alt="" className="w-full object-cover h-[586px]" />
+                )
+                :(
+
+                    <div className="mb-40">
+                        <div className="bg-bg-primary pb-20">
+                            <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
+                                <div className="flex gap-5">
+                                    <div className="flex-basis basis-2/3">
+                                        <img src={PropertiesForRent1} alt="" className="w-full object-cover h-[586px]" />
+                                    </div>
+                                    <div className="flex-basis basis-1/3">
+                                        <img src={PropertiesForRent1} alt="" className="w-full h-[283px] mb-5 object-cover"/>
+                                        <img src={PropertiesForRent1} alt="" className="w-full h-[283px] object-cover"/>
+                                    </div>
                                 </div>
-                                <div className="flex-basis basis-1/3">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-[283px] mb-5 object-cover"/>
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-[283px] object-cover"/>
+                                <div className="mt-5 relative select-none">
+                                    <Swiper
+                                        modules={[Autoplay, Pagination, Navigation]}
+                                        spaceBetween={20}
+                                        slidesPerView={4}
+                                        pagination={{ clickable: true }}
+                                        navigation={{
+                                            nextEl: '.custom-next-button',
+                                            prevEl: '.custom-prev-button',
+                                        }}
+                                        
+                                    >
+                                        <SwiperSlide  className=''>
+                                            <img
+                                                src={PropertiesForRent1}
+                                                className="w-full h-[164px] object-cover"
+                                            />
+                                        </SwiperSlide>
+                                        <SwiperSlide  className=''>
+                                            <img
+                                                src={PropertiesForRent1}
+                                                className="w-full h-[164px] object-cover"
+                                            />
+                                        </SwiperSlide>
+                                        <SwiperSlide  className=''>
+                                            <img
+                                                src={PropertiesForRent1}
+                                                className="w-full h-[164px] object-cover"
+                                            />
+                                        </SwiperSlide>
+                                        <SwiperSlide  className=''>
+                                            <img
+                                                src={PropertiesForRent1}
+                                                className="w-full h-[164px] object-cover"
+                                            />
+                                        </SwiperSlide>
+                                        <SwiperSlide  className=''>
+                                            <img
+                                                src={PropertiesForRent1}
+                                                className="w-full h-[164px] object-cover"
+                                            />
+                                        </SwiperSlide>
+                                    </Swiper>
+                                    <button className="custom-prev-button absolute -left-15 top-1/2 -translate-y-1/2 z-10 cursor-pointer">
+                                        <ChevronLeft/>
+                                    </button>
+                                    <button className="custom-next-button absolute -right-15 top-1/2  -translate-y-1/2 z-10 cursor-pointer ">
+                                    <ChevronRight/>
+                                    </button>
+                                </div>
+                                {/*  */}
+                                <div className="mt-10 flex gap-10">
+                                    <div className="flex-basis basis-2/3">
+                                        <h1 className="text-[60px] font-subtitle text-txt-secondary font-semibold">Villa Shirla</h1>
+                                        <div className="flex items-center">
+                                            <div className="bg-txt-secondary  px-15 py-2 text-bg-primary rounded-4xl text-[18px]">Hotel</div>
+                                            <div className="flex ml-4">
+                                                <Star className={'mr-2'}/>
+                                                <Star />
+                                            </div>
+                                        </div>
+                                        {/*  */}
+                                        <div className="flex items-center mt-8">
+                                            <p className="text-[18px]">2 Beds</p>
+                                            <div className="bg-dot w-[8px] h-[8px] rounded-full mx-8 "></div>
+                                            <p className="text-[18px]">2 Bathrooms</p>
+                                        </div>
+                                        <div className="mt-8 flex items-center">
+                                            <h1 className="text-[38px] text-txt-secondary">$150</h1>
+                                            <h1 className="text-[26px] text-txt-secondary ml-2">for 2 nights</h1>
+                                        </div>
+                                        <div className="w-full h-[1px] bg-txt-primary my-10"></div>
+                                        <p className="text-[26px]">Can Banco is a breathtaking gated villa located near Jesús, just five minutes from Ibiza Town and Marina Ibiza. Offering a perfect blend of privacy, comfort, and elegance, making it an excellent choice for those seeking a luxurious retreat on the island. Designed to provide a serene yet stylish living environment, Can Banco combines modern convenience with the natural beauty of Ibiza, offering its guests an unparalleled experience.</p>
+                                        <p className="underline font-semibold text-[18px] mt-8">Show more</p>
+                                        <div className="w-full h-[1px] bg-txt-primary my-10"></div>
+                                        <ul>
+                                            <li className="flex items-start mb-10">
+                                                <OutdoorGrill />
+                                                <div className="ml-4 text-[18px]">
+                                                    <h4 className="font-semibold">Ourdoor entertainment</h4>
+                                                    <p>The alfresco dining and outdoor seating eare greate for summer trips.</p>
+                                                </div>
+                                            </li>
+                                            <li className="flex items-start mb-10">
+                                                <Bed />
+                                                <div className="ml-4 text-[18px]">
+                                                    <h4 className="font-semibold">Room in a rental unit</h4>
+                                                    <p>Your own room in a home, plus access to shared spaces.</p>
+                                                </div>
+                                            </li>
+                                            <li className="flex items-start"> 
+                                                <AddGroupOff />
+                                                <div className="ml-4 text-[18px]">
+                                                    <h4 className="font-semibold">Free cancellation for 24 hours</h4>
+                                                    <p>Get a full refund if you change your mind.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div className="w-full h-[1px] bg-txt-primary my-10"></div>
+                                        <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">Great for your stay</h1>
+                                        <ul className="flex flex-wrap mt-8 gap-x-10 gap-y-4">
+                                            <li className="flex items-center">
+                                                <Balcony className={'mr-4'}/>
+                                                Balcony
+                                            </li>
+                                            <li className="flex items-center">
+                                                <ACUnit className={'mr-4'}/>
+                                                Air conditioning
+                                            </li>
+                                            <li className="flex items-center">
+                                                <CarLock className={'mr-4'}/>
+                                                Parking
+                                            </li>
+                                            <li className="flex items-center">
+                                               <Exercise className={'mr-4'}/> 
+                                                Fitness center
+                                            </li>
+                                            <li className="flex items-center">
+                                                <DishWasher className={'mr-4'}/>
+                                                Kitchen
+                                            </li>
+                                            <li className="flex items-center">
+                                                <FamilyRestRoom className={'mr-4'}/>
+                                                Family rooms
+                                            </li>
+                                            <li className="flex items-center">
+                                                <VapeFree className={'mr-4'}/>
+                                                Non-smoking rooms
+                                            </li>
+                                            <li className="flex items-center">
+                                                <Wifi />
+                                                Wifi in all areas
+                                            </li>
+                                            <li className="flex items-center">
+                                                <BeachAccess className={'mr-4'}/>
+                                                Beachfront
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {/*  */}
+                                    <div className="flex-basis basis-1/2">
+                                        <div className="bg-white border p-4 rounded-sm text-center">
+                                            <h1 className="text-[60px] text-txt-secondary font-subtitle font-semibold mb-8">Get in touch</h1>
+                                            <input type="text" placeholder="First Name" className="w-full rounded-sm mb-8"/>
+                                            <input type="text" placeholder="Last Name" className="w-full rounded-sm mb-8"/>
+                                            <input type="text" placeholder="Email Address" className="w-full rounded-sm mb-8"/>
+                                            <input type="text" placeholder="Mobile phone number" className="w-full rounded-sm mb-8"/>
+                                            <textarea name="" id="" placeholder="Write your message here ..."  className="w-full rounded-sm mb-8"></textarea>
+                                            <div className="flex flex-row items-start mt-2 text-txt-primary">
+                                                <div className="border  mt-1 mr-2 cursor-pointer w-[34px] h-[17px]" onClick={()=>setConsent(!consent)}>
+                                                    {consent && (
+                                                        <Check width={15} className="h-[17px]"/>
+                                                    )}
+                                                </div>
+                                                <p className="text-[15px] text-left">
+                                                    {t('footer:policy')}
+                                                </p>
+                                            </div>
+                                            <button className="cursor-pointer text-[18px] uppercase w-full py-4 bg-txt-secondary  text-bg-primary mt-8 rounded-sm">submit message</button>
+                                        </div>
+                                        {/*  */}
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.7484136613452!2d105.74611147590936!3d20.96261619004587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452efff394ce3%3A0x391a39d4325be464!2sPhenikaa%20University!5e0!3m2!1sen!2s!4v1761578035476!5m2!1sen!2s" width="600" height="450" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" className="mt-20"></iframe>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="mt-5">
-                                <Swiper
-                                    modules={[Autoplay, Pagination, Navigation]}
-                                    spaceBetween={20}
-                                    slidesPerView={4}
-                                    
-                                >
-                                    <SwiperSlide  className=''>
-                                        <img
-                                            src={PropertiesForRent1}
-                                            className="w-full h-[164px] object-cover"
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide  className=''>
-                                        <img
-                                            src={PropertiesForRent1}
-                                            className="w-full h-[164px] object-cover"
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide  className=''>
-                                        <img
-                                            src={PropertiesForRent1}
-                                            className="w-full h-[164px] object-cover"
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide  className=''>
-                                        <img
-                                            src={PropertiesForRent1}
-                                            className="w-full h-[164px] object-cover"
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide  className=''>
-                                        <img
-                                            src={PropertiesForRent1}
-                                            className="w-full h-[164px] object-cover"
-                                        />
-                                    </SwiperSlide>
-                                </Swiper>
+                        </div>
+                        <div>
+                            <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
+                                <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">You might also like this</h1>
+                                <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
+                            <div className="cursor-pointer bg-bg-primary">
+                                <div className="h-[283px]">
+                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="p-4">
+                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
+                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
+                                    <div className="flex items-center mt-2">
+                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
+                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                        <p>1 Bedrooms</p>
+                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                        <p>1 Bathrooms</p>
+                                    </div>
+                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
+                                </div>
+                            </div>
+                            {/*  */}
+                            <div className="cursor-pointer bg-bg-primary">
+                                <div className="h-[283px]">
+                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="p-4">
+                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
+                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
+                                    <div className="flex items-center mt-2">
+                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
+                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                        <p>1 Bedrooms</p>
+                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                        <p>1 Bathrooms</p>
+                                    </div>
+                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
+                                </div>
+                            </div>
+                            {/*  */}
+                            <div className="cursor-pointer bg-bg-primary">
+                                <div className="h-[283px]">
+                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                </div>
+                                <div className="p-4">
+                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
+                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
+                                    <div className="flex items-center mt-2">
+                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
+                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                        <p>1 Bedrooms</p>
+                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                        <p>1 Bathrooms</p>
+                                    </div>
+                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )
+                }
             <Footer withContact={false}/>
         </div>
      );
