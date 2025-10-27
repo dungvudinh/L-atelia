@@ -12,6 +12,7 @@
     --color-txt-gray:#434343;
     /* Màu nền phụ (ví dụ: header, footer, hoặc section khác) */
     --color-bg-secondary: #344D3B;
+    --color-dot:#D9D9D9;
     --font-subtitle: 'Cormorant Infant'
   }
 body 

@@ -198,29 +198,29 @@ function About()
             <div className='mt-20 flex justify-center mb-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] relative'>
                     <Swiper
-        modules={[Autoplay, Pagination, Navigation]}
-        spaceBetween={20}
-        slidesPerView={4}
-        navigation={{
-            nextEl: '.custom-next-button',
-            prevEl: '.custom-prev-button',
-        }}
-    >
-        {
-            SLIDE_ITEMS.map(slideItem=>(
-                <SwiperSlide key={slideItem.id} className=''>
-                    <img
-                        src={slideItem.src}
-                        className="w-full h-[420px] object-cover object-top"
-                    />
-                    <div>
-                        <h4 className='text-[25px] font-semibold mt-4 font-subtitle text-txt-secondary'>{slideItem.name}</h4>
-                        <h4 className='text-[18px]'>Project Manager</h4>
-                    </div>
-                </SwiperSlide>
-            ))
-        }
-    </Swiper>
+                        modules={[Autoplay, Pagination, Navigation]}
+                        spaceBetween={20}
+                        slidesPerView={4}
+                        navigation={{
+                            nextEl: '.custom-next-button',
+                            prevEl: '.custom-prev-button',
+                        }}
+                    >
+                        {
+                            SLIDE_ITEMS.map(slideItem=>(
+                                <SwiperSlide key={slideItem.id} className=''>
+                                    <img
+                                        src={slideItem.src}
+                                        className="w-full h-[420px] object-cover object-top"
+                                    />
+                                    <div>
+                                        <h4 className='text-[25px] font-semibold mt-4 font-subtitle text-txt-secondary'>{slideItem.name}</h4>
+                                        <h4 className='text-[18px]'>Project Manager</h4>
+                                    </div>
+                                </SwiperSlide>
+                            ))
+                        }
+                    </Swiper>
                     <button className="custom-prev-button absolute -left-15 top-1/2 -translate-y-1/2 z-10 cursor-pointer">
                         <ChevronLeft/>
                     </button>

@@ -45,6 +45,10 @@ const publicRoutes = [
   {
     path:routes.brochure, 
     component:Brochure
+  }, 
+  {
+    path:routes.propertiesForRentDetail,
+    component:PropertiesForRent
   }
 ];
 
