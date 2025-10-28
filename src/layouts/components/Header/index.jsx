@@ -40,7 +40,7 @@ function Header() {
     };
     
     return ( 
-        <div className="bg-bg-primary flex justify-center items-center fixed top-0 left-0 z-50 w-full">
+        <div className="bg-bg-primary flex justify-center items-center fixed top-0 left-0 z-50 w-full z-100">
             <div className="w-full xl:max-w-screen-xl flex items-center justify-between md:max-w-screen-md 
             lg:max-w-[900px] mx-auto md:max-w-screen-md">
                 {/* LEFT HEADER */}
