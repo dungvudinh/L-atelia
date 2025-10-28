@@ -11,6 +11,7 @@ import { ArrowRight } from "lucide-react";
 import img1 from '../../assets/images/img1.png';
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
+import OptimizedImage from "../../components/OptimizedImage";
 const SLIDE_ITEMS = [
     {id:1, src:slide1 },
     {id:2, src:slide1}, 
@@ -41,7 +42,7 @@ function Landing() {
                     SLIDE_ITEMS.map(slideItem=>(
                         <SwiperSlide key={slideItem.id}>
                             <div className="w-full h-[840px] relative">
-                                <img
+                                <OptimizedImage
                                 src={slideItem.src}
                                 className="w-full h-full object-cover object-center"
                                 />
@@ -55,7 +56,7 @@ function Landing() {
             <div className=" mt-8 mb-40 lg:mb-20 flex justify-center">
                 <div className="flex justify-center flex-row items-center xl:max-w-screen-xl lg:max-w-[900px]">
                     <div>
-                        <img src={logoText} alt="" className="w-[800px]"/>
+                        <OptimizedImage src={logoText} alt="" className="w-[800px]"/>
                     </div>
                     <div className="pl-20 mt-20">
                         <p className="text-[30px] text-txt-primary">
@@ -119,7 +120,7 @@ function Landing() {
                     </div>
                     {/* RIGHT */}
                     <div className="flex-basis basis-1/2">
-                        <img src={img1} alt="" className="w-full h-full object-cover"/>
+                        <OptimizedImage src={img1} alt="" className="w-full h-full object-cover"/>
                     </div>
                 </div>
             </div>
@@ -178,7 +179,7 @@ const FeatureProperties = ()=>
                         { 
                             SLIDE_ITEMS.map(slideItem=>(
                                 <SwiperSlide key={slideItem.id}> 
-                                    <img src={slideItem.src} className="object-cover object-center" />
+                                    <OptimizedImage src={slideItem.src} className="object-cover object-center" />
                                 </SwiperSlide> 
                             )) 
                         } 

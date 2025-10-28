@@ -1,5 +1,6 @@
 import media1 from '../../assets/images/media1.png'
 import Footer from '../../layouts/components/Footer';
+import OptimizedImage from '../../components/OptimizedImage';
 function Media() {
     return ( 
         <div>
@@ -20,7 +21,7 @@ function Media() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10">
                         <div className='cursor-pointer'>
                             <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                <img src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                <OptimizedImage src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                             </div>
                             <div className='mt-4 p-2'>
                                 <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
@@ -36,7 +37,7 @@ function Media() {
 
                         <div className='cursor-pointer'>
                             <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                <img src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                <OptimizedImage src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                             </div>
                             <div className='mt-4 p-2'>
                                 <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
@@ -51,7 +52,7 @@ function Media() {
                         </div>
                         <div className='cursor-pointer'>
                             <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                <img src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                <OptimizedImage src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                             </div>
                             <div className='mt-4 p-2'>
                                 <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
@@ -66,7 +67,7 @@ function Media() {
                         </div>
                         <div className='cursor-pointer'>
                             <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                <img src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                <OptimizedImage src={media1} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                             </div>
                             <div className='mt-4 p-2'>
                                 <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>

@@ -11,12 +11,12 @@ import mediaDetail9 from '../../assets/images/media-detail-9.png'
 import mediaDetail10 from '../../assets/images/media-detail-10.png'
 import mediaDetail11 from '../../assets/images/media-detail-11.png'
 import Footer from '../../layouts/components/Footer';
-
+import OptimizedImage from '../../components/OptimizedImage';
 function MediaDetail() {
     return ( 
         <div className="mt-20">
             <div className='w-full h-210'>
-                <img src={mediaDetail} alt="" className='w-full h-full object-cover' />
+                <OptimizedImage src={mediaDetail} alt="" className='w-full h-full object-cover' />
             </div>
             <div className='flex flex-col items-center mt-30'>
                 <div className='xl:max-w-screen-lg text-center mb-40'>
@@ -45,7 +45,7 @@ function MediaDetail() {
                 </div>
                 {/*  */}
                 <div className='h-[640px] w-[1000px] mb-40'>
-                    <img src={mediaDetail2} alt="" className='h-full w-full object-cover'/>
+                    <OptimizedImage src={mediaDetail2} alt="" className='h-full w-full object-cover'/>
                 </div>
                 {/*  */}
                 <div className='xl:max-w-screen-lg px-10 text-txt-primary mb-30'>
@@ -59,10 +59,10 @@ function MediaDetail() {
                 {/*  */}
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] flex gap-30 w-full mb-30'>
                     <div className='flex-basis basis-1/2  h-200'>
-                        <img src={mediaDetail3} alt="" className=' w-full h-full'/>
+                        <OptimizedImage src={mediaDetail3} alt="" className=' w-full h-full'/>
                     </div>
                     <div className='flex-basis basis-1/2  h-200'>
-                        <img src={mediaDetail4} alt="" className='flex-basis basis-1/2 w-full h-full'/>
+                        <OptimizedImage src={mediaDetail4} alt="" className='flex-basis basis-1/2 w-full h-full'/>
                     </div>
                 </div>
                 {/*  */}
@@ -73,7 +73,7 @@ function MediaDetail() {
                 </div>
                 {/*  */}
                 <div className='relative w-full h-100 mb-40'>
-                    <img src={mediaDetail5} alt="" className='w-full h-full object-cover' />
+                    <OptimizedImage src={mediaDetail5} alt="" className='w-full h-full object-cover' />
                     <div className='absolute inset-0 bg-black/30'></div>
                     <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center font-subtitle'>
                         <h4 className='text-lg font-medium text-[60px] '>Made in Australia</h4>
@@ -82,7 +82,7 @@ function MediaDetail() {
                 </div>
                 {/*  */}
                 <div className='xl:max-w-screen-lg mb-40 h-180 w-full'>
-                    <img src={mediaDetail6} alt="" className='w-full h-full'/>
+                    <OptimizedImage src={mediaDetail6} alt="" className='w-full h-full'/>
                 </div>
                 {/*  */}
                 <div className="xl:max-w-screen-lg px-20 mb-30">
@@ -93,7 +93,7 @@ function MediaDetail() {
                 </div>
                 {/*  */}
                 <div className='xl:max-w-screen-lg mb-30 h-180 w-full'>
-                    <img src={mediaDetail7} alt="" className='w-full h-full object-cover'/>
+                    <OptimizedImage src={mediaDetail7} alt="" className='w-full h-full object-cover'/>
                 </div>
                 {/*  */}
                 <div className="xl:max-w-screen-lg px-20 mb-30">
@@ -103,11 +103,11 @@ function MediaDetail() {
                 </div>
                 {/*  */}
                 <div className='xl:max-w-screen-lg mb-30 h-180 w-full'>
-                    <img src={mediaDetail8} alt="" className='w-full h-full object-cover'/>
+                    <OptimizedImage src={mediaDetail8} alt="" className='w-full h-full object-cover'/>
                 </div>
                 {/*  */}
                 <div className='relative w-full h-100 mb-40'>
-                    <img src={mediaDetail5} alt="" className='w-full h-full object-cover' />
+                    <OptimizedImage src={mediaDetail5} alt="" className='w-full h-full object-cover' />
                     <div className='absolute inset-0 bg-black/30'></div>
                     <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center font-subtitle'>
                         <h4 className='text-lg font-medium text-[60px] '>Made in Australia</h4>
@@ -117,10 +117,10 @@ function MediaDetail() {
                 {/*  */}
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] flex gap-30 w-full mb-30'>
                     <div className='flex-basis basis-1/2  h-200'>
-                        <img src={mediaDetail3} alt="" className=' w-full h-full'/>
+                        <OptimizedImage src={mediaDetail3} alt="" className=' w-full h-full'/>
                     </div>
                     <div className='flex-basis basis-1/2  h-200'>
-                        <img src={mediaDetail4} alt="" className='flex-basis basis-1/2 w-full h-full'/>
+                        <OptimizedImage src={mediaDetail4} alt="" className='flex-basis basis-1/2 w-full h-full'/>
                     </div>
                 </div>
                 {/*  */}
@@ -134,7 +134,7 @@ function MediaDetail() {
                 </div>
                 {/*  */}
                 <div className='xl:max-w-screen-lg mb-30 h-180 w-full'>
-                    <img src={mediaDetail9} alt="" className='w-full h-full object-cover'/>
+                    <OptimizedImage src={mediaDetail9} alt="" className='w-full h-full object-cover'/>
                 </div>
                 {/*  */}
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] h-[1px] bg-txt-gray opacity-50 w-full mb-30'></div>
@@ -142,7 +142,7 @@ function MediaDetail() {
                 <div className='xl:max-w-screen-lg w-full flex gap-50'>
                     <div className='flex-basis basis-1/2 text-center'>
                         <p className='mb-5 font-subtitle uppercase text-[25px] font-semibold'>PREVIOUS</p>
-                        <img src={mediaDetail10} alt="" />
+                        <OptimizedImage src={mediaDetail10} alt="" />
                         <p className='my-5 text-[18px]'>PROPERTIES</p>
                         <p className='text-[25px] font-subtitle text-txt-secondary font-semibold'>
                             Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
@@ -151,7 +151,7 @@ function MediaDetail() {
                     </div>
                     <div className='flex-basis basis-1/2 text-center'>
                         <p className='mb-5 font-subtitle uppercase text-[25px] font-semibold'>PREVIOUS</p>
-                        <img src={mediaDetail10} alt="" />
+                        <OptimizedImage src={mediaDetail10} alt="" />
                         <p className='my-5 text-[18px]'>PROPERTIES</p>
                         <p className='text-[25px] font-subtitle text-txt-secondary font-semibold'>
                             Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
@@ -169,7 +169,7 @@ function MediaDetail() {
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10">
                             <div className='cursor-pointer'>
                                 <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <img src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                                 </div>
                                 <div className='mt-4 p-2'>
                                     <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
@@ -185,7 +185,7 @@ function MediaDetail() {
     
                             <div className='cursor-pointer'>
                                 <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <img src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                                 </div>
                                 <div className='mt-4 p-2'>
                                     <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
@@ -200,7 +200,7 @@ function MediaDetail() {
                             </div>
                             <div className='cursor-pointer'>
                                 <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <img src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                                 </div>
                                 <div className='mt-4 p-2'>
                                     <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
@@ -215,7 +215,7 @@ function MediaDetail() {
                             </div>
                             <div className='cursor-pointer'>
                                 <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <img src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
                                 </div>
                                 <div className='mt-4 p-2'>
                                     <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>

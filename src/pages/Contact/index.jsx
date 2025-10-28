@@ -3,6 +3,7 @@ import contact from '../../assets/images/contact.png'
 import { useTranslation } from 'react-i18next';
 import { Check } from 'lucide-react';
 import Footer from '../../layouts/components/Footer';
+import OptimizedImage from '../../components/OptimizedImage';
 const PRICE_RANGES = [
   "$0 - $200k",
   "$200k - $400k",
@@ -18,7 +19,7 @@ function Contact() {
     return ( 
         <div className="mt-20">
             <div className="h-[840px] relative">
-                <img src={contact} alt="" className="w-full h-full object-cover" />
+                <OptimizedImage src={contact} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40"></div> {/* ảnh tối 40% */}
                 <div className='absolute z-40 top-2/5 left-1/2  text-bg-primary text-[60px] font-subtitle transform translate-x-[-50%] xl:max-w-screen-xl w-full lg:max-w-[900px]'>
                     <div className='w-full'>

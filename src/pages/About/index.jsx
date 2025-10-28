@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { ArrowDown, ArrowRight, ArrowUp, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import Footer from '../../layouts/components/Footer'
+import OptimizedImage from '../../components/OptimizedImage'
 const SLIDE_ITEMS = [
     {id:1, src:aboutUs7, name:'Rogier van den Brand', position:'Project Manager' },
     {id:2, src:aboutUs8,  name:'Rogier van den Brand', position:'Project Manager'}, 
@@ -27,7 +28,7 @@ function About()
     return (
         <div className="mt-20">
             <div className='w-full h-[840px]'>
-                <img src={aboutUs} alt="" className='w-full h-full object-cover'/>
+                <OptimizedImage src={aboutUs} alt="" className='w-full h-full object-cover'/>
             </div>
             <div className='flex justify-center mt-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex gap-10'>
@@ -40,7 +41,7 @@ function About()
                         </p>  
                     </div>
                     <div className='flex-basis basis-1/2 h-[650px]'>
-                        <img src={aboutUs2} alt="" className='w-full h-full object-cover'/>
+                        <OptimizedImage src={aboutUs2} alt="" className='w-full h-full object-cover'/>
                     </div>
                 </div>
             </div>
@@ -58,14 +59,14 @@ function About()
                     <h4 className='text-[18px] w-150'>With our local team, we have the knowledge of local legislation, speak the local language and know what properties are currently on the market…or soon will be.</h4>
                 </div>
                 <div className='h-[600px] w-full'>
-                    <img src={aboutUs3} alt="" className='object-cover h-full w-full' />
+                    <OptimizedImage src={aboutUs3} alt="" className='object-cover h-full w-full' />
                 </div>
             </div>
             {/*  */}
             <div className='flex justify-center mt-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex gap-10'>
                     <div className='flex-basis basis-1/2'>
-                        <img src={aboutUs4} alt="" className='w-full h-[650px] object-cover'/>
+                        <OptimizedImage src={aboutUs4} alt="" className='w-full h-[650px] object-cover'/>
                     </div>
                     <div className='flex-basis basis-1/2'>
                         <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold mb-5'>One team. One set of standards.</h1>
@@ -87,7 +88,7 @@ function About()
             {/*  */}
             <div className='flex mt-20 bg-txt-secondary text-bg-primary'>
                 <div className='flex-basis basis-1/2 h-[500px]'>
-                    <img src={aboutUs5} alt="" className='w-full h-full object-cover'/>
+                    <OptimizedImage src={aboutUs5} alt="" className='w-full h-full object-cover'/>
                 </div>
                 <div className='flex-basis basis-1/2 px-12 mt-30'>
                     <h4 className='text-[25px] font-subtitle'>
@@ -95,7 +96,7 @@ function About()
                     </h4>
                     <div className='mt-2'>
                         <div className='w-10 h-10 rounded-full overflow-hidden '>
-                            <img src={aboutUs6} alt="" className='object-cover w-full h-full rounded-full'/>
+                            <OptimizedImage src={aboutUs6} alt="" className='object-cover w-full h-full rounded-full'/>
                         </div>
                         <p className='mt-2 text-[15px] font-subtitle'>Rogier van den Brand</p>
                         <p className='mt-2 text-[15px]'>Founder</p>
@@ -209,7 +210,7 @@ function About()
                         {
                             SLIDE_ITEMS.map(slideItem=>(
                                 <SwiperSlide key={slideItem.id} className=''>
-                                    <img
+                                    <OptimizedImage
                                         src={slideItem.src}
                                         className="w-full h-[420px] object-cover object-top"
                                     />

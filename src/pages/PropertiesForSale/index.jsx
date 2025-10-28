@@ -11,6 +11,7 @@ import sale6 from '../../assets/images/sale_6.png'
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import CustomSelect from "../../components/CustomSelect";
+import OptimizedImage from "../../components/OptimizedImage";
  const options = [
     { value: 'option1', label: 'Option 1' },
     { value: 'option2', label: 'Option 2' },
@@ -146,7 +147,7 @@ function PropertiesForSale() {
              {/* IMAGES */}
              <div >
                 <div className="relative h-[600px]">
-                    <img src={sale1} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
+                    <OptimizedImage src={sale1} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
                     <button className="absolute top-10 right-10 bg-txt-secondary text-white p-3">
                         <LocalizedLink to={'/properties-for-sale/1'}>
                             FOR SALE
@@ -155,7 +156,7 @@ function PropertiesForSale() {
                 </div>
                 {/* IMAGE 2 */}
                 <div className="relative h-[600px] mt-4">
-                    <img src={sale2} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
+                    <OptimizedImage src={sale2} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
                     <button className="absolute top-10 right-10 bg-txt-secondary text-white p-3">
                         <LocalizedLink to={'/properties-for-sale/2'}>
                             FOR SALE
@@ -163,7 +164,7 @@ function PropertiesForSale() {
                     </button>
                 </div>
                 <div className="relative h-[600px] mt-4">
-                    <img src={sale3} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
+                    <OptimizedImage src={sale3} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
                     <button className="absolute top-10 right-10 bg-txt-secondary text-white p-3">
                         <LocalizedLink to={'/properties-for-sale/1'}>
                             FOR SALE
@@ -171,13 +172,13 @@ function PropertiesForSale() {
                     </button>
                 </div>
                 <div className="relative h-[600px] mt-4">
-                    <img src={sale5} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
+                    <OptimizedImage src={sale5} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
                     <button className="absolute top-10 right-10 bg-txt-secondary text-white p-3">
                         FOR SALE
                     </button>
                 </div>
                 <div className="relative h-[600px] mt-4">
-                    <img src={sale6} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
+                    <OptimizedImage src={sale6} alt="" className="w-full h-full" style={{objectFit:'cover'}}/>
                     <button className="absolute top-10 right-10 bg-txt-secondary text-white p-3">
                         FOR SALE
                     </button>

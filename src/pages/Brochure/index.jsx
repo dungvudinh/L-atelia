@@ -4,6 +4,7 @@ import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
 import item1 from '../../assets/images/brochure-and-floorplans/item1.png'
 import Footer from "../../layouts/components/Footer";
+import OptimizedImage from "../../components/OptimizedImage";
 const FILTERS = [
     {id:0, title:'Brochure and FloorPlans', type:'PDF', banner:brochureAndFloorPlans, data:[{id:1, src:item1}, {id:2, src:item1}, {id:3, src:item1},, {id:4, src:item1}]},
     {id:1, title:'Current State Photos', type:'JPG', banner:currentStatePhotos,  uploadDate: 'August 25 2025', data:[{id:1, src:item1}, {id:2, src:item1}, {id:3, src:item1},, {id:4, src:item1}]},
@@ -44,7 +45,7 @@ function Brochure() {
                                         FILTERS.map(filterItem=>(
                                             <li key={filterItem.id} className="flex gap-5 mb-4 cursor-pointer" onClick={()=>handleSetFilterId(filterItem.id)}>
                                                 <div className="w-[150px]">
-                                                    <img src={filterItem.banner} alt="" className="w-full"/>
+                                                    <OptimizedImage src={filterItem.banner} alt="" className="w-full"/>
                                                 </div>
                                                 <div>
                                                     <p className="text-[18px] truncate font-semibold">{filterItem.title}</p>
@@ -69,7 +70,7 @@ function Brochure() {
                                 { FILTERS[filterId].data && 
                                     FILTERS[filterId].data.map(dataItem=>(
                                         <div key={dataItem.id} className="mb-4">
-                                            <img src={dataItem.src} alt="" />
+                                            <OptimizedImage src={dataItem.src} alt="" />
                                         </div>
                                     ))
                                 }

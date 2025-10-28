@@ -1,6 +1,7 @@
 import project1 from '../../assets/images/projects/project1.png'
 import Footer from '../../layouts/components/Footer';
 import { LocalizedLink } from '../../components/LocalizedLink';
+import OptimizedImage from '../../components/OptimizedImage';
 const IMAGES = [
     { id: 1, src: '../../assets/images/projects/project1.png', alt: "Project 1", title: "Modern Villa" },
     { id: 2, src: '../../assets/images/projects/project2.png', alt: "Project 2", title: "Luxury Apartment" },
@@ -26,7 +27,7 @@ function Projects() {
                             <div key={image.id} className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300
                             cursor-pointer">
                                 <LocalizedLink to={`/projects/${image.title}/view-brochure`}>
-                                    <img 
+                                    <OptimizedImage 
                                         src={project1} 
                                         alt={image.alt}
                                         className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"

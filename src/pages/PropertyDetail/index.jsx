@@ -7,13 +7,14 @@ import architecture1 from '../../assets/images/architecture1.png'
 import architecture2 from '../../assets/images/architecture2.png'
 import history from '../../assets/images/history.png'
 import Footer from "../../layouts/components/Footer";
+import OptimizedImage from "../../components/OptimizedImage";
 function PropertyDetail()
 {
     return (
         <div className="mt-20">
             {/* BANNER */}
             <div className="w-full h-[840px] relative">
-                <img 
+                <OptimizedImage 
                     src={propertyDetailBanner} 
                     alt="" 
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
@@ -48,7 +49,7 @@ function PropertyDetail()
                     </div>
                     {/* RIGHT */}
                     <div className="flex-basis basis-1/2">
-                        <img src={patikiTownhouse} alt="" />
+                        <OptimizedImage src={patikiTownhouse} alt="" />
                     </div>
                 </div>
 
@@ -102,15 +103,15 @@ function PropertyDetail()
                         </div>
                         {/* RIGHT */}
                         <div className="flex-basis basis-1/2 h-150">
-                            <img src={propertyFeatures} alt="" className="h-full w-full"/>
+                            <OptimizedImage src={propertyFeatures} alt="" className="h-full w-full"/>
                         </div>
                     </div>
                 </div>
             </div>
             {/*  */}
             <div className="relative">
-                <img src={architecture1} alt="" className="w-full h-300"/>
-                <img src={architecture2} alt="" className="w-full h-300"/>
+                <OptimizedImage src={architecture1} alt="" className="w-full h-300"/>
+                <OptimizedImage src={architecture2} alt="" className="w-full h-300"/>
                 <div className="absolute top-1/2 left-50 bg-white p-8 w-150 -translate-y-1/2">
                     <h4 className="text-[25px] font-subtitle text-txt-secondary">
                         SPECTACULAR ARCHITECTURE
@@ -121,7 +122,7 @@ function PropertyDetail()
             {/* HISTORY */}
             <div className="flex">
                 <div className="flex-basis basis-1/2">
-                    <img src={history} alt="" />
+                    <OptimizedImage src={history} alt="" />
                 </div>
                 <div className="p-20 flex-basis basis-1/2">
                     <h4 className="text-[25px] font-subtitle text-txt-secondary">THE HISTORY</h4>
@@ -136,8 +137,8 @@ function PropertyDetail()
             
             {/* HISTORY */}
             <div className="relative">
-                <img src={architecture1} alt="" className="w-full h-300"/>
-                <img src={architecture2} alt="" className="w-full h-300"/>
+                <OptimizedImage src={architecture1} alt="" className="w-full h-300"/>
+                <OptimizedImage src={architecture2} alt="" className="w-full h-300"/>
                 <div className="absolute top-1/2 right-50 bg-white p-8 w-150 -translate-y-1/2">
                     <h4 className="text-[25px] font-subtitle text-txt-secondary">
                         IMMATECULATE DETAILS

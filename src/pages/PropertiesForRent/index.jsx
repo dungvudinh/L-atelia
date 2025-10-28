@@ -21,6 +21,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import OptimizedImage from "../../components/OptimizedImage";
 const theme = {
     popup: {
       footer: {
@@ -262,7 +263,7 @@ function PropertiesForRent() {
                         <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
                             <div className="cursor-pointer bg-bg-primary">
                                 <div className="h-[283px]">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
@@ -280,7 +281,7 @@ function PropertiesForRent() {
                             {/*  */}
                             <div className="cursor-pointer bg-bg-primary">
                                 <div className="h-[283px]">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
@@ -298,7 +299,7 @@ function PropertiesForRent() {
                             {/*  */}
                             <div className="cursor-pointer bg-bg-primary">
                                 <div className="h-[283px]">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
@@ -323,11 +324,11 @@ function PropertiesForRent() {
                             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
                                 <div className="flex gap-5">
                                     <div className="flex-basis basis-2/3">
-                                        <img src={PropertiesForRent1} alt="" className="w-full object-cover h-[586px]" />
+                                        <OptimizedImage src={PropertiesForRent1} alt="" className="w-full object-cover h-[586px]" />
                                     </div>
                                     <div className="flex-basis basis-1/3">
-                                        <img src={PropertiesForRent1} alt="" className="w-full h-[283px] mb-5 object-cover"/>
-                                        <img src={PropertiesForRent1} alt="" className="w-full h-[283px] object-cover"/>
+                                        <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-[283px] mb-5 object-cover"/>
+                                        <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-[283px] object-cover"/>
                                     </div>
                                 </div>
                                 <div className="mt-5 relative select-none">
@@ -343,31 +344,31 @@ function PropertiesForRent() {
                                         
                                     >
                                         <SwiperSlide  className=''>
-                                            <img
+                                            <OptimizedImage
                                                 src={PropertiesForRent1}
                                                 className="w-full h-[164px] object-cover"
                                             />
                                         </SwiperSlide>
                                         <SwiperSlide  className=''>
-                                            <img
+                                            <OptimizedImage
                                                 src={PropertiesForRent1}
                                                 className="w-full h-[164px] object-cover"
                                             />
                                         </SwiperSlide>
                                         <SwiperSlide  className=''>
-                                            <img
+                                            <OptimizedImage
                                                 src={PropertiesForRent1}
                                                 className="w-full h-[164px] object-cover"
                                             />
                                         </SwiperSlide>
                                         <SwiperSlide  className=''>
-                                            <img
+                                            <OptimizedImage
                                                 src={PropertiesForRent1}
                                                 className="w-full h-[164px] object-cover"
                                             />
                                         </SwiperSlide>
                                         <SwiperSlide  className=''>
-                                            <img
+                                            <OptimizedImage
                                                 src={PropertiesForRent1}
                                                 className="w-full h-[164px] object-cover"
                                             />
@@ -502,7 +503,7 @@ function PropertiesForRent() {
                                 <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
                             <div className="cursor-pointer bg-bg-primary">
                                 <div className="h-[283px]">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
@@ -520,7 +521,7 @@ function PropertiesForRent() {
                             {/*  */}
                             <div className="cursor-pointer bg-bg-primary">
                                 <div className="h-[283px]">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
@@ -538,7 +539,7 @@ function PropertiesForRent() {
                             {/*  */}
                             <div className="cursor-pointer bg-bg-primary">
                                 <div className="h-[283px]">
-                                    <img src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="p-4">
                                     <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
