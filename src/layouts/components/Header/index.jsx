@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector} from "react-redux";
 import logo from '../../../assets/images/logo.png';
 import {setLanguage} from '../../../redux/actions/languageActions';
-import {LocalizedLink, useLocalizedPath} from '../../../components/LocalizedLink';
+import {LocalizedLink} from '../../../components/LocalizedLink';
 const MENU_ITEMS = [
     {id:1, title:'projects', to:'/projects'},
     {id:2, title:'properties for sale', to:'/properties-for-sale'}, 
@@ -15,7 +15,6 @@ const MENU_ITEMS = [
 ]
 
 function Header() {
-    const getLocalizedLink = useLocalizedPath();
     const {t,i18n} = useTranslation('header');
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.language);
@@ -50,19 +49,19 @@ function Header() {
                 {/* RIGHT HEADER */}
                 <div className="flex">
                     {/* MENU ITEMS */}
-                    <ul className="text-txt-secondary flex mr-10!">
+                    <ul className="text-txt-secondary flex">
                         {
                             MENU_ITEMS.map(menuItem=>(
-                                <li key={menuItem.id} className={`cursor-pointer mr-4 relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 
-                                    ${currentItem === menuItem.id ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`} onClick={()=>setCurrentItem(menuItem.id)}>
-                                        <LocalizedLink to={menuItem.to}>
+                                <li key={menuItem.id} className={`cursor-pointer ${menuItem.id !== MENU_ITEMS.length ? ' mr-8' :''} relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 
+                                    ${currentItem === menuItem.id ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`} >
+                                        <LocalizedLink to={menuItem.to} onClick={()=>setCurrentItem(menuItem.id)} className="text-[18px]">
                                             {t(`${menuItem.title}`)}
                                         </LocalizedLink>
                                 </li>
                             ))
                         }
                     </ul>
-                    <div className="flex items-center space-x-4 text-txt-secondary font-medium">
+                    {/* <div className="flex items-center space-x-4 text-txt-secondary font-medium">
                         <button
                             onClick={() => handleChangeLanguage("en")}
                             className={`relative pb-1 ${
@@ -81,7 +80,7 @@ function Header() {
                         >
                             Vie
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

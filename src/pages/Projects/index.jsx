@@ -3,14 +3,14 @@ import Footer from '../../layouts/components/Footer';
 import { LocalizedLink } from '../../components/LocalizedLink';
 import OptimizedImage from '../../components/OptimizedImage';
 const IMAGES = [
-    { id: 1, src: '../../assets/images/projects/project1.png', alt: "Project 1", title: "Modern Villa" },
-    { id: 2, src: '../../assets/images/projects/project2.png', alt: "Project 2", title: "Luxury Apartment" },
-    { id: 3, src: '../../assets/images/projects/project3.png', alt: "Project 3", title: "Office Building" },
-    { id: 4, src: '../../assets/images/projects/project4.png', alt: "Project 4", title: "Restaurant Design" },
-    { id: 5, src: '../../assets/images/projects/project5.png', alt: "Project 5", title: "Hotel Resort" },
-    { id: 6, src: '../../assets/images/projects/project6.png', alt: "Project 6", title: "Beach House" },
-    { id: 7, src: '../../assets/images/projects/project7.png', alt: "Project 6", title: "Beach House" },
-    { id: 8, src: '../../assets/images/projects/project8.png', alt: "Project 6", title: "Beach House" },
+    { id: 1, src: '../../assets/images/projects/project1.png', alt: "Project 1", title: "Modern Villa", type:'for rent' },
+    { id: 2, src: '../../assets/images/projects/project2.png', alt: "Project 2", title: "Luxury Apartment", type:'for rent' },
+    { id: 3, src: '../../assets/images/projects/project3.png', alt: "Project 3", title: "Office Building", type:'for rent' },
+    { id: 4, src: '../../assets/images/projects/project4.png', alt: "Project 4", title: "Restaurant Design", type:'for rent' },
+    { id: 5, src: '../../assets/images/projects/project5.png', alt: "Project 5", title: "Hotel Resort", type:'for sale' },
+    { id: 6, src: '../../assets/images/projects/project6.png', alt: "Project 6", title: "Beach House", type:'for sale' },
+    { id: 7, src: '../../assets/images/projects/project7.png', alt: "Project 6", title: "Beach House",type:'for sale' },
+    { id: 8, src: '../../assets/images/projects/project8.png', alt: "Project 6", title: "Beach House", type:'for sale' },
 ];
 function Projects() {
     return ( 
@@ -32,7 +32,7 @@ function Projects() {
                                         alt={image.alt}
                                         className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
-                                    <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px]'>FOR RENT</button>
+                                    <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px] uppercase'>{image.type}</button>
                                 </LocalizedLink>
                             </div>
                         ))}

@@ -22,13 +22,10 @@ function PropertyDetail()
                 <div className="absolute left-1/2 -translate-x-1/2  top-[50%] text-bg-primary">
                     <h1 className="font-subtitle text-[60px]">FOR SALE</h1>
                     <button className="border  border-bg-primary px-4 py-2 w-full flex justify-between 
-                        text-[18px] uppercase group transition-all duration-300 cursor-pointer">
+                        text-[18px] uppercase transition-all duration-300 cursor-pointer hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary">
                         VIEW BROCHURE
                         <ArrowRight className="
-                                transform
-                                transition-transform
-                                duration-300
-                                group-hover:translate-x-2" />
+                                " />
                     </button>
                 </div>
             </div>
@@ -90,16 +87,7 @@ function PropertyDetail()
                             <p className="mt-10 text-txt-gray text-[26px]">
                                 The imposing building presides over an oasis like garden with a state-of-the-art swimming pool, private dining area, and plentiful sunbathing spaces. The vast roof terrace on the upper level adds a whole new dimension to this one-of-a kind urban home.
                             </p>
-                            <ul className="mt-4">
-                                <li className="flex text-[18px] font-bold">
-                                    <ChevronRight className="mr-2"/>
-                                    SALT WATER EXCHANGE SWIMMING POOL 
-                                </li>
-                                <li className="flex text-[18px] font-bold mt-4"> 
-                                    <ChevronRight className="mr-2"/>
-                                    RESTORED ORIGINAL WELL
-                                </li>
-                            </ul>
+                            
                         </div>
                         {/* RIGHT */}
                         <div className="flex-basis basis-1/2 h-150">

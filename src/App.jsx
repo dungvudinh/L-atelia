@@ -8,7 +8,7 @@ import { publicRoutes } from "./routes/index";
 // 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
 function LanguageRedirect() {
   const userLang = navigator.language.startsWith("vi") ? "vi" : "en";
-  return <Navigate to={`/${userLang}`} replace />;
+  return <Navigate to={`/vi`} replace />;
 }
 
 // 🧩 Đồng bộ i18n khi URL thay đổi (/:lng)

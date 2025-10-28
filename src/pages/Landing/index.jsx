@@ -62,28 +62,30 @@ function Landing() {
                         <p className="text-[30px] text-txt-primary">
                             {t('landing:hero.subtitle')}
                         </p>
-                        <button
-                            className="
-                                mt-8 flex items-center
-                                text-txt-primary font-medium
-                                border border-txt-primary
-                                px-6 py-3
-                                cursor-pointer
-                                uppercase
-                                group
-                                hover:bg-txt-secondary
-                                hover:text-bg-primary
-                            "
-                            >
-                            {t('landing:button.view_our_properties')}
-                            <ArrowRight
+                        <LocalizedLink to={'/projects'}>
+                            <button
                                 className="
-                                group-hover:text-bg-primary
-                                text-txt-primary
-                                ml-4
+                                    mt-8 flex items-center
+                                    text-txt-primary font-medium
+                                    border border-txt-primary
+                                    px-6 py-3
+                                    cursor-pointer
+                                    uppercase
+                                    group
+                                    hover:bg-txt-secondary
+                                    hover:text-bg-primary
                                 "
-                            />
-                        </button>
+                                >
+                                        {t('landing:button.view_our_properties')}
+                                        <ArrowRight
+                                            className="
+                                            group-hover:text-bg-primary
+                                            text-txt-primary
+                                            ml-4
+                                            "
+                                        />
+                            </button>
+                        </LocalizedLink>
 
                     </div>
                 </div>

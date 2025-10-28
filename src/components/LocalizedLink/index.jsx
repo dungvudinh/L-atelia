@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function LocalizedLink({ to, children, ...props }) {
+  console.log(to)
   const { i18n } = useTranslation();
   const { lng } = useParams();
   

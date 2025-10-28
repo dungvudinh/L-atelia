@@ -27,8 +27,8 @@ function Footer({withContact}) {
                             </p>
                         </div>
                         <div className="basis-full basis-1/3 flex flex-col">
-                            <input type="text" placeholder="Full name" className="bg-[#D9D9D9] p-3 outline-none mb-4"/>
-                            <input type="text" placeholder="Email" className="bg-[#D9D9D9] p-3 outline-none mb-4"/>
+                            <input type="text" placeholder="Full name" className="bg-[#D9D9D9] p-3 outline-none focus:outline-none focus:ring-0 focus:border-none border-0 mb-4"/>
+                            <input type="text" placeholder="Email" className="bg-[#D9D9D9] p-3 outline-none focus:outline-none focus:ring-0 focus:border-none border-0 mb-4"/>
                             <button className="font-subtitle text-[20px] bg-bg-secondary text-bg-primary py-2 cursor-pointer uppercase">
                                 {t('footer:button.title')}
                             </button>

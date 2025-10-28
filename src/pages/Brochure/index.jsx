@@ -17,7 +17,6 @@ function Brochure() {
         console.log('ID', id)
         setFilterId(id);
     }
-    console.log(FILTERS[filterId])
     return ( 
         <div className="">
             <div className="mt-20 flex justify-center mb-20">
@@ -29,7 +28,7 @@ function Brochure() {
                     <ul className="mt-20 text-[25px] flex font-subtitle font-semibold">
                         {
                             FILTERS.map(filterItem=>(
-                                <li className={`rounded-4xl text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer mr-4 select-none ${filterId === filterItem.id ? 'bg-txt-secondary text-white' :''} `} 
+                                <li className={`rounded-4xl text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer select-none ${filterId === filterItem.id ? 'bg-txt-secondary text-white' :''} `} 
                                 key={filterItem.id} onClick={()=>handleSetFilterId(filterItem.id)}>
                                     {filterItem.title}
                                 </li>
@@ -38,44 +37,43 @@ function Brochure() {
                     </ul>
                     {/* MAIN */}
                     <div className="mt-10 flex gap-10">
-                            {/* SUMMARY */}
-                            <div className="flex-basis basis-1/3">
-                                <ul>
-                                    {
-                                        FILTERS.map(filterItem=>(
-                                            <li key={filterItem.id} className="flex gap-5 mb-4 cursor-pointer" onClick={()=>handleSetFilterId(filterItem.id)}>
-                                                <div className="w-[150px]">
-                                                    <OptimizedImage src={filterItem.banner} alt="" className="w-full"/>
-                                                </div>
-                                                <div>
-                                                    <p className="text-[18px] truncate font-semibold">{filterItem.title}</p>
-                                                    <span className="text-[18px] text-txt-primary opacity-50">{filterItem.type}</span>
-                                                </div>
-                                            </li>
-                                        ))
-                                    }
-                                </ul>
-                            </div>
-                            {/* MAIN */}
-                            <div className="flex-basis basis-3/4">
-                            {
-                                FILTERS[filterId].uploadDate && 
-                                <div className="flex items-center mb-10 pl-2">
-                                    <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
-                                    <p className="w-150 text-center font-semibold">{FILTERS[filterId].uploadDate}</p>
-                                    <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
-                                </div>
-                            }
-                            <div className="overflow-y-auto scrollbar pl-8 h-500">
-                                { FILTERS[filterId].data && 
-                                    FILTERS[filterId].data.map(dataItem=>(
-                                        <div key={dataItem.id} className="mb-4">
-                                            <OptimizedImage src={dataItem.src} alt="" />
-                                        </div>
+                        <div className="basis-1/4 w-full overflow-hidden"> {/* Đã bỏ flex-basis */}
+                            <ul>
+                                {
+                                    FILTERS.map(filterItem=>(
+                                        <li key={filterItem.id} className="flex gap-5 mb-4 cursor-pointer" onClick={()=>handleSetFilterId(filterItem.id)}>
+                                            <div className="w-[150px]">
+                                                <OptimizedImage src={filterItem.banner} alt="" className="w-full"/>
+                                            </div>
+                                            <div className="flex-1 overflow-hidden">
+                                                <p className="text-[18px] truncate font-semibold">{filterItem.title}</p>
+                                                <span className="text-[18px] text-txt-primary opacity-50">{filterItem.type}</span>
+                                            </div>
+                                        </li>
                                     ))
                                 }
+                            </ul>
+                        </div>
+                        
+                        <div className="basis-4/5"> {/* Đã bỏ flex-basis */}
+                        {
+                            FILTERS[filterId].uploadDate && 
+                            <div className="flex items-center mb-10 pl-2">
+                                <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
+                                <p className="w-150 text-center font-semibold">{FILTERS[filterId].uploadDate}</p>
+                                <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
                             </div>
-                            </div>
+                        }
+                        <div className="overflow-y-auto scrollbar pl-8 h-500">
+                            { FILTERS[filterId].data && 
+                                FILTERS[filterId].data.map(dataItem=>(
+                                    <div key={dataItem.id} className="mb-4">
+                                        <OptimizedImage src={dataItem.src} alt="" />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
