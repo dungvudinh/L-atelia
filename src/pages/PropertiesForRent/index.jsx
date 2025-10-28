@@ -55,7 +55,7 @@ function PropertiesForRent() {
     const [showSortingOptions, setShowSortingOptions] = useState(false);
     const [showPropertiesOptions, setShowPropertiesOptions] = useState(false);
     const [consent, setConsent] = useState(true);
-        const {t} = useTranslation('footer');
+    const {t} = useTranslation('footer');
     const params = useParams();
     console.log(params)
     return ( 

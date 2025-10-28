@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useParams, useLocation } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -40,6 +40,7 @@ function LocalizedRoutes() {
   const { lng } = useParams();
 
   return (
+    
     <Routes>
       {publicRoutes.map((route, index) => {
         const Page = route.component;
