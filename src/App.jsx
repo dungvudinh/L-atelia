@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, Navigate, useParams } from "react-router-dom";
+import { Routes, Route, Navigate, useParams, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
@@ -26,14 +26,15 @@ function LanguageSync({ children }) {
 
   // Nếu Redux thay đổi → cập nhật và lưu localStorage
   useEffect(() => {
-    if (language && i18n.language !== language) {
-      i18n.changeLanguage(language);
-      localStorage.setItem("language", language);
-    }
-  }, [language, i18n]);
+      if (language && i18n.language !== language) {
+        i18n.changeLanguage(language);
+        localStorage.setItem("language", language);
+      }
+    }, [language, i18n]);
 
-  return children;
-}
+    return children;
+  }
+
 
 // 🧩 Component để xử lý routing với ngôn ngữ
 function LocalizedRoutes() {
@@ -77,6 +78,11 @@ function LocalizedRoutes() {
 
 // 🧩 App chính
 export default function App() {
+  const location= useLocation();
+  useEffect(()=>
+  {
+    window.scrollTo(0,0);
+  }, [location.pathname])
   return (
     <Routes>
       {/* Nếu người dùng vào "/" → tự chuyển hướng */}
