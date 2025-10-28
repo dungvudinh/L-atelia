@@ -33,7 +33,7 @@ export default defineConfig({
           vendor:['react', 'react-dom']
         }, 
         assetFileNames:(accessInfo)=>{
-          if (/png|jpe?g|svg|gif|webp/i.test(assetInfo.name)) {
+          if (/png|jpe?g|svg|gif|webp/i.test(accessInfo.name)) {
             return 'assets/images/[name]-[hash][extname]'
           }
           return 'assets/[name]-[hash][extname]'
