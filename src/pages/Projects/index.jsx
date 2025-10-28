@@ -16,7 +16,7 @@ function Projects() {
         <div>
             <div className="mt-20 flex justify-center mb-20">
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-10">
-                    <h1 className="text-[60px] font-subtitle text-txt-secondary">ALL PROJECTS</h1>
+                    <h1 className="text-[60px] font-subtitle text-txt-secondary font-semibold">ALL PROJECTS</h1>
                     <p className="mt-10 text-txt-gray text-[26px]">
                         The mission in reforming the historic mansion was to create a home with an uncompromised year round living experience, while ensuring the heritage not only lived on but enhanced its lavish style.
                     </p>

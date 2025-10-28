@@ -109,19 +109,19 @@ function Contact() {
                     <h1 className='text-[60px] font-subtitle font-semibold text-txt-secondary mb-10'>Contact Us</h1>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">First Name *</label>
-                        <input type="text" placeholder='First Name' className='w-full rounded-sm'/>
+                        <input type="text" placeholder='First Name' className='w-full rounded-sm mt-2 text-[18px]'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Last Name *</label>
-                        <input type="text" placeholder='Last Name' className='w-full rounded-sm'/>
+                        <input type="text" placeholder='Last Name' className='w-full rounded-sm mt-2 text-[18px]'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Email *</label>
-                        <input type="text" placeholder='Email Address' className='w-full rounded-sm'/>
+                        <input type="text" placeholder='Email Address' className='w-full rounded-sm mt-2 text-[18px]'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Phone</label>
-                        <input type="text" placeholder='Mobile phone number' className='w-full rounded-sm'/>
+                        <input type="text" placeholder='Mobile phone number' className='w-full rounded-sm mt-2 text-[18px]'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Select your Budget *</label>
@@ -144,7 +144,7 @@ function Contact() {
                     </div>
                     <div className='flex flex-col items-start'>
                         <label htmlFor="" className='mb-2'>Message *</label>
-                        <textarea name="" id="" placeholder='Write your message here ...' className='w-full rounded-sm'></textarea>
+                        <textarea name="" id="" placeholder='Write your message here ...' className='w-full rounded-sm text-[18px]'></textarea>
                     </div>
                     <div className="flex flex-row items-start mt-2 text-txt-primary mt-4">
                         <div className="border  mt-1 mr-2 cursor-pointer w-[34px] h-[17px]" onClick={()=>setConsent(!consent)}>
