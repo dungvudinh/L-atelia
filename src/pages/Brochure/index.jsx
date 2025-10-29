@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams,useSearchParams } from "react-router-dom";
 import brochureAndFloorPlans from '../../assets/images/brochure-and-floorplans.png'
 import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
@@ -6,16 +7,23 @@ import item1 from '../../assets/images/brochure-and-floorplans/item1.png'
 import Footer from "../../layouts/components/Footer";
 import OptimizedImage from "../../components/OptimizedImage";
 const FILTERS = [
-    {id:0, title:'Brochure and FloorPlans', type:'PDF', banner:brochureAndFloorPlans, data:[{id:1, src:item1}, {id:2, src:item1}, {id:3, src:item1},, {id:4, src:item1}]},
+    {id:0, title:'Brochure', type:'PDF', banner:brochureAndFloorPlans, data:[{id:1, src:item1}, {id:2, src:item1}, {id:3, src:item1},, {id:4, src:item1}]},
     {id:1, title:'Current State Photos', type:'JPG', banner:currentStatePhotos,  uploadDate: 'August 25 2025', data:[{id:1, src:item1}, {id:2, src:item1}, {id:3, src:item1},, {id:4, src:item1}]},
     {id:2, title:'Renders Showing Potential', type:'JPG', banner:rendersShowingPotential,uploadDate: 'August 25 2025' , data:[{id:1, src:item1}, {id:2, src:item1}, {id:3, src:item1},, {id:4, src:item1}]}
 ]
 function Brochure() {
     const [filterId,setFilterId] = useState(0);
-    const handleSetFilterId =(id)=>
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const filter = searchParams.get('filter');
+    useEffect(()=>
     {
-        console.log('ID', id)
-        setFilterId(id);
+        setFilterId(filter)
+    },[filter])
+    const handleSetFilterId =(filterItem)=>
+    {
+        setFilterId(filterItem.id);
+        navigate(`?filter=${filterItem.id}`);
     }
     return ( 
         <div className="">
@@ -28,8 +36,8 @@ function Brochure() {
                     <ul className="mt-20 text-[25px] flex font-subtitle font-semibold">
                         {
                             FILTERS.map(filterItem=>(
-                                <li className={`rounded-4xl text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer select-none ${filterId === filterItem.id ? 'bg-txt-secondary text-white' :''} `} 
-                                key={filterItem.id} onClick={()=>handleSetFilterId(filterItem.id)}>
+                                <li className={`w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer select-none ${filter == filterItem.id ? 'bg-txt-secondary text-white' :''} `} 
+                                key={filterItem.id} onClick={()=>handleSetFilterId(filterItem)}>
                                     {filterItem.title}
                                 </li>
                             ))
@@ -37,7 +45,7 @@ function Brochure() {
                     </ul>
                     {/* MAIN */}
                     <div className="mt-10 flex gap-10">
-                        <div className="basis-1/4 w-full overflow-hidden"> {/* Đã bỏ flex-basis */}
+                        {/* <div className="basis-1/4 w-full overflow-hidden">
                             <ul>
                                 {
                                     FILTERS.map(filterItem=>(
@@ -53,9 +61,9 @@ function Brochure() {
                                     ))
                                 }
                             </ul>
-                        </div>
+                        </div> */}
                         
-                        <div className="basis-4/5"> {/* Đã bỏ flex-basis */}
+                        <div> {/* Đã bỏ flex-basis */}
                         {
                             FILTERS[filterId].uploadDate && 
                             <div className="flex items-center mb-10 pl-2">
@@ -64,7 +72,7 @@ function Brochure() {
                                 <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
                             </div>
                         }
-                        <div className="overflow-y-auto scrollbar pl-8 h-500">
+                        <div className="">
                             { FILTERS[filterId].data && 
                                 FILTERS[filterId].data.map(dataItem=>(
                                     <div key={dataItem.id} className="mb-4">

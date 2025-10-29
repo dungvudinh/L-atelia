@@ -8,6 +8,9 @@ import architecture2 from '../../assets/images/architecture2.png'
 import history from '../../assets/images/history.png'
 import Footer from "../../layouts/components/Footer";
 import OptimizedImage from "../../components/OptimizedImage";
+import CustomAccordion from "../../components/Accordion";
+import { LocalizedLink } from "../../components/LocalizedLink";
+
 function PropertyDetail()
 {
     return (
@@ -87,6 +90,7 @@ function PropertyDetail()
                             <p className="mt-10 text-txt-gray text-[26px]">
                                 The imposing building presides over an oasis like garden with a state-of-the-art swimming pool, private dining area, and plentiful sunbathing spaces. The vast roof terrace on the upper level adds a whole new dimension to this one-of-a kind urban home.
                             </p>
+                            <CustomAccordion  />
                             
                         </div>
                         {/* RIGHT */}
@@ -113,12 +117,9 @@ function PropertyDetail()
                     <OptimizedImage src={history} alt="" />
                 </div>
                 <div className="p-20 flex-basis basis-1/2">
-                    <h4 className="text-[25px] font-subtitle text-txt-secondary">THE HISTORY</h4>
+                    <h4 className="text-[25px] font-subtitle text-txt-secondary font-semibold">THE HISTORY</h4>
                     <p className="mt-4 w-110 text-[26px] text-txt-gray">When scientists discovered the health benefits of vitamin C in the late 18th century Sóller’s citrus trade boomed and the town saw a massive influx of wealth.</p>
-                    <button className="flex items-center cursor-pointer mt-4 font-bold">
-                        <ChevronRight className="mr-4"/>
-                        READ MORE
-                    </button>
+                    <CustomAccordion data={[{title:'READ MORE', content:'It was during this time of opulence in 1896 that this townhouse was built. Parisian architects were hired and materials such as stained glass and wood were shipped in from all over the world.'}]} />
                 </div>
             </div>
             {/*  */}
@@ -142,16 +143,22 @@ function PropertyDetail()
                         <h1 className="text-[60px] font-subtitle text-txt-secondary">Tracking Your Project</h1>
                         <ul>
                             <li className="text-[25px] mt-15">
-                                <p className="font-subtitle font-semibold">Brochure and Floorplans</p>
-                                <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">READ MORE</button>
+                                <p className="font-subtitle font-semibold">Brochure</p>
+                                <LocalizedLink to="/projects/brochure/view-brochure?filter=0">
+                                    <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">READ MORE</button>
+                                </LocalizedLink>
                             </li>
                             <li className="text-[25px] mt-15">
                                 <p className="font-subtitle font-semibold"> Current State Photos</p>
-                                <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">READ MORE</button>
+                                <LocalizedLink to="/projects/current-state-photos/view-brochure?filter=1">
+                                    <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">READ MORE</button>
+                                </LocalizedLink>
                             </li>
                             <li className="text-[25px] mt-15">
                                 <p className="font-subtitle font-semibold">Renders Showing Potential</p>
-                                <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">READ MORE</button>
+                                <LocalizedLink to="/projects/renders-showing-potential/view-brochure?filter=2">
+                                    <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">READ MORE</button>
+                                </LocalizedLink>
                             </li>
                         </ul>
                     </div>

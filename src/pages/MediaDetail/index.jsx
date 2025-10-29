@@ -12,6 +12,13 @@ import mediaDetail10 from '../../assets/images/media-detail-10.png'
 import mediaDetail11 from '../../assets/images/media-detail-11.png'
 import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
+import { LocalizedLink } from '../../components/LocalizedLink';
+
+const MEDIA_ITEMS = [
+    {id:1, type: 'Lifestyle', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail11},
+    {id:2, type: 'Properties', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail11},
+    {id:3, type: 'Product', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail11},
+]
 function MediaDetail() {
     return ( 
         <div className="mt-20">
@@ -140,9 +147,9 @@ function MediaDetail() {
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] h-[1px] bg-txt-gray opacity-50 w-full mb-30'></div>
                 {/*  */}
                 <div className='xl:max-w-screen-lg w-full flex gap-50'>
-                    <div className='flex-basis basis-1/2 text-center'>
+                    <div className='flex-basis basis-1/2 text-center group  transition-all duration-300 overflow-hidden'>
                         <p className='mb-5 font-subtitle uppercase text-[25px] font-semibold'>PREVIOUS</p>
-                        <OptimizedImage src={mediaDetail10} alt="" />
+                        <OptimizedImage src={mediaDetail10} alt=""  className={'transition-transform duration-300 group-hover:scale-105'}/>
                         <p className='my-5 text-[18px]'>PROPERTIES</p>
                         <p className='text-[25px] font-subtitle text-txt-secondary font-semibold'>
                             Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
@@ -150,7 +157,7 @@ function MediaDetail() {
                         <button className='mt-15 rounded-full p-2 duration-200 ease-in hover:bg-stone-200 cursor-pointer'><ArrowLeft size={30} className='text-txt-gray'/></button>
                     </div>
                     <div className='flex-basis basis-1/2 text-center'>
-                        <p className='mb-5 font-subtitle uppercase text-[25px] font-semibold'>PREVIOUS</p>
+                        <p className='mb-5 font-subtitle uppercase text-[25px] font-semibold'>NEXT</p>
                         <OptimizedImage src={mediaDetail10} alt="" />
                         <p className='my-5 text-[18px]'>PROPERTIES</p>
                         <p className='text-[25px] font-subtitle text-txt-secondary font-semibold'>
@@ -167,68 +174,42 @@ function MediaDetail() {
                         Related Stories
                     </h4>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10">
-                            <div className='cursor-pointer'>
-                                <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
+                        {
+                            MEDIA_ITEMS.map((item) => (
+                                <div key={item.id} className='cursor-pointer'>
+                                    <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
+                                        <OptimizedImage 
+                                            src={item.image} 
+                                            alt="" 
+                                            className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                                        />
+                                    </div>
+                                    <div className='mt-4 p-2'>
+                                        <h4 className='text-[18px] text-txt-gray mb-4'>{item.type.toUpperCase()}</h4>
+                                        
+                                        {/* Title - 1 dòng */}
+                                        <h4 className='text-[25px] font-subtitle text-txt-secondary font-semibold mb-4 
+                                        line-clamp-1 overflow-hidden text-ellipsis'>
+                                            {item.title}
+                                        </h4>
+                                        
+                                        {/* Description - 2 dòng */}
+                                        <p className='text-[18px] mb-4 
+                                        line-clamp-2 overflow-hidden text-ellipsis'>
+                                            {item.description}
+                                        </p>
+                                        
+                                        <LocalizedLink to={`/media/${item.id}`}>
+                                            <button className='border border-txt-gray p-2 cursor-pointer text-[18px] 
+                                            hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary 
+                                            transition-colors duration-300'>
+                                                READ MORE
+                                            </button>
+                                        </LocalizedLink>
+                                    </div>
                                 </div>
-                                <div className='mt-4 p-2'>
-                                    <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
-                                    <h4 className='text-[25px] font-subtitle text-txt-secondary font-semibold mb-4'>
-                                        Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
-                                    </h4>
-                                    <p className='text-[18px] mb-4'>
-                                        Dubbed Mon Cor, the newly renovated home dates to 1903
-                                    </p>
-                                    <button className='border border-txt-gray p-2 cursor-pointer text-[18px]'>READ MORE</button>
-                                </div>
-                            </div>
-    
-                            <div className='cursor-pointer'>
-                                <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
-                                </div>
-                                <div className='mt-4 p-2'>
-                                    <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
-                                    <h4 className='text-[25px] font-subtitle text-txt-secondary font-semibold mb-4'>
-                                        Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
-                                    </h4>
-                                    <p className='text-[18px] mb-4'>
-                                        Dubbed Mon Cor, the newly renovated home dates to 1903
-                                    </p>
-                                    <button className='border border-txt-gray p-2 cursor-pointer text-[18px]'>READ MORE</button>
-                                </div>
-                            </div>
-                            <div className='cursor-pointer'>
-                                <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
-                                </div>
-                                <div className='mt-4 p-2'>
-                                    <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
-                                    <h4 className='text-[25px] font-subtitle text-txt-secondary font-semibold mb-4'>
-                                        Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
-                                    </h4>
-                                    <p className='text-[18px] mb-4'>
-                                        Dubbed Mon Cor, the newly renovated home dates to 1903
-                                    </p>
-                                    <button className='border border-txt-gray p-2 cursor-pointer text-[18px]'>READ MORE</button>
-                                </div>
-                            </div>
-                            <div className='cursor-pointer'>
-                                <div className='h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                                    <OptimizedImage src={mediaDetail11} alt="" className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'/>
-                                </div>
-                                <div className='mt-4 p-2'>
-                                    <h4 className='text-[18px] text-txt-gray mb-4'>PRODUCT</h4>
-                                    <h4 className='text-[25px] font-subtitle text-txt-secondary font-semibold mb-4'>
-                                        Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca
-                                    </h4>
-                                    <p className='text-[18px] mb-4'>
-                                        Dubbed Mon Cor, the newly renovated home dates to 1903
-                                    </p>
-                                    <button className='border border-txt-gray p-2 cursor-pointer text-[18px]'>READ MORE</button>
-                                </div>
-                            </div>
-    
+                            ))
+                        }
                     </div>
                 </div>
                 {/*  */}
@@ -237,5 +218,4 @@ function MediaDetail() {
         </div>
      );
 }
-
 export default MediaDetail;

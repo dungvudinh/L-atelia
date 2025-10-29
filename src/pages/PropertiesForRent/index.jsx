@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../layouts/components/Footer";
 import { Datepicker } from 'flowbite-react';
@@ -22,6 +22,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import OptimizedImage from "../../components/OptimizedImage";
+
 const theme = {
     popup: {
       footer: {
@@ -58,7 +59,57 @@ function PropertiesForRent() {
     const [consent, setConsent] = useState(true);
     const {t} = useTranslation('footer');
     const params = useParams();
-    console.log(params)
+    const locationRef = useRef(null);
+    const sortingRef = useRef(null);
+    const propertiesRef = useRef(null);
+    // Hook xử lý click outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Kiểm tra click outside location dropdown
+            if (locationRef.current && !locationRef.current.contains(event.target)) {
+                setShowSelectLocation(false);
+            }
+            
+            // Kiểm tra click outside sorting dropdown
+            if (sortingRef.current && !sortingRef.current.contains(event.target)) {
+                setShowSortingOptions(false);
+            }
+            
+            // Kiểm tra click outside properties dropdown
+            if (propertiesRef.current && !propertiesRef.current.contains(event.target)) {
+                setShowPropertiesOptions(false);
+            }
+        };
+
+        // Thêm event listener khi component mount
+        document.addEventListener('mousedown', handleClickOutside);
+        
+        // Cleanup event listener khi component unmount
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    // Hàm xử lý khi click vào location item
+    const handleLocationSelect = (locationItem) => {
+        console.log('Selected location:', locationItem);
+        setShowSelectLocation(false);
+        // Thêm logic xử lý khi chọn location ở đây
+    };
+
+    // Hàm xử lý khi click vào properties item
+    const handlePropertiesSelect = (propertiesItem) => {
+        console.log('Selected property:', propertiesItem);
+        setShowPropertiesOptions(false);
+        // Thêm logic xử lý khi chọn property ở đây
+    };
+
+    // Hàm xử lý khi click vào sorting item
+    const handleSortingSelect = (sortingItem) => {
+        console.log('Selected sorting:', sortingItem);
+        setShowSortingOptions(false);
+        // Thêm logic xử lý khi chọn sorting ở đây
+    };
     return ( 
         <div className="mt-20">
             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
@@ -93,7 +144,7 @@ function PropertiesForRent() {
                         <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
                             <div className="flex items-center">
                                 <CalendarClock className='mr-2'/>
-                                Check in
+                                Check out
                             </div>
                             <ArrowDown />
                         </div>
@@ -171,7 +222,7 @@ function PropertiesForRent() {
                             More Filter
                         </button>
                         {/* LOCATION */}
-                        <div className="relative mr-5 flex-1">
+                        <div className="relative mr-5 flex-1" ref={locationRef}>
                             <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSelectLocation(!showSelectLocation)}>
                                 <div className="flex items-center mr-8">
                                     <AddLocation className='mr-2'/>
@@ -183,7 +234,8 @@ function PropertiesForRent() {
                                 <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
                                     <ul className="w-full">
                                         {LOCATION_ITEMS.map(locationItem=>(
-                                            <li className="flex justify-between border-b border-b-txt-primary py-2  cursor-pointer" key={locationItem.id}>
+                                            <li className="flex justify-between border-b border-b-txt-primary py-2  cursor-pointer" key={locationItem.id}
+                                             onClick={() => handleLocationSelect(locationItem)}>
                                                 <div className="flex items-start">
                                                     <Distance  className="mr-4"/>
                                                     <div>
@@ -199,7 +251,7 @@ function PropertiesForRent() {
                             )}
                         </div>
                         {/* PROPERTIES */}
-                        <div className="relative mr-5">
+                        <div className="relative mr-5" ref={propertiesRef}>
                             <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowPropertiesOptions(!showPropertiesOptions)}>
                                 <div className="flex items-center mr-8">
                                     <PageInfo className='mr-2'/>
@@ -211,7 +263,8 @@ function PropertiesForRent() {
                                 <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
                                     <ul className="w-full">
                                         {PROPERTIES_ITEMS.map(propertiesItem=>(
-                                            <li className="flex justify-between border-b border-b-txt-primary py-2  cursor-pointer" key={propertiesItem.id}>
+                                            <li className="flex justify-between border-b border-b-txt-primary py-2  cursor-pointer" key={propertiesItem.id}
+                                             onClick={() => handlePropertiesSelect(propertiesItem)}>
                                                 <div className="flex items-start">
                                                     {propertiesItem.icon}
                                                     <div>
@@ -228,7 +281,7 @@ function PropertiesForRent() {
                         </div>
                     </div>
                     {/* SORTING */}
-                    <div className="relative ml-5">
+                    <div className="relative ml-5" ref={sortingRef} >
                         <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSortingOptions(!showSortingOptions)}>
                             <div className="flex items-center mr-12">
                                 <FilterList className='mr-2'/>
@@ -240,7 +293,8 @@ function PropertiesForRent() {
                             <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
                                 <ul className="w-full">
                                     {SORTING_ITEMS.map(sortingItem=>(
-                                        <li className="flex justify-between border-b border-b-txt-primary py-2 cursor-pointer" key={sortingItem.id}>
+                                        <li className="flex justify-between border-b border-b-txt-primary py-2 cursor-pointer" key={sortingItem.id}
+                                         onClick={() => handleSortingSelect(sortingItem)}>
                                             <div className="flex items-start">
                                                 {sortingItem.icon}
                                                 <div>
