@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import contact from '../../assets/images/contact.png'
+import contact from '../../assets/images/contact.webp'
 import { useTranslation } from 'react-i18next';
 import { Check, Dot } from 'lucide-react';
 import Footer from '../../layouts/components/Footer';
