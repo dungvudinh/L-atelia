@@ -8,7 +8,7 @@ const routes = {
     media:'media', 
     mediaDetail:'media/:mediaId', 
     about:'about',
-    brochure:'projects/:projectId/view-brochure',
+    brochure:'view-brochure/:brochureId',
     contact:'/contact'
   };
   

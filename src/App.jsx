@@ -8,7 +8,7 @@ import { publicRoutes } from "./routes/index";
 // 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
 function LanguageRedirect() {
   const userLang = navigator.language.startsWith("vi") ? "vi" : "en";
-  return <Navigate to={`/vi`} replace />;
+  return <Navigate to={`/en`} replace />;
 }
 
 // 🧩 Đồng bộ i18n khi URL thay đổi (/:lng)
@@ -78,11 +78,11 @@ function LocalizedRoutes() {
 
 // 🧩 App chính
 export default function App() {
-  const location= useLocation();
-  useEffect(()=>
-  {
-    window.scrollTo(0,0);
-  }, [location.pathname])
+  // const location= useLocation();
+  // useEffect(()=>
+  // {
+  //   window.scrollTo(0,0);
+  // }, [location.pathname])
   return (
     <Routes>
       {/* Nếu người dùng vào "/" → tự chuyển hướng */}

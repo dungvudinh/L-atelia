@@ -24,12 +24,13 @@ function PropertyDetail()
                 />
                 <div className="absolute left-1/2 -translate-x-1/2  top-[50%] text-bg-primary">
                     <h1 className="font-subtitle text-[60px]">FOR SALE</h1>
-                    <button className="border  border-bg-primary px-4 py-2 w-full flex justify-between 
-                        text-[18px] uppercase transition-all duration-300 cursor-pointer hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary">
-                        VIEW BROCHURE
-                        <ArrowRight className="
-                                " />
-                    </button>
+                    <LocalizedLink to={`/view-brochure/1?filter=0`}>
+                        <button className="border  border-bg-primary px-4 py-2 w-full flex justify-between 
+                            text-[18px] uppercase transition-all duration-300 cursor-pointer hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary">
+                            VIEW BROCHURE
+                            <ArrowRight  />
+                        </button>
+                    </LocalizedLink>
                 </div>
             </div>
             {/* PatikiTownhouse */}

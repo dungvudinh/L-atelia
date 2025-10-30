@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import contact from '../../assets/images/contact.png'
 import { useTranslation } from 'react-i18next';
-import { Check } from 'lucide-react';
+import { Check, Dot } from 'lucide-react';
 import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
+
 const PRICE_RANGES = [
   "$0 - $200k",
   "$200k - $400k",
@@ -16,6 +17,13 @@ const PRICE_RANGES = [
 function Contact() {
     const [consent, setConsent] = useState(true);
     const {t} = useTranslation('footer');
+    const [selectedPriceRange, setSelectedPriceRange] = useState(null);
+
+    const handlePriceRangeSelect = (range, index) => {
+        // Nếu click vào item đang được chọn thì unselect, ngược lại select item mới
+        setSelectedPriceRange(prev => prev === range ? null : range);
+    };
+
     return ( 
         <div className="mt-20">
             <div className="h-[840px] relative">
@@ -31,7 +39,7 @@ function Contact() {
             {/*  */}
             <div className='flex justify-center absolute xl:max-w-screen-xl lg:max-w-[900px] w-full left-1/2 transform translate-x-[-50%]  z-50 top-170'>
                 <div className='w-full flex gap-5'>
-                    {/*  */}
+                    {/* Các phần office info giữ nguyên */}
                     <div className='flex-1 bg-txt-primary text-bg-primary px-8 py-4'>
                         <h1 className='text-[40px] font-subtitle'>Opening hours</h1>
                         <p className='mt-4 text-[15px]  font-light'>
@@ -56,7 +64,7 @@ function Contact() {
                         </p>
                         <p className='mt-2 text-[15px]'>Appointments only</p>
                     </div>
-                    <div className='flex-1 bg-txt-primary text-bg-primary px-8 py-4'>
+                    <div className='flex-1 bg-txt-primary text-bg-primary px-8 py-5'>
                         <h1 className='text-[40px] font-subtitle'>Ibiza office</h1>
                         <p className='mt-4 text-[15px]  font-light'>
                             Sales
@@ -110,45 +118,46 @@ function Contact() {
                     <h1 className='text-[60px] font-subtitle font-semibold text-txt-secondary mb-10'>Contact Us</h1>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">First Name *</label>
-                        <input type="text" placeholder='First Name' className='w-full rounded-sm mt-2 text-[18px]'/>
+                        <input type="text" placeholder='First Name' className='w-full rounded-sm mt-2 text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Last Name *</label>
-                        <input type="text" placeholder='Last Name' className='w-full rounded-sm mt-2 text-[18px]'/>
+                        <input type="text" placeholder='Last Name' className='w-full rounded-sm mt-2 text-[18px] w-full rounded-sm mt-2 text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Email *</label>
-                        <input type="text" placeholder='Email Address' className='w-full rounded-sm mt-2 text-[18px]'/>
+                        <input type="text" placeholder='Email Address' className='w-full rounded-sm mt-2 text-[18px] w-full rounded-sm mt-2 text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Phone</label>
-                        <input type="text" placeholder='Mobile phone number' className='w-full rounded-sm mt-2 text-[18px]'/>
+                        <input type="text" placeholder='Mobile phone number' className='w-full rounded-sm mt-2 text-[18px] w-full rounded-sm mt-2 text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray'/>
                     </div>
                     <div className='flex flex-col items-start mb-10'>
                         <label htmlFor="">Select your Budget *</label>
-                        <ul className='flex flex-col mt-4 text-[18px]'>
+                        <ul className='flex flex-col mt-4 text-[18px] w-full'>
                             {PRICE_RANGES.map((range, index) => (
-                                <li className='flex items-center mb-2'>
-                                    <div className="w-[15px] h-[15px] border rounded-full border-txt-primary relative mr-2 cursor-pointer">
-                                        <div className="w-[6px] h-[6px] bg-txt-primary rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+                                <li 
+                                    key={index} 
+                                    className='flex items-center mb-2 cursor-pointer  p-2 rounded transition-colors'
+                                    onClick={() => handlePriceRangeSelect(range, index)}
+                                >
+                                    <div className={`w-[20px] h-[20px] border-2 rounded-full border-txt-primary relative mr-2 flex items-center justify-center `}>
+                                        {/* KHÔNG hiển thị dot nào cả - đã xóa điều kiện hiển thị dot */}
+                                        <Dot className={`absolute text-txt-primary ${selectedPriceRange === range ? '' : 'hidden'}`}  size={40}/>
                                     </div>
-                                    <p>
-                                        {/* <span>$0</span>
-                                        <span> - </span>
-                                        <span>$200k</span> */}
+                                    <p className={'text-[18px]'}>
                                         {range}
                                     </p>
                                 </li>
                             ))}
-
                         </ul>
                     </div>
                     <div className='flex flex-col items-start'>
                         <label htmlFor="" className='mb-2'>Message *</label>
-                        <textarea name="" id="" placeholder='Write your message here ...' className='w-full rounded-sm text-[18px]'></textarea>
+                        <textarea name="" id="" placeholder='Write your message here ...' className='w-full rounded-sm text-[18px] w-full rounded-sm mt-2 text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray'></textarea>
                     </div>
                     <div className="flex flex-row items-start mt-2 text-txt-primary mt-4">
-                        <div className="border  mt-1 mr-2 cursor-pointer w-[34px] h-[17px]" onClick={()=>setConsent(!consent)}>
+                        <div className="border mt-1 mr-2 cursor-pointer w-[34px] h-[17px]" onClick={()=>setConsent(!consent)}>
                             {consent && (
                                 <Check width={15} className="h-[17px]"/>
                             )}
@@ -157,12 +166,12 @@ function Contact() {
                             {t('footer:policy')}
                         </p>
                     </div>
-                    <button className='mt-4 w-full rounded-sm bg-txt-secondary uppercase text-[18px] text-bg-primary py-4'>submit message</button>
+                    <button className='mt-4 w-full rounded-sm bg-txt-secondary uppercase text-[18px] text-bg-primary py-4 cursor-pointer'>submit message</button>
                 </div>
             </div>
             <Footer withContact={false}/>
         </div>
-     );
+    );
 }
 
 export default Contact;

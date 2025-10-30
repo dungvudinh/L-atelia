@@ -67,7 +67,7 @@ function Projects() {
                             <h4 className='text-white text-[18px] font-light mb-6 leading-relaxed'>
                                 Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros
                             </h4>
-                            <LocalizedLink to={`/projects/${titleSlug}/view-brochure?filter=0`}>
+                            <LocalizedLink to={`/view-brochure/${titleSlug}?filter=0`}>
                                 <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
                                 hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
                                     view more

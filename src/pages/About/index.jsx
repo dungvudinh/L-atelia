@@ -16,6 +16,7 @@ import "swiper/css/navigation";
 import { ArrowDown, ArrowRight, ArrowUp, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import Footer from '../../layouts/components/Footer'
 import OptimizedImage from '../../components/OptimizedImage'
+import {LocalizedLink} from '../../components/LocalizedLink';
 const SLIDE_ITEMS = [
     {id:1, src:aboutUs7, name:'Rogier van den Brand', position:'Project Manager' },
     {id:2, src:aboutUs8,  name:'Rogier van den Brand', position:'Project Manager'}, 
@@ -55,7 +56,9 @@ function About()
                     </div>
                 </div>
                 <div className='ml-25 mt-30'>
-                    <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold w-80 mb-10'>Understand the market</h1>
+                    <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold w-80 mb-10 leading-tight'>
+                        Understand the market
+                    </h1>
                     <h4 className='text-[18px] w-150'>With our local team, we have the knowledge of local legislation, speak the local language and know what properties are currently on the market…or soon will be.</h4>
                 </div>
                 <div className='h-[600px] w-full'>
@@ -75,13 +78,15 @@ function About()
                             Our designers work closely with a team of local craftspeople to reach a standard that measures up to our vision. For the duration of a project, we’re on the ground every day signing off on decisions, no matter how small. It’s this hand-on commitment that gives our clients peace of mind when they’re the other side of the world.
                             The majority of our projects begin with no buyer in mind. We assume all the risk, giving us complete freedom to turn uncut gems into uncompromised masterpieces.The properties we sell are far more than a transaction to us –they’re homes we’ve put everything into creating.
                         </p>  
-                        <button className='mt-10 flex border border-txt-primary px-3 py-1 cursor-pointer group
-                                transition-all duration-300 uppercase text-[18px]'>
-                            CONTACT US <ArrowRight className='ml-4 transform
-                                transition-transform
-                                duration-300
-                                group-hover:translate-x-2'/>
-                        </button>
+                        <LocalizedLink to='/contact'>
+                            <button className='mt-10 flex border border-txt-primary px-3 py-1 cursor-pointer group
+                                    transition-all duration-300 uppercase text-[18px]'>
+                                CONTACT US <ArrowRight className='ml-4 transform
+                                    transition-transform
+                                    duration-300
+                                    group-hover:translate-x-2'/>
+                            </button>
+                        </LocalizedLink>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import { useEffect,useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 import Footer from "../../layouts/components/Footer";
 import { Datepicker } from 'flowbite-react';
 import { CalendarClock, ArrowDown,GroupSearch, Group,Face,Bed, Sort,AddLocation, Distance, 
@@ -49,6 +49,123 @@ const PROPERTIES_ITEMS = [
     {id:3, name:'Villa', icon:<Villa className={'mr-2'}/>},
     {id:3, name:'Apartment', icon:<SourceEnvironment className={'mr-2'}/>},
 ]
+// Tạo file data/propertiesData.js hoặc thêm trực tiếp vào component
+const PROPERTIES_DATA = [
+  {
+    id: 1,
+    name: "Villa Shirla",
+    location: "Spain, Ibiza, San Rafael",
+    price: 500,
+    priceUnit: "per night",
+    bedrooms: 1,
+    bathrooms: 1,
+    image: PropertiesForRent1, // import your image
+    type: "Villa",
+    rating: 4.8,
+    amenities: ["Wifi", "Pool", "Air Conditioning", "Beach Access"],
+    description: "Can Banco is a breathtaking gated villa located near Jesús, just five minutes from Ibiza Town and Marina Ibiza. Offering a perfect blend of privacy, comfort, and elegance...",
+    features: [
+      {
+        icon: <OutdoorGrill />,
+        title: "Outdoor entertainment",
+        description: "The alfresco dining and outdoor seating area great for summer trips."
+      },
+      {
+        icon: <Bed />,
+        title: "Room in a rental unit",
+        description: "Your own room in a home, plus access to shared spaces."
+      },
+      {
+        icon: <AddGroupOff />,
+        title: "Free cancellation for 24 hours",
+        description: "Get a full refund if you change your mind."
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "Villa Marina",
+    location: "Spain, Barcelona, Beachfront",
+    price: 650,
+    priceUnit: "per night",
+    bedrooms: 2,
+    bathrooms: 2,
+    image: PropertiesForRent1,
+    type: "Villa",
+    rating: 4.9,
+    amenities: ["Wifi", "Pool", "Ocean View", "Parking"],
+    description: "Luxury beachfront villa with stunning ocean views...",
+    features: [
+      {
+        icon: <BeachAccess />,
+        title: "Beachfront",
+        description: "Direct access to private beach area."
+      },
+      {
+        icon: <Balcony />,
+        title: "Private Balcony",
+        description: "Enjoy beautiful sunsets from your private balcony."
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Mountain Retreat",
+    location: "Switzerland, Alps, Zermatt",
+    price: 450,
+    priceUnit: "per night",
+    bedrooms: 3,
+    bathrooms: 2,
+    image: PropertiesForRent1,
+    type: "Cabin",
+    rating: 4.7,
+    amenities: ["Fireplace", "Mountain View", "Ski-in/Ski-out", "Hot Tub"],
+    description: "Cozy mountain cabin with breathtaking alpine views...",
+    features: [
+      {
+        icon: <Exercise />,
+        title: "Fitness Center",
+        description: "Full gym facilities available."
+      },
+      {
+        icon: <CarLock />,
+        title: "Secure Parking",
+        description: "Indoor parking with security system."
+      }
+    ]
+  }
+];
+
+// Hoặc nếu bạn muốn đơn giản hơn:
+const SIMPLE_PROPERTIES_DATA = [
+  {
+    id: 1,
+    name: "Villa Shirla",
+    location: "Spain, Ibiza, San Rafael",
+    price: 500,
+    bedrooms: 1,
+    bathrooms: 1,
+    image: PropertiesForRent1
+  },
+  {
+    id: 2,
+    name: "Villa Marina", 
+    location: "Spain, Barcelona, Beachfront",
+    price: 650,
+    bedrooms: 2,
+    bathrooms: 2,
+    image: PropertiesForRent1
+  },
+  {
+    id: 3,
+    name: "Mountain Retreat",
+    location: "Switzerland, Alps, Zermatt", 
+    price: 450,
+    bedrooms: 3,
+    bathrooms: 2,
+    image: PropertiesForRent1
+  }
+];
 function PropertiesForRent() {
     const [showCheckInDate, setShowCheckInDate] = useState(false);
     const [showCheckOutDate, setShowCheckOutDate] = useState(false);
@@ -59,12 +176,33 @@ function PropertiesForRent() {
     const [consent, setConsent] = useState(true);
     const {t} = useTranslation('footer');
     const params = useParams();
+    const navigate = useNavigate();
+    // Refs for all dropdowns
     const locationRef = useRef(null);
     const sortingRef = useRef(null);
     const propertiesRef = useRef(null);
+    const checkInRef = useRef(null);
+    const checkOutRef = useRef(null);
+    const selectPersonRef = useRef(null);
+
     // Hook xử lý click outside
     useEffect(() => {
         const handleClickOutside = (event) => {
+            // Kiểm tra click outside checkin dropdown
+            if (checkInRef.current && !checkInRef.current.contains(event.target)) {
+                setShowCheckInDate(false);
+            }
+            
+            // Kiểm tra click outside checkout dropdown
+            if (checkOutRef.current && !checkOutRef.current.contains(event.target)) {
+                setShowCheckOutDate(false);
+            }
+            
+            // Kiểm tra click outside select person dropdown
+            if (selectPersonRef.current && !selectPersonRef.current.contains(event.target)) {
+                setShowSelectPerson(false);
+            }
+            
             // Kiểm tra click outside location dropdown
             if (locationRef.current && !locationRef.current.contains(event.target)) {
                 setShowSelectLocation(false);
@@ -110,13 +248,28 @@ function PropertiesForRent() {
         setShowSortingOptions(false);
         // Thêm logic xử lý khi chọn sorting ở đây
     };
+
+    // Hàm xử lý checkin date
+    const handleCheckInSelect = (date) => {
+        console.log('Selected checkin date:', date);
+        setShowCheckInDate(false);
+        // Thêm logic xử lý khi chọn checkin date ở đây
+    };
+
+    // Hàm xử lý checkout date
+    const handleCheckOutSelect = (date) => {
+        console.log('Selected checkout date:', date);
+        setShowCheckOutDate(false);
+        // Thêm logic xử lý khi chọn checkout date ở đây
+    };
+
     return ( 
         <div className="mt-20">
             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
                 {/* GROUP FILTER */}
                 <div className="pt-20 flex w-full mb-10">
                     {/* CHECK IN */}
-                    <div className="relative mr-5 flex-1">
+                    <div className="relative mr-5 flex-1" ref={checkInRef}>
                         <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowCheckInDate(!showCheckInDate)}>
                             <div className="flex items-center">
                                 <CalendarClock className='mr-2'/>
@@ -129,9 +282,7 @@ function PropertiesForRent() {
                             <Datepicker
                                 inline
                                 onSelectedDateChanged={(date) => {
-                                    console.log(date)
-                                    setSelectCheckInDate(date);
-                                    setShowCheckInDate(false);
+                                    handleCheckInSelect(date);
                                 }}
                                 theme={theme}
                                 className="w-full!"
@@ -140,7 +291,7 @@ function PropertiesForRent() {
                         )}
                     </div>
                     {/* CHECK OUT */}
-                    <div className="relative mr-5 flex-1">
+                    <div className="relative mr-5 flex-1" ref={checkOutRef}>
                         <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
                             <div className="flex items-center">
                                 <CalendarClock className='mr-2'/>
@@ -153,8 +304,7 @@ function PropertiesForRent() {
                             <Datepicker
                                 inline
                                 onSelectedDateChanged={(date) => {
-                                setSelectedDate(date);
-                                setShowDatepicker(false);
+                                    handleCheckOutSelect(date);
                                 }}
                                 theme={theme}
                             />
@@ -162,7 +312,7 @@ function PropertiesForRent() {
                         )}
                     </div>
                     {/* SELECT PERSON */}
-                    <div className="relative mr-5 flex-1">
+                    <div className="relative mr-5 flex-1" ref={selectPersonRef}>
                         <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSelectPerson(!showSelectPerson)}>
                             <div className="flex items-center">
                                 <GroupSearch className='mr-2'/>
@@ -311,63 +461,36 @@ function PropertiesForRent() {
                     </div>
                 </div>
             </div>
-                {/* LIST ITEM */}
+            
+            {/* ... rest of your component code remains the same ... */}
+            {/* LIST ITEM */}
                 {!params.propertyId ? (
                     <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
                         <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
-                            <div className="cursor-pointer bg-bg-primary">
-                                <div className="h-[283px]">
-                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="p-4">
-                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
-                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bedrooms</p>
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bathrooms</p>
+                            {
+                                PROPERTIES_DATA.map(property => (
+                                    <div className="cursor-pointer bg-bg-primary" key={property.id} >
+                                        <div className="h-[283px]">
+                                            <OptimizedImage src={property.image} alt={property.name} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="p-4">
+                                            <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">{property.name}</h1>
+                                            <p className="mt-4 text-[15px]">{property.location}</p>
+                                            <div className="flex items-center mt-2">
+                                                <p className="text-[15px] font-semibold">From ${property.price} per night</p>
+                                                <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                                <p>{property.bedrooms} Bedrooms</p>
+                                                <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                                <p>{property.bathrooms} Bathrooms</p>
+                                            </div>
+                                            <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer" onClick={()=>navigate(`/en/properties-for-rent/${property.id}`)}>view more<ArrowRight className="ml-8"/></button>
+                                        </div>
                                     </div>
-                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
-                                </div>
-                            </div>
-                            {/*  */}
-                            <div className="cursor-pointer bg-bg-primary">
-                                <div className="h-[283px]">
-                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="p-4">
-                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
-                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bedrooms</p>
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bathrooms</p>
-                                    </div>
-                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
-                                </div>
-                            </div>
-                            {/*  */}
-                            <div className="cursor-pointer bg-bg-primary">
-                                <div className="h-[283px]">
-                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="p-4">
-                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
-                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bedrooms</p>
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bathrooms</p>
-                                    </div>
-                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
-                                </div>
-                            </div>
+                                ))
+                            }
+
+                            
+                            
                         </div>
                     </div>
                 )
@@ -389,7 +512,7 @@ function PropertiesForRent() {
                                     <Swiper
                                         modules={[Autoplay, Pagination, Navigation]}
                                         spaceBetween={20}
-                                        slidesPerView={4}
+                                        slidesPerView={5}
                                         pagination={{ clickable: true }}
                                         navigation={{
                                             nextEl: '.custom-next-button',
@@ -397,6 +520,12 @@ function PropertiesForRent() {
                                         }}
                                         
                                     >
+                                        <SwiperSlide  className=''>
+                                            <OptimizedImage
+                                                src={PropertiesForRent1}
+                                                className="w-full h-[164px] object-cover"
+                                            />
+                                        </SwiperSlide>
                                         <SwiperSlide  className=''>
                                             <OptimizedImage
                                                 src={PropertiesForRent1}
@@ -436,8 +565,8 @@ function PropertiesForRent() {
                                     </button>
                                 </div>
                                 {/*  */}
-                                <div className="mt-10 flex gap-10">
-                                    <div className="flex-basis basis-2/3">
+                                <div className="mt-10 grid grid-cols-5 gap-10">
+                                    <div className="col-span-3">
                                         <h1 className="text-[60px] font-subtitle text-txt-secondary font-semibold">Villa Shirla</h1>
                                         <div className="flex items-center">
                                             <div className="bg-txt-secondary  px-15 py-2 text-bg-primary rounded-4xl text-[18px]">Hotel</div>
@@ -525,7 +654,7 @@ function PropertiesForRent() {
                                         </ul>
                                     </div>
                                     {/*  */}
-                                    <div className="flex-basis basis-1/2">
+                                    <div className="col-span-2">
                                         <div className="bg-white border p-4 rounded-sm text-center">
                                             <h1 className="text-[60px] text-txt-secondary font-subtitle font-semibold mb-8">Get in touch</h1>
                                             <input type="text" placeholder="First Name" className="w-full rounded-sm mb-8"/>
@@ -546,7 +675,7 @@ function PropertiesForRent() {
                                             <button className="cursor-pointer text-[18px] uppercase w-full py-4 bg-txt-secondary  text-bg-primary mt-8 rounded-sm">submit message</button>
                                         </div>
                                         {/*  */}
-                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.7484136613452!2d105.74611147590936!3d20.96261619004587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452efff394ce3%3A0x391a39d4325be464!2sPhenikaa%20University!5e0!3m2!1sen!2s!4v1761578035476!5m2!1sen!2s" width="600" height="450" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" className="mt-20"></iframe>
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.7484136613452!2d105.74611147590936!3d20.96261619004587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452efff394ce3%3A0x391a39d4325be464!2sPhenikaa%20University!5e0!3m2!1sen!2s!4v1761578035476!5m2!1sen!2s" width="490" height="450" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" className="mt-20"></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -555,60 +684,28 @@ function PropertiesForRent() {
                             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
                                 <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">You might also like this</h1>
                                 <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
-                            <div className="cursor-pointer bg-bg-primary">
-                                <div className="h-[283px]">
-                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
+                                    {
+                                        PROPERTIES_DATA.map(property => (
+                                            <div className="cursor-pointer bg-bg-primary" key={property.id} >
+                                                <div className="h-[283px]">
+                                                    <OptimizedImage src={property.image} alt={property.name} className="w-full h-full object-cover" />
+                                                </div>
+                                                <div className="p-4">
+                                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">{property.name}</h1>
+                                                    <p className="mt-4 text-[15px]">{property.location}</p>
+                                                    <div className="flex items-center mt-2">
+                                                        <p className="text-[15px] font-semibold">From ${property.price} per night</p>
+                                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                                        <p>{property.bedrooms} Bedrooms</p>
+                                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
+                                                        <p>{property.bathrooms} Bathrooms</p>
+                                                    </div>
+                                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer" onClick={()=>navigate(`/en/properties-for-rent/${property.id}`)}>view more<ArrowRight className="ml-8"/></button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
                                 </div>
-                                <div className="p-4">
-                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
-                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bedrooms</p>
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bathrooms</p>
-                                    </div>
-                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
-                                </div>
-                            </div>
-                            {/*  */}
-                            <div className="cursor-pointer bg-bg-primary">
-                                <div className="h-[283px]">
-                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="p-4">
-                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
-                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bedrooms</p>
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bathrooms</p>
-                                    </div>
-                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
-                                </div>
-                            </div>
-                            {/*  */}
-                            <div className="cursor-pointer bg-bg-primary">
-                                <div className="h-[283px]">
-                                    <OptimizedImage src={PropertiesForRent1} alt="" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="p-4">
-                                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">Villa Shirla</h1>
-                                    <p className="mt-4 text-[15px]">Spain, Ibiza, San Rafael</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-[15px] font-semibold">From $500 per night</p> 
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bedrooms</p>
-                                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                                        <p>1 Bathrooms</p>
-                                    </div>
-                                    <button className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer">view more<ArrowRight className="ml-8"/></button>
-                                </div>
-                            </div>
-                        </div>
                             </div>
                         </div>
                     </div>
