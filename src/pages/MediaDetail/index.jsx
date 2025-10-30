@@ -1,23 +1,23 @@
 import { ArrowLeft, ArrowRight, Dot } from 'lucide-react';
-import mediaDetail from '../../assets/images/media-detail.png'
-import mediaDetail2 from '../../assets/images/media-detail-2.png'
-import mediaDetail3 from '../../assets/images/media-detail-3.png'
-import mediaDetail4 from '../../assets/images/media-detail-4.png'
-import mediaDetail5 from '../../assets/images/media-detail-5.png'
-import mediaDetail6 from '../../assets/images/media-detail-6.png'
-import mediaDetail7 from '../../assets/images/media-detail-7.png'
-import mediaDetail8 from '../../assets/images/media-detail-8.png'
-import mediaDetail9 from '../../assets/images/media-detail-9.png'
-import mediaDetail10 from '../../assets/images/media-detail-10.png'
-import mediaDetail11 from '../../assets/images/media-detail-11.png'
+import mediaDetail from '../../assets/images/media-detail/media-detail.webp'
+import mediaDetail2 from '../../assets/images/media-detail/media-detail-2.webp'
+import mediaDetail3 from '../../assets/images/media-detail/media-detail-3.webp'
+import mediaDetail4 from '../../assets/images/media-detail/media-detail-4.webp'
+import mediaDetail5 from '../../assets/images/media-detail/media-detail-5.webp'
+import mediaDetail6 from '../../assets/images/media-detail/media-detail-6.webp'
+import mediaDetail7 from '../../assets/images/media-detail/media-detail-7.webp'
+import mediaDetail8 from '../../assets/images/media-detail/media-detail-8.webp'
+import mediaDetail9 from '../../assets/images/media-detail/media-detail-9.webp'
+import mediaDetail10 from '../../assets/images/media-detail/media-detail-10.webp'
+// import mediaDetail11 from '../../assets/images/media-detail/media-detail-11.webp'
 import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
 import { LocalizedLink } from '../../components/LocalizedLink';
 
 const MEDIA_ITEMS = [
-    {id:1, type: 'Lifestyle', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail11},
-    {id:2, type: 'Properties', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail11},
-    {id:3, type: 'Product', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail11},
+    {id:1, type: 'Lifestyle', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail10},
+    {id:2, type: 'Properties', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail10},
+    {id:3, type: 'Product', title: 'Exploring Mon Cor: Berrow Projects Presents a Remarkable Architectural Marvel in Soller, Mallorca', description: 'Dubbed Mon Cor, the newly renovated home dates to 1903', image: mediaDetail10},
 ]
 function MediaDetail() {
     return ( 

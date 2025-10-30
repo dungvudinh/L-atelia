@@ -1,13 +1,13 @@
-import aboutUs from '../../assets/images/about-us.png'
-import aboutUs2 from '../../assets/images/about-us-2.png'
-import aboutUs3 from '../../assets/images/about-us-3.png'
-import aboutUs4 from '../../assets/images/about-us-4.png'
-import aboutUs5 from '../../assets/images/about-us-5.png'
-import aboutUs6 from '../../assets/images/about-us-6.png'
-import aboutUs7 from '../../assets/images/about-us-7.png'
-import aboutUs8 from '../../assets/images/about-us-8.png'
-import aboutUs9 from '../../assets/images/about-us-9.png'
-import aboutUs10 from '../../assets/images/about-us-10.png'
+import aboutUs from '../../assets/images/about-us/about-us.webp'
+import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
+import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
+import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
+import aboutUs5 from '../../assets/images/about-us/about-us-5.webp'
+import aboutUs6 from '../../assets/images/about-us/about-us-6.webp'
+import aboutUs7 from '../../assets/images/about-us/about-us-7.webp'
+import aboutUs8 from '../../assets/images/about-us/about-us-8.webp'
+import aboutUs9 from '../../assets/images/about-us/about-us-9.webp'
+import aboutUs10 from '../../assets/images/about-us/about-us-10.webp'
 import { Swiper, SwiperSlide,useSwiper  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";

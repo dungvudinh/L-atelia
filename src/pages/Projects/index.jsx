@@ -1,4 +1,4 @@
-import project1 from '../../assets/images/projects/project1.png'
+import project1 from '../../assets/images/projects/project1.webp'
 import Footer from '../../layouts/components/Footer';
 import { LocalizedLink } from '../../components/LocalizedLink';
 import OptimizedImage from '../../components/OptimizedImage';

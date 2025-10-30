@@ -5,7 +5,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import slide1 from '../../assets/images/slides/slide1.png';
+import slide1 from '../../assets/images/slides/slide1.webp';
 import logoText from '../../assets/images/logo-text.png';
 import { ArrowRight } from "lucide-react";
 import img1 from '../../assets/images/img1.png';

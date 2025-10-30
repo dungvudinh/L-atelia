@@ -3,11 +3,10 @@ import { useTranslation } from "react-i18next";
 import {Sort,Adjust} from '../../assets/icons';
 import { ListFilter, MapPinPlusIcon } from "lucide-react";
 import { AddLocation,ArrowDown,PageInfo, FilterList,Payments, PaymentArrowDown, Apartment, ChairUmbrella,Villa,SourceEnvironment,Distance} from "../../assets/icons";
-import sale1 from '../../assets/images/sale_1.png'
-import sale2 from '../../assets/images/sale_2.png'
-import sale3 from '../../assets/images/sale_3.png'
-import sale5 from '../../assets/images/sale_5.png'
-import sale6 from '../../assets/images/sale_6.png'
+import sale1 from '../../assets/images/sale/sale_1.webp'
+import sale2 from '../../assets/images/sale/sale_2.webp'
+import sale3 from '../../assets/images/sale/sale_3.webp'
+import sale5 from '../../assets/images/sale/sale_5.webp'
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import OptimizedImage from "../../components/OptimizedImage";
