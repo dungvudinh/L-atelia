@@ -136,36 +136,7 @@ const PROPERTIES_DATA = [
   }
 ];
 
-// Hoặc nếu bạn muốn đơn giản hơn:
-const SIMPLE_PROPERTIES_DATA = [
-  {
-    id: 1,
-    name: "Villa Shirla",
-    location: "Spain, Ibiza, San Rafael",
-    price: 500,
-    bedrooms: 1,
-    bathrooms: 1,
-    image: PropertiesForRent1
-  },
-  {
-    id: 2,
-    name: "Villa Marina", 
-    location: "Spain, Barcelona, Beachfront",
-    price: 650,
-    bedrooms: 2,
-    bathrooms: 2,
-    image: PropertiesForRent1
-  },
-  {
-    id: 3,
-    name: "Mountain Retreat",
-    location: "Switzerland, Alps, Zermatt", 
-    price: 450,
-    bedrooms: 3,
-    bathrooms: 2,
-    image: PropertiesForRent1
-  }
-];
+
 function PropertiesForRent() {
     const [showCheckInDate, setShowCheckInDate] = useState(false);
     const [showCheckOutDate, setShowCheckOutDate] = useState(false);
@@ -184,7 +155,10 @@ function PropertiesForRent() {
     const checkInRef = useRef(null);
     const checkOutRef = useRef(null);
     const selectPersonRef = useRef(null);
-
+    const [adults, setAdults] = useState(1);
+    const [children, setChildren] = useState(0);
+    const [rooms, setRooms] = useState(1);
+    const [selectedDate, setSelectedDate] = useState(false);
     // Hook xử lý click outside
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -262,7 +236,40 @@ function PropertiesForRent() {
         setShowCheckOutDate(false);
         // Thêm logic xử lý khi chọn checkout date ở đây
     };
-
+    const handlePersonChange = (type, change) => {
+        switch (type) {
+            case 'adults':
+                const newAdults = adults + change;
+                if (newAdults >= 1 && newAdults <= 10) { // Giới hạn tối đa 10 người lớn
+                    setAdults(newAdults);
+                    // Đảm bảo số phòng không ít hơn số người lớn
+                    if (rooms < newAdults) {
+                        setRooms(newAdults);
+                    }
+                }
+                break;
+                
+            case 'children':
+                const newChildren = children + change;
+                if (newChildren >= 0 && newChildren <= 6) { // Giới hạn tối đa 6 trẻ em
+                    setChildren(newChildren);
+                }
+                break;
+                
+            case 'rooms':
+                const newRooms = rooms + change;
+                if (newRooms >= 1 && newRooms <= 10) { // Giới hạn tối đa 10 phòng
+                    // Đảm bảo số phòng không ít hơn số người lớn
+                    if (newRooms >= adults) {
+                        setRooms(newRooms);
+                    }
+                }
+                break;
+                
+            default:
+                break;
+        }
+    };
     return ( 
         <div className="mt-20">
             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
@@ -280,12 +287,28 @@ function PropertiesForRent() {
                         {showCheckInDate && (
                             <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none">
                             <Datepicker
+                                value={selectedDate}
                                 inline
                                 onSelectedDateChanged={(date) => {
-                                    handleCheckInSelect(date);
+                                    console.log(date)
+                                    setSelectedDate(date)
                                 }}
                                 theme={theme}
                                 className="w-full!"
+                                language="en"
+                                minDate={new Date(2020, 0, 1)}
+                                maxDate={new Date(2025, 11, 31)}
+                                weekStart={1}
+                                autoHide={true}
+                                title="Select a date"
+                                filterDate={(date, view) => {
+                                if (view === Views.Days) {
+                                    const day = date.getDay();
+                                    // allow only weekdays
+                                    return day !== 0 && day !== 6;
+                                }
+                                return true;
+                                }}
                             />
                             </div>
                         )}
@@ -313,53 +336,101 @@ function PropertiesForRent() {
                     </div>
                     {/* SELECT PERSON */}
                     <div className="relative mr-5 flex-1" ref={selectPersonRef}>
-                        <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSelectPerson(!showSelectPerson)}>
-                            <div className="flex items-center">
-                                <GroupSearch className='mr-2'/>
-                                Select adult and children
-                            </div>
-                            <ArrowDown />
+    <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none" onClick={() => setShowSelectPerson(!showSelectPerson)}>
+        <div className="flex items-center">
+            <GroupSearch className='mr-2'/>
+            {/* Hiển thị tổng số người và phòng */}
+            {`${adults} Adult${adults > 1 ? 's' : ''}, ${children} Children, ${rooms} Room${rooms > 1 ? 's' : ''}`}
+        </div>
+        <ArrowDown />
+    </div>
+    {showSelectPerson && (
+        <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full">
+            <ul className="w-full">
+                {/* Adults */}
+                <li className="flex justify-between border-b border-b-txt-primary hover:bg-gray-100 cursor-pointer p-2">
+                    <div className="flex items-center">
+                        <Group className="mr-4"/>
+                        <div>
+                            <span className="text-[18px] block">Adults</span>
+                            <span className="text-[12px] text-gray-500">Ages 13 or above</span>
                         </div>
-                        {showSelectPerson && (
-                            <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
-                                <ul className="w-full">
-                                    <li className="flex justify-between border-b border-b-txt-primary py-2">
-                                        <div className="flex items-center">
-                                            <Group  className="mr-4"/>
-                                            <span className="text-[18px]">Adults</span>
-                                        </div>
-                                        <div>
-                                            <span className="cursor-pointer text-[18px]">-</span>
-                                            <span className="mx-4 text-[18px]">2</span>
-                                            <span className="text-[18px]">+</span>
-                                        </div>
-                                    </li>
-                                    <li className="flex justify-between border-b border-b-txt-primary py-2">
-                                        <div className="flex items-center">
-                                            <Face  className="mr-4"/>
-                                            <span className="text-[18px]">Children</span>
-                                        </div>
-                                        <div>
-                                            <span className="cursor-pointer text-[18px]">-</span>
-                                            <span className="mx-4 text-[18px]">2</span>
-                                            <span className="text-[18px]">+</span>
-                                        </div>
-                                    </li>
-                                    <li className="flex justify-between  py-2">
-                                        <div className="flex items-center">
-                                            <Bed  className="mr-4"/>
-                                            <span className="text-[18px]">Rooms</span>
-                                        </div>
-                                        <div>
-                                            <span className="cursor-pointer text-[18px]">-</span>
-                                            <span className="mx-4 text-[18px]">2</span>
-                                            <span className="text-[18px]">+</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        )}
                     </div>
+                    <div className="flex items-center">
+                        <button 
+                            className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                            onClick={() => handlePersonChange('adults', -1)}
+                            disabled={adults <= 1}
+                        >
+                            <span className="text-[18px]">-</span>
+                        </button>
+                        <span className="mx-4 text-[18px] min-w-[20px] text-center">{adults}</span>
+                        <button 
+                            className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full"
+                            onClick={() => handlePersonChange('adults', 1)}
+                        >
+                            <span className="text-[18px]">+</span>
+                        </button>
+                    </div>
+                </li>
+                
+                {/* Children */}
+                <li className="flex justify-between border-b border-b-txt-primary p-2 hover:bg-gray-100">
+                    <div className="flex items-center">
+                        <Face className="mr-4"/>
+                        <div>
+                            <span className="text-[18px] block">Children</span>
+                            <span className="text-[12px] text-gray-500">Ages 0-12</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center">
+                        <button 
+                            className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                            onClick={() => handlePersonChange('children', -1)}
+                            disabled={children <= 0}
+                        >
+                            <span className="text-[18px]">-</span>
+                        </button>
+                        <span className="mx-4 text-[18px] min-w-[20px] text-center">{children}</span>
+                        <button 
+                            className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full"
+                            onClick={() => handlePersonChange('children', 1)}
+                        >
+                            <span className="text-[18px]">+</span>
+                        </button>
+                    </div>
+                </li>
+                
+                {/* Rooms */}
+                <li className="flex justify-between p-2 hover:bg-gray-100">
+                    <div className="flex items-center">
+                        <Bed className="mr-4"/>
+                        <div>
+                            <span className="text-[18px] block">Rooms</span>
+                            <span className="text-[12px] text-gray-500">Number of rooms</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center">
+                        <button 
+                            className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                            onClick={() => handlePersonChange('rooms', -1)}
+                            disabled={rooms <= 1}
+                        >
+                            <span className="text-[18px]">-</span>
+                        </button>
+                        <span className="mx-4 text-[18px] min-w-[20px] text-center">{rooms}</span>
+                        <button 
+                            className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full"
+                            onClick={() => handlePersonChange('rooms', 1)}
+                        >
+                            <span className="text-[18px]">+</span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    )}
+</div>
                     <button className="flex-1 bg-txt-secondary text-white cursor-pointer">Search</button>
                 </div>
                 {/*  */}
