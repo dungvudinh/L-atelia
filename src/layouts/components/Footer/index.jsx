@@ -7,7 +7,7 @@ function Footer({withContact}) {
     const [consent, setConsent] = useState(true);
     const {t} = useTranslation('footer');
     return ( 
-        <div className="pt-[100px] bg-bg-primary pb-[30px] md:px-[50px] md:py-[50px] flex justify-center">
+        <div className="bg-bg-primary pb-[30px] md:px-[50px] md:pb-[50px] flex justify-center">
             <div className="xl:max-w-screen-xl lg:max-w-[900px]">
                 {/* CONTACT */}
                 {withContact && (

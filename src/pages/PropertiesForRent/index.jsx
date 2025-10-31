@@ -16,19 +16,29 @@ import { CalendarClock, ArrowDown,GroupSearch, Group,Face,Bed, Sort,AddLocation,
     BeachAccess} from "../../assets/icons";
 import PropertiesForRent1 from '../../assets/images/properties-for-rent-1.png';
 import { ArrowRight, Wifi } from "lucide-react";
-import { Swiper, SwiperSlide,useSwiper  } from "swiper/react";
+import { Swiper, SwiperSlide  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import OptimizedImage from "../../components/OptimizedImage";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const theme = {
     popup: {
       footer: {
         base: "hidden"
       }
-    }
+    }, 
+    views:{
+        days: {
+          items: {
+            item: {
+              selected: "bg-txt-secondary text-white hover:bg-txt-secondary", // Thay đổi màu ở đây
+            },
+          },
+        },
+      },
   };
 const LOCATION_ITEMS = [
     {id:1, name:'Ho Chi Minh City', country:'Viet Nam'},
@@ -184,7 +194,8 @@ function PropertiesForRent() {
     const checkInRef = useRef(null);
     const checkOutRef = useRef(null);
     const selectPersonRef = useRef(null);
-
+    const [selectedCheckInDate, setSelectedCheckInDate] = useState();
+    const [selectedCheckOutDate, setSelectedCheckOutDate] = useState();
     // Hook xử lý click outside
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -237,7 +248,6 @@ function PropertiesForRent() {
 
     // Hàm xử lý khi click vào properties item
     const handlePropertiesSelect = (propertiesItem) => {
-        console.log('Selected property:', propertiesItem);
         setShowPropertiesOptions(false);
         // Thêm logic xử lý khi chọn property ở đây
     };
@@ -249,20 +259,31 @@ function PropertiesForRent() {
         // Thêm logic xử lý khi chọn sorting ở đây
     };
 
-    // Hàm xử lý checkin date
-    const handleCheckInSelect = (date) => {
-        console.log('Selected checkin date:', date);
-        setShowCheckInDate(false);
-        // Thêm logic xử lý khi chọn checkin date ở đây
-    };
-
-    // Hàm xử lý checkout date
-    const handleCheckOutSelect = (date) => {
-        console.log('Selected checkout date:', date);
-        setShowCheckOutDate(false);
-        // Thêm logic xử lý khi chọn checkout date ở đây
-    };
-
+    const handleCheckInSelect = (date)=>
+    {
+        setSelectedCheckInDate(date);
+        setShowCheckInDate(false); 
+    }
+    const handleCheckOutSelect = (date)=>
+    {
+        setSelectedCheckOutDate(date);
+        setShowCheckOutDate(false); 
+    }
+    const formatDisplayDate = (date) => {
+        console.log(date)
+        if (!date) return "Check in"; // Hiển thị mặc định khi chưa chọn
+        
+        return date.toLocaleDateString("vi-VI", {
+          weekday: "short",
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
+        
+        // Hoặc các format khác:
+        // return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        // return date.toLocaleDateString("en-US"); // MM/DD/YYYY
+      };
     return ( 
         <div className="mt-20">
             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
@@ -273,20 +294,21 @@ function PropertiesForRent() {
                         <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowCheckInDate(!showCheckInDate)}>
                             <div className="flex items-center">
                                 <CalendarClock className='mr-2'/>
-                                Check in
+                                <span className={'text-[18px]'}>
+                                    {formatDisplayDate(selectedCheckInDate)}
+                                </span>
+                                {/* Check in */}
                             </div>
                             <ArrowDown />
                         </div>
                         {showCheckInDate && (
                             <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none">
-                            <Datepicker
+                            <DatePicker
+                                selected={selectedCheckInDate}
+                                onChange={handleCheckInSelect}
                                 inline
-                                onSelectedDateChanged={(date) => {
-                                    handleCheckInSelect(date);
-                                }}
-                                theme={theme}
-                                className="w-full!"
-                            />
+                                className="w-full"
+                                />
                             </div>
                         )}
                     </div>
@@ -295,26 +317,27 @@ function PropertiesForRent() {
                         <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
                             <div className="flex items-center">
                                 <CalendarClock className='mr-2'/>
-                                Check out
+                                <span className={'text-[18px]'}>
+                                    {formatDisplayDate(selectedCheckOutDate)}
+                                </span>
                             </div>
                             <ArrowDown />
                         </div>
                         {showCheckOutDate && (
                             <div className="absolute top-full mt-1 z-50 bg-white shadow-lg   select-none">
-                            <Datepicker
+                            <DatePicker
+                                selected={selectedCheckOutDate}
+                                onChange={handleCheckOutSelect}
                                 inline
-                                onSelectedDateChanged={(date) => {
-                                    handleCheckOutSelect(date);
-                                }}
-                                theme={theme}
-                            />
+                                className="w-full"
+                                />
                             </div>
                         )}
                     </div>
                     {/* SELECT PERSON */}
                     <div className="relative mr-5 flex-1" ref={selectPersonRef}>
                         <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSelectPerson(!showSelectPerson)}>
-                            <div className="flex items-center">
+                            <div className="flex items-center text-[18px]">
                                 <GroupSearch className='mr-2'/>
                                 Select adult and children
                             </div>
