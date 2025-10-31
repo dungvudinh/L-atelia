@@ -146,36 +146,7 @@ const PROPERTIES_DATA = [
   }
 ];
 
-// Hoặc nếu bạn muốn đơn giản hơn:
-const SIMPLE_PROPERTIES_DATA = [
-  {
-    id: 1,
-    name: "Villa Shirla",
-    location: "Spain, Ibiza, San Rafael",
-    price: 500,
-    bedrooms: 1,
-    bathrooms: 1,
-    image: PropertiesForRent1
-  },
-  {
-    id: 2,
-    name: "Villa Marina", 
-    location: "Spain, Barcelona, Beachfront",
-    price: 650,
-    bedrooms: 2,
-    bathrooms: 2,
-    image: PropertiesForRent1
-  },
-  {
-    id: 3,
-    name: "Mountain Retreat",
-    location: "Switzerland, Alps, Zermatt", 
-    price: 450,
-    bedrooms: 3,
-    bathrooms: 2,
-    image: PropertiesForRent1
-  }
-];
+
 function PropertiesForRent() {
     const [showCheckInDate, setShowCheckInDate] = useState(false);
     const [showCheckOutDate, setShowCheckOutDate] = useState(false);

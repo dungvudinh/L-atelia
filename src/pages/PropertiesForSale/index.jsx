@@ -126,11 +126,11 @@ function PropertiesForSale() {
                                     <ArrowDown />
                                 </div>
                                 {showSelectLocation && (
-                                    <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none p-2 w-full">
+                                    <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full">
                                         <ul className="w-full">
                                             {LOCATION_ITEMS.map(locationItem => (
                                                 <li 
-                                                    className={`flex justify-between ${locationItem.id !== LOCATION_ITEMS.length ? 'border-b border-b-txt-primary' :''} py-2 cursor-pointer hover:bg-gray-50`} 
+                                                    className={`flex justify-between p-2 ${locationItem.id !== LOCATION_ITEMS.length ? 'border-b border-b-txt-primary' :''} py-2 cursor-pointer hover:bg-gray-200`} 
                                                     key={locationItem.id}
                                                     onClick={() => handleLocationSelect(locationItem)}
                                                 >
@@ -161,11 +161,11 @@ function PropertiesForSale() {
                                     <ArrowDown />
                                 </div>
                                 {showPropertiesOptions && (
-                                    <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none p-2 w-full">
+                                    <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full">
                                         <ul className="w-full">
                                             {PROPERTIES_ITEMS.map(propertiesItem => (
                                                 <li 
-                                                    className={`flex justify-between ${propertiesItem.id !== PROPERTIES_ITEMS.length ? 'border-b border-b-txt-primary' :''} py-2 cursor-pointer hover:bg-gray-50`} 
+                                                    className={`flex justify-between p-2 ${propertiesItem.id !== PROPERTIES_ITEMS.length ? 'border-b border-b-txt-primary' :''} py-2 cursor-pointer hover:bg-gray-200`} 
                                                     key={propertiesItem.id}
                                                     onClick={() => handlePropertiesSelect(propertiesItem)}
                                                 >
@@ -196,11 +196,11 @@ function PropertiesForSale() {
                                 <ArrowDown />
                             </div>
                             {showSortingOptions && (
-                                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none p-2 w-full">
+                                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full">
                                     <ul className="w-full">
                                         {SORTING_ITEMS.map(sortingItem => (
                                             <li 
-                                                className={`flex justify-between flex justify-between ${sortingItem.id !== SORTING_ITEMS.length ? 'border-b border-b-txt-primary' :''} py-2 cursor-pointer hover:bg-gray-50 py-2 cursor-pointer hover:bg-gray-50`} 
+                                                className={`flex justify-between p-2 flex justify-between ${sortingItem.id !== SORTING_ITEMS.length ? 'border-b border-b-txt-primary' :''} py-2 cursor-pointer hover:bg-gray-200 py-2 cursor-pointer`} 
                                                 key={sortingItem.id}
                                                 onClick={() => handleSortingSelect(sortingItem)}
                                             >
