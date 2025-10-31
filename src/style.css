@@ -132,3 +132,8 @@ body
   font-family: "Nunito Sans", sans-serif;
   font-size: 15px;;
 }
+.react-datepicker__day--keyboard-selected
+{
+  background-color: var(--color-txt-secondary) !important;
+  color:var(--color-bg-primary) !important;
+}

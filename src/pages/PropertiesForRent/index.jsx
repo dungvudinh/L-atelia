@@ -1,7 +1,6 @@
 import { useEffect,useState, useRef } from "react";
 import { useParams, useNavigate} from "react-router-dom";
 import Footer from "../../layouts/components/Footer";
-import { Datepicker } from 'flowbite-react';
 import { CalendarClock, ArrowDown,GroupSearch, Group,Face,Bed, Sort,AddLocation, Distance, 
     FilterList, Payments, PaymentArrowDown, PageInfo, Apartment, ChairUmbrella, Villa, SourceEnvironment, Star, 
     OutdoorGrill,
@@ -24,22 +23,7 @@ import { useTranslation } from "react-i18next";
 import OptimizedImage from "../../components/OptimizedImage";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-const theme = {
-    popup: {
-      footer: {
-        base: "hidden"
-      }
-    }, 
-    views:{
-        days: {
-          items: {
-            item: {
-              selected: "bg-txt-secondary text-white hover:bg-txt-secondary", // Thay đổi màu ở đây
-            },
-          },
-        },
-      },
-  };
+
 const LOCATION_ITEMS = [
     {id:1, name:'Ho Chi Minh City', country:'Viet Nam'},
     {id:2, name:'Nha Trang', country:'Viet Nam'},
@@ -361,24 +345,24 @@ function PropertiesForRent() {
                 {/*  */}
                 <div className="flex items-center justify-between w-full mb-20">
                     <div className="flex ">
-                        <button className="flex items-center bg-txt-secondary px-20 py-2 text-bg-primary text-[18px] font-light mr-5">
+                        <button className="flex items-center bg-txt-secondary px-20 py-2 text-bg-primary text-[18px] font-light mr-5 cursor-pointer">
                             <Sort className='mr-4'/>
                             More Filter
                         </button>
                         {/* LOCATION */}
                         <div className="relative mr-5 flex-1" ref={locationRef}>
                             <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSelectLocation(!showSelectLocation)}>
-                                <div className="flex items-center mr-8">
+                                <div className="flex items-center mr-8 text-[18px]">
                                     <AddLocation className='mr-2'/>
                                     Select your location
                                 </div>
                                 <ArrowDown />
                             </div>
                             {showSelectLocation && (
-                                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
+                                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none  w-full">
                                     <ul className="w-full">
                                         {LOCATION_ITEMS.map(locationItem=>(
-                                            <li className="flex justify-between border-b border-b-txt-primary py-2  cursor-pointer" key={locationItem.id}
+                                            <li className="flex justify-between border-b border-b-txt-primary p-2  cursor-pointer hover:bg-gray-200" key={locationItem.id}
                                              onClick={() => handleLocationSelect(locationItem)}>
                                                 <div className="flex items-start">
                                                     <Distance  className="mr-4"/>
@@ -397,17 +381,17 @@ function PropertiesForRent() {
                         {/* PROPERTIES */}
                         <div className="relative mr-5" ref={propertiesRef}>
                             <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowPropertiesOptions(!showPropertiesOptions)}>
-                                <div className="flex items-center mr-8">
+                                <div className="flex items-center mr-8 text-[18px]">
                                     <PageInfo className='mr-2'/>
                                     Select your property
                                 </div>
                                 <ArrowDown />
                             </div>
                             {showPropertiesOptions && (
-                                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
+                                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none w-full">
                                     <ul className="w-full">
                                         {PROPERTIES_ITEMS.map(propertiesItem=>(
-                                            <li className="flex justify-between border-b border-b-txt-primary py-2  cursor-pointer" key={propertiesItem.id}
+                                            <li className="flex justify-between border-b border-b-txt-primary p-2  cursor-pointer hover:bg-gray-200" key={propertiesItem.id}
                                              onClick={() => handlePropertiesSelect(propertiesItem)}>
                                                 <div className="flex items-start">
                                                     {propertiesItem.icon}
@@ -427,17 +411,17 @@ function PropertiesForRent() {
                     {/* SORTING */}
                     <div className="relative ml-5" ref={sortingRef} >
                         <div className="flex items-center  justify-between border border-txt-primary p-2 cursor-pointer select-none"  onClick={() => setShowSortingOptions(!showSortingOptions)}>
-                            <div className="flex items-center mr-12">
+                            <div className="flex items-center mr-12 text-[18px]">
                                 <FilterList className='mr-2'/>
                                 Default sorting
                             </div>
                             <ArrowDown />
                         </div>
                         {showSortingOptions && (
-                            <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
+                            <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none w-full">
                                 <ul className="w-full">
                                     {SORTING_ITEMS.map(sortingItem=>(
-                                        <li className="flex justify-between border-b border-b-txt-primary py-2 cursor-pointer" key={sortingItem.id}
+                                        <li className="flex justify-between border-b border-b-txt-primary p-2 cursor-pointer hover:bg-gray-200" key={sortingItem.id}
                                          onClick={() => handleSortingSelect(sortingItem)}>
                                             <div className="flex items-start">
                                                 {sortingItem.icon}
