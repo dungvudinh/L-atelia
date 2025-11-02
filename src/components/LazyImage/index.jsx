@@ -1,12 +1,24 @@
 import { useState, useRef, useEffect } from 'react';
 
-// Component LazyImage
-function LazyImage({ src, alt, className, placeholder }) {
+function LazyImage({ 
+  src, 
+  alt, 
+  className, 
+  placeholder, 
+  priority = false, // Thêm prop priority cho ảnh quan trọng
+  eager = false // Load ngay lập tức không cần lazy
+}) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const imgRef = useRef(null);
 
   useEffect(() => {
+    // Nếu là ảnh priority hoặc eager thì load ngay lập tức
+    if (priority || eager) {
+      setIsInView(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -14,7 +26,10 @@ function LazyImage({ src, alt, className, placeholder }) {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1, rootMargin: '50px' }
+      { 
+        threshold: 0.1, 
+        rootMargin: '100px' // Load sớm hơn 100px trước khi vào viewport
+      }
     );
 
     if (imgRef.current) {
@@ -26,27 +41,32 @@ function LazyImage({ src, alt, className, placeholder }) {
         observer.unobserve(imgRef.current);
       }
     };
-  }, []);
+  }, [priority, eager]);
 
   return (
     <div ref={imgRef} className="relative">
-      {/* Placeholder */}
+      {/* Placeholder chỉ hiện khi chưa load xong */}
       {!isLoaded && (
-        <div className={`absolute inset-0 bg-gray-200 animate-pulse ${className}`}>
-          {placeholder || <div className="w-full h-full bg-gray-300" />}
+        <div className={`absolute inset-0 bg-gray-200 animate-pulse z-10 ${className}`}>
+          {placeholder || <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin"></div>
+          </div>}
         </div>
       )}
       
-      {/* Ảnh thực tế */}
+      {/* Ảnh thực tế - với priority thì load ngay */}
       {isInView && (
         <img
           src={src}
           alt={alt}
-          className={`${className} transition-opacity duration-300 ${
+          className={`${className} transition-opacity duration-500 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
-          onLoad={() => setIsLoaded(true)}
-          loading="lazy"
+          onLoad={() => {
+            setIsLoaded(true);
+          }}
+          loading={priority || eager ? "eager" : "lazy"}
+          decoding="async"
         />
       )}
     </div>

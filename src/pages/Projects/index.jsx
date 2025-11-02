@@ -5,7 +5,7 @@ import OptimizedImage from '../../components/OptimizedImage';
 import { ArrowRight } from 'lucide-react'; 
 import project2 from '../../assets/images/projects/project2.png'
 import LazyImage from '../../components/LazyImage';
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect , useState} from 'react';
 const IMAGES = [
     { id: 1, src: '../../assets/images/projects/project1.png', alt: "Project 1", title: "Modern Villa", type:'for rent' },
     { id: 2, src: '../../assets/images/projects/project2.png', alt: "Project 2", title: "Luxury Apartment", type:'for rent' },
@@ -25,8 +25,31 @@ function useImagePreload(imageUrls) {
     }, [imageUrls]);
   }
 function Projects() {
-    
-    useImagePreload([project1, project2]);
+    const [preloadedImages, setPreloadedImages] = useState(new Set());
+
+  // Preload ảnh đầu tiên ngay khi component mount
+  useEffect(() => {
+    const preloadImages = async () => {
+      const imagesToPreload = IMAGES.slice(0, 4); // Preload 4 ảnh đầu tiên
+      
+      const preloadPromises = imagesToPreload.map((image, index) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = image.src;
+          img.onload = () => {
+            setPreloadedImages(prev => new Set([...prev, image.id]));
+            resolve();
+          };
+          img.onerror = resolve; // Vẫn resolve kể cả khi lỗi
+        });
+      });
+
+      await Promise.all(preloadPromises);
+    };
+
+    preloadImages();
+  }, []);
+    // useImagePreload([project1, project2]);
     const handleImageClick = useCallback((imageId)=>{
         console.log('Image clicked');
     })
@@ -41,9 +64,78 @@ function Projects() {
                     </p>
                     {/* LIST IMAGES */}
                     <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {IMAGES.map((image) => (
-                            <ProjectItem key={image.id} image={image} onImageClick={handleImageClick}/>
-                        ))}
+                        {IMAGES.map((image, index) => {
+                            const isPriority = index < 2;
+                            const isEager = index < 4 && !isPriority;
+                            const convertToSlug = (title) => {
+                                return title
+                                    .toLowerCase()
+                                    .replace(/\s+/g, '-')           // Thay khoảng trắng bằng dấu gạch ngang
+                                    .replace(/[^\w\-]+/g, '')       // Loại bỏ ký tự đặc biệt
+                                    .replace(/\-\-+/g, '-')         // Thay nhiều gạch ngang bằng một gạch
+                                    .replace(/^-+/, '')             // Loại bỏ gạch ngang ở đầu
+                                    .replace(/-+$/, '');            // Loại bỏ gạch ngang ở cuối
+                            };
+                            const titleSlug = convertToSlug(image.title);
+                            return (
+                                // <ProjectItem key={image.id} image={image} onImageClick={handleImageClick} isPriority={isPriority} isEager={isEager}/>
+                                <div key={image.id} className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
+                  {/* Ảnh chính */}
+                  <LazyImage 
+                    src={project2} 
+                    alt={image.alt}
+                    className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
+                    priority={isPriority}
+                    eager={isEager}
+                    placeholder={
+                      <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                          preloadedImages.has(image.id) ? 'opacity-50' : ''
+                        }`}></div>
+                      </div>
+                    }
+                  />
+                  
+                  {/* Badge type */}
+                  <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px] uppercase z-20'>
+                    {image.type}
+                  </button>
+
+                  {/* Overlay khi hover */}
+                  <div className='w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                    <div className='w-full h-full relative'>
+                      <LazyImage 
+                        src={project1} 
+                        alt={image.alt}
+                        className="w-full h-full object-cover brightness-50"
+                        eager={isEager} // Overlay cũng được ưu tiên tương tự
+                      />
+                    </div>
+                    
+                    <div className='absolute inset-0 flex flex-col justify-center items-start p-6 z-30 mt-40 ml-4'>
+                      <div className="text-left max-w-md">
+                        <h4 className='text-white text-[18px] font-light mb-6 leading-relaxed'>
+                          Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros
+                        </h4>
+                        <LocalizedLink to={`/view-brochure/${titleSlug}?filter=0`}>
+                          <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
+                          hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
+                            view more
+                            <ArrowRight className='ml-4' size={20}/>
+                          </button>
+                        </LocalizedLink>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Title hiển thị mặc định */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300 z-20">
+                    <h3 className="text-white text-xl font-semibold">{image.title}</h3>
+                    <p className="text-gray-200 text-sm">{image.type}</p>
+                  </div>
+                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
@@ -51,7 +143,7 @@ function Projects() {
         </div>
      );
 }
-const ProjectItem = memo(({image, onImageClick})=>{
+const ProjectItem = memo(({image, onImageClick, isPriority, isEager})=>{
     const convertToSlug = (title) => {
         return title
             .toLowerCase()
@@ -64,52 +156,60 @@ const ProjectItem = memo(({image, onImageClick})=>{
     const titleSlug = convertToSlug(image.title);
     return (
         <div key={image.id} className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
-            {/* Ảnh chính */}
-            <LazyImage 
-                src={project2} 
-                alt={image.alt}
-                className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            
-            {/* Badge type */}
-            <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px] uppercase z-20'>
-                {image.type}
-            </button>
+                  {/* Ảnh chính */}
+                  <LazyImage 
+                    src={project2} 
+                    alt={image.alt}
+                    className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
+                    priority={isPriority}
+                    eager={isEager}
+                    placeholder={
+                      <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                          preloadedImages.has(image.id) ? 'opacity-50' : ''
+                        }`}></div>
+                      </div>
+                    }
+                  />
+                  
+                  {/* Badge type */}
+                  <button className='absolute right-5 bg-txt-secondary top-5 p-2 text-white text-[18px] uppercase z-20'>
+                    {image.type}
+                  </button>
 
-            {/* Overlay khi hover */}
-            <div className='w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                {/* Ảnh overlay (cùng ảnh nhưng được làm tối) */}
-                <div className='w-full h-full relative'>
-                    <LazyImage 
+                  {/* Overlay khi hover */}
+                  <div className='w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                    <div className='w-full h-full relative'>
+                      <LazyImage 
                         src={project1} 
                         alt={image.alt}
-                        className="w-full h-full object-cover brightness-50" // brightness-50 để làm tối ảnh
-                    />
-                </div>
-                
-                {/* Content hiển thị trên ảnh tối */}
-                <div className='absolute inset-0 flex flex-col justify-center items-start p-6 z-30 mt-40 ml-4'>
-                    <div className="text-left max-w-md">
+                        className="w-full h-full object-cover brightness-50"
+                        eager={isEager} // Overlay cũng được ưu tiên tương tự
+                      />
+                    </div>
+                    
+                    <div className='absolute inset-0 flex flex-col justify-center items-start p-6 z-30 mt-40 ml-4'>
+                      <div className="text-left max-w-md">
                         <h4 className='text-white text-[18px] font-light mb-6 leading-relaxed'>
-                            Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros
+                          Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros
                         </h4>
                         <LocalizedLink to={`/view-brochure/${titleSlug}?filter=0`}>
-                            <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
-                            hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
-                                view more
-                                <ArrowRight className='ml-4' size={20}/>
-                            </button>
+                          <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
+                          hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
+                            view more
+                            <ArrowRight className='ml-4' size={20}/>
+                          </button>
                         </LocalizedLink>
+                      </div>
                     </div>
-                </div>
-            </div>
+                  </div>
 
-            {/* Title hiển thị mặc định (sẽ ẩn khi hover) */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300 z-20">
-                <h3 className="text-white text-xl font-semibold">{image.title}</h3>
-                <p className="text-gray-200 text-sm">{image.type}</p>
-            </div>
-        </div>
+                  {/* Title hiển thị mặc định */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300 z-20">
+                    <h3 className="text-white text-xl font-semibold">{image.title}</h3>
+                    <p className="text-gray-200 text-sm">{image.type}</p>
+                  </div>
+                </div>
     )
 })
 export default Projects;
