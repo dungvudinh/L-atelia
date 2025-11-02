@@ -8,7 +8,7 @@ function Footer({withContact}) {
     const {t} = useTranslation('footer');
     return ( 
         <div className="bg-bg-primary pb-[30px] md:px-[50px] md:pb-[50px] flex justify-center">
-            <div className="xl:max-w-screen-xl lg:max-w-[900px]">
+            <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-20">
                 {/* CONTACT */}
                 {withContact && (
                     <div className="flex gap-10">
