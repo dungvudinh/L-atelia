@@ -3,15 +3,15 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import brochureAndFloorPlans from '../../assets/images/brochure-and-floorplans.png'
 import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
-import item1 from '../../assets/images/brochure-and-floorplans/item1.png'
+import item1 from '../../assets/images/brochure-and-floorplans/item1.webp'
 import Footer from "../../layouts/components/Footer";
 import OptimizedImage from "../../components/OptimizedImage";
-import brochure from '../../assets/images/brochure/brochure.png';
-import brochure2 from '../../assets/images/brochure/brochure-2.png';
-import brochure3 from '../../assets/images/brochure/brochure-3.png';
-import brochure4 from '../../assets/images/brochure/brochure-4.png';
-import brochure5 from '../../assets/images/brochure/brochure-5.png';
-import brochure6 from '../../assets/images/brochure/brochure-6.png';
+import brochure from '../../assets/images/brochure/brochure.webp';
+import brochure2 from '../../assets/images/brochure/brochure-2.webp';
+import brochure3 from '../../assets/images/brochure/brochure-3.webp';
+import brochure4 from '../../assets/images/brochure/brochure-4.webp';
+import brochure5 from '../../assets/images/brochure/brochure-5.webp';
+import brochure6 from '../../assets/images/brochure/brochure-6.webp';
 const FILTERS = [
     {
         id: 0, 
