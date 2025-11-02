@@ -5,13 +5,13 @@ import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
 import item1 from '../../assets/images/brochure-and-floorplans/item1.webp'
 import Footer from "../../layouts/components/Footer";
-import OptimizedImage from "../../components/OptimizedImage";
 import brochure from '../../assets/images/brochure/brochure.webp';
 import brochure2 from '../../assets/images/brochure/brochure-2.webp';
 import brochure3 from '../../assets/images/brochure/brochure-3.webp';
 import brochure4 from '../../assets/images/brochure/brochure-4.webp';
 import brochure5 from '../../assets/images/brochure/brochure-5.webp';
 import brochure6 from '../../assets/images/brochure/brochure-6.webp';
+import LazyImage from "../../components/LazyImage";
 const FILTERS = [
     {
         id: 0, 
@@ -103,13 +103,60 @@ const FILTERS = [
         ]
     }
 ]
-
+function usePriorityPreload(imageUrls, count = 6) {
+    const [preloadedImages, setPreloadedImages] = useState(new Set());
+  
+    useEffect(() => {
+      const preloadImages = async () => {
+        const imagesToPreload = imageUrls.slice(0, count);
+        
+        const preloadPromises = imagesToPreload.map((url) => {
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.src = url;
+            img.onload = () => {
+              setPreloadedImages(prev => new Set([...prev, url]));
+              resolve();
+            };
+            img.onerror = resolve;
+          });
+        });
+  
+        await Promise.all(preloadPromises);
+      };
+  
+      if (imageUrls.length > 0) {
+        preloadImages();
+      }
+    }, [imageUrls, count]);
+  
+    return preloadedImages;
+  }
 function Brochure() {
     const [filterId, setFilterId] = useState(0);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const filter = searchParams.get('filter');
     
+    // Lấy tất cả URLs của images trong filter hiện tại để preload
+    const getCurrentFilterImageUrls = () => {
+        const currentFilter = FILTERS.find(f => f.id == filterId);
+        if (!currentFilter) return [];
+        
+        if (filterId == 0) {
+            // Brochure - data là array đơn giản
+            return currentFilter.data.map(item => item.src);
+        } else {
+            // Các filter khác - data có nested structure
+            return currentFilter.data.flatMap(dateGroup => 
+                dateGroup.images.map(img => img.src)
+            );
+        }
+    };
+
+    const imageUrls = getCurrentFilterImageUrls();
+    const preloadedImages = usePriorityPreload(imageUrls, 8); // Preload 8 ảnh đầu tiên
+
     useEffect(() => {
         setFilterId(filter || 0);
     }, [filter]);
@@ -119,11 +166,20 @@ function Brochure() {
         navigate(`?filter=${filterItem.id}`);
     }
 
-    // Kiểm tra nếu là Brochure (1 cột) hay các mục khác (3 cột)
     const isBrochure = filterId == 0;
     const gridClass = isBrochure 
-        ? "grid grid-cols-1 gap-4"  // 1 cột cho Brochure
-        : "grid grid-cols-3 gap-4"; // 3 cột cho Tiến độ thi công & Hình ảnh thiết kế
+        ? "grid grid-cols-1 gap-4"
+        : "grid grid-cols-3 gap-4";
+
+    // Hàm xác định mức độ ưu tiên cho từng ảnh
+    const getImagePriority = (index, groupIndex = 0) => {
+        // Ảnh đầu tiên của group đầu tiên: priority cao nhất
+        if (groupIndex === 0 && index < 2) return { priority: true };
+        // 4 ảnh tiếp theo: eager load
+        if (groupIndex === 0 && index < 6) return { eager: true };
+        // Các ảnh còn lại: lazy loading
+        return {};
+    };
 
     return ( 
         <div className="">
@@ -148,16 +204,24 @@ function Brochure() {
 
                     {/* MAIN CONTENT */}
                     <div className="mt-10">
-                        {/* Hiển thị cho Brochure (layout đơn giản) */}
+                        {/* Hiển thị cho Brochure */}
                         {isBrochure && (
                             <div className={gridClass}>
                                 {FILTERS[filterId].data && 
-                                    FILTERS[filterId].data.map(dataItem => (
+                                    FILTERS[filterId].data.map((dataItem, index) => (
                                         <div key={dataItem.id} className="w-full">
-                                            <OptimizedImage 
+                                            <LazyImage 
                                                 src={dataItem.src} 
                                                 alt="" 
-                                                className="w-full h-auto object-cover"
+                                                className="w-full h-[325px] object-cover"
+                                                {...getImagePriority(index)}
+                                                placeholder={
+                                                    <div className="w-full h-64 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                                                            preloadedImages.has(dataItem.src) ? 'opacity-50' : ''
+                                                        }`}></div>
+                                                    </div>
+                                                }
                                             />
                                         </div>
                                     ))
@@ -165,7 +229,7 @@ function Brochure() {
                             </div>
                         )}
                         
-                        {/* Hiển thị cho Tiến độ thi công & Hình ảnh thiết kế (có nhiều ngày) */}
+                        {/* Hiển thị cho Tiến độ thi công & Hình ảnh thiết kế */}
                         {!isBrochure && FILTERS[filterId].data.map((dateGroup, groupIndex) => (
                             <div key={groupIndex} className="mb-12">
                                 {/* Hiển thị ngày đăng */}
@@ -177,12 +241,20 @@ function Brochure() {
                                 
                                 {/* Grid hình ảnh 3 cột */}
                                 <div className={gridClass}>
-                                    {dateGroup.images.map(imageItem => (
-                                        <div key={imageItem.id} className="w-full h-[325px] ">
-                                            <OptimizedImage 
+                                    {dateGroup.images.map((imageItem, imageIndex) => (
+                                        <div key={imageItem.id} className="w-full h-[325px]">
+                                            <LazyImage 
                                                 src={imageItem.src} 
                                                 alt="" 
-                                                className="w-full h-auto object-cover h-full"
+                                                className="w-full h-full object-cover"
+                                                {...getImagePriority(imageIndex, groupIndex)}
+                                                placeholder={
+                                                    <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                                                            preloadedImages.has(imageItem.src) ? 'opacity-50' : ''
+                                                        }`}></div>
+                                                    </div>
+                                                }
                                             />
                                         </div>
                                     ))}

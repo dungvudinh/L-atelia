@@ -59,7 +59,7 @@ function LazyImage({
         <img
           src={src}
           alt={alt}
-          className={`${className} transition-opacity duration-500 ${
+          className={`${className}  transition-opacity duration-500 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           onLoad={() => {
