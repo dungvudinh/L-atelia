@@ -1,8 +1,8 @@
 {
-    "projects":"Các dự án", 
-    "properties for sale": "Các bất động sản", 
-    "properties for rent":"Bất động sản cho thuê", 
-    "about us":"Về chúng tôi", 
+    "projects":"Projects", 
+    "properties for sale": "Properties for sale", 
+    "properties for rent":"Properties for rent", 
+    "about us":"About Us", 
     "media":"Media", 
-    "contact":"Liên hệ"
+    "contact":"Contact"
 }

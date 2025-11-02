@@ -299,9 +299,9 @@ function PropertiesForRent() {
                             <ArrowDown />
                         </div>
                         {showSelectPerson && (
-                            <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none p-2 w-full">
+                            <div className="absolute top-full mt-1 z-50 bg-white shadow-lg  select-none w-full">
                                 <ul className="w-full">
-                                    <li className="flex justify-between border-b border-b-txt-primary py-2">
+                                    <li className="flex justify-between border-b border-b-txt-primary p-2 hover:bg-stone-200">
                                         <div className="flex items-center">
                                             <Group  className="mr-4"/>
                                             <span className="text-[18px]">Adults</span>
@@ -312,7 +312,7 @@ function PropertiesForRent() {
                                             <span className="text-[18px]">+</span>
                                         </div>
                                     </li>
-                                    <li className="flex justify-between border-b border-b-txt-primary py-2">
+                                    <li className="flex justify-between border-b border-b-txt-primary p-2 hover:bg-stone-200">
                                         <div className="flex items-center">
                                             <Face  className="mr-4"/>
                                             <span className="text-[18px]">Children</span>
@@ -323,7 +323,7 @@ function PropertiesForRent() {
                                             <span className="text-[18px]">+</span>
                                         </div>
                                     </li>
-                                    <li className="flex justify-between  py-2">
+                                    <li className="flex justify-between  p-2 hover:bg-stone-200">
                                         <div className="flex items-center">
                                             <Bed  className="mr-4"/>
                                             <span className="text-[18px]">Rooms</span>
@@ -341,7 +341,7 @@ function PropertiesForRent() {
                     <button className="flex-1 bg-txt-secondary text-white cursor-pointer">Search</button>
                 </div>
                 {/*  */}
-                <h1 className='uppercase text-[60px] font-subtitle text-txt-secondary font-semibold mb-10'>Properties for rent</h1>
+                <h1 className='uppercase text-[60px] font-subtitle text-txt-secondary font-semibold mb-10'>CÁC DỰ ÁN CHO THUÊ</h1>
                 {/*  */}
                 <div className="flex items-center justify-between w-full mb-20">
                     <div className="flex ">

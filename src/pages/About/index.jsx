@@ -34,11 +34,23 @@ function About()
             <div className='flex justify-center mt-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex gap-10'>
                     <div className='flex-basis basis-1/2'>
-                        <h4 className='uppercase text-[26px] mb-5' >about us</h4>
-                        <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold mb-5'>About History</h1>
-                        <h4 className='text-[26px] mb-10'>Berrow Projects was founded by brothers Archie and Monty Berrow who moved to Mallorca in 2018 with a shared vision of bringing a professional, innovative approach to Mallorcan property development.</h4>
+                        <h4 className=' text-[26px] mb-5' >L'atelia</h4>
+                        <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold mb-5'>
+                            {/* About History */}
+                            Về chúng tôi
+                        </h1>
+                        {/* <h4 className='text-[26px] mb-10'>
+                            Berrow Projects was founded by brothers Archie and Monty Berrow who moved to Mallorca in 2018 with a shared vision of bringing a professional, innovative approach to Mallorcan property development.</h4> */}
+                        <p className='text-[18px] mb-10 mt-10'>
+                            L'atelia được thành lập tại thành phố biển xinh đẹp Đà Nẵng, với mục tiêu kiến tạo nên những ngôi nhà độc bản, được thiết kế tinh tế, mang phong cách hiện đại và tối giản.
+                        </p>
                         <p className='text-[18px]'>
-                            They oversee all aspects of the day to day operations working alongside a dedicated team of local craftsmen, artisans, architects, and world-renowned brands who all share one common purpose– To help your family start the life you didn’t even know you were dreaming about.
+                            {/* They oversee all aspects of the day to day operations working alongside a dedicated team of local craftsmen, artisans, architects, and world-renowned brands who all share one common purpose– To help your family start the life you didn’t even know you were dreaming about. */}
+                            Mỗi công trình của chúng tôi không chỉ là một bản thiết kế riêng biệt mà còn là một tuyên ngôn về phong cách sống mới cho gia chủ. Với tầm nhìn trở thành biểu tượng của sự sáng tạo và chuyên nghiệp trong lĩnh vực phát triển bất động sản tại Đà Nẵng, Latelia cam kết mang đến những dự án được chăm chút đến từng chi tiết.
+                        </p>  
+                        <p className='text-[18px] mt-10'>
+                            {/* They oversee all aspects of the day to day operations working alongside a dedicated team of local craftsmen, artisans, architects, and world-renowned brands who all share one common purpose– To help your family start the life you didn’t even know you were dreaming about. */}
+                            Chúng tôi giám sát toàn bộ quá trình – từ ý tưởng đến khi hoàn thiện – cùng với đội ngũ kiến trúc sư, nghệ nhân và thợ thủ công lành nghề, cũng như hợp tác với các thương hiệu danh tiếng quốc tế. Mục tiêu chung của chúng tôi rất rõ ràng: giúp bạn khởi đầu một cuộc sống mà có thể bạn chưa từng nghĩ mình đang mơ ước.
                         </p>  
                     </div>
                     <div className='flex-basis basis-1/2 h-[650px]'>
@@ -55,11 +67,15 @@ function About()
                         <button className='rounded-full text-white p-2 bg-txt-secondary'><ArrowDown /></button>
                     </div>
                 </div>
-                <div className='ml-25 mt-30'>
-                    <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold w-80 mb-10 leading-tight'>
-                        Understand the market
+                <div className='ml-25 mt-30 mr-20'>
+                    <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold w-70 mb-10 leading-tight'>
+                        {/* Understand the market */}
+                        Thấu hiểu thị trường
                     </h1>
-                    <h4 className='text-[18px] w-150'>With our local team, we have the knowledge of local legislation, speak the local language and know what properties are currently on the market…or soon will be.</h4>
+                    <h4 className='text-[18px] w-150'>
+                        {/* With our local team, we have the knowledge of local legislation, speak the local language and know what properties are currently on the market…or soon will be. */}
+                        Chúng tôi am hiểu Đà Nẵng một cách tường tận – từ những con người thân thiện đến những địa điểm đáng nhớ – và chúng tôi luôn hướng tới việc mang giá trị gia đình vào từng ngôi nhà mình xây dựng.
+                    </h4>
                 </div>
                 <div className='h-[600px] w-full'>
                     <OptimizedImage src={aboutUs3} alt="" className='object-cover h-full w-full' />
@@ -72,16 +88,27 @@ function About()
                         <OptimizedImage src={aboutUs4} alt="" className='w-full h-[650px] object-cover'/>
                     </div>
                     <div className='flex-basis basis-1/2'>
-                        <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold mb-5'>One team. One set of standards.</h1>
-                        <h4 className='text-[26px] mb-10'>Berrow operates a “direct to buyer” model and manages everything from concept to completion.</h4>
+                        <h1 className='text-[60px] font-subtitle text-txt-secondary font-semibold mb-5'>
+                            {/* One team. One set of standards. */}
+                            Một đội ngũ <br/>
+                            Một tiêu chuẩn
+                        </h1>
+                        <h4 className='text-[26px] mb-10'>
+                            {/* Berrow operates a “direct to buyer” model and manages everything from concept to completion. */}
+                            L’atelia vận hành theo mô hình “trực tiếp đến người mua”, quản lý mọi công đoạn từ ý tưởng, thiết kế đến thi công và hoàn thiện.
+                        </h4>
                         <p className='text-[18px]'>
-                            Our designers work closely with a team of local craftspeople to reach a standard that measures up to our vision. For the duration of a project, we’re on the ground every day signing off on decisions, no matter how small. It’s this hand-on commitment that gives our clients peace of mind when they’re the other side of the world.
-                            The majority of our projects begin with no buyer in mind. We assume all the risk, giving us complete freedom to turn uncut gems into uncompromised masterpieces.The properties we sell are far more than a transaction to us –they’re homes we’ve put everything into creating.
+                            {/* Our designers work closely with a team of local craftspeople to reach a standard that measures up to our vision. For the duration of a project, we’re on the ground every day signing off on decisions, no matter how small. It’s this hand-on commitment that gives our clients peace of mind when they’re the other side of the world.
+                            The majority of our projects begin with no buyer in mind. We assume all the risk, giving us complete freedom to turn uncut gems into uncompromised masterpieces.The properties we sell are far more than a transaction to us –they’re homes we’ve put everything into creating. */}
+                            Đội ngũ thiết kế của chúng tôi làm việc chặt chẽ với các nghệ nhân và thợ thủ công địa phương, nhằm đạt đến chuẩn mực chất lượng cao nhất theo đúng tầm nhìn của L’atelia.
                         </p>  
+                        <p className='text-[18px] mt-10'>
+                        Chúng tôi luôn có mặt tại công trường mỗi ngày, đích thân phê duyệt từng chi tiết, dù là nhỏ nhất – bởi chúng tôi hiểu rằng sự tỉ mỉ chính là điều mang lại niềm tin và sự an tâm cho khách hàng, dù họ ở xa.
+                        </p>
                         <LocalizedLink to='/contact'>
                             <button className='mt-10 flex border border-txt-primary px-3 py-1 cursor-pointer group
                                     transition-all duration-300 uppercase text-[18px]'>
-                                CONTACT US <ArrowRight className='ml-4 transform
+                                LIÊN HỆ <ArrowRight className='ml-4 transform
                                     transition-transform
                                     duration-300
                                     group-hover:translate-x-2'/>
@@ -103,7 +130,7 @@ function About()
                         <div className='w-10 h-10 rounded-full overflow-hidden '>
                             <OptimizedImage src={aboutUs6} alt="" className='object-cover w-full h-full rounded-full'/>
                         </div>
-                        <p className='mt-2 text-[15px] font-subtitle'>Rogier van den Brand</p>
+                        <p className='mt-2 text-[15px] font-subtitle'>Trần Duy Tùng</p>
                         <p className='mt-2 text-[15px]'>Founder</p>
                     </div>
                 </div>
@@ -112,88 +139,98 @@ function About()
             <div className='bg-bg-primary flex justify-center mt-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full mt-20 mb-20'>
                     <div className='flex justify-between'>
-                        <h1 className='text-[60px] font-subtitle font-semibold text-txt-secondary'>Our appoarch</h1>
-                        <div>
+                        <h1 className='text-[60px] font-subtitle font-semibold text-txt-secondary'>Quy trình mua nhà cùng L’atelia</h1>
+                        {/* <div>
                             <button className='border rounded-2xl px-10 py-1 cursor-pointer border-txt-secondary font-semibold'>Buying</button>
                             <button className='border rounded-2xl px-10 py-1 cursor-pointer bg-txt-secondary text-bg-primary font-semibold'>Selling</button>
                             <button className='border rounded-2xl px-10 py-1 cursor-pointer border-txt-secondary font-semibold'>Renting</button>
-                        </div>
+                        </div> */}
                     </div>
                     {/*  */}
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-10">
                             <div className='p-8 bg-white'>
-                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Initial consultation</h4>
-                                <p className='text-[18px]'>Discuss your home-buying goals and preferences with a Royal Estates.</p>
+                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Tư vấn ban đầu</h4>
+                                <p className='text-[18px]'>Chúng tôi lắng nghe để hiểu rõ mong muốn, phong cách sống và yêu cầu riêng của bạn</p>
                                 <div className='w-full h-[1px] bg-txt-primary my-4'></div>
                                 <p className='flex items-start text-[18px]'>
-                                    <Check size={22} className='mr-2'/>
-                                    Understand client’s budget and preferences.
-                                </p>
-                                <p className='flex items-start text-[18px] mt-2'>
-                                    <Check size={20} className='mr-2'/>
-                                    Identify key criteria for property search.
-                                </p>
-                            </div>
-                            {/*  */}
-                            <div className='p-8 bg-white'>
-                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Property search</h4>
-                                <p className='text-[18px]'>Conduct a comprehensive search for properties that meet your criteria.</p>
-                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
-                                <p className='flex items-start text-[18px]'>
-                                    <Check size={25} className='mr-2'/>
-                                    Search through our extensive database of properties.
-                                </p>
-                                <p className='flex items-start text-[18px] mt-2'>
-                                    <Check size={27} className='mr-2'/>
-                                    Narrow down options based on location, size, and amenities.
-                                </p>
-                            </div>
-                            {/*  */}
-                            <div className='p-8 bg-white'>
-                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Viewings</h4>
-                                <p className='text-[18px]'>Schedule viewings of selected properties accompanied by a Royal Estates agent.</p>
-                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
-                                <p className='flex items-start text-[18px]'>
-                                    <Check size={20} className='mr-2'/>
-                                    Arrange property viewings at convenient times.
-                                </p>
-                                <p className='flex items-start text-[18px] mt-2'>
-                                    <Check size={25} className='mr-2'/>
-                                    Provide insights and answer questions during viewings.
-                                </p>
-                            </div>
-                            {/*  */}
-                            <div className='p-8 bg-white'>
-                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Negotiation and offer</h4>
-                                <p className='text-[18px]'>Assist in negotiating the best price and terms for your chosen property.</p>
-                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
-                                <p className='flex items-start text-[18px]'>
-                                    <Check size={28} className='mr-2'/>
-                                    Negotiate on behalf of the client to secure favorable terms.
-                                </p>
-                                <p className='flex items-start text-[18px] mt-2'>
-                                    <Check size={20} className='mr-2'/>
-                                    Present offers and counteroffers to the seller.
-                                </p>
-                            </div>
-                            {/*  */}
-                            <div className='p-8 bg-white'>
-                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Contract and closing</h4>
-                                <p className='text-[18px]'>Guide you through the contract process and finalize the sale.</p>
-                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
-                                <p className='flex items-start text-[18px]'>
-                                    <Check size={20} className='mr-2'/>
-                                   Review and explain contract terms.
+                                    <Check size={30} className='mr-2'/>
+                                    Xác định sở thích, nhu cầu và định hướng thiết kế mong muốn.
                                 </p>
                                 <p className='flex items-start text-[18px] mt-2'>
                                     <Check size={40} className='mr-2'/>
-                                    Coordinate with legal and financial professionals for a smooth closing process.
+                                    Làm rõ các tiêu chí trọng yếu và những yếu tố độc đáo mà bạn tìm kiếm ở một ngôi nhà.
+                                </p>
+                            </div>
+                            {/*  */}
+                            <div className='p-8 bg-white'>
+                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Đánh giá tài sản mong muốn</h4>
+                                <p className='text-[18px]'>Chúng tôi tiến hành đánh giá kỹ lưỡng ngôi nhà hoặc dự án mà bạn quan tâm.</p>
+                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
+                                <p className='flex items-start text-[18px]'>
+                                    <Check size={30} className='mr-2'/>
+                                    Phân tích, làm nổi bật các đặc điểm nổi trội của bất động sản.
+                                </p>
+                                <p className='flex items-start text-[18px] mt-2'>
+                                    <Check size={35} className='mr-2'/>
+                                    Đề xuất những cải tiến tiềm năng giúp tối ưu giá trị sử dụng và thẩm mỹ.
+                                </p>
+                                <p className='flex items-start text-[18px] mt-2'>
+                                    <Check size={45} className='mr-2'/>
+                                    Bạn có thể đề xuất hoặc thương lượng mức giá phù hợp với nhu cầu và ngân sách của mình.
+                                </p>
+                            </div>
+                            {/*  */}
+                            <div className='p-8 bg-white'>
+                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Đánh giá thiết kế</h4>
+                                <p className='text-[18px]'>Bạn sẽ được xem bản thiết kế chi tiết 2D và mô phỏng 3D của ngôi nhà.</p>
+                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
+                                <p className='flex items-start text-[18px]'>
+                                    <Check size={45} className='mr-2'/>
+                                    Thảo luận trực tiếp với kiến trúc sư của Latelia để tinh chỉnh thiết kế theo sở thích cá nhân.
+                                </p>
+                                <p className='flex items-start text-[18px] mt-2'>
+                                    <Check size={40} className='mr-2'/>
+                                    Đảm bảo ngôi nhà phản ánh đúng cá tính và phong cách sống riêng biệt của bạn.
+                                </p>
+                            </div>
+                            {/*  */}
+                            <div className='p-8 bg-white'>
+                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Chốt thiết kế & xem vị trí đất</h4>
+                                <p className='text-[18px]'>Chúng tôi lắng nghe để hiểu rõ mong muốn, phong cách sống và yêu cầu riêng của bạn</p>
+                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
+                                <p className='flex items-start text-[18px]'>
+                                    <Check size={45} className='mr-2'/>
+                                    Sau khi hoàn thiện bản thiết kế, bạn sẽ xem xét, xác nhận và ký duyệt phương án cuối cùng.
+                                </p>
+                                <p className='flex items-start text-[18px] mt-2'>
+                                    <Check size={60} className='mr-2'/>
+                                    Tiếp đó, Latelia sẽ hướng dẫn bạn tham quan thực tế vị trí đất, giúp bạn cảm nhận rõ hơn về không gian và tiềm năng của dự án.
+                                </p>
+                            </div>
+                            {/*  */}
+                            <div className='p-8 bg-white'>
+                                <h4 className='text-[25px] font-semibold font-subtitle text-txt-secondary'>Hoàn tất bán hàng</h4>
+                                <p className='text-[18px]'>Latelia đồng hành cùng bạn đến bước cuối cùng của hành trình.</p>
+                                <div className='w-full h-[1px] bg-txt-primary my-4'></div>
+                                <p className='flex items-start text-[18px]'>
+                                    <Check size={30} className='mr-2'/>
+                                    Hỗ trợ trọn gói các thủ tục pháp lý và hành chính liên quan.
+                                </p>
+                                <p className='flex items-start text-[18px] mt-2'>
+                                    <Check size={35} className='mr-2'/>
+                                    Hướng dẫn chi tiết quy trình ký kết, chuyển nhượng và nhận bàn giao.
+                                </p>
+                                <p className='flex items-start text-[18px] mt-2'>
+                                    <Check size={35} className='mr-2'/>
+                                    Đảm bảo toàn bộ quá trình diễn ra minh bạch, suôn sẻ và thành công.
                                 </p>
                             </div>
                             {/*  */}
                             <div className='p-8 bg-white flex flex-col justify-center items-center w-100'>
-                               <h1 className='text-[40px] font-subtitle font-semibold text-txt-secondary text-center'>Start your home search</h1>
-                               <button className='bg-txt-secondary text-bg-primary flex px-4 py-2 text-[18px] uppercase cursor-pointer'>Contact Us <ArrowRight className='ml-8'/></button>
+                            <h1 className='text-[40px] font-subtitle font-semibold text-txt-secondary text-center leading-tight'>
+    Tìm kiếm ngôi nhà hoàn hảo của bạn
+</h1>
+                               <button className='bg-txt-secondary text-bg-primary flex px-4 py-2 text-[18px] uppercase cursor-pointer mt-4'>LIÊN HỆ NGAY<ArrowRight className='ml-8'/></button>
                             </div>
                     </div>
                     {/*  */}

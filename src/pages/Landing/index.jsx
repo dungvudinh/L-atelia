@@ -97,7 +97,7 @@ function Landing() {
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] flex gap-10">
                     {/* LEFT CONTENT */}
                     <div className="flex-basis basis-1/2">
-                        <h1 className="font-subtitle text-[60px] text-bg-secondary">{t('landing:our_philosophy.title')}</h1>
+                        <h1 className="font-subtitle text-[60px] text-bg-secondary font-semibold">{t('landing:our_philosophy.title')}</h1>
                         <h4 className="text-[38px] text-txt-primary mt-8">
                             {t('landing:our_philosophy.summary')}
                         </h4>

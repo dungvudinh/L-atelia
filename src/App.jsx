@@ -8,7 +8,7 @@ import { publicRoutes } from "./routes/index";
 // 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
 function LanguageRedirect() {
   const userLang = navigator.language.startsWith("vi") ? "vi" : "en";
-  return <Navigate to={`/en`} replace />;
+  return <Navigate to={`/vi`} replace />;
 }
 
 // 🧩 Đồng bộ i18n khi URL thay đổi (/:lng)
@@ -26,9 +26,12 @@ function LanguageSync({ children }) {
 
   // Nếu Redux thay đổi → cập nhật và lưu localStorage
   useEffect(() => {
-      if (language && i18n.language !== language) {
-        i18n.changeLanguage(language);
-        localStorage.setItem("language", language);
+      // if (language && i18n.language !== language) {
+      //   i18n.changeLanguage(language);
+      //   localStorage.setItem("language", language);
+      // }
+      if (i18n.language !== "vi") {
+        i18n.changeLanguage("vi");
       }
     }, [language, i18n]);
 
@@ -70,7 +73,7 @@ function LocalizedRoutes() {
       {/* Redirect từ /:lng đến /:lng/ (trang chủ) */}
       <Route 
         path="" 
-        element={<Navigate to={`/${lng}`} replace />} 
+        element={<Navigate to={`/vi`} replace />} 
       />
     </Routes>
   );
