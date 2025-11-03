@@ -1,4 +1,4 @@
-import media1 from '../../assets/images/media1.png'
+import media1 from '../../assets/images/media1.webp'
 import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
 import {LocalizedLink} from '../../components/LocalizedLink';

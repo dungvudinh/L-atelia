@@ -44,7 +44,7 @@ function LazyImage({
   }, [priority, eager]);
 
   return (
-    <div ref={imgRef} className="relative">
+    <div ref={imgRef} className="relative h-full">
       {/* Placeholder chỉ hiện khi chưa load xong */}
       {!isLoaded && (
         <div className={`absolute inset-0 bg-gray-200 animate-pulse z-10 ${className}`}>
