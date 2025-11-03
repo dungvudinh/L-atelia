@@ -13,7 +13,7 @@ import { CalendarClock, ArrowDown,GroupSearch, Group,Face,Bed, Sort,AddLocation,
     FamilyRestRoom,
     VapeFree,
     BeachAccess} from "../../assets/icons";
-import PropertiesForRent1 from '../../assets/images/properties-for-rent-1.png';
+import PropertiesForRent1 from '../../assets/images/properties-for-rent-1.webp';
 import { ArrowRight, Wifi } from "lucide-react";
 import { Swiper, SwiperSlide  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
