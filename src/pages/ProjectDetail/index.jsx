@@ -11,7 +11,7 @@ import OptimizedImage from "../../components/OptimizedImage";
 import CustomAccordion from "../../components/Accordion";
 import { LocalizedLink } from "../../components/LocalizedLink";
 
-function PropertyDetail()
+function ProjectDetail()
 {
     return (
         <div className="mt-20">
@@ -192,4 +192,4 @@ function PropertyDetail()
         </div>
     )
 }
-export default PropertyDetail;
+export default ProjectDetail
