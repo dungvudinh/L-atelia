@@ -31,7 +31,7 @@ function Projects() {
       
       console.log('🚀 Starting to fetch projects...');
       const response = await projectsService.getProjects();
-      
+      console.log(response)
       // Transform API data to match your component structure với field mapping chính xác
       const transformedProjects = response.data?.projects?.map(project => ({
         id: project._id || project.id,
@@ -169,6 +169,7 @@ function Projects() {
 }
 
 const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloadedImages, titleSlug }) => {
+  console.log(project)
   const handleClick = useCallback(() => {
     onImageClick(project.id);
   }, [onImageClick, project.id]);
@@ -180,7 +181,15 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
     return `${'http://localhost:3000'}/${imagePath}`;
   };
 
-  const imageUrl = getImageUrl(project.src);
+  const imageUrl = getImageUrl(project.src.url);
+  
+  // Lấy ảnh thứ 2 từ gallery nếu có
+  const secondImageUrl = project.gallery && project.gallery.length > 1 
+    ? getImageUrl(project.gallery[1]) 
+    : null;
+
+  // Kiểm tra xem gallery có trên 2 ảnh không
+  const hasMultipleImages = project.gallery && project.gallery.length > 1;
 
   return (
     <div 
@@ -192,7 +201,6 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
         src={imageUrl} 
         alt={project.alt}
         className="w-full h-100 object-cover transition-transform duration-300 group-hover:scale-105"
-        
         priority={isPriority}
         eager={isEager}
         placeholder={
@@ -211,39 +219,52 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
 
       {/* Overlay khi hover */}
       <div className='w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-        <div className='w-full h-full relative'>
+      <div className='w-full h-full relative'>
+        {/* Hiển thị ảnh thứ 2 nếu có nhiều hơn 2 ảnh, ngược lại hiển thị ảnh gốc với overlay tối */}
+        {hasMultipleImages ? (
+          <LazyImage 
+            src={secondImageUrl} 
+            alt={project.alt}
+            className="w-full h-full object-cover"
+            eager={isEager}
+          />
+        ) : (
           <LazyImage 
             src={imageUrl} 
             alt={project.alt}
-            className="w-full h-full object-cover brightness-50"
+            className="w-full h-full object-cover"
             eager={isEager}
           />
-        </div>
+        )}
         
-        <div className='absolute inset-0 flex flex-col justify-center items-start p-6 z-30 mt-40 ml-4'>
-          <div className="text-left max-w-md">
-            <h4 className='text-white text-[18px] font-light mb-6 leading-relaxed'>
-              {project.description || 'Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros'}
-            </h4>
-            <LocalizedLink to={`/projects/${project.id}`}>
-              <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
-              hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
-                view more
-                <ArrowRight className='ml-4' size={20}/>
-              </button>
-            </LocalizedLink>
-          </div>
+        {/* Overlay màu tối trong suốt */}
+        <div className="absolute inset-0 bg-black/60 z-10"></div>
+      </div>
+      
+      {/* Nội dung hiển thị khi hover (description và nút View more) */}
+      <div className='absolute inset-0 flex flex-col justify-center items-start p-6 z-30 mt-40 ml-4'>
+        <div className="text-left max-w-md">
+          <h4 className='text-white text-[18px] font-light mb-6 leading-relaxed'>
+            {project.title || 'Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros'}
+          </h4>
+          <LocalizedLink to={`/projects/${project.id}`}>
+            <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
+            hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
+              view more
+              <ArrowRight className='ml-4' size={20}/>
+            </button>
+          </LocalizedLink>
         </div>
       </div>
+    </div>
 
       {/* Title hiển thị mặc định */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300 z-20">
+      {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 group-hover:opacity-0 transition-opacity duration-300 z-20">
         <h3 className="text-white text-xl font-semibold">{project.title}</h3>
-        {/* <p className="text-gray-200 text-sm">For Sale</p> */}
         {project.location && (
           <p className="text-gray-300 text-xs mt-1">{project.location}</p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 });

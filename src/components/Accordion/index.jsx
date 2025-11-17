@@ -41,7 +41,7 @@ console.log(accordionItems)
                 <ChevronRight size={25} />
                 </div>
                 <span className="text-[18px] font-bold text-gray-800 ml-2">
-                  {item.title}
+                  {item.name}
                 </span>
               </div>
               
@@ -53,7 +53,7 @@ console.log(accordionItems)
               }`}
             >
               <div className=" pb-4 text-[18px]">
-                {item.content}
+                {item.description}
               </div>
             </div>
           </div>

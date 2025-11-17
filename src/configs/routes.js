@@ -9,7 +9,7 @@ const routes = {
     media:'media', 
     mediaDetail:'media/:mediaId', 
     about:'about',
-    brochure:'view-brochure/:brochureId',
+    brochure:'view-brochure/:projectId',
     contact:'/contact'
   };
   

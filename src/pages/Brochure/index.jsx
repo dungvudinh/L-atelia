@@ -1,199 +1,287 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import brochureAndFloorPlans from '../../assets/images/brochure-and-floorplans.png'
 import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
-import item1 from '../../assets/images/brochure-and-floorplans/item1.webp'
 import Footer from "../../layouts/components/Footer";
-import brochure from '../../assets/images/brochure/brochure.webp';
-import brochure2 from '../../assets/images/brochure/brochure-2.webp';
-import brochure3 from '../../assets/images/brochure/brochure-3.webp';
-import brochure4 from '../../assets/images/brochure/brochure-4.webp';
-import brochure5 from '../../assets/images/brochure/brochure-5.webp';
-import brochure6 from '../../assets/images/brochure/brochure-6.webp';
 import LazyImage from "../../components/LazyImage";
+import { projectsService } from "../../services/projectsService";
+
 const FILTERS = [
     {
         id: 0, 
         title: 'Brochure', 
         type: 'PDF', 
-        banner: brochureAndFloorPlans, 
-        data: [
-            {id: 1, src: item1}, 
-            {id: 2, src: item1}, 
-            {id: 3, src: item1}, 
-            {id: 4, src: item1}
-        ]
+        banner: brochureAndFloorPlans
     },
     {
         id: 1, 
         title: 'Tiến độ thi công', 
         type: 'JPG', 
-        banner: currentStatePhotos,
-        data: [
-            {
-                uploadDate: 'August 25 2025',
-                images: [
-                    {id: 1, src: brochure}, 
-                    {id: 2, src: brochure2}, 
-                    {id: 3, src: brochure3}, 
-                    {id: 4, src: brochure4},
-                    {id: 5, src: brochure5},
-                    {id: 6, src: brochure6}
-                ]
-            },
-            {
-                uploadDate: 'August 20 2025', 
-                images: [
-                    {id: 7, src: brochure}, 
-                    {id: 8, src: brochure2}, 
-                    {id: 9, src: brochure3}, 
-                    {id: 10, src: brochure4},
-                    {id: 11, src: brochure6}
-                ]
-            },
-            {
-                uploadDate: 'August 15 2025',
-                images: [
-                    {id: 12, src: brochure}, 
-                    {id: 13, src: brochure3}, 
-                    {id: 14, src: brochure6}
-                ]
-            }
-        ]
+        banner: currentStatePhotos
     },
     {
         id: 2, 
         title: 'Hình ảnh thiết kế', 
         type: 'JPG', 
-        banner: rendersShowingPotential,
-        data: [
-            {
-                uploadDate: 'July 30 2025',
-                images: [
-                    {id: 15, src: brochure2}, 
-                    {id: 16, src: brochure3}, 
-                    {id: 17, src: brochure6}, 
-                    {id: 18, src: brochure5},
-                    {id: 19, src: brochure3},
-                    {id: 20, src: brochure4},
-                    {id: 21, src: brochure6},
-                    {id: 22, src: brochure2}
-                ]
-            },
-            {
-                uploadDate: 'July 25 2025',
-                images: [
-                    {id: 23, src: brochure2}, 
-                    {id: 24, src: brochure4}, 
-                    {id: 25, src: brochure6}, 
-                    {id: 26, src: brochure3}
-                ]
-            },
-            {
-                uploadDate: 'July 20 2025',
-                images: [
-                    {id: 27, src: brochure2}, 
-                    {id: 28, src: brochure4}, 
-                    {id: 29, src: brochure5}, 
-                    {id: 30, src: brochure2},
-                    {id: 31, src: brochure6}
-                ]
-            }
-        ]
+        banner: rendersShowingPotential
     }
 ]
+
 function usePriorityPreload(imageUrls, count = 6) {
     const [preloadedImages, setPreloadedImages] = useState(new Set());
   
     useEffect(() => {
-      const preloadImages = async () => {
-        const imagesToPreload = imageUrls.slice(0, count);
-        
-        const preloadPromises = imagesToPreload.map((url) => {
-          return new Promise((resolve) => {
-            const img = new Image();
-            img.src = url;
-            img.onload = () => {
-              setPreloadedImages(prev => new Set([...prev, url]));
-              resolve();
-            };
-            img.onerror = resolve;
-          });
-        });
-  
-        await Promise.all(preloadPromises);
-      };
-  
-      if (imageUrls.length > 0) {
+        if (imageUrls.length === 0) return;
+
+        const preloadImages = async () => {
+            const imagesToPreload = imageUrls.slice(0, count);
+            
+            const preloadPromises = imagesToPreload.map((url) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = url;
+                    img.onload = () => {
+                        setPreloadedImages(prev => {
+                            if (prev.has(url)) return prev;
+                            return new Set([...prev, url]);
+                        });
+                        resolve();
+                    };
+                    img.onerror = resolve;
+                });
+            });
+
+            await Promise.all(preloadPromises);
+        };
+
         preloadImages();
-      }
     }, [imageUrls, count]);
-  
+
     return preloadedImages;
-  }
+}
+
+// Hàm format ngày tháng
+const formatDate = (dateString) => {
+    if (!dateString) return 'Unknown Date';
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'Invalid Date';
+    
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+};
+
+// Hàm nhóm hình ảnh theo ngày
+const groupImagesByDate = (images) => {
+    if (!images || !Array.isArray(images)) return [];
+    
+    const grouped = {};
+    
+    images.forEach(image => {
+        if (!image.url) return;
+        
+        const dateKey = image.uploaded_at ? new Date(image.uploaded_at).toDateString() : 'Unknown Date';
+        
+        if (!grouped[dateKey]) {
+            grouped[dateKey] = {
+                uploadDate: image.uploaded_at,
+                images: []
+            };
+        }
+        
+        grouped[dateKey].images.push({
+            id: image.id || Math.random().toString(36).substr(2, 9),
+            src: image.url,
+            uploaded_at: image.uploaded_at
+        });
+    });
+    
+    return Object.values(grouped)
+        .sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate))
+        .map(group => ({
+            ...group,
+            uploadDate: formatDate(group.uploadDate)
+        }));
+};
+
 function Brochure() {
     const [filterId, setFilterId] = useState(0);
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [searchParams] = useSearchParams();
+    const { projectId } = useParams();
     const navigate = useNavigate();
     const filter = searchParams.get('filter');
     
-    // Lấy tất cả URLs của images trong filter hiện tại để preload
-    const getCurrentFilterImageUrls = () => {
-        const currentFilter = FILTERS.find(f => f.id == filterId);
-        if (!currentFilter) return [];
-        
-        if (filterId == 0) {
-            // Brochure - data là array đơn giản
-            return currentFilter.data.map(item => item.src);
-        } else {
-            // Các filter khác - data có nested structure
-            return currentFilter.data.flatMap(dateGroup => 
-                dateGroup.images.map(img => img.src)
-            );
-        }
-    };
+    // Fetch project data từ API
+    const fetchProjectData = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            
+            if (!projectId) {
+                throw new Error('Project ID is required');
+            }
 
-    const imageUrls = getCurrentFilterImageUrls();
-    const preloadedImages = usePriorityPreload(imageUrls, 8); // Preload 8 ảnh đầu tiên
+            const response = await projectsService.getProjectById(projectId);
+            setProject(response.data || response);
+            
+        } catch (err) {
+            console.error('❌ Failed to fetch project data:', err);
+            setError(err.message || 'Failed to load project data');
+        } finally {
+            setLoading(false);
+        }
+    }, [projectId]);
 
     useEffect(() => {
-        setFilterId(filter || 0);
+        if (projectId) {
+            fetchProjectData();
+        }
+    }, [projectId, fetchProjectData]);
+
+    // Set filterId từ URL parameter
+    useEffect(() => {
+        if (filter !== null) {
+            setFilterId(parseInt(filter) || 0);
+        }
     }, [filter]);
 
-    const handleSetFilterId = (filterItem) => {
+    // Memoize hàm getCurrentFilterImageUrls
+    const getCurrentFilterImageUrls = useCallback(() => {
+        if (!project) return [];
+        
+        if (filterId === 0) {
+            if (Array.isArray(project.brochure)) {
+                return project.brochure.map(item => item.url).filter(url => url);
+            } else if (project.brochure && project.brochure.url) {
+                return [project.brochure.url];
+            }
+            return [];
+        } else if (filterId === 1) {
+            if (!project.constructionProgress || !Array.isArray(project.constructionProgress)) return [];
+            return project.constructionProgress.map(item => item.url).filter(url => url);
+        } else if (filterId === 2) {
+            if (!project.designImages || !Array.isArray(project.designImages)) return [];
+            return project.designImages.map(item => item.url).filter(url => url);
+        }
+        
+        return [];
+    }, [project, filterId]);
+
+    // Memoize imageUrls
+    const imageUrls = useMemo(() => {
+        return getCurrentFilterImageUrls();
+    }, [getCurrentFilterImageUrls]);
+
+    const preloadedImages = usePriorityPreload(imageUrls, 8);
+
+    // Memoize hàm getCurrentFilterData
+    const getCurrentFilterData = useCallback(() => {
+        if (!project) return [];
+        
+        if (filterId === 0) {
+            if (Array.isArray(project.brochure)) {
+                return project.brochure.map((item, index) => ({
+                    id: item.id || `brochure-${index}`,
+                    url: item.url,
+                }));
+            } else if (project.brochure && project.brochure.url) {
+                return [{ id: 1, url: project.brochure.url }];
+            }
+            return [];
+        } else if (filterId === 1) {
+            return groupImagesByDate(project.constructionProgress || []);
+        } else if (filterId === 2) {
+            return groupImagesByDate(project.designImages || []);
+        }
+        return [];
+    }, [project, filterId]);
+
+    const currentFilterData = useMemo(() => {
+        return getCurrentFilterData();
+    }, [getCurrentFilterData]);
+
+    const handleSetFilterId = useCallback((filterItem) => {
         setFilterId(filterItem.id);
         navigate(`?filter=${filterItem.id}`);
-    }
+    }, [navigate]);
 
-    const isBrochure = filterId == 0;
+    const isBrochure = filterId === 0;
     const gridClass = isBrochure 
         ? "grid grid-cols-1 gap-4"
         : "grid grid-cols-3 gap-4";
 
     // Hàm xác định mức độ ưu tiên cho từng ảnh
-    const getImagePriority = (index, groupIndex = 0) => {
-        // Ảnh đầu tiên của group đầu tiên: priority cao nhất
+    const getImagePriority = useCallback((index, groupIndex = 0) => {
         if (groupIndex === 0 && index < 2) return { priority: true };
-        // 4 ảnh tiếp theo: eager load
         if (groupIndex === 0 && index < 6) return { eager: true };
-        // Các ảnh còn lại: lazy loading
         return {};
-    };
+    }, []);
+
+    // Loading state
+    if (loading) {
+        return (
+            <div className="mt-20 flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                    <div className="w-12 h-12 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="mt-4 text-txt-gray text-lg">Loading project data...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (error) {
+        return (
+            <div className="mt-20 flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                    <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                        <h2 className="text-xl font-semibold">Error</h2>
+                        <p>{error}</p>
+                        <button 
+                            onClick={fetchProjectData}
+                            className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700"
+                        >
+                            Retry
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!project) {
+        return (
+            <div className="mt-20 flex justify-center items-center min-h-screen">
+                <div className="text-center">
+                    <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+                        <h2 className="text-xl font-semibold">Project Not Found</h2>
+                        <p>The requested project could not be found.</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return ( 
         <div className="">
             <div className="mt-20 flex justify-center mb-20">
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10">
-                    <h1 className="text-[60px] font-subtitle text-txt-secondary mb-10">Patiki Townhouse</h1>
+                    <h1 className="text-[60px] font-subtitle text-txt-secondary mb-10">
+                        {project.title}
+                    </h1>
+                    
                     <p className="text-[26px] text-txt-gray">
-                        An architectural gem immaculately restored and modernized from its 1896 creation with no compromise on luxury. The mission in reforming the historic mansion was to create a home with an uncompromised year round living experience, while ensuring the heritage not only lived on but enhanced its lavish style.
+                        {project.description}
                     </p>
                     
                     <ul className="mt-20 text-[25px] flex font-subtitle font-semibold">
                         {FILTERS.map(filterItem => (
                             <li 
-                                className={`w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer select-none ${filterId == filterItem.id ? 'bg-txt-secondary text-white' : ''}`} 
+                                className={`w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer select-none ${filterId === filterItem.id ? 'bg-txt-secondary text-white' : ''}`} 
                                 key={filterItem.id} 
                                 onClick={() => handleSetFilterId(filterItem)}
                             >
@@ -202,44 +290,43 @@ function Brochure() {
                         ))}
                     </ul>
 
-                    {/* MAIN CONTENT */}
                     <div className="mt-10">
-                        {/* Hiển thị cho Brochure */}
-                        {isBrochure && (
+                        {currentFilterData.length === 0 && (
+                            <div className="text-center py-12">
+                                <p className="text-txt-gray text-lg">No data available for this section.</p>
+                            </div>
+                        )}
+
+                        {isBrochure && currentFilterData.length > 0 && (
                             <div className={gridClass}>
-                                {FILTERS[filterId].data && 
-                                    FILTERS[filterId].data.map((dataItem, index) => (
-                                        <div key={dataItem.id} className="w-full">
-                                            <LazyImage 
-                                                src={dataItem.src} 
-                                                alt="" 
-                                                className="w-full h-[325px] object-cover"
-                                                {...getImagePriority(index)}
-                                                placeholder={
-                                                    <div className="w-full h-64 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-                                                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
-                                                            preloadedImages.has(dataItem.src) ? 'opacity-50' : ''
-                                                        }`}></div>
-                                                    </div>
-                                                }
-                                            />
-                                        </div>
-                                    ))
-                                }
+                                {currentFilterData.map((item, index) => (
+                                    <div key={item.id} className="w-full">
+                                        <LazyImage 
+                                            src={item.url} 
+                                            alt="" 
+                                            className="w-full h-[325px] object-cover"
+                                            {...getImagePriority(index)}
+                                            placeholder={
+                                                <div className="w-full h-64 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                    <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                                                        preloadedImages.has(item.url) ? 'opacity-50' : ''
+                                                    }`}></div>
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         )}
                         
-                        {/* Hiển thị cho Tiến độ thi công & Hình ảnh thiết kế */}
-                        {!isBrochure && FILTERS[filterId].data.map((dateGroup, groupIndex) => (
+                        {!isBrochure && currentFilterData.map((dateGroup, groupIndex) => (
                             <div key={groupIndex} className="mb-12">
-                                {/* Hiển thị ngày đăng */}
                                 <div className="flex items-center mb-6 pl-2">
                                     <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
                                     <p className="w-150 text-center font-semibold text-lg">{dateGroup.uploadDate}</p>
                                     <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
                                 </div>
                                 
-                                {/* Grid hình ảnh 3 cột */}
                                 <div className={gridClass}>
                                     {dateGroup.images.map((imageItem, imageIndex) => (
                                         <div key={imageItem.id} className="w-full h-[325px]">
