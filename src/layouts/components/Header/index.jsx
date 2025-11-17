@@ -7,7 +7,7 @@ import {setLanguage} from '../../../redux/actions/languageActions';
 import {LocalizedLink} from '../../../components/LocalizedLink';
 const MENU_ITEMS = [
     {id:1, title:'projects', to:'/projects'},
-    {id:2, title:'properties for sale', to:'/properties-for-sale'}, 
+    // {id:2, title:'properties for sale', to:'/properties-for-sale'}, 
     {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
     {id:4, title:'about us', to:'/about'}, 
     {id:5, title:'media', to:'/media'}, 
