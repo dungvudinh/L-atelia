@@ -20,6 +20,10 @@ body
     color:#404040 !important;
 
 }
+/* ::after 
+{
+  background-color: none !important;
+} */
 .swiper 
 {
   position:relative !important;
@@ -174,4 +178,36 @@ body
 /* Transition mượt khi chuyển filter */
 .filter-content {
   transition: opacity 0.3s ease-in-out;
+}
+.react-datepicker {
+  width: 100% !important;
+}
+
+.react-datepicker__month-container {
+  width: 100% !important;
+}
+
+.react-datepicker__month {
+  margin: 0 !important;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .react-datepicker {
+    font-size: 14px !important;
+  }
+  
+  .react-datepicker__day {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    line-height: 2.5rem !important;
+  }
+  
+  .react-datepicker__header {
+    padding: 0.5rem !important;
+  }
+  
+  .react-datepicker__current-month {
+    font-size: 1rem !important;
+  }
 }

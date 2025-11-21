@@ -212,7 +212,7 @@ function Brochure() {
     const isBrochure = filterId === 0;
     const gridClass = isBrochure 
         ? "grid grid-cols-1 gap-4"
-        : "grid grid-cols-3 gap-4";
+        : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4";
 
     // Hàm xác định mức độ ưu tiên cho từng ảnh
     const getImagePriority = useCallback((index, groupIndex = 0) => {
@@ -224,7 +224,7 @@ function Brochure() {
     // Loading state
     if (loading) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen">
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="w-12 h-12 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin mx-auto"></div>
                     <p className="mt-4 text-txt-gray text-lg">Loading project data...</p>
@@ -236,7 +236,7 @@ function Brochure() {
     // Error state
     if (error) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen">
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
                         <h2 className="text-xl font-semibold">Error</h2>
@@ -255,7 +255,7 @@ function Brochure() {
 
     if (!project) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen">
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
                         <h2 className="text-xl font-semibold">Project Not Found</h2>
@@ -268,20 +268,26 @@ function Brochure() {
 
     return ( 
         <div className="">
-            <div className="mt-20 flex justify-center mb-20">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10">
-                    <h1 className="text-[60px] font-subtitle text-txt-secondary mb-10">
+            <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4 lg:px-0">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-6 lg:mt-10 w-full">
+                    {/* HEADER */}
+                    <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary mb-6 lg:mb-10 leading-tight">
                         {project.title}
                     </h1>
                     
-                    <p className="text-[26px] text-txt-gray">
+                    <p className="text-[18px] md:text-[22px] lg:text-[26px] text-txt-gray leading-relaxed">
                         {project.description}
                     </p>
                     
-                    <ul className="mt-20 text-[25px] flex font-subtitle font-semibold">
+                    {/* FILTER TABS */}
+                    <ul className="mt-10 lg:mt-20 text-[16px] md:text-[20px] lg:text-[25px] flex flex-col sm:flex-row font-subtitle font-semibold gap-4 sm:gap-2 lg:gap-0">
                         {FILTERS.map(filterItem => (
                             <li 
-                                className={`w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-10 py-2 cursor-pointer select-none ${filterId === filterItem.id ? 'bg-txt-secondary text-white' : ''}`} 
+                                className={`w-full sm:w-[200px] md:w-[300px] lg:w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-4 md:px-6 lg:px-10 py-2 md:py-2 cursor-pointer select-none transition-all duration-300 ${
+                                    filterId === filterItem.id 
+                                        ? 'bg-txt-secondary text-white scale-105' 
+                                        : 'hover:bg-gray-100'
+                                }`} 
                                 key={filterItem.id} 
                                 onClick={() => handleSetFilterId(filterItem)}
                             >
@@ -290,10 +296,11 @@ function Brochure() {
                         ))}
                     </ul>
 
-                    <div className="mt-10">
+                    {/* CONTENT */}
+                    <div className="mt-8 lg:mt-10">
                         {currentFilterData.length === 0 && (
-                            <div className="text-center py-12">
-                                <p className="text-txt-gray text-lg">No data available for this section.</p>
+                            <div className="text-center py-8 lg:py-12">
+                                <p className="text-txt-gray text-base lg:text-lg">No data available for this section.</p>
                             </div>
                         )}
 
@@ -304,10 +311,10 @@ function Brochure() {
                                         <LazyImage 
                                             src={item.url} 
                                             alt="" 
-                                            className="w-full h-[325px] object-cover"
+                                            className="w-full h-[200px] md:h-[250px] lg:h-[325px] object-cover"
                                             {...getImagePriority(index)}
                                             placeholder={
-                                                <div className="w-full h-64 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                <div className="w-full h-[200px] md:h-[250px] lg:h-[325px] bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
                                                     <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
                                                         preloadedImages.has(item.url) ? 'opacity-50' : ''
                                                     }`}></div>
@@ -320,16 +327,20 @@ function Brochure() {
                         )}
                         
                         {!isBrochure && currentFilterData.map((dateGroup, groupIndex) => (
-                            <div key={groupIndex} className="mb-12">
-                                <div className="flex items-center mb-6 pl-2">
-                                    <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
-                                    <p className="w-150 text-center font-semibold text-lg">{dateGroup.uploadDate}</p>
-                                    <div className="w-full h-[2px] bg-txt-primary opacity-50"></div>
+                            <div key={groupIndex} className="mb-8 lg:mb-12">
+                                {/* DATE HEADER */}
+                                <div className="flex items-center mb-4 lg:mb-6 px-2">
+                                    <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
+                                    <p className="w-full md:w-150 text-center font-semibold text-sm md:text-base lg:text-lg px-2 md:px-0">
+                                        {dateGroup.uploadDate}
+                                    </p>
+                                    <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
                                 </div>
                                 
+                                {/* IMAGE GRID */}
                                 <div className={gridClass}>
                                     {dateGroup.images.map((imageItem, imageIndex) => (
-                                        <div key={imageItem.id} className="w-full h-[325px]">
+                                        <div key={imageItem.id} className="w-full h-[200px] md:h-[250px] lg:h-[325px]">
                                             <LazyImage 
                                                 src={imageItem.src} 
                                                 alt="" 

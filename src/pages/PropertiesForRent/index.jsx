@@ -2,9 +2,9 @@
 import { useEffect,useState, useRef, useMemo } from "react";
 import { useParams, useNavigate} from "react-router-dom";
 import Footer from "../../layouts/components/Footer";
-import { CalendarClock, ArrowDown, GroupSearch, Group, Face, Sort, AddLocation, Distance, FilterList, Payments, PaymentArrowDown } from "../../assets/icons";
+import { CalendarClock, ArrowDown, GroupSearch, Group, Face, Sort, AddLocation, Distance, FilterList, Payments, PaymentArrowDown,Star, OutdoorGrill, Bed, AddGroupOff, Balcony, ACUnit, CarLock, Exercise, DishWasher, FamilyRestRoom, VapeFree, Wifi, BeachAccess } from "../../assets/icons";
 import PropertiesForRent1 from '../../assets/images/properties-for-rent-1.webp';
-import { ArrowRight, ChevronLeft, ChevronRight, Check } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Check, Highlighter } from "lucide-react";
 import { Swiper, SwiperSlide  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { useTranslation } from "react-i18next";
@@ -24,8 +24,8 @@ const LOCATION_ITEMS = [
 
 // THAY ĐỔI: Chỉ 2 option sort mới
 const SORTING_ITEMS = [
-  {id:1, name:'Per Room Per Night', value: 'per_room_per_night'},
-  {id:2, name:'Total Price', value: 'total_price'},
+  {id:1, name:'Per Room Per Night', value: 'per_room_per_night', icon:<Payments />},
+  {id:2, name:'Total Price', value: 'total_price', icon:<Payments />},
 ]
 
 // Hàm tính giá theo từng loại
@@ -75,7 +75,9 @@ function PropertiesForRent() {
   const [error, setError] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedSorting, setSelectedSorting] = useState(SORTING_ITEMS[0]);
-  
+  // THÊM: State cho show more description
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  console.log(rentProperties)
   // THAY ĐỔI: Tách state cho filter và search
   const [searchFilters, setSearchFilters] = useState({
     checkIn: null,
@@ -494,9 +496,52 @@ function PropertiesForRent() {
     return PropertiesForRent1;
   };
 
+  // THÊM: Hàm xử lý click show more
+  const handleShowMoreClick = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  // THÊM: Hàm lọc related properties (loại bỏ current property)
+  const getRelatedProperties = () => {
+    if (!currentProperty) return [];
+    
+    // Lọc ra các property khác với currentProperty
+    const otherProperties = rentProperties.filter(property => 
+      property._id !== currentProperty._id
+    );
+    
+    // Lấy 4 property đầu tiên
+    return otherProperties.slice(0, 4);
+  };
+
+  const renderAmenities = (title)=>
+  {
+    switch(title)
+    {
+      case 'Balcony': 
+        return <Balcony />
+      case 'Air conditioning': 
+        return <ACUnit />
+      case 'Parking':
+        return <CarLock />
+      case 'Fitness center':
+        return <Exercise />
+      case 'Kitchen': 
+        return <DishWasher />
+      case 'Family rooms':
+        return <FamilyRestRoom />
+      case 'Non-smoking rooms':
+        return <VapeFree />
+      case 'Wifi in all areas': 
+        return <Wifi />
+      case 'Beachfront': 
+        return <BeachAccess />
+    }
+  }
+
   if (loading) {
     return (
-      <div className="mt-20 flex justify-center items-center min-h-screen">
+      <div className="mt-20 flex justify-center items-center min-h-screen px-4">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-txt-gray text-lg">Loading properties...</p>
@@ -507,7 +552,7 @@ function PropertiesForRent() {
 
   if (error) {
     return (
-      <div className="mt-20 flex justify-center items-center min-h-screen">
+      <div className="mt-20 flex justify-center items-center min-h-screen px-4">
         <div className="text-center">
           <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             <h2 className="text-xl font-semibold">Error</h2>
@@ -526,23 +571,23 @@ function PropertiesForRent() {
 
   return ( 
     <div className="mt-20">
-      <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
-        {/* GROUP FILTER */}
-        <div className="pt-20 flex w-full mb-10">
+      <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
+        {/* GROUP FILTER - MOBILE RESPONSIVE */}
+        <div className="pt-10 flex flex-col lg:flex-row w-full mb-6 gap-4">
           {/* CHECK IN */}
-          <div className="relative mr-5 flex-1" ref={checkInRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none"  
+          <div className="relative flex-1" ref={checkInRef}>
+            <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
                  onClick={() => setShowCheckInDate(!showCheckInDate)}>
               <div className="flex items-center">
-                <CalendarClock className='mr-2'/>
-                <span className={'text-[18px]'}>
-                {formatDisplayDate(tempFilters.checkIn, 'checkin')} {/* Thêm type */}
+                <CalendarClock className='mr-2 w-4 h-4'/>
+                <span className={'text-[14px]'}>
+                {formatDisplayDate(tempFilters.checkIn, 'checkin')}
                 </span>
               </div>
-              <ArrowDown />
+              <ArrowDown className="w-4 h-4" />
             </div>
             {showCheckInDate && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none">
+              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
                 <DatePicker
                   selected={tempFilters.checkIn}
                   onChange={handleCheckInSelect}
@@ -555,19 +600,19 @@ function PropertiesForRent() {
           </div>
           
           {/* CHECK OUT */}
-          <div className="relative mr-5 flex-1" ref={checkOutRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none"  
+          <div className="relative flex-1" ref={checkOutRef}>
+            <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
                  onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
               <div className="flex items-center">
-                <CalendarClock className='mr-2'/>
-                <span className={'text-[18px]'}>
-                {formatDisplayDate(tempFilters.checkOut, 'checkout')} {/* Thêm type */}
+                <CalendarClock className='mr-2 w-4 h-4'/>
+                <span className={'text-[14px]'}>
+                {formatDisplayDate(tempFilters.checkOut, 'checkout')}
                 </span>
               </div>
-              <ArrowDown />
+              <ArrowDown className="w-4 h-4" />
             </div>
             {showCheckOutDate && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none">
+              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
                 <DatePicker
                   selected={tempFilters.checkOut}
                   onChange={handleCheckOutSelect}
@@ -580,36 +625,36 @@ function PropertiesForRent() {
           </div>
           
           {/* SELECT PERSON */}
-          <div className="relative mr-5 flex-1" ref={selectPersonRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none"  
+          <div className="relative flex-1" ref={selectPersonRef}>
+            <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
                  onClick={() => setShowSelectPerson(!showSelectPerson)}>
-              <div className="flex items-center text-[18px]">
-                <GroupSearch className='mr-2'/>
+              <div className="flex items-center text-[14px]">
+                <GroupSearch className='mr-2 w-4 h-4'/>
                 {formatGuestDisplay()}
               </div>
-              <ArrowDown />
+              <ArrowDown className="w-4 h-4" />
             </div>
             {showSelectPerson && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full">
+              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
                 <ul className="w-full">
-                  <li className="flex justify-between border-b border-b-txt-primary p-2 hover:bg-stone-200">
+                  <li className="flex justify-between border-b border-b-txt-primary p-3 hover:bg-stone-200">
                     <div className="flex items-center">
-                      <Group className="mr-4"/>
-                      <span className="text-[18px]">Adults</span>
+                      <Group className="mr-4 w-4 h-4"/>
+                      <span className="text-[14px]">Adults</span>
                     </div>
                     <div className="flex items-center">
                       <button 
-                        className="w-8 h-8 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50"
+                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
                         onClick={() => handleGuestCountChange('adults', 'decrement')}
                         disabled={tempFilters.adults <= 1}
                       >
                         -
                       </button>
-                      <span className="mx-4 text-[18px] min-w-[20px] text-center">
+                      <span className="mx-3 text-[14px] min-w-[20px] text-center">
                         {tempFilters.adults}
                       </span>
                       <button 
-                        className="w-8 h-8 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50"
+                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
                         onClick={() => handleGuestCountChange('adults', 'increment')}
                         disabled={tempFilters.adults >= 10}
                       >
@@ -617,24 +662,24 @@ function PropertiesForRent() {
                       </button>
                     </div>
                   </li>
-                  <li className="flex justify-between p-2 hover:bg-stone-200">
+                  <li className="flex justify-between p-3 hover:bg-stone-200">
                     <div className="flex items-center">
-                      <Face className="mr-4"/>
-                      <span className="text-[18px]">Children</span>
+                      <Face className="mr-4 w-4 h-4"/>
+                      <span className="text-[14px]">Children</span>
                     </div>
                     <div className="flex items-center">
                       <button 
-                        className="w-8 h-8 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50"
+                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
                         onClick={() => handleGuestCountChange('children', 'decrement')}
                         disabled={tempFilters.children <= 0}
                       >
                         -
                       </button>
-                      <span className="mx-4 text-[18px] min-w-[20px] text-center">
+                      <span className="mx-3 text-[14px] min-w-[20px] text-center">
                         {tempFilters.children}
                       </span>
                       <button 
-                        className="w-8 h-8 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50"
+                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
                         onClick={() => handleGuestCountChange('children', 'increment')}
                         disabled={tempFilters.children >= 5}
                       >
@@ -649,49 +694,51 @@ function PropertiesForRent() {
           
           {/* THAY ĐỔI: Nút Search */}
           <button 
-            className="flex-1 bg-txt-secondary text-white cursor-pointer hover:bg-blue-700"
+            className="bg-txt-secondary text-white cursor-pointer hover:bg-blue-700 py-3 text-[16px] lg:flex-1"
             onClick={handleSearch}
           >
             Search
           </button>
         </div>
 
-        <h1 className='uppercase text-[60px] font-subtitle text-txt-secondary font-semibold mb-10'>CÁC DỰ ÁN CHO THUÊ</h1>
+        <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold mb-6 leading-tight'>
+          CÁC DỰ ÁN CHO THUÊ
+        </h1>
         
         {/* Active Filters Display */}
         {(selectedLocation || searchFilters.checkIn || selectedSorting.value !== 'per_room_per_night') && (
-          <div className="flex items-center mb-6 gap-4 flex-wrap">
-            <span className="text-[18px] font-semibold">Active Filters:</span>
+          <div className="flex items-center mb-4 gap-2 flex-wrap">
+            <span className="text-[14px] font-semibold">Active Filters:</span>
             {selectedLocation && (
-              <div className="flex items-center bg-txt-secondary text-white px-3 py-1 rounded-full">
-                <span className="text-[14px] mr-2">Location: {selectedLocation.name}</span>
+              <div className="flex items-center bg-txt-secondary text-white px-2 py-1 rounded-full">
+                <span className="text-[12px] mr-1">Location: {selectedLocation.name}</span>
                 <button 
                   onClick={clearLocationFilter}
-                  className="text-white hover:text-gray-200 text-[14px]"
+                  className="text-white hover:text-gray-200 text-[12px]"
                 >
                   ×
                 </button>
               </div>
             )}
             {searchFilters.checkIn && searchFilters.checkOut && (
-              <div className="flex items-center bg-green-600 text-white px-3 py-1 rounded-full">
-                <span className="text-[14px] mr-2">
+              <div className="flex items-center bg-green-600 text-white px-2 py-1 rounded-full">
+                <span className="text-[12px] mr-1">
                   {formatDisplayDate(searchFilters.checkIn)} - {formatDisplayDate(searchFilters.checkOut)}
                 </span>
                 <button 
                   onClick={clearDateFilters}
-                  className="text-white hover:text-gray-200 text-[14px]"
+                  className="text-white hover:text-gray-200 text-[12px]"
                 >
                   ×
                 </button>
               </div>
             )}
             {selectedSorting && selectedSorting.value !== 'per_room_per_night' && (
-              <div className="flex items-center bg-txt-primary text-white px-3 py-1 rounded-full">
-                <span className="text-[14px] mr-2">Sort: {selectedSorting.name}</span>
+              <div className="flex items-center bg-txt-primary text-white px-2 py-1 rounded-full">
+                <span className="text-[12px] mr-1">Sort: {selectedSorting.name}</span>
                 <button 
                   onClick={clearSortingFilter}
-                  className="text-white hover:text-gray-200 text-[14px]"
+                  className="text-white hover:text-gray-200 text-[12px]"
                 >
                   ×
                 </button>
@@ -699,44 +746,71 @@ function PropertiesForRent() {
             )}
             <button 
               onClick={clearAllFilters}
-              className="text-txt-secondary hover:text-blue-700 text-[14px] font-semibold"
+              className="text-txt-secondary hover:text-blue-700 text-[12px] font-semibold"
             >
               Clear All
             </button>
           </div>
         )}
         
-        <div className="flex items-center justify-between w-full mb-20">
-          <div className="flex">
-            <button className="flex items-center bg-txt-secondary px-20 py-2 text-bg-primary text-[18px] font-light mr-5 cursor-pointer">
-              <Sort className='mr-4'/>
-              More Filter
-            </button>
-            
+        <div className="flex flex-col lg:flex-row w-full mb-10 gap-4">
+          <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-auto">
             {/* LOCATION */}
-            <div className="relative mr-5" ref={locationRef}>
-              <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none min-w-[200px]"  
+            <div className="relative w-full lg:w-[200px]" ref={locationRef}>
+              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
                    onClick={() => setShowSelectLocation(!showSelectLocation)}>
-                <div className="flex items-center text-[18px]">
-                  <AddLocation className='mr-2'/>
-                  <span className="truncate max-w-[150px]">
+                <div className="flex items-center text-[14px] mr-2">
+                  <AddLocation className='mr-2 w-4 h-4'/>
+                  <div className="max-w-[200px] flex-1 truncate">
                     {selectedLocation ? selectedLocation.name : 'Select your location'}
-                  </span>
+                  </div>
                 </div>
-                <ArrowDown />
+                <ArrowDown className="w-4 h-4" />
               </div>
               {showSelectLocation && (
-                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full">
+                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
                   <ul className="w-full">
                     {LOCATION_ITEMS.map(locationItem=>(
-                      <li className="flex justify-between border-b border-b-txt-primary p-2 cursor-pointer hover:bg-gray-200" 
+                      <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
                           key={locationItem.id}
                           onClick={() => handleLocationSelect(locationItem)}>
                           <div className="flex items-start">
-                            <Distance className="mr-4"/>
+                            <Distance className="mr-3 w-4 h-4"/>
                             <div>
-                              <p className="text-[18px] font-semibold">{locationItem.name}</p>
-                              <p>{locationItem.country}</p>
+                              <p className="text-[14px] font-semibold">{locationItem.name}</p>
+                              <p className="text-[12px]">{locationItem.country}</p>
+                            </div>
+                          </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            
+            {/* SORTING */}
+            <div className="relative w-full lg:w-[200px]" ref={sortingRef}>
+              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
+                   onClick={() => setShowSortingOptions(!showSortingOptions)}>
+                <div className="flex items-center text-[14px]">
+                  <FilterList className='mr-2 w-4 h-4'/>
+                  <span className="max-w-[300px] truncate">
+                    {selectedSorting ? selectedSorting.name : 'Default sorting'}
+                  </span>
+                </div>
+                <ArrowDown className="w-4 h-4" />
+              </div>
+              {showSortingOptions && (
+                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
+                  <ul className="w-full">
+                    {SORTING_ITEMS.map(sortingItem=>(
+                      <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
+                          key={sortingItem.id}
+                          onClick={() => handleSortingSelect(sortingItem)}>
+                          <div className="flex items-start">
+                            {sortingItem.icon}
+                            <div className="ml-2">
+                              <p className="text-[14px] font-semibold">{sortingItem.name}</p>
                             </div>
                           </div>
                       </li>
@@ -746,68 +820,36 @@ function PropertiesForRent() {
               )}
             </div>
           </div>
-          
-          {/* SORTING - THAY ĐỔI: Chỉ 2 option mới */}
-          <div className="relative" ref={sortingRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-2 cursor-pointer select-none min-w-[200px]"  
-                 onClick={() => setShowSortingOptions(!showSortingOptions)}>
-              <div className="flex items-center text-[18px]">
-                <FilterList className='mr-2'/>
-                <span className="truncate max-w-[150px]">
-                  {selectedSorting ? selectedSorting.name : 'Default sorting'}
-                </span>
-              </div>
-              <ArrowDown />
-            </div>
-            {showSortingOptions && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full right-0">
-                <ul className="w-full">
-                  {SORTING_ITEMS.map(sortingItem=>(
-                    <li className="flex justify-between border-b border-b-txt-primary p-2 cursor-pointer hover:bg-gray-200" 
-                        key={sortingItem.id}
-                        onClick={() => handleSortingSelect(sortingItem)}>
-                        <div className="flex items-start">
-                          {sortingItem.icon}
-                          <div>
-                            <p className="text-[18px] font-semibold">{sortingItem.name}</p>
-                          </div>
-                        </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
         </div>
       </div>
       
       {/* LIST ITEM */}
       {!params.propertyId ? (
-        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
+        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
           {/* Results Count */}
           <div className="mb-6">
-            <p className="text-[18px] text-txt-gray">
+            <p className="text-[14px] text-txt-gray">
               Found {rentProperties.length} propert{rentProperties.length !== 1 ? 'ies' : 'y'}
               {selectedLocation && ` in ${selectedLocation.name}`}
               {searchFilters.checkIn && searchFilters.checkOut && ` for selected dates`}
             </p>
             {/* Hiển thị loại sort đang được áp dụng */}
-            <p className="text-sm text-txt-secondary mt-1">
+            <p className="text-xs text-txt-secondary mt-1">
               Sorting by: <strong>{selectedSorting.name}</strong>
             </p>
             {/* Hiển thị thông tin guests đang được áp dụng */}
             {searchFilters.checkIn && searchFilters.checkOut && (
-              <p className="text-sm text-txt-secondary mt-1">
+              <p className="text-xs text-txt-secondary mt-1">
                 Guests: <strong>{searchFilters.adults} adults, {searchFilters.children} children</strong>
               </p>
             )}
           </div>
           
-          <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6 mb-20">
             {rentProperties.length > 0 ? (
               rentProperties.map(property => (
-                <div className="cursor-pointer bg-bg-primary" key={property._id} >
-                  <div className="h-[283px]">
+                <div className="cursor-pointer bg-bg-primary shadow-sm hover:shadow-md transition-shadow" key={property._id} >
+                  <div className="h-[200px] lg:h-[250px]">
                     <OptimizedImage 
                       src={getPropertyImage(property)} 
                       alt={property.title} 
@@ -815,39 +857,37 @@ function PropertiesForRent() {
                     />
                   </div>
                   <div className="p-4">
-                    <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">{property.title}</h1>
-                    <p className="mt-4 text-[15px]">{property.location}</p>
-                    <div className="flex items-center mt-2">
-                      <p className="text-[15px] font-semibold">
+                    <h1 className="mt-3 text-[20px] lg:text-[24px] font-subtitle font-semibold text-txt-secondary leading-tight">
+                      {property.title}
+                    </h1>
+                    <p className="mt-2 text-[13px]">{property.location}</p>
+                    <div className="flex items-center mt-2 flex-wrap gap-1">
+                      <p className="text-[13px] font-semibold">
                         {formatPrice(property.price, property.priceUnit)}
                       </p>
-                      <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                      <p>{property.bedrooms || property.beds} Bedrooms</p>
-                      <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                      <p>{property.bathrooms} Bathrooms</p>
+                      <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
+                      <p className="text-[13px]">{property.bedrooms || property.beds} Bedrooms</p>
+                      <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
+                      <p className="text-[13px]">{property.bathrooms} Bathrooms</p>
                     </div>
-                    {/* DEBUG: Hiển thị giá đã tính toán theo loại sort hiện tại */}
-                    {/* <p className="text-xs text-gray-500 mt-1">
-                      {getCalculatedPriceDisplay(property, selectedSorting.value)}
-                    </p> */}
                     {searchFilters.checkIn && searchFilters.checkOut && (
-                      <div className="mt-2 text-green-600 text-[14px] font-semibold">
+                      <div className="mt-2 text-green-600 text-[12px] font-semibold">
                         ✓ Available for selected dates
                       </div>
                     )}
                     <button 
-                      className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer" 
+                      className="text-[14px] uppercase border border-txt-primary flex items-center justify-center p-2 mt-3 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer w-full"
                       onClick={() => navigate(`/en/properties-for-rent/${property._id}`)}
                     >
                       view more
-                      <ArrowRight className="ml-8"/>
+                      <ArrowRight className="ml-2 w-4 h-4"/>
                     </button>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="col-span-4 text-center py-12">
-                <p className="text-txt-gray text-lg">
+              <div className="col-span-1 lg:col-span-2 xl:col-span-3 text-center py-8">
+                <p className="text-txt-gray text-base">
                   {selectedLocation || searchFilters.checkIn 
                     ? 'No properties found matching your criteria. Try adjusting your filters.'
                     : 'No properties available.'
@@ -856,7 +896,7 @@ function PropertiesForRent() {
                 {(selectedLocation || searchFilters.checkIn) && (
                   <button 
                     onClick={clearAllFilters}
-                    className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700"
+                    className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700 text-sm"
                   >
                     Clear All Filters
                   </button>
@@ -866,26 +906,26 @@ function PropertiesForRent() {
           </div>
         </div>
       ) : (
-        <div className="mb-40">
+        <div className="mb-20">
           {currentProperty && (
-            <div className="bg-bg-primary pb-20">
-              <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
+            <div className="bg-bg-primary pb-10">
+              <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
                 {/* Property Detail Content */}
-                <div className="flex gap-5">
-                  <div className="flex-basis basis-2/3">
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="lg:flex-1">
                     <OptimizedImage 
                       src={getPropertyImage(currentProperty)} 
                       alt={currentProperty.title} 
-                      className="w-full object-cover h-[586px]" 
+                      className="w-full object-cover h-[300px] lg:h-[400px]" 
                     />
                   </div>
-                  <div className="flex-basis basis-1/3">
+                  <div className="grid grid-cols-1 gap-4 lg:w-1/3">
                     {currentProperty.gallery && currentProperty.gallery.slice(0, 2).map((image, index) => (
                       <OptimizedImage 
                         key={image._id || index}
                         src={image.url} 
                         alt={currentProperty.title} 
-                        className="w-full h-[283px] mb-5 object-cover"
+                        className="w-full h-[150px] lg:h-[190px] object-cover"
                       />
                     ))}
                   </div>
@@ -893,11 +933,19 @@ function PropertiesForRent() {
                 
                 {/* Gallery Slider */}
                 {currentProperty.gallery && currentProperty.gallery.length > 0 && (
-                  <div className="mt-5 relative select-none">
+                  <div className="mt-4 relative select-none">
                     <Swiper
                       modules={[Autoplay, Pagination, Navigation]}
-                      spaceBetween={20}
-                      slidesPerView={5}
+                      spaceBetween={10}
+                      slidesPerView={2}
+                      breakpoints={{
+                        640: {
+                          slidesPerView: 3,
+                        },
+                        1024: {
+                          slidesPerView: 4,
+                        },
+                      }}
                       pagination={{ clickable: true }}
                       navigation={{
                         nextEl: '.custom-next-button',
@@ -909,71 +957,112 @@ function PropertiesForRent() {
                           <OptimizedImage
                             src={image.url}
                             alt={currentProperty.title}
-                            className="w-full h-[164px] object-cover"
+                            className="w-full h-[120px] lg:h-[150px] object-cover"
                           />
                         </SwiperSlide>
                       ))}
                     </Swiper>
-                    <button className="custom-prev-button absolute -left-15 top-1/2 -translate-y-1/2 z-10 cursor-pointer">
-                      <ChevronLeft/>
+                    <button className="custom-prev-button absolute -left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/80 p-1">
+                      <ChevronLeft className="w-4 h-4"/>
                     </button>
-                    <button className="custom-next-button absolute -right-15 top-1/2  -translate-y-1/2 z-10 cursor-pointer ">
-                    <ChevronRight/>
+                    <button className="custom-next-button absolute -right-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/80 p-1">
+                      <ChevronRight className="w-4 h-4"/>
                     </button>
                   </div>
                 )}
 
                 {/* Property Details */}
-                <div className="mt-10 grid grid-cols-5 gap-10">
-                  <div className="col-span-3">
-                    <h1 className="text-[60px] font-subtitle text-txt-secondary font-semibold">{currentProperty.title}</h1>
-                    <div className="flex items-center">
-                      <div className="bg-txt-secondary  px-15 py-2 text-bg-primary rounded-4xl text-[18px]">
-                        {currentProperty.type || 'Property'}
+                <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2">
+                    <h1 className="text-[28px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold leading-tight">
+                      {currentProperty.title}
+                    </h1>
+                    <div className="flex items-center mt-4 flex-col lg:flex-row gap-3">
+                      <div className="bg-txt-secondary px-4 py-2 text-bg-primary rounded-4xl text-[14px] w-full lg:w-auto text-center">
+                        {currentProperty.type || 'Hotel'}
+                      </div>
+                      <div className="flex flex-row justify-center">
+                        <Star className="w-4 h-4" />
+                        <Star className={'ml-2 w-4 h-4'}/>
+                        <Star className={'ml-2 w-4 h-4'}/>
+                        <Star className={'ml-2 w-4 h-4'}/>
+                        <Star className={'ml-2 w-4 h-4'}/>
                       </div>
                     </div>
                     
-                    <div className="flex items-center mt-8">
-                      <p className="text-[18px]">{currentProperty.beds || currentProperty.bedrooms} Beds</p>
-                      <div className="bg-dot w-[8px] h-[8px] rounded-full mx-8 "></div>
-                      <p className="text-[18px]">{currentProperty.bathrooms} Bathrooms</p>
+                    <div className="flex items-center mt-6 flex-wrap gap-2">
+                      <p className="text-[14px]">{currentProperty.beds || currentProperty.bedrooms} Beds</p>
+                      <div className="bg-dot w-[6px] h-[6px] rounded-full"></div>
+                      <p className="text-[14px]">{currentProperty.bathrooms} Bathrooms</p>
                     </div>
-                    <div className="mt-8 flex items-center">
-                      <h1 className="text-[38px] text-txt-secondary">
+                    <div className="mt-6 flex items-center">
+                      <h1 className="text-[24px] text-txt-secondary">
                         ${currentProperty.price}
                       </h1>
-                      <h1 className="text-[26px] text-txt-secondary ml-2">
+                      <h1 className="text-[18px] text-txt-secondary ml-2">
                         {currentProperty.priceUnit || 'per night'}
                       </h1>
                     </div>
-                    <div className="w-full h-[1px] bg-txt-primary my-10"></div>
-                    <p className="text-[26px]">{currentProperty.description}</p>
-                    <p className="underline font-semibold text-[18px] mt-8">Show more</p>
-                    <div className="w-full h-[1px] bg-txt-primary my-10"></div>
+                    <div className="w-full h-[1px] bg-txt-primary my-6"></div>
+                    <p className="text-[16px] lg:text-[18px] leading-relaxed">{currentProperty.descriptionShort}</p>
+                    
+                    {/* THÊM: Phần description với show more */}
+                    {currentProperty.description && (
+                      <div className="mt-4">
+                        {showFullDescription && (
+                          <p className={`text-[14px] lg:text-[16px] leading-relaxed ${!showFullDescription ? 'line-clamp-3' : ''}`}>
+                            {currentProperty.description}
+                          </p>
+                        )}
+                        <button 
+                          className="underline font-semibold text-[14px] mt-3 cursor-pointer hover:text-txt-secondary"
+                          onClick={handleShowMoreClick}
+                        >
+                          {showFullDescription ? 'Show less' : 'Show more'}
+                        </button>
+                      </div>
+                    )}
+                    
+                    <div className="w-full h-[1px] bg-txt-primary my-6"></div>
                     
                     {/* Highlights */}
                     {currentProperty.highlights && currentProperty.highlights.length > 0 && (
                       <ul>
-                        {currentProperty.highlights.map((highlight, index) => (
-                          <li className="flex items-start mb-10" key={highlight._id || index}>
-                            <div className="ml-4 text-[18px]">
-                              <h4 className="font-semibold">{highlight.title}</h4>
-                              <p>{highlight.description}</p>
-                            </div>
-                          </li>
-                        ))}
+                        {currentProperty.highlights.map((highlight, index) => {
+                          let Icon =  Highlighter;
+                          if(index === 0) // outdoor entertainment 
+                            Icon = OutdoorGrill
+                          else if(index === 1) //Room in a rantal unit 
+                            Icon = Bed
+                          else if(index  ===2) //Free cancellation for 24 hours
+                            Icon = AddGroupOff;
+                          return (
+                            <li className="flex items-start mb-6" key={highlight._id || index}>
+                              <Icon className="w-5 h-5 mt-1 flex-shrink-0" />
+                              <div className="ml-3 text-[14px]">
+                                <h4 className="font-semibold">{highlight.title}</h4>
+                                <p className="mt-1">{highlight.description}</p>
+                              </div>
+                            </li>
+                          )
+                        })}
                       </ul>
                     )}
 
-                    <div className="w-full h-[1px] bg-txt-primary my-10"></div>
-                    <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">Amenities</h1>
+                    <div className="w-full h-[1px] bg-txt-primary my-6"></div>
+                    <h1 className="text-[24px] font-subtitle font-semibold text-txt-secondary">
+                      Amenities
+                    </h1>
                     
                     {/* Amenities */}
                     {currentProperty.amenities && currentProperty.amenities.length > 0 && (
-                      <ul className="flex flex-wrap mt-8 gap-x-10 gap-y-4">
+                      <ul className="grid grid-cols-1 lg:grid-cols-2 mt-4 gap-3">
                         {currentProperty.amenities.map((amenity, index) => (
                           <li className="flex items-center" key={index}>
-                            {amenity}
+                            <div className="w-4 h-4 flex items-center justify-center">
+                              {renderAmenities(amenity)}
+                            </div>
+                            <p className="ml-2 text-[14px]">{amenity}</p>
                           </li>
                         ))}
                       </ul>
@@ -981,18 +1070,20 @@ function PropertiesForRent() {
                   </div>
                   
                   {/* Contact Form */}
-                  <div className="col-span-2">
-                    <div className="bg-white border p-4 rounded-sm text-center">
-                      <h1 className="text-[60px] text-txt-secondary font-subtitle font-semibold mb-8">Get in touch</h1>
+                  <div className="mt-8 lg:mt-0">
+                    <div className="bg-white border p-4 lg:p-6 rounded-sm text-center sticky top-24">
+                      <h1 className="text-[28px] lg:text-[32px] text-txt-secondary font-subtitle font-semibold mb-6 leading-tight">
+                        Get in touch
+                      </h1>
                       
                       {formSuccess && (
-                        <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                        <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
                           Thank you! Your booking request has been submitted. We will contact you soon.
                         </div>
                       )}
                       
                       {formError && (
-                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
                           {formError}
                         </div>
                       )}
@@ -1002,7 +1093,7 @@ function PropertiesForRent() {
                           type="text" 
                           name="firstName"
                           placeholder="First Name" 
-                          className="w-full rounded-sm mb-4 p-2 border border-gray-300"
+                          className="w-full rounded-sm mb-3 p-3 border border-gray-300 text-sm"
                           value={contactForm.firstName}
                           onChange={handleFormChange}
                           required
@@ -1011,7 +1102,7 @@ function PropertiesForRent() {
                           type="text" 
                           name="lastName"
                           placeholder="Last Name" 
-                          className="w-full rounded-sm mb-4 p-2 border border-gray-300"
+                          className="w-full rounded-sm mb-3 p-3 border border-gray-300 text-sm"
                           value={contactForm.lastName}
                           onChange={handleFormChange}
                           required
@@ -1020,7 +1111,7 @@ function PropertiesForRent() {
                           type="email" 
                           name="email"
                           placeholder="Email Address" 
-                          className="w-full rounded-sm mb-4 p-2 border border-gray-300"
+                          className="w-full rounded-sm mb-3 p-3 border border-gray-300 text-sm"
                           value={contactForm.email}
                           onChange={handleFormChange}
                           required
@@ -1029,7 +1120,7 @@ function PropertiesForRent() {
                           type="tel" 
                           name="phone"
                           placeholder="Mobile phone number" 
-                          className="w-full rounded-sm mb-4 p-2 border border-gray-300"
+                          className="w-full rounded-sm mb-3 p-3 border border-gray-300 text-sm"
                           value={contactForm.phone}
                           onChange={handleFormChange}
                           required
@@ -1037,30 +1128,30 @@ function PropertiesForRent() {
                         <textarea 
                           name="message"
                           placeholder="Write your message here ..." 
-                          className="w-full rounded-sm mb-4 p-2 border border-gray-300"
+                          className="w-full rounded-sm mb-3 p-3 border border-gray-300 text-sm"
                           rows="4"
                           value={contactForm.message}
                           onChange={handleFormChange}
                         ></textarea>
                         
                         <div className="flex flex-row items-start mt-2 text-txt-primary">
-                          <div 
-                            className="border mt-1 mr-2 cursor-pointer w-[34px] h-[17px] flex items-center justify-center" 
-                            onClick={() => setConsent(!consent)}
-                          >
-                            {consent && (
-                              <Check width={15} className="h-[17px]" />
-                            )}
-                          </div>
-                          <p className="text-[15px] text-left">
-                            {t('footer:policy')}
-                          </p>
+                            <div 
+                              className="border mt-1 mr-2 cursor-pointer w-[24px] h-[24px] flex items-center justify-center flex-shrink-0" 
+                              onClick={() => setConsent(!consent)}
+                            >
+                              {consent && (
+                                <Check className="w-[12px] h-[12px]" />
+                              )}
+                            </div>
+                            <p className="text-[12px] text-left">
+                              {t('footer:policy')}
+                            </p>
                         </div>
                         
                         <button 
                           type="submit"
                           disabled={formLoading}
-                          className="cursor-pointer text-[18px] uppercase w-full py-4 bg-txt-secondary text-bg-primary mt-8 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="cursor-pointer text-[16px] uppercase w-full py-3 bg-txt-secondary text-bg-primary mt-6 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {formLoading ? 'Submitting...' : 'Submit Booking Request'}
                         </button>
@@ -1068,16 +1159,18 @@ function PropertiesForRent() {
                     </div>
                     
                     {/* Map */}
-                    <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.7484136613452!2d105.74611147590936!3d20.96261619004587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452efff394ce3%3A0x391a39d4325be464!2sPhenikaa%20University!5e0!3m2!1sen!2s!4v1761578035476!5m2!1sen!2s" 
-                      width="490" 
-                      height="450" 
-                      style={{border:0}} 
-                      allowFullScreen="" 
-                      loading="lazy" 
-                      referrerPolicy="no-referrer-when-downgrade" 
-                      className="mt-20"
-                    ></iframe>
+                    <div className="mt-10">
+                      <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.7484136613452!2d105.74611147590936!3d20.96261619004587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452efff394ce3%3A0x391a39d4325be464!2sPhenikaa%20University!5e0!3m2!1sen!2s!4v1761578035476!5m2!1sen!2s" 
+                        width="100%" 
+                        height="300"
+                        style={{border:0}} 
+                        allowFullScreen="" 
+                        loading="lazy" 
+                        referrerPolicy="no-referrer-when-downgrade" 
+                        className="rounded-sm"
+                      ></iframe>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1086,40 +1179,52 @@ function PropertiesForRent() {
           
           {/* Related Properties */}
           <div>
-            <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
-              <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">You might also like this</h1>
-              <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
-                {rentProperties.slice(0, 4).map(property => (
-                  <div className="cursor-pointer bg-bg-primary" key={property._id} >
-                    <div className="h-[283px]">
-                      <OptimizedImage 
-                        src={getPropertyImage(property)} 
-                        alt={property.title} 
-                        className="w-full h-full object-cover" 
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">{property.title}</h1>
-                      <p className="mt-4 text-[15px]">{property.location}</p>
-                      <div className="flex items-center mt-2">
-                        <p className="text-[15px] font-semibold">
-                          {formatPrice(property.price, property.priceUnit)}
-                        </p>
-                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                        <p>{property.bedrooms || property.beds} Bedrooms</p>
-                        <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
-                        <p>{property.bathrooms} Bathrooms</p>
+            <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
+              <h1 className="text-[24px] font-subtitle font-semibold text-txt-secondary">
+                You might also like this
+              </h1>
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mt-6 mb-20">
+                {getRelatedProperties().length > 0 ? (
+                  getRelatedProperties().map(property => (
+                    <div className="cursor-pointer bg-bg-primary shadow-sm hover:shadow-md transition-shadow" key={property._id} >
+                      <div className="h-[200px]">
+                        <OptimizedImage 
+                          src={getPropertyImage(property)} 
+                          alt={property.title} 
+                          className="w-full h-full object-cover" 
+                        />
                       </div>
-                      <button 
-                        className="text-[18px] uppercase border border-txt-primary flex p-2 mt-4 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer" 
-                        onClick={() => navigate(`/en/properties-for-rent/${property._id}`)}
-                      >
-                        view more
-                        <ArrowRight className="ml-8"/>
-                      </button>
+                      <div className="p-4">
+                        <h1 className="mt-3 text-[20px] font-subtitle font-semibold text-txt-secondary leading-tight">
+                          {property.title}
+                        </h1>
+                        <p className="mt-2 text-[13px]">{property.location}</p>
+                        <div className="flex items-center mt-2 flex-wrap gap-1">
+                          <p className="text-[13px] font-semibold">
+                            {formatPrice(property.price, property.priceUnit)}
+                          </p>
+                          <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
+                          <p className="text-[13px]">{property.bedrooms || property.beds} Bedrooms</p>
+                          <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
+                          <p className="text-[13px]">{property.bathrooms} Bathrooms</p>
+                        </div>
+                        <button 
+                          className="text-[14px] uppercase border border-txt-primary flex items-center justify-center p-2 mt-3 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer w-full"
+                          onClick={() => navigate(`/en/properties-for-rent/${property._id}`)}
+                        >
+                          view more
+                          <ArrowRight className="ml-2 w-4 h-4"/>
+                        </button>
+                      </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="col-span-1 lg:col-span-2 xl:col-span-4 text-center py-8">
+                    <p className="text-txt-gray text-base">
+                      No related properties found.
+                    </p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>

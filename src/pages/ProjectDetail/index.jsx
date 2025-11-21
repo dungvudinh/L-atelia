@@ -55,7 +55,7 @@ function ProjectDetail() {
     // Loading state
     if (loading) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen">
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="w-12 h-12 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin mx-auto"></div>
                     <p className="mt-4 text-txt-gray text-lg">Loading project details...</p>
@@ -67,7 +67,7 @@ function ProjectDetail() {
     // Error state
     if (error) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen">
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
                         <h2 className="text-xl font-semibold">Error</h2>
@@ -87,7 +87,7 @@ function ProjectDetail() {
     // Project not found
     if (!project) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen">
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
                         <h2 className="text-xl font-semibold">Project Not Found</h2>
@@ -109,181 +109,192 @@ function ProjectDetail() {
     return (
         <div className="mt-20">
             {/* BANNER */}
-            <div className="w-full h-[840px] relative">
+            <div className="w-full h-[300px] md:h-[500px] lg:h-[840px] relative">
                 <OptimizedImage 
                     src={project && project.heroImage.url} 
                     alt="" 
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
                 />
-                <div className="absolute left-1/2 -translate-x-1/2  top-[50%] text-bg-primary">
-                    <h1 className="font-subtitle text-[60px]">FOR SALE</h1>
+                <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4">
+                    <h1 className="font-subtitle text-[32px] md:text-[48px] lg:text-[60px]">FOR SALE</h1>
                     <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
-                        <button className="border  border-bg-primary px-4 py-2 w-full flex justify-between 
-                            text-[18px] uppercase transition-all duration-300 cursor-pointer hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary">
+                        <button className="border border-bg-primary px-4 py-2 w-full max-w-[280px] md:max-w-none flex justify-between items-center
+                            text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary mt-4">
                             VIEW BROCHURE
-                            <ArrowRight  />
+                            <ArrowRight size={18} className="ml-2" />
                         </button>
                     </LocalizedLink>
                 </div>
             </div>
             
             {/* Project Details */}
-            <div className="flex justify-center mt-20">
-                <div className="flex xl:max-w-screen-xl lg:max-w-[900px] gap-20">
+            <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
+                <div className="flex flex-col lg:flex-row xl:max-w-screen-xl lg:max-w-[900px] gap-8 lg:gap-20 w-full">
                     {/* LEFT */}
-                    <div className="flex-basis basis-1/2 mt-7">
-                        <h1 className="text-[60px] text-txt-secondary font-subtitle">
+                    <div className="flex-basis lg:basis-1/2 mt-0 lg:mt-7 order-2 lg:order-1">
+                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] text-txt-secondary font-subtitle leading-tight">
                             {project.title || 'Patiki Townhouse'}
                         </h1>
-                        <p className="mt-10 text-[22px]">
+                        <p className="mt-6 lg:mt-10 text-[16px] md:text-[18px] lg:text-[22px] leading-relaxed">
                             {project.description || 'An architectural gem immaculately restored and modernized from its 1896 creation with no compromise on luxury. The mission in reforming the historic mansion was to create a home with an uncompromised year round living experience, while ensuring the heritage not only lived on but enhanced its lavish style.'}
                         </p>
                     </div>
                     {/* RIGHT */}
-                    <div className="flex-basis basis-1/2">
+                    <div className="flex-basis lg:basis-1/2 order-1 lg:order-2">
                         <OptimizedImage 
                             src={project && project.gallery[0].url} 
                             alt={project.title} 
+                            className="w-full h-auto"
                         />
                     </div>
                 </div>
             </div>
 
             {/* PROPERTY FEATURES */}
-            <div className="bg-bg-primary mt-20 flex justify-center">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-20 w-full">
-                    <ul className="flex justify-start">
-                        <li className="mr-30">
-                            <h4 className="text-[25px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
-                            <p className="flex flex-col text-[18px] mt-4 text-txt-gray">
+            <div className="bg-bg-primary mt-10 lg:mt-20 flex justify-center px-4 lg:px-0">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full">
+                    <ul className="flex flex-col md:flex-row justify-start gap-8 md:gap-10 lg:gap-30">
+                        <li className="md:mr-10 lg:mr-30">
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
+                            <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
-                                    project?.propertyFeatures.length > 0 && project.propertyFeatures.map(propertyFeature=>(
+                                    project?.propertyFeatures?.length > 0 && project.propertyFeatures.map(propertyFeature=>(
                                         <span key={propertyFeature._id}>{propertyFeature.text}</span>
                                     ))
                                 }
                             </p>
                         </li>
-                        <li className="mr-30">
-                            <h4 className="text-[25px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
-                            <p className="flex flex-col text-[18px] mt-4 text-txt-gray">
+                        <li className="md:mr-10 lg:mr-30">
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
+                            <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
-                                    project?.specifications.length > 0 && project.specifications.map(specification=>(
+                                    project?.specifications?.length > 0 && project.specifications.map(specification=>(
                                         <span key={specification._id}>{specification.text}</span>
                                     ))
                                 }
                             </p>
                         </li>
                         <li>
-                            <h4 className="text-[25px] font-subtitle text-txt-secondary font-semibold">LOCATION</h4>
-                            <p className="flex flex-col text-[18px] mt-4 text-txt-gray">
-                                <span >{project?.location}</span>
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">LOCATION</h4>
+                            <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray">
+                                <span>{project?.location}</span>
                             </p>
                         </li>
                     </ul>
-                    <div className="mt-20 flex gap-20">
+                    <div className="mt-10 lg:mt-20 flex flex-col lg:flex-row gap-8 lg:gap-20">
                         {/* LEFT */}
-                        <div className="flex-basis basis-1/2">
-                            <h4 className="text-[25px] font-subtitle text-txt-secondary font-semibold">{project?.propertyHighlights.length > 0 && project.propertyHighlights[0].title}</h4>
-                            <p className="mt-10 text-txt-gray text-[26px]">
-                            {project?.propertyHighlights.length > 0 && project.propertyHighlights[0].description}
+                        <div className="flex-basis lg:basis-1/2">
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                                {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].title}
+                            </h4>
+                            <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[22px] lg:text-[26px] leading-relaxed">
+                                {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].description}
                             </p>
                             {
-                                project?.propertyHighlights[0]?.featureSections.length > 0 && (
-                                    <CustomAccordion data={project.propertyHighlights[0].featureSections}/>
+                                project?.propertyHighlights?.[0]?.featureSections?.length > 0 && (
+                                    <div className="mt-6 lg:mt-10">
+                                        <CustomAccordion data={project.propertyHighlights[0].featureSections}/>
+                                    </div>
                                 )
                             }
                         </div>
                         {/* RIGHT */}
-                        <div className="flex-basis basis-1/2 h-150">
-                            <OptimizedImage src={project?.gallery[1]?.src} alt="" className="h-full w-full"/>
+                        <div className="flex-basis lg:basis-1/2 h-[300px] lg:h-150">
+                            <OptimizedImage src={project?.gallery?.[1]?.url} alt="" className="h-full w-full object-cover"/>
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* ARCHITECTURE SECTION */}
-            <div className="relative">
-                <OptimizedImage src={project?.gallery[2]?.url} alt="" className="w-full h-300"/>
-                <OptimizedImage src={project?.gallery[3]?.url} alt="" className="w-full h-300"/>
-                <div className="absolute top-1/2 left-50 bg-white p-8 w-150 -translate-y-1/2">
-                    <h4 className="text-[25px] font-subtitle text-txt-secondary">
+            <div className="relative mt-10 lg:mt-0">
+                <OptimizedImage src={project?.gallery?.[2]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <OptimizedImage src={project?.gallery?.[3]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary">
                         SPECTACULAR ARCHITECTURE
                     </h4>
-                    <p className="mt-4 text-[18px] text-txt-gray">
-                        {project?.specialSections[0].shortDescription}
+                    <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
+                        {project?.specialSections?.[0]?.shortDescription}
                     </p>
                     {
-                        project?.specialSections[0]?.isExpandable && (
-                            <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[0].fullDescription}]} />
+                        project?.specialSections?.[0]?.isExpandable && (
+                            <div className="mt-4">
+                                <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[0].fullDescription}]} />
+                            </div>
                         )
                     }
                 </div>
             </div>
 
             {/* HISTORY SECTION */}
-            <div className="flex">
-                <div className="flex-basis basis-1/2">
-                    <OptimizedImage src={project?.gallery[4]} alt="" />
+            <div className="flex flex-col lg:flex-row">
+                <div className="flex-basis lg:basis-1/2">
+                    <OptimizedImage src={project?.gallery?.[4]?.url} alt="" className="w-full h-[300px] lg:h-auto object-cover" />
                 </div>
-                <div className="p-20 flex-basis basis-1/2">
-                    <h4 className="text-[25px] font-subtitle text-txt-secondary font-semibold">THE HISTORY</h4>
-                    <p className="mt-4 text-[18px] text-txt-gray">
-                        {project?.specialSections[1].shortDescription}
+                <div className="p-6 md:p-10 lg:p-20 flex-basis lg:basis-1/2">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">THE HISTORY</h4>
+                    <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
+                        {project?.specialSections?.[1]?.shortDescription}
                     </p>
                     {
-                        project?.specialSections[1]?.isExpandable && (
-                            <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[1].fullDescription}]} />
+                        project?.specialSections?.[1]?.isExpandable && (
+                            <div className="mt-4">
+                                <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[1].fullDescription}]} />
+                            </div>
                         )
                     }
                 </div>
             </div>
 
             {/* DETAILS SECTION */}
-            <div className="relative">
-                <OptimizedImage src={project?.gallery[5]} alt="" className="w-full h-300"/>
-                <OptimizedImage src={project?.gallery[6]} alt="" className="w-full h-300"/>
-                <div className="absolute top-1/2 right-50 bg-white p-8 w-150 -translate-y-1/2">
-                    <h4 className="text-[25px] font-subtitle text-txt-secondary">
+            <div className="relative mt-10 lg:mt-0">
+                <OptimizedImage src={project?.gallery?.[5]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <OptimizedImage src={project?.gallery?.[6]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary">
                         IMMACULATE DETAILS
                     </h4>
-                    <p className="mt-4 text-[18px] text-txt-gray">
-                        {project?.specialSections[2].shortDescription}
+                    <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
+                        {project?.specialSections?.[2]?.shortDescription}
                     </p>
                     {
-                        project?.specialSections[2]?.isExpandable && (
-                            <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[2].fullDescription}]} />
+                        project?.specialSections?.[2]?.isExpandable && (
+                            <div className="mt-4">
+                                <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[2].fullDescription}]} />
+                            </div>
                         )
                     }
                 </div>
             </div>
 
             {/* CONTACT US & TRACKING */}
-            <div className="flex justify-center mt-20">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex w-full gap-30">
+            <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30">
                     {/* LEFT - TRACKING */}
-                    <div className="flex-basis basis-1/2">
-                        <h1 className="text-[60px] font-subtitle text-txt-secondary">Tracking Your Project</h1>
-                        <ul>
-                            <li className="text-[25px] mt-15">
+                    <div className="flex-basis lg:basis-1/2 order-2 lg:order-1">
+                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Tracking Your Project</h1>
+                        <ul className="mt-8 lg:mt-15">
+                            <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle font-semibold">Brochure</p>
-                                <LocalizedLink to={`/projects/brochure/view-brochure/${project.id}?filter=0`}>
-                                    <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">
+                                <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
+                                    <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
                                     </button>
                                 </LocalizedLink>
                             </li>
-                            <li className="text-[25px] mt-15">
+                            <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle font-semibold">Current State Photos</p>
-                                <LocalizedLink to={`/projects/current-state-photos/view-brochure/${project.id}?filter=1`}>
-                                    <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">
+                                <LocalizedLink to={`/view-brochure/${project._id}?filter=1`}>
+                                    <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
                                     </button>
                                 </LocalizedLink>
                             </li>
-                            <li className="text-[25px] mt-15">
+                            <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle font-semibold">Renders Showing Potential</p>
-                                <LocalizedLink to={`/projects/renders-showing-potential/view-brochure/${project.id}?filter=2`}>
-                                    <button className="text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-4">
+                                <LocalizedLink to={`/view-brochure/${project._id}?filter=2`}>
+                                    <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
                                     </button>
                                 </LocalizedLink>
@@ -292,46 +303,46 @@ function ProjectDetail() {
                     </div>
                     
                     {/* RIGHT - CONTACT FORM */}
-                    <div className="flex-basis basis-1/2 mb-40">
-                        <h1 className="text-[60px] font-subtitle text-txt-secondary">Contact Us</h1>
-                        <div className="mt-10 text-[18px]">
+                    <div className="flex-basis lg:basis-1/2 mb-20 lg:mb-40 order-1 lg:order-2">
+                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Contact Us</h1>
+                        <div className="mt-6 lg:mt-10 text-[16px] lg:text-[18px]">
                             <div className="flex flex-col">
                                 <label htmlFor="firstName" className="mb-2">First Name *</label>
                                 <input 
                                     type="text" 
                                     id="firstName"
                                     placeholder="First Name" 
-                                    className="border p-4 border-txt-gray outline-none rounded-md"
+                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
                                 />
                             </div>
-                            <div className="flex flex-col mt-10">
+                            <div className="flex flex-col mt-6 lg:mt-10">
                                 <label htmlFor="lastName" className="mb-2">Last Name *</label>
                                 <input 
                                     type="text" 
                                     id="lastName"
                                     placeholder="Last Name" 
-                                    className="border p-4 border-txt-gray outline-none rounded-md"
+                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
                                 />
                             </div>
-                            <div className="flex flex-col mt-10">
+                            <div className="flex flex-col mt-6 lg:mt-10">
                                 <label htmlFor="email" className="mb-2">Email *</label>
                                 <input 
                                     type="email" 
                                     id="email"
                                     placeholder="Email" 
-                                    className="border p-4 border-txt-gray outline-none rounded-md"
+                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
                                 />
                             </div>
-                            <div className="flex flex-col mt-10">
+                            <div className="flex flex-col mt-6 lg:mt-10">
                                 <label htmlFor="phone" className="mb-2">Phone *</label>
                                 <input 
                                     type="tel" 
                                     id="phone"
                                     placeholder="Phone" 
-                                    className="border p-4 border-txt-gray outline-none rounded-md"
+                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
                                 />
                             </div>
-                            <button className="mt-10 rounded-md bg-txt-secondary text-white w-full py-4 hover:bg-blue-700 transition-colors duration-300">
+                            <button className="mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 hover:bg-blue-700 transition-colors duration-300 text-[16px] md:text-[18px]">
                                 SUBMIT MESSAGE
                             </button>
                         </div>
