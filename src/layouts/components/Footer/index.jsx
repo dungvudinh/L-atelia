@@ -53,7 +53,7 @@ function Footer({withContact}) {
                             {/* CONSENT CHECKBOX */}
                             <div className="flex flex-row items-start mt-3 md:mt-2 text-txt-primary">
                                 <div 
-                                    className="border mt-1 mr-3 cursor-pointer w-[20px] h-[20px] md:w-[40px] md:h-[17px] flex items-center justify-center flex-shrink-0"
+                                    className="border mt-1 mr-3 cursor-pointer w-[20px] h-[20px]  flex items-center justify-center flex-shrink-0"
                                     onClick={() => setConsent(!consent)}
                                 >
                                     {consent && (
