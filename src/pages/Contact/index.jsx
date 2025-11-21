@@ -211,10 +211,8 @@ function Contact() {
                                     className='flex items-center mb-2 cursor-pointer p-2 rounded transition-colors hover:bg-gray-50'
                                     onClick={() => handlePriceRangeSelect(range, index)}
                                 >
-                                    <div className={`w-[18px] h-[18px] md:w-[20px] md:h-[20px] border-2 rounded-full border-txt-primary relative mr-2 md:mr-3 flex items-center justify-center ${
-                                        selectedPriceRange === range ? 'bg-txt-primary' : ''
-                                    }`}>
-                                        <Dot className={`absolute text-white ${selectedPriceRange === range ? '' : 'hidden'}`} size={30} className='md:w-10 md:h-10'/>
+                                    <div className={`w-[18px] h-[18px] md:w-[20px] md:h-[20px] border-2 rounded-full border-txt-primary relative mr-2 md:mr-3 flex items-center justify-center `}>
+                                        <Dot className={`absolute text-txt-primary ${selectedPriceRange === range ? '' : 'hidden'}`} size={40} />
                                     </div>
                                     <p className='text-[14px] md:text-[16px] lg:text-[18px]'>
                                         {range}
