@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { API_ROOT } from '../utils/constants'
-// const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
-const API_BASE_URL= 'https://l-atelia-api.onrender.com'
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+// const API_BASE_URL= 'https://l-atelia-api.onrender.com'
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
   withCredentials:true, 

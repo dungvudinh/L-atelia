@@ -63,7 +63,7 @@ function Header() {
             <div className="w-full xl:max-w-screen-xl flex items-center justify-between lg:max-w-[900px] mx-auto px-4 md:px-0">
                 {/* LEFT HEADER - Logo */}
                 <Link to={'/'} className="flex-1 md:flex-none">
-                    <img src={logo} alt="" className="w-16 md:w-20 mx-auto md:mx-0" />
+                    <img src={logo} alt="" className="w-16 md:w-20  md:mx-0" />
                 </Link>
 
                 {/* MOBILE MENU ICON */}

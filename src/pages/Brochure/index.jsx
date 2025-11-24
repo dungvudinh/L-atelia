@@ -285,7 +285,7 @@ function Brochure() {
                             <li 
                                 className={`w-full sm:w-[200px] md:w-[300px] lg:w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-4 md:px-6 lg:px-10 py-2 md:py-2 cursor-pointer select-none transition-all duration-300 ${
                                     filterId === filterItem.id 
-                                        ? 'bg-txt-secondary text-white scale-105' 
+                                        ? 'bg-txt-secondary text-white' 
                                         : 'hover:bg-gray-100'
                                 }`} 
                                 key={filterItem.id} 

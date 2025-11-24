@@ -1071,7 +1071,7 @@ function PropertiesForRent() {
                   
                   {/* Contact Form */}
                   <div className="mt-8 lg:mt-0">
-                    <div className="bg-white border p-4 lg:p-6 rounded-sm text-center sticky top-24">
+                    <div className="bg-white border p-4 lg:p-6 rounded-sm text-center">
                       <h1 className="text-[28px] lg:text-[32px] text-txt-secondary font-subtitle font-semibold mb-6 leading-tight">
                         Get in touch
                       </h1>

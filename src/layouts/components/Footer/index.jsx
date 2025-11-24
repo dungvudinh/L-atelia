@@ -69,13 +69,13 @@ function Footer({withContact}) {
                 )}
                 
                 {/* LOCATION */}
-                <div className="flex flex-col items-center mt-10 md:mt-15 lg:mt-20 xl:mt-20 text-txt-primary">
+                <div className={`flex flex-col items-center text-txt-primary ${withContact ? 'mt-10' :''}`}>
                     <img src={logo} alt="Logo" className="w-[80px] md:w-[108px] text-center" />
                     <img src={logoTextNoBg} alt="L'atelia" className="w-[160px] md:w-[211px] text-center mb-3 md:mb-4 mt-2" />
                     <p className="text-[16px] md:text-[18px] mb-2 text-center">Crafting luxury property</p>
                     <p className="text-[16px] md:text-[18px] mb-2 text-center">Da Nang City</p>
                     <p className="text-[16px] md:text-[18px] mb-4 md:mb-6 text-center">©2025 L'atelia</p>
-                    <p className="text-[12px] md:text-[15px] text-center leading-relaxed max-w-2xl">
+                    <p className="text-[12px] md:text-[15px] text-center leading-relaxed ">
                         We use cookies to ensure that we give you the best experience on our website. 
                         If you continue to use this site we will assume that you are happy with it.
                     </p>

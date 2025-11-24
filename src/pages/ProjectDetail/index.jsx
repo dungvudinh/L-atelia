@@ -115,13 +115,14 @@ function ProjectDetail() {
                     alt="" 
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
                 />
-                <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4">
+                <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4 flex flex-col items-center">
                     <h1 className="font-subtitle text-[32px] md:text-[48px] lg:text-[60px]">FOR SALE</h1>
                     <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
-                        <button className="border border-bg-primary px-4 py-2 w-full max-w-[280px] md:max-w-none flex justify-between items-center
-                            text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary mt-4">
+                        <button className="border border-bg-primary px-4 py-2 flex justify-between items-center
+                            text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer 
+                            hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary mt-4">
                             VIEW BROCHURE
-                            <ArrowRight size={18} className="ml-2" />
+                            <ArrowRight size={18} className="md:ml-10 ml-2" />
                         </button>
                     </LocalizedLink>
                 </div>
@@ -272,7 +273,7 @@ function ProjectDetail() {
             <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30">
                     {/* LEFT - TRACKING */}
-                    <div className="flex-basis lg:basis-1/2 order-2 lg:order-1">
+                    <div className="flex-basis lg:basis-1/2 order-2 lg:order-1 mb-4">
                         <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Tracking Your Project</h1>
                         <ul className="mt-8 lg:mt-15">
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
@@ -342,7 +343,7 @@ function ProjectDetail() {
                                     className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
                                 />
                             </div>
-                            <button className="mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 hover:bg-blue-700 transition-colors duration-300 text-[16px] md:text-[18px]">
+                            <button className="cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px]">
                                 SUBMIT MESSAGE
                             </button>
                         </div>

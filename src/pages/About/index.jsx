@@ -258,6 +258,9 @@ function About()
                         spaceBetween={16}
                         slidesPerView={1}
                         breakpoints={{
+                            0:{
+                                slidesPerView:2
+                            }, 
                             640: {
                                 slidesPerView: 2,
                             },
