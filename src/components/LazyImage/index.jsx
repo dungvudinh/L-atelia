@@ -59,7 +59,6 @@ function LazyImage({
         <img
           src={src}
           alt={alt}
-          crossOrigin="anonymous"
           className={`${className}  transition-opacity duration-500 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
