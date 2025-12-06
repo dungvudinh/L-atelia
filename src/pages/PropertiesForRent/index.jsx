@@ -694,7 +694,7 @@ function PropertiesForRent() {
           
           {/* THAY ĐỔI: Nút Search */}
           <button 
-            className="bg-txt-secondary text-white cursor-pointer hover:bg-blue-700 py-3 text-[16px] lg:flex-1"
+            className="bg-txt-secondary text-white cursor-pointer py-3 text-[16px] lg:flex-1"
             onClick={handleSearch}
           >
             Search
