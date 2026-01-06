@@ -13,7 +13,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { ArrowRight, Check, ChevronLeft, ChevronRight, Building2, Target, ShieldCheck, Heart, MapPin, Users } from 'lucide-react';
+import { ArrowRight, Check, ChevronLeft, ChevronRight, Building2, Target, ShieldCheck, Heart, MapPin, Users, Minus } from 'lucide-react';
 import Footer from '../../layouts/components/Footer'
 import OptimizedImage from '../../components/OptimizedImage'
 import {LocalizedLink} from '../../components/LocalizedLink';
@@ -65,8 +65,12 @@ function About()
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-col lg:flex-row gap-6 lg:gap-10'>
                     <div className='lg:flex-basis lg:basis-1/2'>
                         <h4 className='text-[20px] lg:text-[26px] mb-4 lg:mb-5 text-txt-secondary' >Latelia</h4>
-                        <h1 className='text-[32px] lg:text-[60px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight'>
-                            Về chúng tôi - Latelia là ai ?
+                        <h1 className='text-[32px] lg:text-[55px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
+                            Về chúng tôi 
+                            <span className='mx-2 mt-2'>
+                                <Minus />
+                            </span>
+                             Latelia là ai ?
                         </h1>
                         <p className='text-[16px] lg:text-[18px] mb-6 lg:mb-6 mt-6 lg:mt-6'>
                             Latelia được thành lập với một khát vọng rõ ràng:
@@ -187,34 +191,41 @@ function About()
 
             {/* Section 4: Đà Nẵng */}
             <div className='mt-10 lg:mt-20 bg-txt-secondary text-bg-primary'>
-                <div className='flex flex-col lg:flex-row'>
-                    <div className='lg:flex-basis lg:basis-1/2 h-[300px] lg:h-[560px]'>
-                        <OptimizedImage src={aboutUs5} alt="" className='w-full h-full object-cover'/>
-                    </div>
-                    <div className='lg:flex-basis lg:basis-1/2 px-6 lg:px-12 py-8 lg:py-30'>
-                        <div className='flex items-center gap-3 mb-6'>
-                            <MapPin className='text-bg-primary' size={24}/>
-                            <h4 className='text-[20px] lg:text-[26px] font-subtitle'>ĐÀ NẴNG – NƠI LATELIA ĐẶT TRỌN NIỀM TIN</h4>
-                        </div>
-                        <p className='text-[16px] lg:text-[18px] mb-6'>
-                            Tất cả dự án của Latelia đều được phát triển tại Đà Nẵng, nơi hội tụ:
-                        </p>
-                        
-                        <div className='space-y-3 mb-8'>
-                            {DA_NANG_FEATURES.map((feature) => (
-                                <p key={feature.id} className='text-[16px] lg:text-[18px] flex items-center'>
-                                    <span className='mr-3'>•</span>
-                                    {feature.text}
-                                </p>
-                            ))}
-                        </div>
-                        
-                        <p className='text-[16px] lg:text-[18px] italic'>
-                            Latelia tin rằng, một không gian sống đẳng cấp cần được đặt đúng vị trí xứng đáng – và Đà Nẵng chính là nền tảng hoàn hảo cho những giá trị chúng tôi theo đuổi.
-                        </p>
-                    </div>
-                </div>
+    <div className='grid grid-cols-1 lg:grid-cols-2 min-h-[560px]'>
+        {/* Hình ảnh - sẽ tự động chiếm toàn bộ chiều cao */}
+        <div className='relative'>
+            <OptimizedImage 
+                src={aboutUs5} 
+                alt="" 
+                className='absolute inset-0 w-full h-full object-cover'
+            />
+        </div>
+        
+        {/* Nội dung */}
+        <div className='px-6 lg:px-12 py-8 lg:py-16 flex flex-col justify-center'>
+            <div className='flex items-center gap-3 mb-6'>
+                <MapPin className='text-bg-primary' size={24}/>
+                <h4 className='text-[20px] lg:text-[26px] font-subtitle'>ĐÀ NẴNG – NƠI LATELIA ĐẶT TRỌN NIỀM TIN</h4>
             </div>
+            <p className='text-[16px] lg:text-[18px] mb-6'>
+                Tất cả dự án của Latelia đều được phát triển tại Đà Nẵng, nơi hội tụ:
+            </p>
+            
+            <div className='space-y-3 mb-8'>
+                {DA_NANG_FEATURES.map((feature) => (
+                    <p key={feature.id} className='text-[16px] lg:text-[18px] flex items-center'>
+                        <span className='mr-3'>•</span>
+                        {feature.text}
+                    </p>
+                ))}
+            </div>
+            
+            <p className='text-[16px] lg:text-[18px] italic'>
+                Latelia tin rằng, một không gian sống đẳng cấp cần được đặt đúng vị trí xứng đáng – và Đà Nẵng chính là nền tảng hoàn hảo cho những giá trị chúng tôi theo đuổi.
+            </p>
+        </div>
+    </div>
+</div>
 
             {/* Section 5: Cam kết */}
             <div className='mt-10 lg:mt-20 px-4'>
