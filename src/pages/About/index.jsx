@@ -105,7 +105,7 @@ function About()
 
             {/* Section 2: Triết lý kiến trúc */}
             <div className='mt-10 lg:mt-20 bg-bg-primary flex flex-col lg:flex-row'>
-                <div className='px-4 lg:px-0 lg:ml-25 mt-8 lg:mt-30 lg:mr-20 lg:w-auto w-full'>
+                <div className='px-4 lg:px-0 lg:ml-25 mt-8 lg:mt-30 lg:mr-20 lg:w-auto w-full pb-4'>
                     <div className='flex items-center gap-3 mb-4'>
                         <Building2 className='text-txt-secondary' size={24}/>
                         <h4 className='text-[20px] lg:text-[26px] text-txt-secondary'>TRIẾT LÝ KIẾN TRÚC</h4>
@@ -142,7 +142,7 @@ function About()
                         </p>
                     </div>
                 </div>
-                <div className='h-[300px] lg:h-[600px] w-full mt-6 lg:mt-0'>
+                <div className='h-[300px] lg:h-[700px] w-full mt-6 lg:mt-0'>
                     <OptimizedImage src={aboutUs3} alt="" className='object-cover h-full w-full' />
                 </div>
             </div>
@@ -188,7 +188,7 @@ function About()
             {/* Section 4: Đà Nẵng */}
             <div className='mt-10 lg:mt-20 bg-txt-secondary text-bg-primary'>
                 <div className='flex flex-col lg:flex-row'>
-                    <div className='lg:flex-basis lg:basis-1/2 h-[300px] lg:h-[500px]'>
+                    <div className='lg:flex-basis lg:basis-1/2 h-[300px] lg:h-[560px]'>
                         <OptimizedImage src={aboutUs5} alt="" className='w-full h-full object-cover'/>
                     </div>
                     <div className='lg:flex-basis lg:basis-1/2 px-6 lg:px-12 py-8 lg:py-30'>
@@ -219,12 +219,12 @@ function About()
             {/* Section 5: Cam kết */}
             <div className='mt-10 lg:mt-20 px-4'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto'>
-                    <div className='text-center mb-10 lg:mb-16'>
+                    <div className='text-center mb-10 lg:mb-16 flex flex-col items-center'>
                         <div className='flex items-center justify-center gap-3 mb-4'>
                             <ShieldCheck className='text-txt-secondary' size={24}/>
                             <h4 className='text-[20px] lg:text-[26px] text-txt-secondary'>CAM KẾT TỪ LATELIA</h4>
                         </div>
-                        <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight'>
+                        <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight lg:w-[740px]'>
                             Latelia không chỉ bán nhà – chúng tôi trao gửi một phong cách sống
                         </h1>
                     </div>
