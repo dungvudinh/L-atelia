@@ -90,7 +90,7 @@ function MediaDetail() {
 
     // Get media image - fallback to default image
     const getMediaImage = (mediaItem) => {
-        if (mediaItem?.featuredImage) return mediaItem.featuredImage;
+        if (mediaItem?.featuredImage) return mediaItem.featuredImage.url;
         return media1;
     };
 

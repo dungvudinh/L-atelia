@@ -79,7 +79,7 @@ function Media() {
 
   // Get default image if featuredImage is not available
   const getMediaImage = (media) => {
-    if (media.featuredImage) return media.featuredImage;
+    if (media.featuredImage) return media.featuredImage.url;
     return media1; // Fallback image
   };
 
