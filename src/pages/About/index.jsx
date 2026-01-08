@@ -147,7 +147,7 @@ function About()
             <div className='mt-10 lg:mt-20 bg-bg-primary flex justify-center'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row'>
                     
-                    <div className='mt-8 lg:mt-30 lg:mr-20 lg:w-auto w-full pb-4'>
+                    <div className='mt-8 lg:mt-30 lg:mr-20 lg:w-auto w-full pb-4  px-4'>
                         <div className='flex items-center gap-3 mb-4'>
                             <Building2 className='text-txt-secondary' size={24}/>
                             <h4 className='text-[20px] lg:text-[26px] text-txt-secondary font-subtitle font-semibold'>TRIẾT LÝ KIẾN TRÚC</h4>
@@ -233,9 +233,9 @@ function About()
     <div className='relative'>
         <div className='flex justify-center'>
             <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full relative z-10'>
-                <div className='grid grid-cols-1 lg:grid-cols-12 min-h-[560px]'>
-                    {/* Nội dung - chiếm 7/12 cột */}
-                    <div className='lg:col-span-7 lg:col-start-6 px-6 lg:px-12 py-8 lg:py-16 flex flex-col justify-center'>
+                <div className='grid grid-cols-1 lg:grid-cols-12'>
+                    {/* Content - luôn ở bên phải */}
+                    <div className='lg:col-span-7 lg:col-start-6 px-6 lg:px-12 py-8 lg:py-16 flex flex-col justify-center order-2 lg:order-none'>
                         <div className='flex items-center gap-3 mb-6'>
                             <MapPin className='text-bg-primary' size={24}/>
                             <h4 className='text-[20px] lg:text-[26px] font-subtitle'>ĐÀ NẴNG – NƠI LATELIA ĐẶT TRỌN NIỀM TIN</h4>
@@ -261,13 +261,16 @@ function About()
             </div>
         </div>
         
-        {/* Hình ảnh - đặt absolute để tràn ra ngoài */}
-        <div className='absolute inset-y-0 left-0 w-1/2 lg:w-[45%]'>
-            <OptimizedImage 
-                src={aboutUs5} 
-                alt="" 
-                className='w-full h-full object-cover'
-            />
+        {/* Hình ảnh - absolute tràn về bên trái trên desktop */}
+        <div className='lg:absolute lg:inset-y-0 lg:right-0 lg:w-[calc(50%+2rem)] lg:-left-12 xl:-left-20'>
+            {/* Container cho hình ảnh với max-width để tạo khoảng cách */}
+            <div className='h-full lg:pr-12 xl:pr-20'>
+                <OptimizedImage 
+                    src={aboutUs5} 
+                    alt="Đà Nẵng - Nơi Latelia đặt trọn niềm tin" 
+                    className='w-full h-[300px] lg:h-full object-cover'
+                />
+            </div>
         </div>
     </div>
 </div>
