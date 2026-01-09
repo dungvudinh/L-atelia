@@ -213,7 +213,7 @@ function ProjectDetail() {
                 <OptimizedImage src={project?.gallery?.[3]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary">
-                        SPECTACULAR ARCHITECTURE
+                        {project?.specialSections?.[0]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
                         {project?.specialSections?.[0]?.shortDescription}
@@ -234,7 +234,9 @@ function ProjectDetail() {
                     <OptimizedImage src={project?.gallery?.[4]?.url} alt="" className="w-full h-[300px] lg:h-auto object-cover" />
                 </div>
                 <div className="p-6 md:p-10 lg:p-20 flex-basis lg:basis-1/2">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">THE HISTORY</h4>
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                        {project?.specialSections?.[1]?.title}
+                    </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
                         {project?.specialSections?.[1]?.shortDescription}
                     </p>
@@ -254,7 +256,7 @@ function ProjectDetail() {
                 <OptimizedImage src={project?.gallery?.[6]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary">
-                        IMMACULATE DETAILS
+                         {project?.specialSections?.[2]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
                         {project?.specialSections?.[2]?.shortDescription}
