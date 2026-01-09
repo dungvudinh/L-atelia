@@ -346,7 +346,7 @@ function ProjectDetail() {
                                 />
                             </div>
                             <button className="cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px]">
-                                SUBMIT MESSAGE
+                                GỬI THÔNG TIN
                             </button>
                         </div>
                     </div>
