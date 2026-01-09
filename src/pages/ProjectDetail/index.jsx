@@ -212,7 +212,7 @@ function ProjectDetail() {
                 <OptimizedImage src={project?.gallery?.[2]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <OptimizedImage src={project?.gallery?.[3]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                         {project?.specialSections?.[0]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
@@ -255,7 +255,7 @@ function ProjectDetail() {
                 <OptimizedImage src={project?.gallery?.[5]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <OptimizedImage src={project?.gallery?.[6]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                          {project?.specialSections?.[2]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
@@ -276,7 +276,7 @@ function ProjectDetail() {
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30">
                     {/* LEFT - TRACKING */}
                     <div className="flex-basis lg:basis-1/2 order-2 lg:order-1 mb-4">
-                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Tracking Your Project</h1>
+                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
                         <ul className="mt-8 lg:mt-15">
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle font-semibold">Brochure</p>
@@ -287,7 +287,7 @@ function ProjectDetail() {
                                 </LocalizedLink>
                             </li>
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Current State Photos</p>
+                                <p className="font-subtitle font-semibold">Tiến độ xây dựng</p>
                                 <LocalizedLink to={`/view-brochure/${project._id}?filter=1`}>
                                     <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
@@ -295,7 +295,7 @@ function ProjectDetail() {
                                 </LocalizedLink>
                             </li>
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Renders Showing Potential</p>
+                                <p className="font-subtitle font-semibold">Hình ảnh Concept</p>
                                 <LocalizedLink to={`/view-brochure/${project._id}?filter=2`}>
                                     <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
@@ -307,7 +307,7 @@ function ProjectDetail() {
                     
                     {/* RIGHT - CONTACT FORM */}
                     <div className="flex-basis lg:basis-1/2 mb-20 lg:mb-40 order-1 lg:order-2">
-                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Contact Us</h1>
+                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Liên Hệ Ngay</h1>
                         <div className="mt-6 lg:mt-10 text-[16px] lg:text-[18px]">
                             <div className="flex flex-col">
                                 <label htmlFor="firstName" className="mb-2">First Name *</label>

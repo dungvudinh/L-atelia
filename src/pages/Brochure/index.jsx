@@ -16,13 +16,13 @@ const FILTERS = [
     },
     {
         id: 1, 
-        title: 'Tiến độ thi công', 
+        title: 'Tiến độ xây dựng', 
         type: 'JPG', 
         banner: currentStatePhotos
     },
     {
         id: 2, 
-        title: 'Hình ảnh thiết kế', 
+        title: 'Hình ảnh Concept', 
         type: 'JPG', 
         banner: rendersShowingPotential
     }
