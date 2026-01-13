@@ -69,6 +69,7 @@ function Media() {
 
   // Handle pagination
   const handlePageChange = (page) => {
+    window.scrollTo(0, 0);
     fetchMedia(selectedCategory, page);
   };
 
@@ -169,13 +170,15 @@ function Media() {
             {mediaItems.length > 0 ? (
               mediaItems.map((item) => (
                 <div key={item._id} className='cursor-pointer group'>
-                  <div className='h-60 lg:h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
-                    <OptimizedImage 
-                      src={getMediaImage(item)} 
-                      alt={item.title}
-                      className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105' 
-                    />
-                  </div>
+                  <a href={`/vi/media/${item._id}`}>
+                    <div className='h-60 lg:h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
+                      <OptimizedImage 
+                        src={getMediaImage(item)} 
+                        alt={item.title}
+                        className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105' 
+                      />
+                    </div>
+                  </a>
                   <div className='mt-4 p-2'>
                     <h4 className='text-[14px] lg:text-[18px] text-txt-gray mb-2 lg:mb-4'>
                       {formatCategory(item.category).toUpperCase()}

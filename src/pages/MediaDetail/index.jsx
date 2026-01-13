@@ -104,17 +104,20 @@ function MediaDetail() {
 
     // Navigate to media detail
     const handleNavigateToMedia = (mediaId) => {
+        window.scrollTo(0, 0);
         navigate(`/vi/media/${mediaId}`);
     };
 
     // Handle previous/next navigation
     const handlePreviousClick = () => {
+        window.scrollTo(0, 0);
         if (previousMedia) {
             handleNavigateToMedia(previousMedia._id);
         }
     };
 
     const handleNextClick = () => {
+        window.scrollTo(0, 0);
         if (nextMedia) {
             handleNavigateToMedia(nextMedia._id);
         }
@@ -285,7 +288,7 @@ function MediaDetail() {
                                 {relatedStories.map((item) => (
                                     <div 
                                         key={item._id} 
-                                        className='cursor-pointer group bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden'
+                                        className='cursor-pointer group bg-white  shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden'
                                         onClick={() => handleNavigateToMedia(item._id)}
                                     >
                                         <div className='h-40 md:h-48 lg:h-60 w-full overflow-hidden'>
@@ -295,7 +298,7 @@ function MediaDetail() {
                                                 className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105'
                                             />
                                         </div>
-                                        <div className='p-4 md:p-5 lg:p-6'>
+                                        <div className='p-4 md:p-5 lg:p-6 text-center'>
                                             <h4 className='text-xs md:text-sm lg:text-base text-txt-gray mb-2 font-medium'>
                                                 {getMediaType(item)}
                                             </h4>
@@ -308,15 +311,15 @@ function MediaDetail() {
                                                 {item.excerpt || 'Discover more about this story...'}
                                             </p>
                                             
-                                            <div className='flex justify-between items-center'>
-                                                <LocalizedLink 
+                                            <div className='flex justify-center items-center'>
+                                                {/* <LocalizedLink 
                                                     to={`/media/${item._id}`}
                                                     onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    <button className='border border-txt-gray px-3 md:px-4 py-1 md:py-2 cursor-pointer text-xs md:text-sm lg:text-base hover:bg-txt-secondary hover:text-white hover:border-txt-secondary transition-colors duration-300 rounded'>
+                                                > */}
+                                                    <button className='border border-txt-gray px-3 md:px-4 py-1 md:py-2 cursor-pointer text-xs md:text-sm lg:text-base hover:bg-txt-secondary hover:text-white hover:border-txt-secondary transition-colors duration-300'>
                                                         READ MORE
                                                     </button>
-                                                </LocalizedLink>
+                                                {/* </LocalizedLink> */}
                                             </div>
                                         </div>
                                     </div>
