@@ -5,21 +5,24 @@ import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
 import { LocalizedLink } from '../../components/LocalizedLink';
 import mediaService from '../../services/mediaService';
-
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 // Categories available
 const CATEGORIES = ['all', 'lifestyle', 'properties', 'product'];
 
 function Media() {
   const [mediaItems, setMediaItems] = useState([]);
+  const { i18n } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { lng } = useParams();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [pagination, setPagination] = useState({
     current: 1,
     pages: 1,
     total: 0
   });
-
+  const currentLanguage = lng || i18n.language;
   // Fetch media data
   const fetchMedia = async (category = 'all', page = 1) => {
     try {
@@ -128,7 +131,7 @@ function Media() {
       </div>
     );
   }
-
+  console.log(currentLanguage)
   return ( 
     <div>
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4">
@@ -169,8 +172,8 @@ function Media() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-8 lg:mt-10">
             {mediaItems.length > 0 ? (
               mediaItems.map((item) => (
-                <div key={item._id} className='cursor-pointer group'>
-                  <a href={`/vi/media/${item._id}`}>
+                <div key={item._id} className='cursor-pointer group' onClick={()=> {window.scrollTo(0,0);window.location.href = `/${currentLanguage}/media/${item._id}`}}>
+                  {/* <LocalizedLink to={`/media/${item._id}`}> */}
                     <div className='h-60 lg:h-80 w-full overflow-hidden group shadow-lg hover:shadow-xl transition-all duration-300'>
                       <OptimizedImage 
                         src={getMediaImage(item)} 
@@ -178,7 +181,7 @@ function Media() {
                         className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-105' 
                       />
                     </div>
-                  </a>
+                  {/* </LocalizedLink> */}
                   <div className='mt-4 p-2'>
                     <h4 className='text-[14px] lg:text-[18px] text-txt-gray mb-2 lg:mb-4'>
                       {formatCategory(item.category).toUpperCase()}
@@ -189,11 +192,11 @@ function Media() {
                     <p className='text-[14px] lg:text-[18px] mb-4 line-clamp-3 leading-relaxed'>
                       {getMediaExcerpt(item)}
                     </p>
-                    <LocalizedLink to={`/media/${item._id}`}>
+                    {/* <LocalizedLink to={`/media/${item._id}`}> */}
                       <button className='border border-txt-gray p-2 cursor-pointer text-[14px] lg:text-[18px] hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary transition-colors duration-200 w-full lg:w-auto'>
                         READ MORE
                       </button>
-                    </LocalizedLink>
+                    {/* </LocalizedLink> */}
                   </div>
                 </div>
               ))
