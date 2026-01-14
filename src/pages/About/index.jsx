@@ -90,18 +90,18 @@ const DA_NANG_FEATURES = [
 function About()
 {
     return (
-        <div className="mt-20">
+        <div className="mt-16 lg:mt-20">
             {/* Hero Image */}
             <div className='w-full h-[300px] lg:h-[840px]'>
                 <OptimizedImage src={aboutUs} alt="" className='w-full h-full object-cover'/>
             </div>
             
             {/* Section 1: About History */}
-            <div className='flex justify-center mt-10 lg:mt-20 px-4'>
+            <div className='flex justify-center mt-10 lg:mt-20 lg:px-4'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-col lg:flex-row gap-6 lg:gap-10'>
-                    <div className='lg:flex-basis lg:basis-1/2'>
+                    <div className='lg:flex-basis lg:basis-1/2 px-4'>
                         {/* <h4 className='text-[20px] lg:text-[26px] mb-4 lg:mb-5 text-txt-secondary' >Latelia</h4> */}
-                        <h1 className='text-[32px] lg:text-[55px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
+                        <h1 className='text-[30px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
                             Về chúng tôi 
                             <span className='mx-2 mt-2'>
                                 <Minus />
@@ -147,12 +147,12 @@ function About()
             <div className='mt-10 lg:mt-20 bg-bg-primary flex justify-center'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row'>
                     
-                    <div className='mt-8 lg:mt-30 lg:mr-20 lg:w-auto w-full pb-4  px-4'>
+                    <div className='mt-8 lg:mt-30 lg:mr-7 lg:w-auto w-full pb-4  px-4'>
                         <div className='flex items-center gap-3 mb-4'>
                             <Building2 className='text-txt-secondary' size={24}/>
                             <h4 className='text-[20px] lg:text-[26px] text-txt-secondary font-subtitle font-semibold'>TRIẾT LÝ KIẾN TRÚC</h4>
                         </div>
-                        <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold lg:w-120 mb-6 lg:mb-6 leading-tight'>
+                        <h1 className='text-[30px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold lg:w-120 mb-6 lg:mb-6 leading-tight'>
                             Kiến trúc không chỉ để ở – mà để tận hưởng
                         </h1>
                         <p className='text-[16px] lg:text-[18px] lg:w-150 mb-6'>
