@@ -58,7 +58,7 @@ function Contact() {
         setSubmitStatus(null);
 
         try {
-            const response = await fetch('http://localhost:3000/v1/contact', {
+            const response = await fetch('https://l-atelia-api-yct5.onrender.com/v1/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
