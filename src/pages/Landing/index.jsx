@@ -5,21 +5,34 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import slide1 from '../../assets/images/slides/slide1.webp';
+import slide2 from '../../assets/images/slides/slide2.jpg';
+import slide3 from '../../assets/images/slides/slide3.jpg';
+import slide4 from '../../assets/images/slides/slide4.jpg';
+import slide5 from '../../assets/images/slides/slide5.jpg';
+import slide6 from '../../assets/images/slides/slide6.jpg';
+import slide7 from '../../assets/images/slides/slide7.jpg';
+import slide8 from '../../assets/images/slides/slide8.jpg';
+import slide9 from '../../assets/images/slides/slide9.jpg';
 import logoText from '../../assets/images/logo-text.png';
 import { ArrowRight } from "lucide-react";
-import img1 from '../../assets/images/img1.png';
+import img2 from '../../assets/images/img2.jpg';
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import OptimizedImage from "../../components/OptimizedImage";
 
 const SLIDE_ITEMS = [
-    {id:1, src:slide1 },
-    {id:2, src:slide1}, 
-    {id:3, src:slide1},
-    {id:4, src:slide1},
-    {id:5, src:slide1},
-    {id:6, src:slide1},
+    {id:1, src:slide2 },
+    {id:2, src:slide3 },
+    {id:3, src:slide4 },
+    {id:4, src:slide6 },
+    {id:4, src:slide7 },
+    {id:4, src:slide8 },
+    {id:4, src:slide9 },
+]
+const SLIDE_ITEMS_2 = [
+    {id:1, src:slide3 },
+    {id:2, src:slide4 },
+    {id:3, src:slide5 },
 ]
 
 function Landing() {
@@ -136,7 +149,7 @@ function Landing() {
                     {/* RIGHT IMAGE */}
                     <div className="flex-basis lg:basis-1/2 order-1 lg:order-2">
                         <OptimizedImage 
-                            src={img1} 
+                            src={img2} 
                             alt="" 
                             className="w-full h-auto lg:h-full object-cover"
                         />
@@ -211,12 +224,12 @@ const FeatureProperties = ()=>
         }}
     >
         { 
-            SLIDE_ITEMS.map(slideItem=>(
+            SLIDE_ITEMS_2.map(slideItem=>(
                 <SwiperSlide key={slideItem.id}> 
                     <div className="h-[200px] md:h-[300px] lg:h-auto">
                         <OptimizedImage 
                             src={slideItem.src} 
-                            className="object-cover object-center w-full h-full"
+                            className="object-cover object-center w-full h-70"
                         />
                     </div>
                 </SwiperSlide> 

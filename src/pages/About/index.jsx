@@ -1,4 +1,4 @@
-import aboutUs from '../../assets/images/about-us/about-us.webp'
+import aboutUs from '../../assets/images/about-us/about-us-final.jpg'
 import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
 import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
 import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
@@ -8,6 +8,9 @@ import aboutUs7 from '../../assets/images/about-us/about-us-7.webp'
 import aboutUs8 from '../../assets/images/about-us/about-us-8.webp'
 import aboutUs9 from '../../assets/images/about-us/about-us-9.webp'
 import aboutUs10 from '../../assets/images/about-us/about-us-10.webp'
+import img2 from '../../assets/images/img2.jpg'
+import img3 from '../../assets/images/img3.jpg'
+import img4 from '../../assets/images/img4.jpg'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -138,7 +141,7 @@ function About()
                         </p>  
                     </div>
                     <div className='lg:flex-basis lg:basis-1/2 h-[300px] lg:h-[650px] mt-6 lg:mt-0'>
-                        <OptimizedImage src={aboutUs2} alt="" className='w-full h-full object-cover'/>
+                        <OptimizedImage src={img2} alt="" className='w-full h-full object-cover'/>
                     </div>
                 </div>
             </div>
@@ -185,7 +188,7 @@ function About()
                         </div>
                     </div>
                     <div className='h-[300px] lg:h-[700px] w-full mt-6 lg:mt-0'>
-                        <OptimizedImage src={aboutUs3} alt="" className='object-cover h-full w-full' />
+                        <OptimizedImage src={img3} alt="" className='object-cover h-full w-full' />
                     </div>
                 </div>
             </div>
@@ -266,7 +269,7 @@ function About()
             {/* Container cho hình ảnh với max-width để tạo khoảng cách */}
             <div className='h-full lg:pr-12 xl:pr-20'>
                 <OptimizedImage 
-                    src={aboutUs5} 
+                    src={img4} 
                     alt="Đà Nẵng - Nơi Latelia đặt trọn niềm tin" 
                     className='w-full h-[300px] lg:h-full object-cover'
                 />
