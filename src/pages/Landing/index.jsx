@@ -166,18 +166,18 @@ const FeatureProperties = ()=>
 {
     return (
         <div className="bg-bg-secondary text-white py-[40px] lg:py-[80px] flex justify-center px-4">
-            <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row lg:items-end w-full">
+            <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row lg:items-start w-full">
                 {/* LEFT */}
-                <div className="lg:mr-10 xl:mr-30 mb-8 lg:mb-0">
+                <div className="lg:mr-5 xl:mr-15 mb-8 lg:mb-0 w-120 h-full flex items-start justify-between flex-col">
                     {/* LIST */}
                     <div className="mb-6">
                     <ul className="text-[24px] md:text-[32px] lg:text-[40px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
                     <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
-                        <LocalizedLink to={`/properties-for-sale/cantonada`}>
-                            Cantonada
+                        <LocalizedLink to={`/projects/695d33be02d603f76992719e`}>
+                            Le Duan Apartment
                         </LocalizedLink>
                     </li>
-                    <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
+                    {/* <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
                         <LocalizedLink to={`/properties-for-sale/son-alba`}>
                             Son Alba
                         </LocalizedLink>
@@ -186,12 +186,12 @@ const FeatureProperties = ()=>
                         <LocalizedLink to={`/properties-for-sale/vistavall`}>
                             Vistavall
                         </LocalizedLink>
-                    </li>
+                    </li> */}
                     </ul>
                     </div>
                     {/* BUTTON */}
                     <button className="border p-3 lg:p-4 mt-4 lg:mt-15 cursor-pointer text-sm lg:text-base w-full lg:w-auto">
-                        FOR RENT
+                        FOR SALE
                     </button>
                 </div>
                 
@@ -242,7 +242,7 @@ const FeatureProperties = ()=>
     
     {/* Description */}
     <p className="mt-4 lg:mt-5 text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed px-4">
-        Set atop Valldemossa, Vistavall combines contemporary elegance with Mallorcan charm, offering panoramic views and year-round sunshine.
+        "The Alley Le Duan Apartment" không chỉ là một công trình, mà là một cách tiếp cận kiến trúc khác biệt giữa lòng đô thị Đà Nẵng đang phát triển.
     </p>
 </div>
             </div>  

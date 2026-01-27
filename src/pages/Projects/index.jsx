@@ -199,7 +199,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
       onClick={handleClick}
     >
       {/* Container cho image và overlay - chỉ hiển thị hình ảnh */}
-      <div className="relative">
+      <LocalizedLink className="relative" to={`/projects/${project.id}`}>
         {/* Ảnh chính */}
         <LazyImage 
           src={imageUrl} 
@@ -270,7 +270,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
           )}
           {/* ĐÃ XÓA nút View More trên desktop */}
         </div>
-      </div>
+      </LocalizedLink>
 
       {/* Content section cho mobile - Title, Location và View More nằm dưới ảnh */}
       <div className="lg:hidden bg-white p-4 relative z-30">
