@@ -309,7 +309,7 @@ function Brochure() {
                                 {currentFilterData.map((item, index) => (
                                     <div key={item.id} className="w-full">
                                         <LazyImage 
-                                            src={item.url} 
+                                            src={item.thumbUrl || item.url} 
                                             alt="" 
                                             className="w-full h-[200px] md:h-[250px] lg:h-[325px] object-cover"
                                             {...getImagePriority(index)}
