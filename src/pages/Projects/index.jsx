@@ -22,20 +22,17 @@ function Projects() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [preloadedImages, setPreloadedImages] = useState(new Set());
-
   // Fetch projects from API
   const fetchProjects = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       
-      console.log('🚀 Starting to fetch projects...');
       const response = await projectsService.getProjects();
-      console.log(response)
       // Transform API data to match your component structure với field mapping chính xác
       const transformedProjects = response.data?.projects?.map(project => ({
         id: project._id || project.id,
-        src: project.heroImage || project.gallery?.[0] || project.designImages?.[0],
+        src: project.heroImage.thumbnailUrl || project.gallery?.[0]?.thumbnailUrl || project.heroImage.url,
         alt: project.title,
         title: project.title,
         type: 'for sale', // Tất cả projects đều là For Sale
@@ -66,7 +63,6 @@ function Projects() {
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
-
   // Preload images
   useEffect(() => {
     const preloadImages = async () => {
@@ -175,16 +171,14 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
   const handleClick = useCallback(() => {
     onImageClick(project.id);
   }, [onImageClick, project.id]);
-
+  console.log('project detail', project)
   // Construct full image URL (adjust based on your backend URL structure)
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     if (imagePath.startsWith('http')) return imagePath;
     return `${'http://localhost:3000'}/${imagePath}`;
   };
-
-  const imageUrl = getImageUrl(project.src.url);
-  
+  const imageUrl = getImageUrl(project.src);
   // Lấy ảnh thứ 2 từ gallery nếu có
   const secondImageUrl = project.gallery && project.gallery.length > 1 
     ? getImageUrl(project.gallery[1].url) 

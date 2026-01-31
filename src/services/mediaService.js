@@ -13,6 +13,7 @@ const mediaService = {
           ...params
         }
       });
+      console.log('media response', response)
       return response.data;
     } catch (error) {
       console.error('Error fetching media:', error);

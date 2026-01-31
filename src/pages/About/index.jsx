@@ -8,7 +8,7 @@ import aboutUs7 from '../../assets/images/about-us/about-us-7.webp'
 import aboutUs8 from '../../assets/images/about-us/about-us-8.webp'
 import aboutUs9 from '../../assets/images/about-us/about-us-9.webp'
 import aboutUs10 from '../../assets/images/about-us/about-us-10.webp'
-import img2 from '../../assets/images/img2.jpg'
+import CEO from '../../assets/images/CEO.png'
 import img3 from '../../assets/images/img3.jpg'
 import img4 from '../../assets/images/img4.jpg'
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -102,7 +102,7 @@ function About()
             {/* Section 1: About History */}
             <div className='flex justify-center mt-10 lg:mt-20 lg:px-4'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-col lg:flex-row gap-6 lg:gap-10'>
-                    <div className='lg:flex-basis lg:basis-1/2 px-4'>
+                    <div className='lg:flex-basis lg:basis-2/3 px-4'>
                         {/* <h4 className='text-[20px] lg:text-[26px] mb-4 lg:mb-5 text-txt-secondary' >Latelia</h4> */}
                         <h1 className='text-[30px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
                             Về chúng tôi 
@@ -140,8 +140,8 @@ function About()
                             Dù mới thành lập hơn một năm, Latelia lựa chọn con đường làm ít – làm kỹ – làm có chiều sâu, lấy uy tín và chất lượng làm nền tảng phát triển bền vững.
                         </p>  
                     </div>
-                    <div className='lg:flex-basis lg:basis-1/2 h-[300px] lg:h-[650px] mt-6 lg:mt-0'>
-                        <OptimizedImage src={img2} alt="" className='w-full h-full object-cover'/>
+                    <div className='lg:flex-basis lg:basis-1/3 h-[300px] lg:h-[650px] mt-6 lg:mt-0 flex justify-end '>
+                        <OptimizedImage src={CEO} alt="" className=' object-contain'/>
                     </div>
                 </div>
             </div>
@@ -395,7 +395,7 @@ function About()
 </div>
 
             {/* Section 7: Team Slider */}
-            <div className='mt-10 lg:mt-20 flex justify-center mb-10 lg:mb-20 px-4'>
+            {/* <div className='mt-10 lg:mt-20 flex justify-center mb-10 lg:mb-20 px-4'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full relative'>
                     <div className='text-center mb-10'>
                         <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight'>
@@ -448,7 +448,7 @@ function About()
                         <ChevronRight />
                     </button>
                 </div>
-            </div>
+            </div> */}
 
             {/* CTA Section */}
             <div className='mt-10 lg:mt-20 bg-txt-secondary text-bg-primary py-16 lg:py-24 px-4'>

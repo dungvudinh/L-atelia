@@ -8,7 +8,7 @@ export const projectsService = {
       
       const response = await axiosClient.get('/v1/projects', { params });
       console.log('✅ Projects fetched successfully');
-      
+      console.log('Response data:', response.data);
       return response.data;
     } catch (error) {
       console.error('❌ Error in getProjects service:', error);
