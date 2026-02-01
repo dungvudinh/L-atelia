@@ -95,7 +95,7 @@ function About()
     return (
         <div className="mt-16 lg:mt-20">
             {/* Hero Image */}
-            <div className='w-full h-[300px] lg:h-[840px]'>
+            <div className='w-full h-screen '>
                 <OptimizedImage src={aboutUs} alt="" className='w-full h-full object-cover'/>
             </div>
             

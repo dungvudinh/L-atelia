@@ -60,7 +60,7 @@ function Landing() {
                 {
                     SLIDE_ITEMS.map(slideItem=>(
                         <SwiperSlide key={slideItem.id}>
-                            <div className="w-full h-[300px] md:h-[500px] lg:h-[840px] relative">
+                            <div className="w-full h-screen  relative">
                                 <OptimizedImage
                                     src={slideItem.src}
                                     className="w-full h-full object-cover object-center"
