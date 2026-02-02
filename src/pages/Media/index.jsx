@@ -83,7 +83,7 @@ function Media() {
 
   // Get default image if featuredImage is not available
   const getMediaImage = (media) => {
-    if (media.featuredImage) return media.featuredImage.thumbnailUrl || media.featuredImage.url;
+    if (media.featuredImage) return 'https://cdn.latelia.com/latelia/'+ media.featuredImage.thumbnailKey || media.featuredImage.key;
     return media1; // Fallback image
   };
 

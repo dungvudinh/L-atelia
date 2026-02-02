@@ -12,7 +12,7 @@ import OptimizedImage from "../../components/OptimizedImage";
 import CustomAccordion from "../../components/Accordion";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import { projectsService } from "../../services/projectsService";
-
+const BASE_CDN_URL = 'https://cdn.latelia.com/latelia/'
 function ProjectDetail() {
     const { projectId } = useParams();
     const [project, setProject] = useState(null);
@@ -104,14 +104,13 @@ function ProjectDetail() {
     }
 
     // Debug info
-    console.log('📊 Project data to render:', project);
 
     return (
         <div className="mt-20">
             {/* BANNER */}
             <div className="w-full h-[300px] md:h-[500px] lg:h-[840px] relative">
                 <OptimizedImage 
-                    src={project && project.heroImage.url} 
+                    src={project && `${BASE_CDN_URL}${project.heroImage.key}`} 
                     alt="" 
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
                 />
@@ -143,7 +142,7 @@ function ProjectDetail() {
                     {/* RIGHT */}
                     <div className="flex-basis lg:basis-1/2 order-1 lg:order-2">
                         <OptimizedImage 
-                            src={project && project.gallery[0].url} 
+                            src={project && `${BASE_CDN_URL}${project.gallery[0].key}`} 
                             alt={project.title} 
                             className="w-full h-auto"
                         />
@@ -201,7 +200,7 @@ function ProjectDetail() {
                         </div>
                         {/* RIGHT */}
                         <div className="flex-basis lg:basis-1/2 h-[300px] lg:h-150">
-                            <OptimizedImage src={project?.gallery?.[1]?.url} alt="" className="h-full w-full object-cover"/>
+                            <OptimizedImage src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} alt="" className="h-full w-full object-cover"/>
                         </div>
                     </div>
                 </div>
@@ -209,8 +208,8 @@ function ProjectDetail() {
 
             {/* ARCHITECTURE SECTION */}
             <div className="relative mt-10 lg:mt-0">
-                <OptimizedImage src={project?.gallery?.[2]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
-                <OptimizedImage src={project?.gallery?.[3]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <OptimizedImage src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <OptimizedImage src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                         {project?.specialSections?.[0]?.title}
@@ -231,7 +230,7 @@ function ProjectDetail() {
             {/* HISTORY SECTION */}
             <div className="flex flex-col lg:flex-row">
                 <div className="flex-basis lg:basis-1/2">
-                    <OptimizedImage src={project?.gallery?.[4]?.url} alt="" className="w-full h-[300px] lg:h-auto object-cover" />
+                    <OptimizedImage src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`} alt="" className="w-full h-[300px] lg:h-auto object-cover" />
                 </div>
                 <div className="p-6 md:p-10 lg:p-20 flex-basis lg:basis-1/2">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
@@ -252,8 +251,8 @@ function ProjectDetail() {
 
             {/* DETAILS SECTION */}
             <div className="relative mt-10 lg:mt-0">
-                <OptimizedImage src={project?.gallery?.[5]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
-                <OptimizedImage src={project?.gallery?.[6]?.url} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <OptimizedImage src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                <OptimizedImage src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
                 <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                          {project?.specialSections?.[2]?.title}

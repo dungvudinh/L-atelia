@@ -139,6 +139,10 @@ function About()
                         <p className='text-[16px] lg:text-[18px] mt-6 lg:mt-8'>
                             Dù mới thành lập hơn một năm, Latelia lựa chọn con đường làm ít – làm kỹ – làm có chiều sâu, lấy uy tín và chất lượng làm nền tảng phát triển bền vững.
                         </p>  
+                        <p className='text-[25px] mt-6 lg:mt-8 font-subtitle font-semibold text-txt-secondary'>
+                        Trần Duy Tùng
+                        Founder & CEO
+                        </p>  
                     </div>
                     <div className='lg:flex-basis lg:basis-1/3 h-[300px] lg:h-[650px] mt-6 lg:mt-0 flex justify-end '>
                         <OptimizedImage src={CEO} alt="" className=' object-contain'/>

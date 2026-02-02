@@ -28,6 +28,36 @@ const FILTERS = [
     }
 ]
 
+// Hàm tạo URL từ key - ƯU TIÊN thumbnailKey
+const getImageUrl = (image) => {
+    if (!image) return '';
+    
+    // Ưu tiên thumbnailKey trước, nếu không có thì dùng key
+    const imageKey = image.thumbnailKey || image.key || '';
+    
+    if (!imageKey) return '';
+    
+    // Tạo URL đầy đủ
+    return `https://cdn.latelia.com/latelia/${imageKey}`;
+};
+
+// Hàm tạo URL từ URL string (cho backward compatibility)
+const getUrlFromString = (urlString) => {
+    if (!urlString) return '';
+    
+    // Nếu đã là URL đầy đủ
+    if (urlString.startsWith('http')) {
+        return urlString;
+    }
+    
+    // Nếu chỉ là key hoặc path
+    if (urlString.includes('/')) {
+        return `https://cdn.latelia.com/latelia/${urlString}`;
+    }
+    
+    return urlString;
+};
+
 function usePriorityPreload(imageUrls, count = 6) {
     const [preloadedImages, setPreloadedImages] = useState(new Set());
   
@@ -79,7 +109,10 @@ const groupImagesByDate = (images) => {
     const grouped = {};
     
     images.forEach(image => {
-        if (!image.url) return;
+        // Sử dụng hàm getImageUrl để lấy URL ưu tiên thumbnail
+        const imageUrl = getImageUrl(image) || (image.url ? getUrlFromString(image.url) : '');
+        
+        if (!imageUrl) return;
         
         const dateKey = image.uploaded_at ? new Date(image.uploaded_at).toDateString() : 'Unknown Date';
         
@@ -92,8 +125,10 @@ const groupImagesByDate = (images) => {
         
         grouped[dateKey].images.push({
             id: image.id || Math.random().toString(36).substr(2, 9),
-            src: image.url,
-            uploaded_at: image.uploaded_at
+            src: imageUrl, // Sử dụng URL ưu tiên thumbnail
+            uploaded_at: image.uploaded_at,
+            // Lưu thêm thông tin gốc để debug
+            originalImage: image
         });
     });
     
@@ -149,23 +184,31 @@ function Brochure() {
         }
     }, [filter]);
 
-    // Memoize hàm getCurrentFilterImageUrls
+    // Memoize hàm getCurrentFilterImageUrls với ưu tiên thumbnail
     const getCurrentFilterImageUrls = useCallback(() => {
         if (!project) return [];
         
         if (filterId === 0) {
             if (Array.isArray(project.brochure)) {
-                return project.brochure.map(item => item.url).filter(url => url);
-            } else if (project.brochure && project.brochure.url) {
-                return [project.brochure.url];
+                return project.brochure
+                    .map(item => getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
+                    .filter(url => url);
+            } else if (project.brochure) {
+                const url = getImageUrl(project.brochure) || 
+                           (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
+                return url ? [url] : [];
             }
             return [];
         } else if (filterId === 1) {
             if (!project.constructionProgress || !Array.isArray(project.constructionProgress)) return [];
-            return project.constructionProgress.map(item => item.url).filter(url => url);
+            return project.constructionProgress
+                .map(item => getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
+                .filter(url => url);
         } else if (filterId === 2) {
             if (!project.designImages || !Array.isArray(project.designImages)) return [];
-            return project.designImages.map(item => item.url).filter(url => url);
+            return project.designImages
+                .map(item => getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
+                .filter(url => url);
         }
         
         return [];
@@ -178,7 +221,7 @@ function Brochure() {
 
     const preloadedImages = usePriorityPreload(imageUrls, 8);
 
-    // Memoize hàm getCurrentFilterData
+    // Memoize hàm getCurrentFilterData với ưu tiên thumbnail
     const getCurrentFilterData = useCallback(() => {
         if (!project) return [];
         
@@ -186,10 +229,13 @@ function Brochure() {
             if (Array.isArray(project.brochure)) {
                 return project.brochure.map((item, index) => ({
                     id: item.id || `brochure-${index}`,
-                    url: item.url,
+                    url: getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
+                    thumbUrl: getImageUrl(item), // Luôn là thumbnail nếu có
                 }));
-            } else if (project.brochure && project.brochure.url) {
-                return [{ id: 1, url: project.brochure.url }];
+            } else if (project.brochure) {
+                const url = getImageUrl(project.brochure) || 
+                           (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
+                return url ? [{ id: 1, url, thumbUrl: getImageUrl(project.brochure) }] : [];
             }
             return [];
         } else if (filterId === 1) {

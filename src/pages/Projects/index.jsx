@@ -29,10 +29,11 @@ function Projects() {
       setError(null);
       
       const response = await projectsService.getProjects();
+      console.log('✅ Fetched projects data:', response.data);
       // Transform API data to match your component structure với field mapping chính xác
       const transformedProjects = response.data?.projects?.map(project => ({
         id: project._id || project.id,
-        src: project.heroImage.thumbnailUrl || project.gallery?.[0]?.thumbnailUrl || project.heroImage.url,
+        src: project.heroImage.thumbnailKey || project.gallery?.[0]?.thumbnailKey || project.heroImage.key,
         alt: project.title,
         title: project.title,
         type: 'for sale', // Tất cả projects đều là For Sale
@@ -175,13 +176,14 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
   // Construct full image URL (adjust based on your backend URL structure)
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
-    if (imagePath.startsWith('http')) return imagePath;
-    return `${'http://localhost:3000'}/${imagePath}`;
+    return `https://cdn.latelia.com/latelia/${imagePath}`
+    // if (imagePath.startsWith('http')) return imagePath;
+    // return `${'http://localhost:3000'}/${imagePath}`;
   };
   const imageUrl = getImageUrl(project.src);
   // Lấy ảnh thứ 2 từ gallery nếu có
   const secondImageUrl = project.gallery && project.gallery.length > 1 
-    ? getImageUrl(project.gallery[1].url) 
+    ? getImageUrl(project.gallery[1].thumbnailKey || project.gallery[1].key) 
     : null;
 
   // Kiểm tra xem gallery có trên 2 ảnh không
