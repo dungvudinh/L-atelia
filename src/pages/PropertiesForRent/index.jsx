@@ -491,7 +491,7 @@ function PropertiesForRent() {
   };
 
   const getPropertyImage = (property) => {
-    if (property.featuredImage) return property.featuredImage;
+    if (property.featuredImage) return 'https://cdn.latelia.com/latelia/' + property.featuredImage.thumbnailKey || property.featuredImage.key;
     if (property.gallery && property.gallery.length > 0) return property.gallery[0].url;
     return PropertiesForRent1;
   };
@@ -923,7 +923,7 @@ function PropertiesForRent() {
                     {currentProperty.gallery && currentProperty.gallery.slice(0, 2).map((image, index) => (
                       <OptimizedImage 
                         key={image._id || index}
-                        src={image.url} 
+                        src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`} 
                         alt={currentProperty.title} 
                         className="w-full h-[150px] lg:h-[190px] object-cover"
                       />
@@ -955,7 +955,7 @@ function PropertiesForRent() {
                       {currentProperty.gallery.map((image) => (
                         <SwiperSlide key={image._id}>
                           <OptimizedImage
-                            src={image.url}
+                            src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`}
                             alt={currentProperty.title}
                             className="w-full h-[120px] lg:h-[150px] object-cover"
                           />
