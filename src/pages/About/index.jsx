@@ -101,10 +101,10 @@ function About()
             
             {/* Section 1: About History */}
             <div className='flex justify-center mt-10 lg:mt-20 lg:px-4'>
-                <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-col lg:flex-row gap-6 lg:gap-10'>
-                    <div className='lg:flex-basis lg:basis-2/3 px-4'>
+                <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-row gap-6 lg:gap-10 px-4 xl:px-0'>
+                    <div className='flex-basis xl:basis-2/3 basis-3/5 px-4'>
                         {/* <h4 className='text-[20px] lg:text-[26px] mb-4 lg:mb-5 text-txt-secondary' >Latelia</h4> */}
-                        <h1 className='text-[30px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
+                        <h1 className='text-[30px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
                             Về chúng tôi 
                             <span className='mx-2 mt-2'>
                                 <Minus />
@@ -144,55 +144,59 @@ function About()
                         Founder & CEO
                         </p>  
                     </div>
-                    <div className='lg:flex-basis lg:basis-1/3 h-[300px] lg:h-[650px] mt-6 lg:mt-0 flex justify-end '>
-                        <OptimizedImage src={CEO} alt="" className=' object-contain'/>
+                    <div className='flex-basis xl:basis-1/3 basis-2/5 h-full xl:h-[650px]  lg:mt-0 flex justify-end '>
+                        <OptimizedImage src={CEO} alt="" className='object-cover h-full object-center w-full'/>
                     </div>
                 </div>
             </div>
 
             {/* Section 2: Triết lý kiến trúc */}
             <div className='mt-10 lg:mt-20 bg-bg-primary flex justify-center'>
-                <div className='xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row'>
-                    
-                    <div className='mt-8 lg:mt-30 lg:mr-7 lg:w-auto w-full pb-4  px-4'>
-                        <div className='flex items-center gap-3 mb-4'>
-                            <Building2 className='text-txt-secondary' size={24}/>
-                            <h4 className='text-[20px] lg:text-[26px] text-txt-secondary font-subtitle font-semibold'>TRIẾT LÝ KIẾN TRÚC</h4>
+                <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full'>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10'>
+                        {/* Phần text - chiếm 1/2 chiều rộng */}
+                        <div className='mt-8 lg:mt-30 lg:mr-7 lg:w-auto w-full pb-4  px-4'>
+                            <div className='flex items-center gap-3 mb-4'>
+                                <Building2 className='text-txt-secondary' size={24}/>
+                                <h4 className='text-[20px] lg:text-[26px] text-txt-secondary font-subtitle font-semibold'>TRIẾT LÝ KIẾN TRÚC</h4>
+                            </div>
+                            <h1 className='text-[30px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-6 lg:mb-6 leading-tight'>
+                                Kiến trúc không chỉ để ở – mà để tận hưởng
+                            </h1>
+                            <p className='text-[16px] lg:text-[18px] mb-6'>
+                                Mỗi công trình Latelia đều được nghiên cứu kỹ lưỡng từ:
+                            </p>
+                            
+                            <div className='space-y-3 mb-8'>
+                                <p className='text-[16px] lg:text-[18px] flex items-start'>
+                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    Ánh sáng tự nhiên & thông gió
+                                </p>
+                                <p className='text-[16px] lg:text-[18px] flex items-start'>
+                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    Sự riêng tư và tiện nghi trong sinh hoạt
+                                </p>
+                                <p className='text-[16px] lg:text-[18px] flex items-start'>
+                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    Cảm xúc khi bước vào không gian sống
+                                </p>
+                                <p className='text-[16px] lg:text-[18px] flex items-start'>
+                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    Tính thẩm mỹ bền vững theo thời gian
+                                </p>
+                            </div>
+                            
+                            <div className='bg-txt-secondary/10 p-6 rounded-lg border-l-4 border-txt-secondary'>
+                                <p className='text-[18px] lg:text-[22px] font-subtitle italic text-txt-secondary'>
+                                    "Một ngôi nhà đẹp không nằm ở sự cầu kỳ, mà ở cảm giác dễ chịu và cân bằng mỗi ngày khi trở về."
+                                </p>
+                            </div>
                         </div>
-                        <h1 className='text-[30px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold lg:w-120 mb-6 lg:mb-6 leading-tight'>
-                            Kiến trúc không chỉ để ở – mà để tận hưởng
-                        </h1>
-                        <p className='text-[16px] lg:text-[18px] lg:w-150 mb-6'>
-                            Mỗi công trình Latelia đều được nghiên cứu kỹ lưỡng từ:
-                        </p>
                         
-                        <div className='space-y-3 mb-8'>
-                            <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
-                                Ánh sáng tự nhiên & thông gió
-                            </p>
-                            <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
-                                Sự riêng tư và tiện nghi trong sinh hoạt
-                            </p>
-                            <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
-                                Cảm xúc khi bước vào không gian sống
-                            </p>
-                            <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
-                                Tính thẩm mỹ bền vững theo thời gian
-                            </p>
+                        {/* Phần hình ảnh - chiếm 1/2 chiều rộng */}
+                        <div className=' w-full order-1 lg:order-2'>
+                            <OptimizedImage src={img3} alt="Triết lý kiến trúc Latelia" className='object-cover h-full w-full ' />
                         </div>
-                        
-                        <div className='bg-txt-secondary/10 p-6 rounded-lg border-l-4 border-txt-secondary'>
-                            <p className='text-[18px] lg:text-[22px] font-subtitle italic text-txt-secondary'>
-                                "Một ngôi nhà đẹp không nằm ở sự cầu kỳ, mà ở cảm giác dễ chịu và cân bằng mỗi ngày khi trở về."
-                            </p>
-                        </div>
-                    </div>
-                    <div className='h-[300px] lg:h-[700px] w-full mt-6 lg:mt-0'>
-                        <OptimizedImage src={img3} alt="" className='object-cover h-full w-full' />
                     </div>
                 </div>
             </div>
@@ -203,9 +207,9 @@ function About()
                     <div className='text-center mb-10 lg:mb-16'>
                         <div className='flex items-center justify-center gap-3 mb-4'>
                             <Target className='text-txt-secondary' size={24}/>
-                            <h4 className='text-[20px] lg:text-[26px] text-txt-secondary font-subtitle font-semibold'>GIÁ TRỊ CỐT LÕI CỦA LATELIA</h4>
+                            <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle font-semibold'>GIÁ TRỊ CỐT LÕI CỦA LATELIA</h4>
                         </div>
-                        <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight'>
+                        <h1 className='text-[32px] xl:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight'>
                             Những điều tạo nên sự khác biệt
                         </h1>
                     </div>
@@ -245,7 +249,7 @@ function About()
                     <div className='lg:col-span-7 lg:col-start-6 px-6 lg:px-12 py-8 lg:py-16 flex flex-col justify-center order-2 lg:order-none'>
                         <div className='flex items-center gap-3 mb-6'>
                             <MapPin className='text-bg-primary' size={24}/>
-                            <h4 className='text-[20px] lg:text-[26px] font-subtitle'>ĐÀ NẴNG – NƠI LATELIA ĐẶT TRỌN NIỀM TIN</h4>
+                            <h4 className='text-[20px] xl:text-[26px] font-subtitle'>ĐÀ NẴNG – NƠI LATELIA ĐẶT TRỌN NIỀM TIN</h4>
                         </div>
                         <p className='text-[16px] lg:text-[18px] mb-6'>
                             Tất cả dự án của Latelia đều được phát triển tại Đà Nẵng, nơi hội tụ:
@@ -288,9 +292,9 @@ function About()
                     <div className='text-center mb-10 lg:mb-16 flex flex-col items-center'>
                         <div className='flex items-center justify-center gap-3 mb-4'>
                             <ShieldCheck className='text-txt-secondary' size={24}/>
-                            <h4 className='text-[20px] lg:text-[26px] text-txt-secondary font-subtitle font-semibold'>CAM KẾT TỪ LATELIA</h4>
+                            <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle font-semibold'>CAM KẾT TỪ LATELIA</h4>
                         </div>
-                        <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight lg:w-[740px]'>
+                        <h1 className='text-[32px] xl:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight lg:w-[740px]'>
                             Latelia không chỉ bán nhà – chúng tôi trao gửi một phong cách sống
                         </h1>
                     </div>
@@ -332,7 +336,7 @@ function About()
 <div className='mt-10 lg:mt-20 bg-gray-50 py-10 lg:py-20'>
     <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
         <div className='text-center mb-10 lg:mb-16'>
-            <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
+            <h1 className='text-[32px] xl:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
                 QUY TRÌNH TRIỂN KHAI DỰ ÁN TẠI LATELIA
             </h1>
             <p className='text-[16px] lg:text-[18px] text-gray-600'>
@@ -342,8 +346,8 @@ function About()
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {PROCESS_STEPS.map((step, index) => (
-                <div key={step.id} className='p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
-                    <div className='flex items-start gap-4'>
+                <div key={step.id} className='p-6 xl:p-8 p-2 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
+                    <div className='flex xl:items-start justify-center items-center gap-4 xl:flex-row flex-col'>
                         <div className='flex-shrink-0 w-10 h-10 bg-txt-secondary text-white rounded-full flex items-center justify-center font-semibold text-[18px]'>
                             {index + 1}
                         </div>
@@ -373,7 +377,7 @@ function About()
 
         <div className='mt-16 lg:mt-20 text-center'>
             <div className='inline-block p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl'>
-                <h3 className='text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-6'>
+                <h3 className='text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-6 font-subtitle'>
                     CAM KẾT CỦA LATELIA
                 </h3>
                 <div className='space-y-4 text-left mb-6'>
@@ -457,10 +461,10 @@ function About()
             {/* CTA Section */}
             <div className='mt-10 lg:mt-20 bg-txt-secondary text-bg-primary py-16 lg:py-24 px-4'>
                 <div className='max-w-4xl mx-auto text-center'>
-                    <h2 className='text-[32px] lg:text-[56px] font-subtitle font-semibold mb-6'>
+                    <h2 className='text-[32px] xl:text-[56px] font-subtitle font-semibold mb-6'>
                         Chọn Latelia – chọn sự an tâm, giá trị và niềm tự hào dài lâu
                     </h2>
-                    <p className='text-[18px] lg:text-[22px] mb-10 max-w-2xl mx-auto'>
+                    <p className='text-[18px] xl:text-[22px] mb-10 max-w-2xl mx-auto'>
                         Một không gian sống tốt sẽ nâng tầm chất lượng cuộc sống của chủ nhân. 
                         Và đó là lý do chúng tôi làm mọi thứ chỉn chu hơn một chút, kỹ hơn một chút và có trách nhiệm hơn mỗi ngày.
                     </p>

@@ -60,7 +60,7 @@ function Header() {
     
     return ( 
         <div className="bg-bg-primary flex justify-center items-center fixed top-0 left-0 z-100 w-full">
-            <div className="w-full xl:max-w-screen-xl flex items-center justify-between lg:max-w-[900px] mx-auto px-4 md:px-0">
+            <div className="w-full xl:max-w-screen-xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
                 {/* LEFT HEADER - Logo */}
                 <Link to={'/'} className="flex-1 md:flex-none">
                     <img src={logo} alt="" className="w-16 md:w-20  md:mx-0" />

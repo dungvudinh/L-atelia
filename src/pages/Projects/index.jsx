@@ -125,7 +125,7 @@ function Projects() {
 
   return (
     <div>
-      <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4 lg:px-0">
+      <div className="mt-20 flex justify-center mb-10 lg:mb-20 !px-4 lg:px-0">
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-6 lg:mt-10">
           {/* HEADER */}
           <h1 className="text-[36px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary font-semibold leading-tight">
@@ -200,7 +200,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
         <LazyImage 
           src={imageUrl} 
           alt={project.alt}
-          className="w-full h-[250px] md:h-[300px] lg:h-100 object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full lg:h-100 object-cover transition-transform duration-300 group-hover:scale-105"
           priority={isPriority}
           eager={isEager}
           placeholder={

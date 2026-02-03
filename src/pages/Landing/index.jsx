@@ -39,7 +39,7 @@ function Landing() {
     const {t} = useTranslation(["landing", "common"]);
     
     return ( 
-        <div className="mt-20">
+        <div className="lg:mt-20 mt-16">
             {/* MAIN SLIDER */}
             <Swiper
                 modules={[Autoplay, Pagination, Navigation]}
@@ -168,29 +168,19 @@ const FeatureProperties = ()=>
         <div className="bg-bg-secondary text-white py-[40px] lg:py-[80px] flex justify-center px-4">
             <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row lg:items-start w-full">
                 {/* LEFT */}
-                <div className="lg:mr-5 xl:mr-15 mb-8 lg:mb-0 w-120 h-full flex items-start justify-between flex-col">
+                <div className="lg:mr-5 xl:mr-15 mb-8 lg:mb-0 lg:w-120 w-full lg:h-full flex lg:items-start item-center justify-between flex-col">
                     {/* LIST */}
                     <div className="mb-6">
-                    <ul className="text-[24px] md:text-[32px] lg:text-[40px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
-                    <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
-                        <LocalizedLink to={`/projects/695d33be02d603f76992719e`}>
-                            Le Duan Apartment
-                        </LocalizedLink>
-                    </li>
-                    {/* <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
-                        <LocalizedLink to={`/properties-for-sale/son-alba`}>
-                            Son Alba
-                        </LocalizedLink>
-                    </li>
-                    <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
-                        <LocalizedLink to={`/properties-for-sale/vistavall`}>
-                            Vistavall
-                        </LocalizedLink>
-                    </li> */}
-                    </ul>
+                        <ul className="text-[24px] md:text-[32px] lg:text-[40px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
+                            <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
+                                <LocalizedLink to={`/projects/695d33be02d603f76992719e`}>
+                                    Le Duan Apartment
+                                </LocalizedLink>
+                            </li>
+                        </ul>
                     </div>
                     {/* BUTTON */}
-                    <button className="border p-3 lg:p-4 mt-4 lg:mt-15 cursor-pointer text-sm lg:text-base w-full lg:w-auto">
+                    <button className="border p-3 lg:p-4 mt-4 lg:mt-15 cursor-pointer text-sm lg:text-base lg:w-auto w-full">
                         FOR SALE
                     </button>
                 </div>
