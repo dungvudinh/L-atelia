@@ -6,12 +6,12 @@ import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
 
 const PRICE_RANGES = [
-  "$0 - $200k",
-  "$200k - $400k",
-  "$400k - $600k",
-  "$600k - $800k",
-  "$800k and above",
-  "Prefer not to say",
+  "5 tỉ VND trở xuống",
+  "5 tỉ VND - 10 tỉ VND",
+  "10 tỉ VND - 15 tỉ VND",
+  "15 tỉ VND - 20 tỉ VND",
+  "Trên 20 tỉ VND",
+  "Không muốn đề cập",
 ];
 
 function Contact() {
@@ -101,8 +101,8 @@ function Contact() {
                 <div className="absolute inset-0 bg-black/40"></div>
                 <div className='absolute z-40 top-1/3 md:top-2/5 left-1/2 text-bg-primary text-[32px] md:text-[48px] lg:text-[60px] font-subtitle transform translate-x-[-50%] xl:max-w-screen-xl w-full lg:max-w-[900px] !px-4 md:px-0'>
                     <div className='w-full'>
-                        <h1>Start the conversation</h1>
-                        <h1>Make things happen</h1>
+                        <h1>Bắt đầu câu chuyện</h1>
+                        <h1>Tạo nên điều kỳ diệu</h1>
                     </div>
                 </div>
             </div>
@@ -110,11 +110,11 @@ function Contact() {
             <div className='flex justify-center absolute xl:max-w-screen-xl lg:max-w-[900px] w-full left-1/2 transform translate-x-[-50%] z-50 -mt-20 md:-mt-32 lg:top-230 px-4 md:px-0'>
                 <div className='w-full flex justify-center'>
                     <div className='bg-txt-primary text-bg-primary px-6 md:px-8 py-6 md:py-4 w-full md:w-auto'>
-                        <h1 className='text-[28px] md:text-[36px] lg:text-[40px] font-subtitle'>Opening hours</h1>
+                        <h1 className='text-[28px] md:text-[36px] lg:text-[40px] font-subtitle'>Giờ làm việc</h1>
                         <p className='mt-4 text-[14px] md:text-[15px] font-light'>
-                            <span>Mon</span>
+                            <span>Thứ 2</span>
                             <span> - </span>
-                            <span>Fri</span>
+                            <span>Thứ 6</span>
                         </p>
                         <p className='mt-2 font-light text-[14px] md:text-[15px]'>
                             <span>10.00h</span>
@@ -127,18 +127,18 @@ function Contact() {
                             <span>20.00h</span>
                         </p>
                         <p className='mt-8 md:mt-12 font-light text-[14px] md:text-[15px]'>
-                            <span>Sat</span>
+                            <span>Thứ 7</span>
                             <span> - </span>
-                            <span>Sun</span>
+                            <span>Chủ nhật</span>
                         </p>
-                        <p className='mt-2 text-[14px] md:text-[15px]'>Appointments only</p>
+                        <p className='mt-2 text-[14px] md:text-[15px]'>Chỉ dành cho hẹn trước</p>
                     </div>
                 </div>
             </div>
 
             <div className='w-full bg-bg-primary text-center  md:pt-60 lg:pt-100 flex justify-center px-4 md:px-0'>
                 <form onSubmit={handleSubmit} className='flex flex-col xl:max-w-[440px] justify-start w-full text-[16px] md:text-[18px] px-4'>
-                    <h1 className='text-[32px] md:text-[48px] lg:text-[60px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Contact Us</h1>
+                    <h1 className='text-[32px] md:text-[48px] lg:text-[60px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
                     
                     {/* Status Message */}
                     {submitStatus && (
@@ -203,7 +203,7 @@ function Contact() {
                     </div>
                     
                     <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                        <label htmlFor="budget" className='text-[14px] md:text-[16px] lg:text-[18px]'>Select your Budget *</label>
+                        <label htmlFor="budget" className='text-[14px] md:text-[16px] lg:text-[18px]'>Dự kiến Budget đầu tư *</label>
                         <ul className='flex flex-col mt-3 md:mt-4 text-[14px] md:text-[16px] lg:text-[18px] w-full'>
                             {PRICE_RANGES.map((range, index) => (
                                 <li 
