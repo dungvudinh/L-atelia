@@ -43,6 +43,7 @@ const getImageUrl = (image) => {
 
 // Hàm tạo URL từ URL string (cho backward compatibility)
 const getUrlFromString = (urlString) => {
+    console.log(urlString)
     if (!urlString) return '';
     
     // Nếu đã là URL đầy đủ
@@ -161,6 +162,7 @@ function Brochure() {
             }
 
             const response = await projectsService.getProjectById(projectId);
+            console.log(response)
             setProject(response.data || response);
             
         } catch (err) {
@@ -227,11 +229,14 @@ function Brochure() {
         
         if (filterId === 0) {
             if (Array.isArray(project.brochure)) {
-                return project.brochure.map((item, index) => ({
+                const data = project.brochure.map((item, index) => ({
                     id: item.id || `brochure-${index}`,
-                    url: getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
+                    url:'https://cdn.latelia.com/latelia/' + (item.key || item.thumbnailKey),
+                    // url: getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
                     thumbUrl: getImageUrl(item), // Luôn là thumbnail nếu có
                 }));
+                console.log(data)
+                return data;
             } else if (project.brochure) {
                 const url = getImageUrl(project.brochure) || 
                            (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
@@ -352,23 +357,25 @@ function Brochure() {
 
                         {isBrochure && currentFilterData.length > 0 && (
                             <div className={gridClass}>
-                                {currentFilterData.map((item, index) => (
-                                    <div key={item.id} className="w-full">
-                                        <LazyImage 
-                                            src={item.thumbUrl || item.url} 
-                                            alt="" 
-                                            className="w-full h-[200px] md:h-[250px] lg:h-[325px] object-cover"
-                                            {...getImagePriority(index)}
-                                            placeholder={
-                                                <div className="w-full h-[200px] md:h-[250px] lg:h-[325px] bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-                                                    <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
-                                                        preloadedImages.has(item.url) ? 'opacity-50' : ''
-                                                    }`}></div>
-                                                </div>
-                                            }
-                                        />
-                                    </div>
-                                ))}
+                                {currentFilterData.map((item, index) => {
+                                    return (
+                                        <div key={item.id} className="w-full">
+                                            <LazyImage 
+                                                src={item.url} 
+                                                alt="" 
+                                                className="w-full h-[500px] object-cover"
+                                                {...getImagePriority(index)}
+                                                placeholder={
+                                                    <div className="w-full h-[200px] md:h-[250px] lg:h-[325px] bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                                                            preloadedImages.has(item.url) ? 'opacity-50' : ''
+                                                        }`}></div>
+                                                    </div>
+                                                }
+                                            />
+                                        </div>
+                                    )
+                                })}
                             </div>
                         )}
                         
