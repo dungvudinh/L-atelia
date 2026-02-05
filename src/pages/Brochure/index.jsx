@@ -363,7 +363,7 @@ function Brochure() {
                                             <LazyImage 
                                                 src={item.url} 
                                                 alt="" 
-                                                className="w-full h-[500px] object-cover"
+                                                className="w-full h-full object-cover"
                                                 {...getImagePriority(index)}
                                                 placeholder={
                                                     <div className="w-full h-[200px] md:h-[250px] lg:h-[325px] bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
