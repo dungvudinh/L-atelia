@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { X, ChevronLeft, ChevronRight } from "lucide-react"; // Thêm icons
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import brochureAndFloorPlans from '../../assets/images/brochure-and-floorplans.png'
 import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
@@ -12,7 +12,7 @@ const FILTERS = [
     {
         id: 0, 
         title: 'Brochure', 
-        type: 'PDF', 
+        type: 'JPG', 
         banner: brochureAndFloorPlans
     },
     {
@@ -29,11 +29,31 @@ const FILTERS = [
     }
 ]
 
-// Hàm lấy URL ảnh gốc (original image)
+// Custom hook để quản lý scroll lock
+const useScrollLock = () => {
+    useEffect(() => {
+        return () => {
+            // Cleanup khi component unmount
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
+    const lockScroll = useCallback(() => {
+        document.body.style.overflow = 'hidden';
+    }, []);
+
+    const unlockScroll = useCallback(() => {
+        document.body.style.overflow = 'unset';
+    }, []);
+
+    return { lockScroll, unlockScroll };
+};
+
+// Hàm lấy URL ảnh gốc (original image) - DÙNG CHO BROCHURE
 const getOriginalImageUrl = (image) => {
     if (!image) return '';
     
-    // Ưu tiên key cho ảnh gốc, nếu không có thì dùng url
+    // Ưu tiên key cho ảnh gốc
     const imageKey = image.key || (image.url && typeof image.url === 'string' && !image.url.startsWith('http') ? image.url : '');
     
     if (!imageKey) {
@@ -48,16 +68,15 @@ const getOriginalImageUrl = (image) => {
     return `https://cdn.latelia.com/latelia/${imageKey}`;
 };
 
-// Hàm tạo URL từ key - ƯU TIÊN thumbnailKey cho thumbnail
-const getImageUrl = (image) => {
+// Hàm tạo URL từ key - DÙNG THUMBNAIL CHO TIẾN ĐỘ & CONCEPT
+const getThumbnailUrl = (image) => {
     if (!image) return '';
     
-    // Ưu tiên thumbnailKey trước, nếu không có thì dùng key
+    // Ưu tiên thumbnailKey, nếu không có thì dùng key
     const imageKey = image.thumbnailKey || image.key || '';
     
     if (!imageKey) return '';
     
-    // Tạo URL đầy đủ
     return `https://cdn.latelia.com/latelia/${imageKey}`;
 };
 
@@ -66,12 +85,10 @@ const getUrlFromString = (urlString) => {
     console.log(urlString)
     if (!urlString) return '';
     
-    // Nếu đã là URL đầy đủ
     if (urlString.startsWith('http')) {
         return urlString;
     }
     
-    // Nếu chỉ là key hoặc path
     if (urlString.includes('/')) {
         return `https://cdn.latelia.com/latelia/${urlString}`;
     }
@@ -123,16 +140,15 @@ const formatDate = (dateString) => {
     return date.toLocaleDateString('en-US', options);
 };
 
-// Hàm nhóm hình ảnh theo ngày
+// Hàm nhóm hình ảnh theo ngày - CHỈ DÙNG CHO TIẾN ĐỘ & CONCEPT
 const groupImagesByDate = (images) => {
     if (!images || !Array.isArray(images)) return [];
     
     const grouped = {};
     
     images.forEach(image => {
-        // Lấy URL ảnh gốc và thumbnail
         const originalUrl = getOriginalImageUrl(image);
-        const thumbUrl = getImageUrl(image) || (image.url ? getUrlFromString(image.url) : '');
+        const thumbUrl = getThumbnailUrl(image) || (image.url ? getUrlFromString(image.url) : '');
         
         if (!originalUrl && !thumbUrl) return;
         
@@ -150,7 +166,6 @@ const groupImagesByDate = (images) => {
             src: thumbUrl, // URL thumbnail để hiển thị trong grid
             originalSrc: originalUrl, // URL ảnh gốc để hiển thị trong popup
             uploaded_at: image.uploaded_at,
-            // Lưu thêm thông tin gốc
             originalImage: image
         });
     });
@@ -163,7 +178,7 @@ const groupImagesByDate = (images) => {
         }));
 };
 
-// Image Popup Component
+// Image Popup Component - CHỈ DÙNG CHO TIẾN ĐỘ & CONCEPT
 const ImagePopup = ({ 
     isOpen, 
     onClose, 
@@ -176,8 +191,8 @@ const ImagePopup = ({
     if (!isOpen || !currentImage) return null;
 
     const [isLoading, setIsLoading] = useState(true);
+    const { lockScroll, unlockScroll } = useScrollLock();
 
-    // Preload next và previous images
     useEffect(() => {
         if (currentImage) {
             setIsLoading(true);
@@ -187,6 +202,19 @@ const ImagePopup = ({
             img.onerror = () => setIsLoading(false);
         }
     }, [currentImage]);
+
+    // Handle body scroll lock
+    useEffect(() => {
+        if (isOpen) {
+            lockScroll();
+        } else {
+            unlockScroll();
+        }
+
+        return () => {
+            unlockScroll();
+        };
+    }, [isOpen, lockScroll, unlockScroll]);
 
     // Handle keyboard navigation
     useEffect(() => {
@@ -202,13 +230,10 @@ const ImagePopup = ({
 
         if (isOpen) {
             window.addEventListener('keydown', handleKeyDown);
-            // Disable body scroll when popup is open
-            document.body.style.overflow = 'hidden';
         }
 
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
-            document.body.style.overflow = 'unset';
         };
     }, [isOpen, hasNext, hasPrev, onNext, onPrev, onClose]);
 
@@ -267,11 +292,11 @@ const ImagePopup = ({
                     className={`max-w-full max-h-[90vh] object-contain mx-auto transition-opacity duration-300 ${
                         isLoading ? 'opacity-0' : 'opacity-100'
                     }`}
-                    onClick={(e) => e.stopPropagation()} // Prevent backdrop click when clicking image
+                    onClick={(e) => e.stopPropagation()}
                 />
             </div>
 
-            {/* Image Counter (optional) */}
+            {/* Image Counter */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded">
                 {currentImage.index + 1} / {currentImage.total}
             </div>
@@ -289,10 +314,11 @@ function Brochure() {
     const navigate = useNavigate();
     const filter = searchParams.get('filter');
     
-    // State for image popup
+    // State for image popup - CHỈ DÙNG CHO FILTER ID 1 & 2
     const [popupOpen, setPopupOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [allImages, setAllImages] = useState([]);
+    const { unlockScroll } = useScrollLock();
 
     // Fetch project data từ API
     const fetchProjectData = useCallback(async () => {
@@ -329,17 +355,25 @@ function Brochure() {
         }
     }, [filter]);
 
-    // Memoize hàm getCurrentFilterImageUrls với ưu tiên thumbnail
+    // Cleanup khi component unmount
+    useEffect(() => {
+        return () => {
+            unlockScroll();
+        };
+    }, [unlockScroll]);
+
+    // Memoize hàm getCurrentFilterImageUrls
     const getCurrentFilterImageUrls = useCallback(() => {
         if (!project) return [];
         
         if (filterId === 0) {
+            // BROCHURE - Dùng ảnh gốc
             if (Array.isArray(project.brochure)) {
                 return project.brochure
-                    .map(item => getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
+                    .map(item => getOriginalImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
                     .filter(url => url);
             } else if (project.brochure) {
-                const url = getImageUrl(project.brochure) || 
+                const url = getOriginalImageUrl(project.brochure) || 
                            (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
                 return url ? [url] : [];
             }
@@ -347,12 +381,12 @@ function Brochure() {
         } else if (filterId === 1) {
             if (!project.constructionProgress || !Array.isArray(project.constructionProgress)) return [];
             return project.constructionProgress
-                .map(item => getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
+                .map(item => getThumbnailUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
                 .filter(url => url);
         } else if (filterId === 2) {
             if (!project.designImages || !Array.isArray(project.designImages)) return [];
             return project.designImages
-                .map(item => getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
+                .map(item => getThumbnailUrl(item) || (item.url ? getUrlFromString(item.url) : ''))
                 .filter(url => url);
         }
         
@@ -366,34 +400,33 @@ function Brochure() {
 
     const preloadedImages = usePriorityPreload(imageUrls, 8);
 
-    // Memoize hàm getCurrentFilterData với ưu tiên thumbnail
+    // Memoize hàm getCurrentFilterData
     const getCurrentFilterData = useCallback(() => {
         if (!project) return [];
         
         if (filterId === 0) {
+            // BROCHURE - Dùng ảnh gốc, KHÔNG có popup
             if (Array.isArray(project.brochure)) {
-                const data = project.brochure.map((item, index) => ({
+                return project.brochure.map((item, index) => ({
                     id: item.id || `brochure-${index}`,
-                    url: getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
-                    thumbUrl: getImageUrl(item),
-                    originalSrc: getOriginalImageUrl(item),
+                    url: getOriginalImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
+                    thumbUrl: getOriginalImageUrl(item), // Brochure cũng dùng ảnh gốc
                 }));
-                console.log(data)
-                return data;
             } else if (project.brochure) {
-                const url = getImageUrl(project.brochure) || 
+                const url = getOriginalImageUrl(project.brochure) || 
                            (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
                 return url ? [{ 
                     id: 1, 
                     url, 
-                    thumbUrl: getImageUrl(project.brochure),
-                    originalSrc: getOriginalImageUrl(project.brochure)
+                    thumbUrl: url
                 }] : [];
             }
             return [];
         } else if (filterId === 1) {
+            // TIẾN ĐỘ XÂY DỰNG - Dùng thumbnail, có popup
             return groupImagesByDate(project.constructionProgress || []);
         } else if (filterId === 2) {
+            // HÌNH ẢNH CONCEPT - Dùng thumbnail, có popup
             return groupImagesByDate(project.designImages || []);
         }
         return [];
@@ -403,34 +436,26 @@ function Brochure() {
         return getCurrentFilterData();
     }, [getCurrentFilterData]);
 
-    // Prepare all images array for popup navigation
+    // Prepare all images array for popup navigation - CHỈ CHO FILTER ID 1 & 2
     useEffect(() => {
-        if (currentFilterData.length > 0) {
+        if (filterId !== 0 && currentFilterData.length > 0) {
             const images = [];
+            let index = 0;
             
-            if (filterId === 0) {
-                // For brochure: flat array
-                currentFilterData.forEach((item, index) => {
+            currentFilterData.forEach(dateGroup => {
+                dateGroup.images.forEach(imageItem => {
                     images.push({
-                        ...item,
+                        ...imageItem,
                         index: index,
-                        total: currentFilterData.length
+                        total: 0 // Will be updated after loop
                     });
+                    index++;
                 });
-            } else {
-                // For construction progress and design images: flatten grouped images
-                let index = 0;
-                currentFilterData.forEach(dateGroup => {
-                    dateGroup.images.forEach(imageItem => {
-                        images.push({
-                            ...imageItem,
-                            index: index,
-                            total: images.length + dateGroup.images.length
-                        });
-                        index++;
-                    });
-                });
-            }
+            });
+            
+            // Update total for each image
+            const total = images.length;
+            images.forEach(img => { img.total = total; });
             
             setAllImages(images);
         } else {
@@ -441,14 +466,21 @@ function Brochure() {
     const handleSetFilterId = useCallback((filterItem) => {
         setFilterId(filterItem.id);
         navigate(`?filter=${filterItem.id}`);
-    }, [navigate]);
+        // Close popup when switching filters và restore scroll
+        setPopupOpen(false);
+        unlockScroll();
+    }, [navigate, unlockScroll]);
 
-    // Handle image click to open popup
+    // Handle image click - CHỈ MỞ POPUP CHO FILTER ID 1 & 2
     const handleImageClick = useCallback((imageIndex, isGrouped = false, groupIndex = 0, imageInGroupIndex = 0) => {
+        // Không mở popup cho Brochure (filterId === 0)
+        if (filterId === 0) {
+            return;
+        }
+        
         let targetIndex = 0;
         
         if (isGrouped) {
-            // Calculate absolute index for grouped images
             let absoluteIndex = 0;
             for (let i = 0; i < groupIndex; i++) {
                 absoluteIndex += currentFilterData[i].images.length;
@@ -460,14 +492,13 @@ function Brochure() {
         
         setCurrentImageIndex(targetIndex);
         setPopupOpen(true);
-    }, [currentFilterData]);
+    }, [currentFilterData, filterId]);
 
-    // Popup navigation functions
     const handleNextImage = useCallback(() => {
         if (currentImageIndex < allImages.length - 1) {
             setCurrentImageIndex(prev => prev + 1);
         } else {
-            setCurrentImageIndex(0); // Loop back to first
+            setCurrentImageIndex(0);
         }
     }, [currentImageIndex, allImages.length]);
 
@@ -475,17 +506,20 @@ function Brochure() {
         if (currentImageIndex > 0) {
             setCurrentImageIndex(prev => prev - 1);
         } else {
-            setCurrentImageIndex(allImages.length - 1); // Loop to last
+            setCurrentImageIndex(allImages.length - 1);
         }
     }, [currentImageIndex, allImages.length]);
 
     const handleClosePopup = useCallback(() => {
         setPopupOpen(false);
-    }, []);
+        unlockScroll();
+    }, [unlockScroll]);
 
     const isBrochure = filterId === 0;
+    // Brochure: 1 cột, full width
+    // Tiến độ & Concept: 3 cột
     const gridClass = isBrochure 
-        ? "grid grid-cols-1 gap-4"
+        ? "grid grid-cols-1 gap-8" // Brochure 1 cột, gap lớn hơn
         : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4";
 
     // Hàm xác định mức độ ưu tiên cho từng ảnh
@@ -544,20 +578,18 @@ function Brochure() {
 
     return ( 
         <div className="">
-            {/* Image Popup */}
-            <ImagePopup
-                isOpen={popupOpen}
-                onClose={handleClosePopup}
-                currentImage={{
-                    ...currentImage,
-                    index: currentImageIndex,
-                    total: allImages.length
-                }}
-                onNext={handleNextImage}
-                onPrev={handlePrevImage}
-                hasNext={currentImageIndex < allImages.length - 1}
-                hasPrev={currentImageIndex > 0}
-            />
+            {/* Image Popup - CHỈ HIỂN THỊ KHI KHÔNG PHẢI BROCHURE */}
+            {!isBrochure && (
+                <ImagePopup
+                    isOpen={popupOpen}
+                    onClose={handleClosePopup}
+                    currentImage={currentImage}
+                    onNext={handleNextImage}
+                    onPrev={handlePrevImage}
+                    hasNext={currentImageIndex < allImages.length - 1}
+                    hasPrev={currentImageIndex > 0}
+                />
+            )}
 
             <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4 lg:px-0">
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-6 lg:mt-10 w-full">
@@ -600,22 +632,24 @@ function Brochure() {
                                 {currentFilterData.map((item, index) => (
                                     <div 
                                         key={item.id} 
-                                        className="w-full cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
-                                        onClick={() => handleImageClick(index)}
+                                        className="w-full"
                                     >
+                                        {/* Brochure - Ảnh gốc, full width, không hover scale, không cursor-pointer */}
                                         <LazyImage 
-                                            src={item.thumbUrl || item.url} 
-                                            alt="" 
-                                            className="w-full h-[200px] md:h-[250px] lg:h-[325px] object-cover"
+                                            src={item.url} 
+                                            alt={`Brochure ${index + 1}`} 
+                                            className="w-full h-auto object-contain border border-gray-200 shadow-lg"
                                             {...getImagePriority(index)}
                                             placeholder={
-                                                <div className="w-full h-[200px] md:h-[250px] lg:h-[325px] bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-                                                    <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
-                                                        preloadedImages.has(item.url) ? 'opacity-50' : ''
-                                                    }`}></div>
+                                                <div className="w-full h-[400px] md:h-[500px] lg:h-[600px] bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                    <div className="w-8 h-8 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin"></div>
                                                 </div>
                                             }
                                         />
+                                        {/* Thêm số trang brochure */}
+                                        <p className="text-center text-txt-gray mt-2 text-sm">
+                                            Page {index + 1} of {currentFilterData.length}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
@@ -632,7 +666,7 @@ function Brochure() {
                                     <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
                                 </div>
                                 
-                                {/* IMAGE GRID */}
+                                {/* IMAGE GRID - TIẾN ĐỘ & CONCEPT */}
                                 <div className={gridClass}>
                                     {dateGroup.images.map((imageItem, imageIndex) => (
                                         <div 

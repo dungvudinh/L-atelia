@@ -509,7 +509,7 @@ function ProjectDetail() {
                         <button 
                             type="submit"
                             disabled={submitting}
-                            className={`cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px] ${submitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}
+                            className={`cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px] ${submitting && 'opacity-50 cursor-not-allowed'}`}
                         >
                             {submitting ? 'ĐANG GỬI...' : 'GỬI THÔNG TIN'}
                         </button>
