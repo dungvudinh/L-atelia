@@ -63,6 +63,7 @@ const getImageUrl = (image) => {
 
 // Hàm tạo URL từ URL string (cho backward compatibility)
 const getUrlFromString = (urlString) => {
+    console.log(urlString)
     if (!urlString) return '';
     
     // Nếu đã là URL đầy đủ
@@ -304,6 +305,7 @@ function Brochure() {
             }
 
             const response = await projectsService.getProjectById(projectId);
+            console.log(response)
             setProject(response.data || response);
             
         } catch (err) {
@@ -370,12 +372,14 @@ function Brochure() {
         
         if (filterId === 0) {
             if (Array.isArray(project.brochure)) {
-                return project.brochure.map((item, index) => ({
+                const data = project.brochure.map((item, index) => ({
                     id: item.id || `brochure-${index}`,
                     url: getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
                     thumbUrl: getImageUrl(item),
                     originalSrc: getOriginalImageUrl(item),
                 }));
+                console.log(data)
+                return data;
             } else if (project.brochure) {
                 const url = getImageUrl(project.brochure) || 
                            (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
