@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { X, ChevronLeft, ChevronRight } from "lucide-react"; // Thêm icons
 import brochureAndFloorPlans from '../../assets/images/brochure-and-floorplans.png'
 import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
@@ -28,7 +29,26 @@ const FILTERS = [
     }
 ]
 
-// Hàm tạo URL từ key - ƯU TIÊN thumbnailKey
+// Hàm lấy URL ảnh gốc (original image)
+const getOriginalImageUrl = (image) => {
+    if (!image) return '';
+    
+    // Ưu tiên key cho ảnh gốc, nếu không có thì dùng url
+    const imageKey = image.key || (image.url && typeof image.url === 'string' && !image.url.startsWith('http') ? image.url : '');
+    
+    if (!imageKey) {
+        // Fallback: Nếu image.url là URL đầy đủ
+        if (image.url && typeof image.url === 'string' && image.url.startsWith('http')) {
+            return image.url;
+        }
+        return '';
+    }
+    
+    // Tạo URL đầy đủ cho ảnh gốc
+    return `https://cdn.latelia.com/latelia/${imageKey}`;
+};
+
+// Hàm tạo URL từ key - ƯU TIÊN thumbnailKey cho thumbnail
 const getImageUrl = (image) => {
     if (!image) return '';
     
@@ -109,10 +129,11 @@ const groupImagesByDate = (images) => {
     const grouped = {};
     
     images.forEach(image => {
-        // Sử dụng hàm getImageUrl để lấy URL ưu tiên thumbnail
-        const imageUrl = getImageUrl(image) || (image.url ? getUrlFromString(image.url) : '');
+        // Lấy URL ảnh gốc và thumbnail
+        const originalUrl = getOriginalImageUrl(image);
+        const thumbUrl = getImageUrl(image) || (image.url ? getUrlFromString(image.url) : '');
         
-        if (!imageUrl) return;
+        if (!originalUrl && !thumbUrl) return;
         
         const dateKey = image.uploaded_at ? new Date(image.uploaded_at).toDateString() : 'Unknown Date';
         
@@ -125,9 +146,10 @@ const groupImagesByDate = (images) => {
         
         grouped[dateKey].images.push({
             id: image.id || Math.random().toString(36).substr(2, 9),
-            src: imageUrl, // Sử dụng URL ưu tiên thumbnail
+            src: thumbUrl, // URL thumbnail để hiển thị trong grid
+            originalSrc: originalUrl, // URL ảnh gốc để hiển thị trong popup
             uploaded_at: image.uploaded_at,
-            // Lưu thêm thông tin gốc để debug
+            // Lưu thêm thông tin gốc
             originalImage: image
         });
     });
@@ -140,6 +162,122 @@ const groupImagesByDate = (images) => {
         }));
 };
 
+// Image Popup Component
+const ImagePopup = ({ 
+    isOpen, 
+    onClose, 
+    currentImage,
+    onNext, 
+    onPrev,
+    hasNext,
+    hasPrev 
+}) => {
+    if (!isOpen || !currentImage) return null;
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Preload next và previous images
+    useEffect(() => {
+        if (currentImage) {
+            setIsLoading(true);
+            const img = new Image();
+            img.src = currentImage.originalSrc || currentImage.src;
+            img.onload = () => setIsLoading(false);
+            img.onerror = () => setIsLoading(false);
+        }
+    }, [currentImage]);
+
+    // Handle keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            } else if (e.key === 'ArrowRight' && hasNext) {
+                onNext();
+            } else if (e.key === 'ArrowLeft' && hasPrev) {
+                onPrev();
+            }
+        };
+
+        if (isOpen) {
+            window.addEventListener('keydown', handleKeyDown);
+            // Disable body scroll when popup is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen, hasNext, hasPrev, onNext, onPrev, onClose]);
+
+    const handleBackdropClick = (e) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
+    return (
+        <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 transition-opacity duration-300"
+            onClick={handleBackdropClick}
+        >
+            {/* Close Button */}
+            <button
+                onClick={onClose}
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+                aria-label="Close"
+            >
+                <X size={32} />
+            </button>
+
+            {/* Navigation Buttons */}
+            {hasPrev && (
+                <button
+                    onClick={onPrev}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-10 bg-black bg-opacity-50 rounded-full p-2"
+                    aria-label="Previous image"
+                >
+                    <ChevronLeft size={32} />
+                </button>
+            )}
+            
+            {hasNext && (
+                <button
+                    onClick={onNext}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-10 bg-black bg-opacity-50 rounded-full p-2"
+                    aria-label="Next image"
+                >
+                    <ChevronRight size={32} />
+                </button>
+            )}
+
+            {/* Image Container */}
+            <div className="relative max-w-4xl max-h-[90vh] w-full mx-4">
+                {isLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                )}
+                
+                <img
+                    src={currentImage.originalSrc || currentImage.src}
+                    alt=""
+                    className={`max-w-full max-h-[90vh] object-contain mx-auto transition-opacity duration-300 ${
+                        isLoading ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    onClick={(e) => e.stopPropagation()} // Prevent backdrop click when clicking image
+                />
+            </div>
+
+            {/* Image Counter (optional) */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded">
+                {currentImage.index + 1} / {currentImage.total}
+            </div>
+        </div>
+    );
+};
+
 function Brochure() {
     const [filterId, setFilterId] = useState(0);
     const [project, setProject] = useState(null);
@@ -150,6 +288,11 @@ function Brochure() {
     const navigate = useNavigate();
     const filter = searchParams.get('filter');
     
+    // State for image popup
+    const [popupOpen, setPopupOpen] = useState(false);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [allImages, setAllImages] = useState([]);
+
     // Fetch project data từ API
     const fetchProjectData = useCallback(async () => {
         try {
@@ -230,12 +373,18 @@ function Brochure() {
                 return project.brochure.map((item, index) => ({
                     id: item.id || `brochure-${index}`,
                     url: getImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
-                    thumbUrl: getImageUrl(item), // Luôn là thumbnail nếu có
+                    thumbUrl: getImageUrl(item),
+                    originalSrc: getOriginalImageUrl(item),
                 }));
             } else if (project.brochure) {
                 const url = getImageUrl(project.brochure) || 
                            (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
-                return url ? [{ id: 1, url, thumbUrl: getImageUrl(project.brochure) }] : [];
+                return url ? [{ 
+                    id: 1, 
+                    url, 
+                    thumbUrl: getImageUrl(project.brochure),
+                    originalSrc: getOriginalImageUrl(project.brochure)
+                }] : [];
             }
             return [];
         } else if (filterId === 1) {
@@ -250,10 +399,85 @@ function Brochure() {
         return getCurrentFilterData();
     }, [getCurrentFilterData]);
 
+    // Prepare all images array for popup navigation
+    useEffect(() => {
+        if (currentFilterData.length > 0) {
+            const images = [];
+            
+            if (filterId === 0) {
+                // For brochure: flat array
+                currentFilterData.forEach((item, index) => {
+                    images.push({
+                        ...item,
+                        index: index,
+                        total: currentFilterData.length
+                    });
+                });
+            } else {
+                // For construction progress and design images: flatten grouped images
+                let index = 0;
+                currentFilterData.forEach(dateGroup => {
+                    dateGroup.images.forEach(imageItem => {
+                        images.push({
+                            ...imageItem,
+                            index: index,
+                            total: images.length + dateGroup.images.length
+                        });
+                        index++;
+                    });
+                });
+            }
+            
+            setAllImages(images);
+        } else {
+            setAllImages([]);
+        }
+    }, [currentFilterData, filterId]);
+
     const handleSetFilterId = useCallback((filterItem) => {
         setFilterId(filterItem.id);
         navigate(`?filter=${filterItem.id}`);
     }, [navigate]);
+
+    // Handle image click to open popup
+    const handleImageClick = useCallback((imageIndex, isGrouped = false, groupIndex = 0, imageInGroupIndex = 0) => {
+        let targetIndex = 0;
+        
+        if (isGrouped) {
+            // Calculate absolute index for grouped images
+            let absoluteIndex = 0;
+            for (let i = 0; i < groupIndex; i++) {
+                absoluteIndex += currentFilterData[i].images.length;
+            }
+            targetIndex = absoluteIndex + imageInGroupIndex;
+        } else {
+            targetIndex = imageIndex;
+        }
+        
+        setCurrentImageIndex(targetIndex);
+        setPopupOpen(true);
+    }, [currentFilterData]);
+
+    // Popup navigation functions
+    const handleNextImage = useCallback(() => {
+        if (currentImageIndex < allImages.length - 1) {
+            setCurrentImageIndex(prev => prev + 1);
+        } else {
+            setCurrentImageIndex(0); // Loop back to first
+        }
+    }, [currentImageIndex, allImages.length]);
+
+    const handlePrevImage = useCallback(() => {
+        if (currentImageIndex > 0) {
+            setCurrentImageIndex(prev => prev - 1);
+        } else {
+            setCurrentImageIndex(allImages.length - 1); // Loop to last
+        }
+    }, [currentImageIndex, allImages.length]);
+
+    const handleClosePopup = useCallback(() => {
+        setPopupOpen(false);
+    }, []);
 
     const isBrochure = filterId === 0;
     const gridClass = isBrochure 
@@ -312,8 +536,25 @@ function Brochure() {
         );
     }
 
+    const currentImage = allImages[currentImageIndex];
+
     return ( 
         <div className="">
+            {/* Image Popup */}
+            <ImagePopup
+                isOpen={popupOpen}
+                onClose={handleClosePopup}
+                currentImage={{
+                    ...currentImage,
+                    index: currentImageIndex,
+                    total: allImages.length
+                }}
+                onNext={handleNextImage}
+                onPrev={handlePrevImage}
+                hasNext={currentImageIndex < allImages.length - 1}
+                hasPrev={currentImageIndex > 0}
+            />
+
             <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4 lg:px-0">
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-6 lg:mt-10 w-full">
                     {/* HEADER */}
@@ -353,7 +594,11 @@ function Brochure() {
                         {isBrochure && currentFilterData.length > 0 && (
                             <div className={gridClass}>
                                 {currentFilterData.map((item, index) => (
-                                    <div key={item.id} className="w-full">
+                                    <div 
+                                        key={item.id} 
+                                        className="w-full cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+                                        onClick={() => handleImageClick(index)}
+                                    >
                                         <LazyImage 
                                             src={item.thumbUrl || item.url} 
                                             alt="" 
@@ -386,7 +631,11 @@ function Brochure() {
                                 {/* IMAGE GRID */}
                                 <div className={gridClass}>
                                     {dateGroup.images.map((imageItem, imageIndex) => (
-                                        <div key={imageItem.id} className="w-full h-[200px] md:h-[250px] lg:h-[325px]">
+                                        <div 
+                                            key={imageItem.id} 
+                                            className="w-full h-[200px] md:h-[250px] lg:h-[325px] cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+                                            onClick={() => handleImageClick(imageIndex, true, groupIndex, imageIndex)}
+                                        >
                                             <LazyImage 
                                                 src={imageItem.src} 
                                                 alt="" 

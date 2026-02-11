@@ -29,7 +29,6 @@ function Projects() {
       setError(null);
       
       const response = await projectsService.getProjects();
-      console.log('✅ Fetched projects data:', response.data);
       // Transform API data to match your component structure với field mapping chính xác
       const transformedProjects = response.data?.projects?.map(project => ({
         id: project._id || project.id,
@@ -38,6 +37,7 @@ function Projects() {
         title: project.title,
         type: 'for sale', // Tất cả projects đều là For Sale
         description: project.description,
+        propertyFeatures: project.propertyFeatures,
         location: project.location,
         status: project.status,
         brochure: project.brochure,
@@ -49,7 +49,6 @@ function Projects() {
         updatedAt: project.updatedAt
       })) || [];
       
-      console.log('✅ Transformed projects:', transformedProjects);
       setProjects(transformedProjects.length > 0 ? transformedProjects : FALLBACK_IMAGES);
       
     } catch (err) {
@@ -98,7 +97,6 @@ function Projects() {
   }, [projects]);
 
   const handleImageClick = useCallback((projectId) => {
-    console.log('🖱️ Project clicked:', projectId);
     // You can add navigation or modal opening logic here
   }, []);
 
@@ -168,11 +166,11 @@ function Projects() {
   );
 }
 
-const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloadedImages, titleSlug }) => {
+const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloadedImages }) => {
+  console.log("PROJECT:", project)
   const handleClick = useCallback(() => {
     onImageClick(project.id);
   }, [onImageClick, project.id]);
-  console.log('project detail', project)
   // Construct full image URL (adjust based on your backend URL structure)
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
@@ -259,12 +257,21 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
         </div>
 
         {/* Content section cho desktop - Title và Location nằm trên ảnh (KHÔNG có nút View More) */}
-        <div className="hidden lg:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:group-hover:opacity-0 lg:transition-opacity lg:duration-300 z-20">
+        <div className="hidden lg:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/100 to-transparent p-4 lg:group-hover:opacity-0 lg:transition-opacity lg:duration-300 z-20">
           <h3 className="text-white text-[20px] font-semibold">{project.title}</h3>
           {project.location && (
-            <p className="text-gray-300 text-[14px] mt-1">{project.location}</p>
+            <p className="text-gray-300 text-[16px] mt-1">{project.location}</p>
           )}
-          {/* ĐÃ XÓA nút View More trên desktop */}
+          {project.propertyFeatures.length > 0 && (
+          project.propertyFeatures.map((feature, idx) => {
+            console.log(feature.text)
+            return (
+              (
+                <p className="text-gray-300 text-[16px] mt-1">{feature.text}</p>
+              )
+            )
+          })
+        )}
         </div>
       </LocalizedLink>
 

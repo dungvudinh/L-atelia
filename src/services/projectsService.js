@@ -180,5 +180,19 @@ export const projectsService = {
       console.error('❌ Error in getProjectsByType service:', error);
       throw error;
     }
-  }
+  }, 
+  submitProjectContactForm: async (projectId, formData) => {
+    try {
+      console.log(`📋 Submitting project contact for ID: ${projectId}`);
+      console.log('Form data:', formData);
+      
+      const response = await axiosClient.post(`/v1/projects/${projectId}/contact`, formData);
+      console.log('✅ Project contact form submitted successfully');
+      
+      return response.data;
+    } catch (error) {
+      console.error('❌ Error in submitProjectContactForm service:', error);
+      throw error;
+    }
+  },
 };

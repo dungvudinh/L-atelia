@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import propertyDetailBanner from '../../assets/images/property-detail-banner.png';
 import { ArrowRight, ChevronRight } from "lucide-react";
-import patikiTownhouse from '../../assets/images/patiki-townhouse.png';
-import propertyFeatures from '../../assets/images/property-features.png';
-import architecture1 from '../../assets/images/architecture1.png'
-import architecture2 from '../../assets/images/architecture2.png'
-import history from '../../assets/images/history.png'
 import Footer from "../../layouts/components/Footer";
 import OptimizedImage from "../../components/OptimizedImage";
 import CustomAccordion from "../../components/Accordion";
@@ -19,6 +13,16 @@ function ProjectDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: ''
+    });
+    const [formErrors, setFormErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
     // Fetch project detail from API
     const fetchProjectDetail = async () => {
         try {
@@ -46,6 +50,93 @@ function ProjectDetail() {
         }
     };
 
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [id]: value
+        }));
+        
+        // Clear error for this field when user types
+        if (formErrors[id]) {
+            setFormErrors(prev => ({
+                ...prev,
+                [id]: ''
+            }));
+        }
+    };
+     const validateForm = () => {
+        const errors = {};
+        
+        if (!formData.firstName.trim()) {
+            errors.firstName = 'First name is required';
+        }
+        if (!formData.lastName.trim()) {
+            errors.lastName = 'Last name is required';
+        }
+        if (!formData.email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            errors.email = 'Email is invalid';
+        }
+        if (!formData.phone.trim()) {
+            errors.phone = 'Phone number is required';
+        }
+        
+        return errors;
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const errors = validateForm();
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+        
+        try {
+            setSubmitting(true);
+            setFormErrors({});
+            
+            // Gửi chỉ 5 trường: 4 từ form + projectTitle
+            const requestData = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                projectTitle: project?.title || 'Unknown Project'
+            };
+            
+            console.log('Submitting project contact form:', requestData);
+            
+            const response = await projectsService.submitProjectContactForm(
+                projectId, 
+                requestData
+            );
+            
+            if (response.success) {
+                setSubmitSuccess(true);
+                // Reset form
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: ''
+                });
+                
+                setTimeout(() => {
+                    setSubmitSuccess(false);
+                }, 5000);
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setFormErrors({
+                submit: error.response?.data?.message || 'Failed to submit form. Please try again.'
+            });
+        } finally {
+            setSubmitting(false);
+        }
+    };
     useEffect(() => {
         if (projectId) {
             fetchProjectDetail();
@@ -306,49 +397,125 @@ function ProjectDetail() {
                     
                     {/* RIGHT - CONTACT FORM */}
                     <div className="flex-basis lg:basis-1/2 mb-20 lg:mb-40 order-1 lg:order-2">
-                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Liên Hệ Ngay</h1>
-                        <div className="mt-6 lg:mt-10 text-[16px] lg:text-[18px]">
-                            <div className="flex flex-col">
-                                <label htmlFor="firstName" className="mb-2">First Name *</label>
+                <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">
+                    Liên Hệ Ngay
+                </h1>
+                
+                {/* <p className="mt-4 text-txt-gray text-[16px] lg:text-[18px]">
+                    Quan tâm đến dự án <span className="font-semibold text-txt-secondary">
+                        {project?.title || 'này'}
+                    </span>? Để lại thông tin, chúng tôi sẽ liên hệ tư vấn cho bạn.
+                </p> */}
+                
+                {submitSuccess && (
+                    <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+                        <p className="font-semibold">✓ Cảm ơn bạn đã liên hệ!</p>
+                        <p>Chúng tôi đã nhận được thông tin của bạn và sẽ liên hệ trong thời gian sớm nhất.</p>
+                        <p className="text-sm mt-2">Email xác nhận đã được gửi đến {formData.email}</p>
+                    </div>
+                )}
+                
+                {formErrors.submit && (
+                    <div className="mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                        <p className="font-semibold">Lỗi:</p>
+                        <p>{formErrors.submit}</p>
+                    </div>
+                )}
+                
+                <div className="mt-6 lg:mt-10 text-[16px] lg:text-[18px]">
+                    <form onSubmit={handleSubmit}>
+                        <div className="flex flex-col">
+                                <label htmlFor="firstName" className="mb-2">
+                                    Tên *
+                                    {formErrors.firstName && (
+                                        <span className="text-red-500 text-sm ml-2">{formErrors.firstName}</span>
+                                    )}
+                                </label>
                                 <input 
                                     type="text" 
                                     id="firstName"
-                                    placeholder="First Name" 
-                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
+                                    value={formData.firstName}
+                                    onChange={handleInputChange}
+                                    placeholder="Tên của bạn" 
+                                    className={`border p-3 md:p-4 ${formErrors.firstName ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                    disabled={submitting}
                                 />
                             </div>
-                            <div className="flex flex-col mt-6 lg:mt-10">
-                                <label htmlFor="lastName" className="mb-2">Last Name *</label>
+                             <div className="flex flex-col  mt-6">
+                                <label htmlFor="lastName" className="mb-2">
+                                    Họ *
+                                    {formErrors.lastName && (
+                                        <span className="text-red-500 text-sm ml-2">{formErrors.lastName}</span>
+                                    )}
+                                </label>
                                 <input 
                                     type="text" 
                                     id="lastName"
-                                    placeholder="Last Name" 
-                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
+                                    value={formData.lastName}
+                                    onChange={handleInputChange}
+                                    placeholder="Họ của bạn" 
+                                    className={`border p-3 md:p-4 ${formErrors.lastName ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                    disabled={submitting}
                                 />
                             </div>
-                            <div className="flex flex-col mt-6 lg:mt-10">
-                                <label htmlFor="email" className="mb-2">Email *</label>
-                                <input 
-                                    type="email" 
-                                    id="email"
-                                    placeholder="Email" 
-                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
-                                />
-                            </div>
-                            <div className="flex flex-col mt-6 lg:mt-10">
-                                <label htmlFor="phone" className="mb-2">Phone *</label>
-                                <input 
-                                    type="tel" 
-                                    id="phone"
-                                    placeholder="Phone" 
-                                    className="border p-3 md:p-4 border-txt-gray outline-none rounded-md"
-                                />
-                            </div>
-                            <button className="cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px]">
-                                GỬI THÔNG TIN
-                            </button>
+                        
+                        
+                        {/* Email */}
+                        <div className="flex flex-col mt-6">
+                            <label htmlFor="email" className="mb-2">
+                                Email *
+                                {formErrors.email && (
+                                    <span className="text-red-500 text-sm ml-2">{formErrors.email}</span>
+                                )}
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                placeholder="email@example.com" 
+                                className={`border p-3 md:p-4 ${formErrors.email ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                disabled={submitting}
+                            />
                         </div>
-                    </div>
+                        
+                        {/* Phone */}
+                        <div className="flex flex-col mt-6">
+                            <label htmlFor="phone" className="mb-2">
+                                Số điện thoại *
+                                {formErrors.phone && (
+                                    <span className="text-red-500 text-sm ml-2">{formErrors.phone}</span>
+                                )}
+                            </label>
+                            <input 
+                                type="tel" 
+                                id="phone"
+                                value={formData.phone}
+                                onChange={handleInputChange}
+                                placeholder="0987 654 321" 
+                                className={`border p-3 md:p-4 ${formErrors.phone ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                disabled={submitting}
+                            />
+                        </div>
+                        
+                        {/* Project Info (read-only) */}
+                        <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                            <p className="text-sm text-gray-600 mb-2">Dự án bạn quan tâm:</p>
+                            <p className="font-semibold text-txt-secondary">
+                                {project?.title || 'Loading...'}
+                            </p>
+                        </div>
+                        
+                        <button 
+                            type="submit"
+                            disabled={submitting}
+                            className={`cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px] ${submitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`}
+                        >
+                            {submitting ? 'ĐANG GỬI...' : 'GỬI THÔNG TIN'}
+                        </button>
+                    </form>
+                </div>
+            </div>
                 </div>
             </div>
             
