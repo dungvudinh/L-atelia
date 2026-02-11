@@ -80,21 +80,18 @@ function PropertiesForSale() {
 
     // Hàm xử lý khi click vào location item
     const handleLocationSelect = (locationItem) => {
-        console.log('Selected location:', locationItem);
         setShowSelectLocation(false);
         // Thêm logic xử lý khi chọn location ở đây
     };
 
     // Hàm xử lý khi click vào properties item
     const handlePropertiesSelect = (propertiesItem) => {
-        console.log('Selected property:', propertiesItem);
         setShowPropertiesOptions(false);
         // Thêm logic xử lý khi chọn property ở đây
     };
 
     // Hàm xử lý khi click vào sorting item
     const handleSortingSelect = (sortingItem) => {
-        console.log('Selected sorting:', sortingItem);
         setShowSortingOptions(false);
         // Thêm logic xử lý khi chọn sorting ở đây
     };

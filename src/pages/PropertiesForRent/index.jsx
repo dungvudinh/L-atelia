@@ -77,7 +77,6 @@ function PropertiesForRent() {
   const [selectedSorting, setSelectedSorting] = useState(SORTING_ITEMS[0]);
   // THÊM: State cho show more description
   const [showFullDescription, setShowFullDescription] = useState(false);
-  console.log(rentProperties)
   // THAY ĐỔI: Tách state cho filter và search
   const [searchFilters, setSearchFilters] = useState({
     checkIn: null,

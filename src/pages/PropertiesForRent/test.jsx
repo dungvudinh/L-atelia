@@ -78,7 +78,6 @@ function PropertiesForRent() {
         try {
             setLoading(true);
             setError(null);
-            console.log('🚀 Fetching rent properties and bookings...');
             
             // Fetch properties và bookings song song
             const [propertiesResponse, bookingsResponse] = await Promise.all([
@@ -86,8 +85,6 @@ function PropertiesForRent() {
                 bookingService.getAllBookings()
             ]);
             
-            console.log('✅ Rent properties response:', propertiesResponse);
-            console.log('✅ Bookings response:', bookingsResponse);
             
             const properties = propertiesResponse.data || propertiesResponse;
             const bookingsData = bookingsResponse.data || bookingsResponse;
@@ -108,10 +105,8 @@ function PropertiesForRent() {
         try {
             setLoading(true);
             setError(null);
-            console.log(`🚀 Fetching property detail for ID: ${id}`);
             
             const response = await rentService.getRentPropertyById(id);
-            console.log('✅ Property detail response:', response);
             
             const property = response.data || response;
             setCurrentProperty(property);
@@ -157,7 +152,6 @@ function PropertiesForRent() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-    console.log(bookings)
     // Kiểm tra property có available không dựa trên bookings
     const isPropertyAvailable = (propertyId, checkIn, checkOut, guests) => {
         if (!checkIn || !checkOut) return true;
@@ -226,14 +220,12 @@ function PropertiesForRent() {
 
     // Hàm xử lý khi click vào location item
     const handleLocationSelect = (locationItem) => {
-        console.log('Selected location:', locationItem);
         setSelectedLocation(locationItem);
         setShowSelectLocation(false);
     };
 
     // Hàm xử lý khi click vào sorting item
     const handleSortingSelect = (sortingItem) => {
-        console.log('Selected sorting:', sortingItem);
         setSelectedSorting(sortingItem);
         setShowSortingOptions(false);
     };

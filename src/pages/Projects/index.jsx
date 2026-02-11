@@ -167,7 +167,6 @@ function Projects() {
 }
 
 const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloadedImages }) => {
-  console.log("PROJECT:", project)
   const handleClick = useCallback(() => {
     onImageClick(project.id);
   }, [onImageClick, project.id]);
@@ -264,7 +263,6 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
           )}
           {project.propertyFeatures.length > 0 && (
           project.propertyFeatures.map((feature, idx) => {
-            console.log(feature.text)
             return (
               (
                 <p className="text-gray-300 text-[16px] mt-1">{feature.text}</p>

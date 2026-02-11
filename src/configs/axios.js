@@ -73,7 +73,6 @@ class AdaptiveAxiosClient {
       if (!strategy.shouldTry(config)) continue;
       
       try {
-        console.log(`🔄 Trying strategy: ${strategy.name}`);
         
         const axiosInstance = axios.create({
           baseURL: this.baseURL,
@@ -97,10 +96,7 @@ class AdaptiveAxiosClient {
         const response = await axiosInstance(config);
         this.currentStrategy = strategy.name;
         
-        // Log success
-        if (strategy.name !== 'normal') {
-          console.log(`✅ Using fallback strategy: ${strategy.name}`);
-        }
+        
         
         return response;
       } catch (error) {

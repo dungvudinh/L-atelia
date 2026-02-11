@@ -20,7 +20,6 @@ const CustomAccordion = ({ data = [], className = "" }) => {
   ];
 
   const accordionItems = data.length > 0 ? data : defaultData;
-console.log(accordionItems)
   return (
     <div className={`w-full max-w-4xl mx-auto ${className}`}>
       <div className="accordion-container  ">

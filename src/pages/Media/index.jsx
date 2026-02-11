@@ -131,7 +131,6 @@ function Media() {
       </div>
     );
   }
-  console.log(currentLanguage)
   return ( 
     <div>
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4">

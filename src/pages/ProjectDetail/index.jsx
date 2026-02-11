@@ -29,15 +29,12 @@ function ProjectDetail() {
             setLoading(true);
             setError(null);
             
-            console.log('🚀 Fetching project detail for ID:', projectId);
             
             if (!projectId) {
                 throw new Error('Project ID is required');
             }
 
             const response = await projectsService.getProjectById(projectId);
-            console.log(response)
-            console.log('✅ Project detail response:', response);
             
             // Set project data
             setProject(response.data || response);
@@ -107,7 +104,6 @@ function ProjectDetail() {
                 projectTitle: project?.title || 'Unknown Project'
             };
             
-            console.log('Submitting project contact form:', requestData);
             
             const response = await projectsService.submitProjectContactForm(
                 projectId, 

@@ -82,7 +82,6 @@ const getThumbnailUrl = (image) => {
 
 // Hàm tạo URL từ URL string (cho backward compatibility)
 const getUrlFromString = (urlString) => {
-    console.log(urlString)
     if (!urlString) return '';
     
     if (urlString.startsWith('http')) {
@@ -279,7 +278,7 @@ const ImagePopup = ({
             )}
 
             {/* Image Container */}
-            <div className="relative max-w-4xl max-h-[90vh] w-full mx-4">
+            <div className="relative max-w-7xl max-h-[90vh] w-full mx-4">
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -331,7 +330,6 @@ function Brochure() {
             }
 
             const response = await projectsService.getProjectById(projectId);
-            console.log(response)
             setProject(response.data || response);
             
         } catch (err) {
