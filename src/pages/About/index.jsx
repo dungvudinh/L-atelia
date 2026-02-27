@@ -209,7 +209,7 @@ function About()
                             <Target className='text-txt-secondary' size={24}/>
                             <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle font-semibold'>GIÁ TRỊ CỐT LÕI CỦA LATELIA</h4>
                         </div>
-                        <h1 className='text-[32px] xl:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight'>
+                        <h1 className='text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight'>
                             Những điều tạo nên sự khác biệt
                         </h1>
                     </div>
@@ -294,7 +294,7 @@ function About()
                             <ShieldCheck className='text-txt-secondary' size={24}/>
                             <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle font-semibold'>CAM KẾT TỪ LATELIA</h4>
                         </div>
-                        <h1 className='text-[32px] xl:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight lg:w-[740px]'>
+                        <h1 className='text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight lg:w-[740px]'>
                             Latelia không chỉ bán nhà – chúng tôi trao gửi một phong cách sống
                         </h1>
                     </div>
@@ -336,7 +336,7 @@ function About()
 <div className='mt-10 lg:mt-20 bg-gray-50 py-10 lg:py-20'>
     <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
         <div className='text-center mb-10 lg:mb-16'>
-            <h1 className='text-[32px] xl:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
+            <h1 className='text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
                 QUY TRÌNH TRIỂN KHAI DỰ ÁN TẠI LATELIA
             </h1>
             <p className='text-[16px] lg:text-[18px] text-gray-600'>
@@ -402,61 +402,7 @@ function About()
     </div>
 </div>
 
-            {/* Section 7: Team Slider */}
-            {/* <div className='mt-10 lg:mt-20 flex justify-center mb-10 lg:mb-20 px-4'>
-                <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full relative'>
-                    <div className='text-center mb-10'>
-                        <h1 className='text-[32px] lg:text-[48px] font-subtitle text-txt-secondary font-semibold leading-tight'>
-                            Đội ngũ chuyên gia
-                        </h1>
-                        <p className='text-[16px] lg:text-[18px] text-gray-600 mt-4'>
-                            Những người đồng hành cùng bạn trên hành trình kiến tạo không gian sống hoàn hảo
-                        </p>
-                    </div>
-                    
-                    <Swiper
-                        modules={[Autoplay, Pagination, Navigation]}
-                        spaceBetween={16}
-                        slidesPerView={1}
-                        breakpoints={{
-                            0:{
-                                slidesPerView:2
-                            }, 
-                            640: {
-                                slidesPerView: 2,
-                            },
-                            1024: {
-                                slidesPerView: 4,
-                            },
-                        }}
-                        navigation={{
-                            nextEl: '.custom-next-button',
-                            prevEl: '.custom-prev-button',
-                        }}
-                    >
-                        {
-                            SLIDE_ITEMS.map(slideItem=>(
-                                <SwiperSlide key={slideItem.id} className=''>
-                                    <OptimizedImage
-                                        src={slideItem.src}
-                                        className="w-full h-[300px] lg:h-[420px] object-cover object-top rounded-lg"
-                                    />
-                                    <div className='mt-4'>
-                                        <h4 className='text-[20px] lg:text-[22px] font-semibold font-subtitle text-txt-secondary'>{slideItem.name}</h4>
-                                        <h4 className='text-[16px] lg:text-[18px] text-gray-600'>{slideItem.position}</h4>
-                                    </div>
-                                </SwiperSlide>
-                            ))
-                        }
-                    </Swiper>
-                    <button className="custom-prev-button hidden lg:flex absolute -left-15 top-1/2 -translate-y-1/2 z-10 cursor-pointer">
-                        <ChevronLeft/>
-                    </button>
-                    <button className="custom-next-button hidden lg:flex absolute -right-15 top-1/2 -translate-y-1/2 z-10 cursor-pointer">
-                        <ChevronRight />
-                    </button>
-                </div>
-            </div> */}
+            
 
             {/* CTA Section */}
             <div className='mt-10 lg:mt-20 bg-txt-secondary text-bg-primary py-16 lg:py-24 px-4'>

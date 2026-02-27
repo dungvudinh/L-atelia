@@ -99,7 +99,7 @@ function Contact() {
             <div className="h-[300px] md:h-[500px] lg:h-[840px] relative">
                 <OptimizedImage src={contact} alt="" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-black/40"></div>
-                <div className='absolute z-40 top-1/3 md:top-2/5 left-1/2 text-bg-primary text-[32px] md:text-[48px] lg:text-[60px] font-subtitle transform translate-x-[-50%] xl:max-w-screen-xl w-full lg:max-w-[900px] !px-4 md:px-0'>
+                <div className='absolute z-40 top-1/3 md:top-2/5 left-1/2 text-bg-primary text-[32px] md:text-[45px] lg:text-[45px] font-subtitle transform translate-x-[-50%] xl:max-w-screen-xl w-full lg:max-w-[900px] !px-4 md:px-0'>
                     <div className='w-full'>
                         <h1>Bắt đầu câu chuyện</h1>
                         <h1>Tạo nên điều kỳ diệu</h1>
@@ -138,7 +138,7 @@ function Contact() {
 
             <div className='w-full bg-bg-primary text-center  md:pt-60 lg:pt-100 flex justify-center px-4 md:px-0'>
                 <form onSubmit={handleSubmit} className='flex flex-col xl:max-w-[440px] justify-start w-full text-[16px] md:text-[18px] px-4'>
-                    <h1 className='text-[32px] md:text-[48px] lg:text-[60px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
+                    <h1 className='text-[32px] md:text-[45px] lg:text-[45px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
                     
                     {/* Status Message */}
                     {submitStatus && (

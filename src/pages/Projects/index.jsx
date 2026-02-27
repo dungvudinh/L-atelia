@@ -126,10 +126,10 @@ function Projects() {
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 !px-4 lg:px-0">
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-6 lg:mt-10">
           {/* HEADER */}
-          <h1 className="text-[36px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary font-semibold leading-tight">
+          <h1 className="text-[36px] md:text-[45px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight">
             Các dự án của chúng tôi
           </h1>
-          <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[22px] lg:text-[26px] leading-relaxed">
+          <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[20px] lg:text-[20px] leading-relaxed">
           Chúng tôi đồng hành cùng KH với mục tiêu rõ ràng đó là mang đến những sản phẩm bất động sản có giá trị thật – cả về trải nghiệm sống lẫn tiềm năng gia tăng trong tương lai.
           </p>
           

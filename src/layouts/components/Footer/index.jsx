@@ -96,17 +96,17 @@ function Footer({withContact}) {
                     <div className="flex flex-col lg:flex-row gap-8 md:gap-10">
                         {/* INSTAGRAM */}
                         <div className="basis-full lg:basis-1/3 text-center lg:text-left">
-                            <h1 className="font-subtitle text-[28px] md:text-[36px] lg:text-[40px] text-txt-secondary leading-tight">
+                            <h1 className="font-subtitle text-[28px] md:text-[36px] lg:text-[30px] text-txt-secondary leading-tight">
                                 INSTAGRAM
                             </h1>
-                            <p className="text-txt-primary text-[20px] md:text-[24px] lg:text-[26px] mt-4 md:mt-6 lg:mt-8">
+                            <p className="text-txt-primary text-[20px] md:text-[24px] lg:text-[22px] mt-4 md:mt-6 lg:mt-8">
                                 @L'atelia
                             </p>
                         </div>
                         
                         {/* NEWSLETTER */}
                         <div className="basis-full lg:basis-1/3 text-center lg:text-left">
-                            <h1 className="font-subtitle text-[28px] md:text-[36px] lg:text-[40px] text-txt-secondary leading-tight">
+                            <h1 className="font-subtitle text-[28px] md:text-[36px] lg:text-[30px] text-txt-secondary leading-tight">
                                 NEWSLETTER
                             </h1>
                             <p className="text-txt-primary text-[16px] md:text-[18px] mt-4 md:mt-6 lg:mt-8 lg:w-75 leading-relaxed">
@@ -199,7 +199,7 @@ function Footer({withContact}) {
                 {/* LOCATION */}
                 <div className={`flex flex-col items-center text-txt-primary ${withContact ? 'mt-10' :''}`}>
                     <img src={logo} alt="Logo" className="w-[80px] md:w-[108px] text-center" />
-                    <img src={logoTextNoBg} alt="L'atelia" className="w-[160px] md:w-[211px] text-center mb-3 md:mb-4 mt-2" />
+                    <img src={logoTextNoBg} alt="L'atelia" className="w-[160px] md:w-[190px] text-center mb-3 md:mb-4 mt-2" />
                     <p className="text-[16px] md:text-[18px] mb-2 text-center">Crafting luxury property</p>
                     <p className="text-[16px] md:text-[18px] mb-2 text-center">Da Nang City</p>
                     <p className="text-[16px] md:text-[18px] mb-4 md:mb-6 text-center">©2025 L'atelia</p>

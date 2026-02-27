@@ -590,13 +590,13 @@ function Brochure() {
             )}
 
             <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-6 lg:mt-10 w-full">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-6 lg:mt-10 w-full px-4">
                     {/* HEADER */}
-                    <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary mb-6 lg:mb-10 leading-tight">
+                    <h1 className="text-[32px] md:text-[45px] lg:text-[40px] font-subtitle text-txt-secondary mb-6 lg:mb-10 leading-tight">
                         {project.title}
                     </h1>
                     
-                    <p className="text-[18px] md:text-[22px] lg:text-[26px] text-txt-gray leading-relaxed">
+                    <p className="text-[18px] md:text-[20px] lg:text-[20px] text-txt-gray leading-relaxed">
                         {project.description}
                     </p>
                     

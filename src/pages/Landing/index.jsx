@@ -82,7 +82,7 @@ function Landing() {
 />
                     </div>
                     <div className="pl-0 lg:pl-20 mt-8 lg:mt-20 text-center lg:text-left w-full lg:w-auto">
-                        <p className="text-[20px] md:text-[24px] lg:text-[30px] text-txt-primary leading-tight">
+                        <p className="text-[20px] md:text-[24px] lg:text-[25px] text-txt-primary leading-tight">
                             {t('landing:hero.subtitle')}
                         </p>
                         <LocalizedLink to={'/projects'} className="inline-block">
@@ -122,10 +122,10 @@ function Landing() {
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row gap-8 lg:gap-10">
                     {/* LEFT CONTENT */}
                     <div className="flex-basis lg:basis-1/2 order-2 lg:order-1">
-                        <h1 className="font-subtitle text-[36px] md:text-[48px] lg:text-[60px] text-bg-secondary font-semibold leading-tight">
+                        <h1 className="font-subtitle text-[36px] md:text-[40px] lg:text-[40px] text-bg-secondary font-semibold leading-tight">
                             {t('landing:our_philosophy.title')}
                         </h1>
-                        <h4 className="text-[24px] md:text-[30px] lg:text-[38px] text-txt-primary mt-6 lg:mt-8 leading-tight">
+                        <h4 className="text-[24px] md:text-[30px] lg:text-[32px] text-txt-primary mt-6 lg:mt-8 leading-tight">
                             {t('landing:our_philosophy.summary')}
                         </h4>
                         <div className="text-[16px] lg:text-[18px] text-txt-primary mt-6 lg:mt-8">
@@ -171,7 +171,7 @@ const FeatureProperties = ()=>
                 <div className="lg:mr-5 xl:mr-15 mb-8 lg:mb-0 lg:w-120 w-full lg:h-full flex lg:items-start item-center justify-between flex-col">
                     {/* LIST */}
                     <div className="mb-6">
-                        <ul className="text-[24px] md:text-[32px] lg:text-[40px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
+                        <ul className="text-[24px] md:text-[32px] lg:text-[35px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
                             <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
                                 <LocalizedLink to={`/projects/695d33be02d603f76992719e`}>
                                     Le Duan Apartment

@@ -202,7 +202,7 @@ function ProjectDetail() {
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
                 />
                 <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4 flex flex-col items-center">
-                    <h1 className="font-subtitle text-[32px] md:text-[48px] lg:text-[60px]">FOR SALE</h1>
+                    <h1 className="font-subtitle text-[32px] md:text-[45px] lg:text-[45px]">FOR SALE</h1>
                     <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
                         <button className="border border-bg-primary px-4 py-2 flex justify-between items-center
                             text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer 
@@ -216,13 +216,13 @@ function ProjectDetail() {
             
             {/* Project Details */}
             <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
-                <div className="flex flex-col lg:flex-row xl:max-w-screen-xl lg:max-w-[900px] gap-8 lg:gap-20 w-full">
+                <div className="flex flex-col lg:flex-row xl:max-w-screen-xl lg:max-w-[900px] gap-8 lg:gap-20 w-full px-4">
                     {/* LEFT */}
                     <div className="flex-basis lg:basis-1/2 mt-0 lg:mt-7 order-2 lg:order-1">
-                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] text-txt-secondary font-subtitle leading-tight">
+                        <h1 className="text-[32px] md:text-[45px] lg:text-[45px] text-txt-secondary font-subtitle leading-tight">
                             {project.title || 'Patiki Townhouse'}
                         </h1>
-                        <p className="mt-6 lg:mt-10 text-[16px] md:text-[18px] lg:text-[22px] leading-relaxed">
+                        <p className="mt-6 lg:mt-10 text-[16px] md:text-[18px] lg:text-[18px] leading-relaxed">
                             {project.description || 'An architectural gem immaculately restored and modernized from its 1896 creation with no compromise on luxury. The mission in reforming the historic mansion was to create a home with an uncompromised year round living experience, while ensuring the heritage not only lived on but enhanced its lavish style.'}
                         </p>
                     </div>
@@ -239,10 +239,10 @@ function ProjectDetail() {
 
             {/* PROPERTY FEATURES */}
             <div className="bg-bg-primary mt-10 lg:mt-20 flex justify-center px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full px-4">
                     <ul className="flex flex-col md:flex-row justify-start gap-8 md:gap-10 lg:gap-30">
                         <li className="md:mr-10 lg:mr-30">
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
                                     project?.propertyFeatures?.length > 0 && project.propertyFeatures.map(propertyFeature=>(
@@ -252,7 +252,7 @@ function ProjectDetail() {
                             </p>
                         </li>
                         <li className="md:mr-10 lg:mr-30">
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
                                     project?.specifications?.length > 0 && project.specifications.map(specification=>(
@@ -262,7 +262,7 @@ function ProjectDetail() {
                             </p>
                         </li>
                         <li>
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">LOCATION</h4>
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">LOCATION</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray">
                                 <span>{project?.location}</span>
                             </p>
@@ -274,7 +274,7 @@ function ProjectDetail() {
                             <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                                 {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].title}
                             </h4>
-                            <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[22px] lg:text-[26px] leading-relaxed">
+                            <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[22px] lg:text-[20px] leading-relaxed">
                                 {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].description}
                             </p>
                             {
@@ -359,10 +359,10 @@ function ProjectDetail() {
 
             {/* CONTACT US & TRACKING */}
             <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30 px-4">
                     {/* LEFT - TRACKING */}
                     <div className="flex-basis lg:basis-1/2 order-2 lg:order-1 mb-4">
-                        <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
+                        <h1 className="text-[32px] md:text-[40px] lg:text-[40px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
                         <ul className="mt-8 lg:mt-15">
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle font-semibold">Brochure</p>
@@ -393,7 +393,7 @@ function ProjectDetail() {
                     
                     {/* RIGHT - CONTACT FORM */}
                     <div className="flex-basis lg:basis-1/2 mb-20 lg:mb-40 order-1 lg:order-2">
-                <h1 className="text-[32px] md:text-[48px] lg:text-[60px] font-subtitle text-txt-secondary leading-tight">
+                <h1 className="text-[32px] md:text-[40px] lg:text-[40px] font-subtitle text-txt-secondary leading-tight">
                     Liên Hệ Ngay
                 </h1>
                 
@@ -433,7 +433,7 @@ function ProjectDetail() {
                                     value={formData.firstName}
                                     onChange={handleInputChange}
                                     placeholder="Tên của bạn" 
-                                    className={`border p-3 md:p-4 ${formErrors.firstName ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                    className={`border p-3 md:p-4 ${formErrors.firstName ? 'border-red-500' : 'border-txt-gray'} outline-none`}
                                     disabled={submitting}
                                 />
                             </div>
@@ -450,7 +450,7 @@ function ProjectDetail() {
                                     value={formData.lastName}
                                     onChange={handleInputChange}
                                     placeholder="Họ của bạn" 
-                                    className={`border p-3 md:p-4 ${formErrors.lastName ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                    className={`border p-3 md:p-4 ${formErrors.lastName ? 'border-red-500' : 'border-txt-gray'} outline-none`}
                                     disabled={submitting}
                                 />
                             </div>
@@ -470,7 +470,7 @@ function ProjectDetail() {
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 placeholder="email@example.com" 
-                                className={`border p-3 md:p-4 ${formErrors.email ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                className={`border p-3 md:p-4 ${formErrors.email ? 'border-red-500' : 'border-txt-gray'} outline-none`}
                                 disabled={submitting}
                             />
                         </div>
@@ -489,13 +489,13 @@ function ProjectDetail() {
                                 value={formData.phone}
                                 onChange={handleInputChange}
                                 placeholder="0987 654 321" 
-                                className={`border p-3 md:p-4 ${formErrors.phone ? 'border-red-500' : 'border-txt-gray'} outline-none rounded-md`}
+                                className={`border p-3 md:p-4 ${formErrors.phone ? 'border-red-500' : 'border-txt-gray'} outline-none `}
                                 disabled={submitting}
                             />
                         </div>
                         
                         {/* Project Info (read-only) */}
-                        <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-md">
+                        <div className="mt-6 p-4 bg-gray-50 border border-gray-200 ">
                             <p className="text-sm text-gray-600 mb-2">Dự án bạn quan tâm:</p>
                             <p className="font-semibold text-txt-secondary">
                                 {project?.title || 'Loading...'}
@@ -505,7 +505,7 @@ function ProjectDetail() {
                         <button 
                             type="submit"
                             disabled={submitting}
-                            className={`cursor-pointer mt-8 lg:mt-10 rounded-md bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px] ${submitting && 'opacity-50 cursor-not-allowed'}`}
+                            className={`cursor-pointer mt-8 lg:mt-10  bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px] ${submitting && 'opacity-50 cursor-not-allowed'}`}
                         >
                             {submitting ? 'ĐANG GỬI...' : 'GỬI THÔNG TIN'}
                         </button>

@@ -135,7 +135,7 @@ function Media() {
     <div>
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4">
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-10 lg:mt-20 text-center">
-          <h1 className="text-[32px] lg:text-[60px] font-subtitle font-semibold text-txt-secondary leading-tight">
+          <h1 className="text-[32px] lg:text-[45px] font-subtitle font-semibold text-txt-secondary leading-tight">
             Media
           </h1>
           

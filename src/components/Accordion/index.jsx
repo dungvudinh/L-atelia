@@ -39,7 +39,7 @@ const CustomAccordion = ({ data = [], className = "" }) => {
                 }`}>
                 <ChevronRight size={25} />
                 </div>
-                <span className="text-[18px] font-bold text-gray-800 ml-2">
+                <span className="text-[16px] font-bold text-gray-800 ml-2">
                   {item.name}
                 </span>
               </div>
@@ -51,7 +51,7 @@ const CustomAccordion = ({ data = [], className = "" }) => {
                 activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
-              <div className=" pb-4 text-[18px]">
+              <div className=" pb-4 text-[16px]">
                 {item.description}
               </div>
             </div>

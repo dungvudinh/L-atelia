@@ -100,7 +100,7 @@ function PropertiesForSale() {
         <div className="mt-20">
             <div className="flex justify-center">
                 <div className="xl:max-w-screen-xl w-full mt-10">
-                    <h1 className="uppercase text-[60px] font-subtitle text-txt-secondary mb-15 font-semibold">{t('propertiesForSale:title')}</h1>
+                    <h1 className="uppercase text-[45px] font-subtitle text-txt-secondary mb-15 font-semibold">{t('propertiesForSale:title')}</h1>
                     
                     {/* FILTER */}
                     <div className="flex items-center justify-between w-full mb-20">

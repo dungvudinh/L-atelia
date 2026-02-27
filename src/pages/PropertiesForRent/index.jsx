@@ -583,7 +583,7 @@ function PropertiesForRent() {
                 {formatDisplayDate(tempFilters.checkIn, 'checkin')}
                 </span>
               </div>
-              <ArrowDown className="w-4 h-4" />
+              <ArrowDown className="w-3 h-3" />
             </div>
             {showCheckInDate && (
               <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
@@ -604,11 +604,11 @@ function PropertiesForRent() {
                  onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
               <div className="flex items-center">
                 <CalendarClock className='mr-2 w-4 h-4'/>
-                <span className={'text-[14px]'}>
+                <span className={'text-[16px]'}>
                 {formatDisplayDate(tempFilters.checkOut, 'checkout')}
                 </span>
               </div>
-              <ArrowDown className="w-4 h-4" />
+              <ArrowDown className="w-3 h-3" />
             </div>
             {showCheckOutDate && (
               <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
@@ -627,11 +627,11 @@ function PropertiesForRent() {
           <div className="relative flex-1" ref={selectPersonRef}>
             <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
                  onClick={() => setShowSelectPerson(!showSelectPerson)}>
-              <div className="flex items-center text-[14px]">
+              <div className="flex items-center text-[16px]">
                 <GroupSearch className='mr-2 w-4 h-4'/>
                 {formatGuestDisplay()}
               </div>
-              <ArrowDown className="w-4 h-4" />
+              <ArrowDown className="w-3 h-3" />
             </div>
             {showSelectPerson && (
               <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
@@ -758,7 +758,7 @@ function PropertiesForRent() {
             <div className="relative w-full lg:w-[200px]" ref={locationRef}>
               <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
                    onClick={() => setShowSelectLocation(!showSelectLocation)}>
-                <div className="flex items-center text-[14px] mr-2">
+                <div className="flex items-center text-[16px] mr-2">
                   <AddLocation className='mr-2 w-4 h-4'/>
                   <div className="max-w-[200px] flex-1 truncate">
                     {selectedLocation ? selectedLocation.name : 'Select your location'}
@@ -788,16 +788,16 @@ function PropertiesForRent() {
             </div>
             
             {/* SORTING */}
-            <div className="relative w-full lg:w-[200px]" ref={sortingRef}>
+            <div className="relative w-full lg:w-[210px]" ref={sortingRef}>
               <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
                    onClick={() => setShowSortingOptions(!showSortingOptions)}>
-                <div className="flex items-center text-[14px]">
+                <div className="flex items-center text-[16px]">
                   <FilterList className='mr-2 w-4 h-4'/>
                   <span className="max-w-[300px] truncate">
                     {selectedSorting ? selectedSorting.name : 'Default sorting'}
                   </span>
                 </div>
-                <ArrowDown className="w-4 h-4" />
+                <ArrowDown className="w-3 h-3" />
               </div>
               {showSortingOptions && (
                 <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
@@ -827,13 +827,13 @@ function PropertiesForRent() {
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
           {/* Results Count */}
           <div className="mb-6">
-            <p className="text-[14px] text-txt-gray">
+            <p className="text-[16px] text-txt-gray">
               Found {rentProperties.length} propert{rentProperties.length !== 1 ? 'ies' : 'y'}
               {selectedLocation && ` in ${selectedLocation.name}`}
               {searchFilters.checkIn && searchFilters.checkOut && ` for selected dates`}
             </p>
             {/* Hiển thị loại sort đang được áp dụng */}
-            <p className="text-xs text-txt-secondary mt-1">
+            <p className="text-sm text-txt-secondary mt-1">
               Sorting by: <strong>{selectedSorting.name}</strong>
             </p>
             {/* Hiển thị thông tin guests đang được áp dụng */}
@@ -859,7 +859,7 @@ function PropertiesForRent() {
                     <h1 className="mt-3 text-[20px] lg:text-[24px] font-subtitle font-semibold text-txt-secondary leading-tight">
                       {property.title}
                     </h1>
-                    <p className="mt-2 text-[13px]">{property.location}</p>
+                    <p className="mt-2 text-[14px]">{property.location}</p>
                     <div className="flex items-center mt-2 flex-wrap gap-1">
                       <p className="text-[13px] font-semibold">
                         {formatPrice(property.price, property.priceUnit)}

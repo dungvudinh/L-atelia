@@ -553,7 +553,7 @@ function PropertiesForRent() {
                     </button>
                 </div>
 
-                <h1 className='uppercase text-[60px] font-subtitle text-txt-secondary font-semibold mb-10'>CÁC DỰ ÁN CHO THUÊ</h1>
+                <h1 className='uppercase text-[45px] font-subtitle text-txt-secondary font-semibold mb-10'>CÁC DỰ ÁN CHO THUÊ</h1>
                 
                 {/* Active Filters Display */}
                 {(selectedLocation || selectedCheckInDate || selectedSorting.value !== 'price_asc') && (
@@ -811,7 +811,7 @@ function PropertiesForRent() {
                                 {/* Property Details */}
                                 <div className="mt-10 grid grid-cols-5 gap-10">
                                     <div className="col-span-3">
-                                        <h1 className="text-[60px] font-subtitle text-txt-secondary font-semibold">{currentProperty.title}</h1>
+                                        <h1 className="text-[45px] font-subtitle text-txt-secondary font-semibold">{currentProperty.title}</h1>
                                         <div className="flex items-center">
                                             <div className="bg-txt-secondary  px-15 py-2 text-bg-primary rounded-4xl text-[18px]">
                                                 {currentProperty.type || 'Property'}
@@ -876,7 +876,7 @@ function PropertiesForRent() {
                                     {/* Contact Form */}
                                     <div className="col-span-2">
                                         <div className="bg-white border p-4 rounded-sm text-center">
-                                            <h1 className="text-[60px] text-txt-secondary font-subtitle font-semibold mb-8">Get in touch</h1>
+                                            <h1 className="text-[45px] text-txt-secondary font-subtitle font-semibold mb-8">Get in touch</h1>
                                             <input type="text" placeholder="First Name" className="w-full rounded-sm mb-8"/>
                                             <input type="text" placeholder="Last Name" className="w-full rounded-sm mb-8"/>
                                             <input type="text" placeholder="Email Address" className="w-full rounded-sm mb-8"/>
