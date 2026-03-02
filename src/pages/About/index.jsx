@@ -101,15 +101,20 @@ function About()
             
             {/* Section 1: About History */}
             <div className='flex justify-center mt-10 lg:mt-20 lg:px-4'>
-                <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-row gap-6 lg:gap-10 px-4 xl:px-0'>
-                    <div className='flex-basis xl:basis-2/3 basis-3/5 px-4'>
-                        {/* <h4 className='text-[20px] lg:text-[26px] mb-4 lg:mb-5 text-txt-secondary' >Latelia</h4> */}
+                <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-col lg:flex-row gap-6 lg:gap-10 px-4 xl:px-0'>
+                    {/* Ảnh - Hiển thị trên mobile, bên phải trên desktop */}
+                    <div className='w-full lg:w-auto lg:flex-basis xl:basis-1/3 lg:basis-2/5 h-[400px] sm:h-[500px] lg:h-[650px] order-1 lg:order-2'>
+                        <OptimizedImage src={CEO} alt="" className='object-cover h-full object-center w-full'/>
+                    </div>
+                    
+                    {/* Text - Hiển thị dưới mobile, bên trái trên desktop */}
+                    <div className='w-full lg:w-auto lg:flex-basis xl:basis-2/3 lg:basis-3/5 px-4 order-2 lg:order-1'>
                         <h1 className='text-[30px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
                             Về chúng tôi 
                             <span className='mx-2 mt-2'>
                                 <Minus />
                             </span>
-                             Latelia là ai ?
+                            Latelia là ai ?
                         </h1>
                         <p className='text-[16px] lg:text-[18px] mb-6 lg:mb-6 mt-6 lg:mt-6'>
                             Latelia được thành lập với một khát vọng rõ ràng:
@@ -140,12 +145,9 @@ function About()
                             Dù mới thành lập hơn một năm, Latelia lựa chọn con đường làm ít – làm kỹ – làm có chiều sâu, lấy uy tín và chất lượng làm nền tảng phát triển bền vững.
                         </p>  
                         <p className='text-[25px] mt-6 lg:mt-8 font-subtitle font-semibold text-txt-secondary'>
-                        Trần Duy Tùng
-                        Founder & CEO
+                            Trần Duy Tùng
+                            Founder & CEO
                         </p>  
-                    </div>
-                    <div className='flex-basis xl:basis-1/3 basis-2/5 h-full xl:h-[650px]  lg:mt-0 flex justify-end '>
-                        <OptimizedImage src={CEO} alt="" className='object-cover h-full object-center w-full'/>
                     </div>
                 </div>
             </div>
