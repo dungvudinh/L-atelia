@@ -103,7 +103,7 @@ function About()
             <div className='flex justify-center mt-10 lg:mt-20 lg:px-4'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] w-full flex flex-col lg:flex-row gap-6 lg:gap-10 px-4 xl:px-0'>
                     {/* Ảnh - Hiển thị trên mobile, bên phải trên desktop */}
-                    <div className='w-full lg:w-auto lg:flex-basis xl:basis-1/3 lg:basis-2/5 h-[400px] sm:h-[500px] lg:h-[650px] order-1 lg:order-2'>
+                    <div className='w-full lg:w-auto lg:flex-basis xl:basis-1/3 lg:basis-2/5 h-[600px] sm:h-[500px] lg:h-[650px] order-1 lg:order-2'>
                         <OptimizedImage src={CEO} alt="" className='object-cover h-full object-center w-full'/>
                     </div>
                     
