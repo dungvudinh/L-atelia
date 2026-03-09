@@ -22,6 +22,7 @@ function Projects() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [preloadedImages, setPreloadedImages] = useState(new Set());
+  
   // Fetch projects from API
   const fetchProjects = useCallback(async () => {
     try {
@@ -29,6 +30,7 @@ function Projects() {
       setError(null);
       
       const response = await projectsService.getProjects();
+      console.log('Fetched projects:', response);
       // Transform API data to match your component structure với field mapping chính xác
       const transformedProjects = response.data?.projects?.map(project => ({
         id: project._id || project.id,
@@ -39,6 +41,7 @@ function Projects() {
         description: project.description,
         propertyFeatures: project.propertyFeatures,
         location: project.location,
+        price: project.price,
         status: project.status,
         brochure: project.brochure,
         constructionProgress: project.constructionProgress,
@@ -63,6 +66,7 @@ function Projects() {
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+  
   // Preload images
   useEffect(() => {
     const preloadImages = async () => {
@@ -179,115 +183,86 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
     // return `${'http://localhost:3000'}/${imagePath}`;
   };
   const imageUrl = getImageUrl(project.src);
-  // Lấy ảnh thứ 2 từ gallery nếu có
-  const secondImageUrl = project.gallery && project.gallery.length > 1 
-    ? getImageUrl(project.gallery[1].thumbnailKey || project.gallery[1].key) 
-    : null;
 
-  // Kiểm tra xem gallery có trên 2 ảnh không
-  const hasMultipleImages = project.gallery && project.gallery.length > 1;
+  // Format price function
+  const formatPrice = (price) => {
+    if (!price) return null;
+    
+    // Nếu price là số, format với dấu phân cách hàng nghìn
+    if (typeof price === 'number') {
+      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+    
+    // Nếu price là string, kiểm tra và format
+    return price;
+  };
+
+  const formattedPrice = formatPrice(project.price);
 
   return (
     <div 
       className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer bg-white"
       onClick={handleClick}
     >
-      {/* Container cho image và overlay - chỉ hiển thị hình ảnh */}
-      <LocalizedLink className="relative" to={`/projects/${project.id}`}>
-        {/* Ảnh chính */}
-        <LazyImage 
-          src={imageUrl} 
-          alt={project.alt}
-          className="w-full h-full lg:h-100 object-cover transition-transform duration-300 group-hover:scale-105"
-          priority={isPriority}
-          eager={isEager}
-          placeholder={
-            <div className="w-full h-[250px] md:h-[300px] lg:h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-              <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
-                preloadedImages.has(project.id) ? 'opacity-50' : ''
-              }`}></div>
-            </div>
-          }
-        />
+      {/* Image container - chỉ hiển thị 1 ảnh chính */}
+      <LocalizedLink className="relative block overflow-hidden" to={`/projects/${project.id}`}>
+        {/* Ảnh chính với hiệu ứng scale khi hover */}
+        <div className="overflow-hidden">
+          <LazyImage 
+            src={imageUrl} 
+            alt={project.alt}
+            className="w-full h-full lg:h-100 object-cover transition-transform duration-500 group-hover:scale-110"
+            priority={isPriority}
+            eager={isEager}
+            placeholder={
+              <div className="w-full h-[250px] md:h-[300px] lg:h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                  preloadedImages.has(project.id) ? 'opacity-50' : ''
+                }`}></div>
+              </div>
+            }
+          />
+        </div>
         
         {/* Badge type - Luôn là For Sale */}
         <button className='absolute right-3 md:right-5 top-3 md:top-5 bg-txt-secondary p-1 md:p-2 text-white text-[12px] md:text-[14px] lg:text-[18px] uppercase z-20'>
           {project.status === 'sale' ? 'For Sale' : project.status === 'rent' ? 'For Rent' : ''}
         </button>
 
-        {/* Overlay khi hover - Ẩn trên mobile, hiện trên desktop */}
-        <div className='w-full h-full absolute top-0 left-0 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 hidden lg:block'>
-          <div className='w-full h-full relative'>
-            {/* Hiển thị ảnh thứ 2 nếu có nhiều hơn 2 ảnh, ngược lại hiển thị ảnh gốc với overlay tối */}
-            {hasMultipleImages ? (
-              <LazyImage 
-                src={secondImageUrl} 
-                alt={project.alt}
-                className="w-full h-full object-cover"
-                eager={isEager}
-              />
-            ) : (
-              <LazyImage 
-                src={imageUrl} 
-                alt={project.alt}
-                className="w-full h-full object-cover"
-                eager={isEager}
-              />
-            )}
-            
-            {/* Overlay màu tối trong suốt */}
-            <div className="absolute inset-0 bg-black/60 z-10"></div>
-          </div>
-          
-          {/* Nội dung hiển thị khi hover (description và nút View more) - CHỈ trên desktop */}
-          <div className='absolute inset-0 flex flex-col justify-center items-start p-6 z-30 mt-40 ml-4'>
-            <div className="text-left max-w-md">
-              <h4 className='text-white text-[18px] font-light mb-6 leading-relaxed'>
-                {project.title || 'Soller Tennis Club is a wellness and lifestyle community for local neighbours, international friends and touring pros'}
-              </h4>
-              <LocalizedLink to={`/projects/${project.id}`}>
-                <button className='flex items-center font-light uppercase text-[18px] border-2 border-white px-6 py-3 text-white 
-                hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300'>
-                  view more
-                  <ArrowRight className='ml-4' size={20}/>
-                </button>
-              </LocalizedLink>
-            </div>
-          </div>
-        </div>
-
-        {/* Content section cho desktop - Title và Location nằm trên ảnh (KHÔNG có nút View More) */}
-        <div className="hidden lg:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/100 to-transparent p-4 lg:group-hover:opacity-0 lg:transition-opacity lg:duration-300 z-20">
-          <h3 className="text-white text-[20px] font-semibold">{project.title}</h3>
-          {project.location && (
-            <p className="text-gray-300 text-[16px] mt-1">{project.location}</p>
-          )}
-          {project.propertyFeatures.length > 0 && (
-          project.propertyFeatures.map((feature, idx) => {
-            return (
-              (
-                <p className="text-gray-300 text-[16px] mt-1">{feature.text}</p>
-              )
-            )
-          })
-        )}
-        </div>
+        {/* Gradient overlay cho desktop */}
+        <div className="hidden lg:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent h-24 z-10"></div>
       </LocalizedLink>
 
-      {/* Content section cho mobile - Title, Location và View More nằm dưới ảnh */}
-      <div className="lg:hidden bg-white p-4 relative z-30">
-        <h3 className="text-txt-primary text-[18px] md:text-[20px] font-semibold">{project.title}</h3>
+      {/* Content section - Title, Location, Price, Features và View More nằm dưới ảnh cho cả mobile và desktop */}
+      <div className="p-4 bg-white relative z-30">
+        <h3 className="text-txt-secondary text-[18px] md:text-[20px] font-semibold mb-1 font-subtitle">{project.title}</h3>
+        {/* Hiển thị giá bán nếu có */}
+        {formattedPrice && (
+          <p className="text-txt-secondary text-[18px] md:text-[20px] font-bold mb-3">
+            {formattedPrice}
+          </p>
+        )}
         {project.location && (
-          <p className="text-txt-gray text-[12px] md:text-[14px] mt-1">{project.location}</p>
+          <p className="text-txt-secondary text-[16px] md:text-[16px] mb-2">{project.location}</p>
         )}
         
-        {/* Nút View More cho mobile - CHỈ hiển thị trên mobile */}
-        <div className="mt-3">
-          <LocalizedLink to={`/projects/${project.id}`}>
-            <button className='flex items-center justify-center font-light uppercase text-[14px] border border-txt-primary px-4 py-2 text-txt-primary 
-            hover:bg-txt-secondary hover:border-txt-secondary hover:text-white transition-all duration-300 w-full'>
+        
+        
+        {project.propertyFeatures && project.propertyFeatures.length > 0 && (
+          <div className="mb-3">
+            {project.propertyFeatures.map((feature, idx) => (
+              <p key={idx} className="text-txt-secondary text-[16px] md:text-[16px] mb-1">{feature.text}</p>
+            ))}
+          </div>
+        )}
+        
+        {/* Nút View More nằm dưới text */}
+        <div className="mt-4">
+          <LocalizedLink to={`/projects/${project.id}`} className="cursor-pointer">
+            <button className='flex items-center justify-center font-light uppercase text-[14px] py-2 text-txt-secondary 
+              transition-all duration-300 w-full md:w-auto font-semibold hover:underline underline-offset-4'>
               view more
-              <ArrowRight className='ml-2' size={16}/>
+              <ArrowRight className='ml-2 transition-transform duration-300 group-hover:translate-x-1' size={16}/>
             </button>
           </LocalizedLink>
         </div>
