@@ -170,6 +170,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
   const handleClick = useCallback(() => {
     onImageClick(project.id);
   }, [onImageClick, project.id]);
+  console.log(project)
   // Construct full image URL (adjust based on your backend URL structure)
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
@@ -211,7 +212,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
         
         {/* Badge type - Luôn là For Sale */}
         <button className='absolute right-3 md:right-5 top-3 md:top-5 bg-txt-secondary p-1 md:p-2 text-white text-[12px] md:text-[14px] lg:text-[18px] uppercase z-20'>
-          for sale
+          {project.status === 'sale' ? 'For Sale' : project.status === 'rent' ? 'For Rent' : ''}
         </button>
 
         {/* Overlay khi hover - Ẩn trên mobile, hiện trên desktop */}
