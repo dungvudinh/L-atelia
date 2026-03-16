@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Youtube } from "lucide-react";
 import brochureAndFloorPlans from '../../assets/images/brochure-and-floorplans.png'
 import currentStatePhotos from '../../assets/images/current-state-photos.png'
 import rendersShowingPotential from '../../assets/images/renders-showing-potential.png'
@@ -28,6 +28,139 @@ const FILTERS = [
         banner: rendersShowingPotential
     }
 ]
+
+// Hàm lấy YouTube Video ID từ URL
+const getYoutubeVideoId = (url) => {
+    if (!url) return null;
+    
+    // Regular expressions for different YouTube URL formats
+    const patterns = [
+        /(?:youtube\.com\/watch\?v=)([^&]+)/,
+        /(?:youtu\.be\/)([^?]+)/,
+        /(?:youtube\.com\/embed\/)([^?]+)/,
+        /(?:youtube\.com\/v\/)([^?]+)/
+    ];
+    
+    for (const pattern of patterns) {
+        const match = url.match(pattern);
+        if (match) return match[1];
+    }
+    
+    return null;
+};
+
+// Hàm tạo YouTube embed URL
+const getYoutubeEmbedUrl = (videoId) => {
+    return `https://www.youtube.com/embed/${videoId}`;
+};
+
+// Hàm tạo YouTube thumbnail URL
+const getYoutubeThumbnailUrl = (videoId) => {
+    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+};
+
+// Component hiển thị video YouTube
+const YoutubeVideo = ({ videoId, title, onClick }) => {
+    const thumbnailUrl = getYoutubeThumbnailUrl(videoId);
+    
+    return (
+        <div 
+            className="w-full h-[200px] md:h-[250px] lg:h-[325px] cursor-pointer transition-transform duration-300 hover:scale-[1.02] relative group"
+            onClick={() => onClick(videoId)}
+        >
+            <LazyImage 
+                src={thumbnailUrl}
+                alt={title || "YouTube Video"}
+                className="w-full h-full object-cover"
+                placeholder={
+                    <div className="w-full h-full bg-gradient-to-r from-red-100 to-red-200 flex items-center justify-center">
+                        <Youtube className="w-12 h-12 text-red-600 opacity-50" />
+                    </div>
+                }
+                onError={(e) => {
+                    // Fallback nếu thumbnail maxresdefault không tồn tại
+                    e.target.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                }}
+            />
+            
+            {/* Play button overlay */}
+            <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent ml-1"></div>
+                </div>
+            </div>
+            
+            {/* YouTube badge */}
+            <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded flex items-center gap-1">
+                <Youtube className="w-3 h-3" />
+                <span>YouTube</span>
+            </div>
+        </div>
+    );
+};
+
+// Video Popup Component
+const VideoPopup = ({ isOpen, onClose, videoId }) => {
+    const { lockScroll, unlockScroll } = useScrollLock();
+
+    useEffect(() => {
+        if (isOpen) {
+            lockScroll();
+        } else {
+            unlockScroll();
+        }
+        return () => unlockScroll();
+    }, [isOpen, lockScroll, unlockScroll]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+        
+        if (isOpen) {
+            window.addEventListener('keydown', handleKeyDown);
+        }
+        
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
+    const handleBackdropClick = (e) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
+    if (!isOpen || !videoId) return null;
+
+    return (
+        <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-95 transition-opacity duration-300"
+            onClick={handleBackdropClick}
+        >
+            <button
+                onClick={onClose}
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+                aria-label="Close"
+            >
+                <X size={32} />
+            </button>
+
+            <div className="relative w-full max-w-5xl mx-4 aspect-video">
+                <iframe
+                    src={`${getYoutubeEmbedUrl(videoId)}?autoplay=1`}
+                    title="YouTube video player"
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            </div>
+        </div>
+    );
+};
 
 // Custom hook để quản lý scroll lock
 const useScrollLock = () => {
@@ -162,6 +295,7 @@ const groupImagesByDate = (images) => {
         
         grouped[dateKey].images.push({
             id: image.id || Math.random().toString(36).substr(2, 9),
+            type: 'image',
             src: thumbUrl, // URL thumbnail để hiển thị trong grid
             originalSrc: originalUrl, // URL ảnh gốc để hiển thị trong popup
             uploaded_at: image.uploaded_at,
@@ -313,10 +447,15 @@ function Brochure() {
     const navigate = useNavigate();
     const filter = searchParams.get('filter');
     
-    // State for image popup - CHỈ DÙNG CHO FILTER ID 1 & 2
+    // State for image popup
     const [popupOpen, setPopupOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [allImages, setAllImages] = useState([]);
+    
+    // State for video popup
+    const [videoPopupOpen, setVideoPopupOpen] = useState(false);
+    const [currentVideoId, setCurrentVideoId] = useState(null);
+    
     const { unlockScroll } = useScrollLock();
 
     // Fetch project data từ API
@@ -407,6 +546,7 @@ function Brochure() {
             if (Array.isArray(project.brochure)) {
                 return project.brochure.map((item, index) => ({
                     id: item.id || `brochure-${index}`,
+                    type: 'image',
                     url: getOriginalImageUrl(item) || (item.url ? getUrlFromString(item.url) : ''),
                     thumbUrl: getOriginalImageUrl(item), // Brochure cũng dùng ảnh gốc
                 }));
@@ -415,6 +555,7 @@ function Brochure() {
                            (project.brochure.url ? getUrlFromString(project.brochure.url) : '');
                 return url ? [{ 
                     id: 1, 
+                    type: 'image',
                     url, 
                     thumbUrl: url
                 }] : [];
@@ -424,8 +565,38 @@ function Brochure() {
             // TIẾN ĐỘ XÂY DỰNG - Dùng thumbnail, có popup
             return groupImagesByDate(project.constructionProgress || []);
         } else if (filterId === 2) {
-            // HÌNH ẢNH CONCEPT - Dùng thumbnail, có popup
-            return groupImagesByDate(project.designImages || []);
+            // HÌNH ẢNH CONCEPT - HIỂN THỊ YOUTUBE VIDEOS TRƯỚC
+            const result = [];
+            
+            // Thêm YouTube videos nếu có
+            if (project.youtubeLinks && Array.isArray(project.youtubeLinks) && project.youtubeLinks.length > 0) {
+                const validVideos = project.youtubeLinks
+                    .filter(link => link && link.url)
+                    .map(link => {
+                        const videoId = getYoutubeVideoId(link.url);
+                        return videoId ? {
+                            id: link.id || videoId,
+                            type: 'video',
+                            videoId: videoId,
+                            title: `YouTube Video ${link.url}`,
+                            url: link.url
+                        } : null;
+                    })
+                    .filter(video => video !== null);
+                
+                if (validVideos.length > 0) {
+                    result.push({
+                        uploadDate: 'Videos',
+                        images: validVideos
+                    });
+                }
+            }
+            
+            // Thêm images sau videos
+            const imageGroups = groupImagesByDate(project.designImages || []);
+            result.push(...imageGroups);
+            
+            return result;
         }
         return [];
     }, [project, filterId]);
@@ -442,12 +613,14 @@ function Brochure() {
             
             currentFilterData.forEach(dateGroup => {
                 dateGroup.images.forEach(imageItem => {
-                    images.push({
-                        ...imageItem,
-                        index: index,
-                        total: 0 // Will be updated after loop
-                    });
-                    index++;
+                    if (imageItem.type === 'image') { // Chỉ lấy images, không lấy videos
+                        images.push({
+                            ...imageItem,
+                            index: index,
+                            total: 0 // Will be updated after loop
+                        });
+                        index++;
+                    }
                 });
             });
             
@@ -464,8 +637,9 @@ function Brochure() {
     const handleSetFilterId = useCallback((filterItem) => {
         setFilterId(filterItem.id);
         navigate(`?filter=${filterItem.id}`);
-        // Close popup when switching filters và restore scroll
+        // Close popups when switching filters
         setPopupOpen(false);
+        setVideoPopupOpen(false);
         unlockScroll();
     }, [navigate, unlockScroll]);
 
@@ -481,7 +655,7 @@ function Brochure() {
         if (isGrouped) {
             let absoluteIndex = 0;
             for (let i = 0; i < groupIndex; i++) {
-                absoluteIndex += currentFilterData[i].images.length;
+                absoluteIndex += currentFilterData[i].images.filter(img => img.type === 'image').length;
             }
             targetIndex = absoluteIndex + imageInGroupIndex;
         } else {
@@ -491,6 +665,12 @@ function Brochure() {
         setCurrentImageIndex(targetIndex);
         setPopupOpen(true);
     }, [currentFilterData, filterId]);
+
+    // Handle video click
+    const handleVideoClick = useCallback((videoId) => {
+        setCurrentVideoId(videoId);
+        setVideoPopupOpen(true);
+    }, []);
 
     const handleNextImage = useCallback(() => {
         if (currentImageIndex < allImages.length - 1) {
@@ -510,6 +690,12 @@ function Brochure() {
 
     const handleClosePopup = useCallback(() => {
         setPopupOpen(false);
+        unlockScroll();
+    }, [unlockScroll]);
+
+    const handleCloseVideoPopup = useCallback(() => {
+        setVideoPopupOpen(false);
+        setCurrentVideoId(null);
         unlockScroll();
     }, [unlockScroll]);
 
@@ -576,7 +762,7 @@ function Brochure() {
 
     return ( 
         <div className="">
-            {/* Image Popup - CHỈ HIỂN THỊ KHI KHÔNG PHẢI BROCHURE */}
+            {/* Image Popup */}
             {!isBrochure && (
                 <ImagePopup
                     isOpen={popupOpen}
@@ -588,6 +774,13 @@ function Brochure() {
                     hasPrev={currentImageIndex > 0}
                 />
             )}
+
+            {/* Video Popup */}
+            <VideoPopup
+                isOpen={videoPopupOpen}
+                onClose={handleCloseVideoPopup}
+                videoId={currentVideoId}
+            />
 
             <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4 lg:px-0">
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-6 lg:mt-10 w-full px-4">
@@ -655,38 +848,53 @@ function Brochure() {
                         
                         {!isBrochure && currentFilterData.map((dateGroup, groupIndex) => (
                             <div key={groupIndex} className="mb-8 lg:mb-12">
-                                {/* DATE HEADER */}
-                                <div className="flex items-center mb-4 lg:mb-6 px-2">
-                                    <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
-                                    <p className="w-full md:w-150 text-center font-semibold text-sm md:text-base lg:text-lg px-2 md:px-0">
-                                        {dateGroup.uploadDate}
-                                    </p>
-                                    <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
-                                </div>
+                                {/* DATE HEADER - Chỉ hiển thị khi có images */}
+                                {dateGroup.images.some(img => img.type === 'image') && (
+                                    <div className="flex items-center mb-4 lg:mb-6 px-2">
+                                        <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
+                                        <p className="w-full md:w-150 text-center font-semibold text-sm md:text-base lg:text-lg px-2 md:px-0">
+                                            {dateGroup.uploadDate}
+                                        </p>
+                                        <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
+                                    </div>
+                                )}
                                 
-                                {/* IMAGE GRID - TIẾN ĐỘ & CONCEPT */}
+                                {/* GRID - Hiển thị cả videos và images */}
                                 <div className={gridClass}>
-                                    {dateGroup.images.map((imageItem, imageIndex) => (
-                                        <div 
-                                            key={imageItem.id} 
-                                            className="w-full h-[200px] md:h-[250px] lg:h-[325px] cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
-                                            onClick={() => handleImageClick(imageIndex, true, groupIndex, imageIndex)}
-                                        >
-                                            <LazyImage 
-                                                src={imageItem.src} 
-                                                alt="" 
-                                                className="w-full h-full object-cover"
-                                                {...getImagePriority(imageIndex, groupIndex)}
-                                                placeholder={
-                                                    <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-                                                        <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
-                                                            preloadedImages.has(imageItem.src) ? 'opacity-50' : ''
-                                                        }`}></div>
-                                                    </div>
-                                                }
-                                            />
-                                        </div>
-                                    ))}
+                                    {dateGroup.images.map((item, imageIndex) => {
+                                        if (item.type === 'video') {
+                                            return (
+                                                <YoutubeVideo
+                                                    key={item.id}
+                                                    videoId={item.videoId}
+                                                    title={item.title}
+                                                    onClick={handleVideoClick}
+                                                />
+                                            );
+                                        } else {
+                                            return (
+                                                <div 
+                                                    key={item.id} 
+                                                    className="w-full h-[200px] md:h-[250px] lg:h-[325px] cursor-pointer transition-transform duration-300 hover:scale-[1.02]"
+                                                    onClick={() => handleImageClick(imageIndex, true, groupIndex, imageIndex)}
+                                                >
+                                                    <LazyImage 
+                                                        src={item.src} 
+                                                        alt="" 
+                                                        className="w-full h-full object-cover"
+                                                        {...getImagePriority(imageIndex, groupIndex)}
+                                                        placeholder={
+                                                            <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
+                                                                <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
+                                                                    preloadedImages.has(item.src) ? 'opacity-50' : ''
+                                                                }`}></div>
+                                                            </div>
+                                                        }
+                                                    />
+                                                </div>
+                                            );
+                                        }
+                                    })}
                                 </div>
                             </div>
                         ))}
