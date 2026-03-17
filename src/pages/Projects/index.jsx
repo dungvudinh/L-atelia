@@ -43,7 +43,7 @@ function Projects() {
       // Transform API data to match your component structure với field mapping chính xác
       const transformedProjects = response.data?.projects?.map(project => ({
         id: project._id || project.id,
-        src: project.heroImage?.thumbnailKey || project.gallery?.[0]?.thumbnailKey || project.heroImage?.key,
+        src: project.heroImage?.thumbnailUrl || project.gallery?.[0]?.thumbnailUrl || project.heroImage?.url,
         alt: project.title,
         title: project.title,
         type: 'for sale',
@@ -144,7 +144,8 @@ function Projects() {
   // Construct full image URL
   const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
-    return `https://cdn.latelia.com/latelia/${imagePath}`;
+    // return `https://cdn.latelia.com/latelia/${imagePath}`;
+    return imagePath;
   };
 
   if (loading) {
@@ -241,7 +242,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
   const handleClick = useCallback(() => {
     onImageClick(project.id);
   }, [onImageClick, project.id]);
-  
+  console.log(project)
   const imageUrl = getImageUrl(project.src);
 
   // Format price function
