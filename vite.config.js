@@ -2,9 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),tailwindcss(),
+  plugins: [react(), tailwindcss(),
     ViteImageOptimizer({
       // Cấu hình optimize
       png: {
@@ -22,17 +23,20 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    allowedHosts: ['latelia.com'] // Thêm dòng này
+  },
   base: '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true, 
-    assetsInlineLimit:4096, 
-    rollupOptions:{
-      output:{
-        manualChunks:{
-          vendor:['react', 'react-dom']
+    assetsInlineLimit: 4096, 
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom']
         }, 
-        assetFileNames:(accessInfo)=>{
+        assetFileNames: (accessInfo) => {
           if (/png|jpe?g|svg|gif|webp/i.test(accessInfo.name)) {
             return 'assets/images/[name]-[hash][extname]'
           }
@@ -41,11 +45,11 @@ export default defineConfig({
       }
     }
   },
-   preview: {
+  preview: {
     port: 4173,
     // host: true
   }, 
-  define:{
-    'process.env':process.env
+  define: {
+    'process.env': process.env
   }
 })
