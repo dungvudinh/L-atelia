@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class AdaptiveAxiosClient {
   constructor() {
-    this.baseURL = 'https://l-atelia-api-yct5.onrender.com';
+    this.baseURL = 'https://api.latelia.com'; // Cấu hình baseURL
     this.strategies = this.setupStrategies();
     this.currentStrategy = 'normal';
   }
