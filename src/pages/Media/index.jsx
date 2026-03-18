@@ -137,7 +137,7 @@ function Media() {
     <div>
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4">
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-10 lg:mt-20 text-center">
-          <h1 className="text-[32px] lg:text-[45px] font-subtitle font-semibold text-txt-secondary leading-tight">
+          <h1 className="text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle font-semibold text-txt-secondary leading-tight">
             Media
           </h1>
           
@@ -170,7 +170,7 @@ function Media() {
           </div>
 
           {/* CONTENT */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-8 lg:mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:gap-6 md:gap-4 mt-8 lg:mt-10">
             {mediaItems.length > 0 ? (
               mediaItems.map((item) => (
                 <div key={item._id} className='cursor-pointer group' onClick={()=> {window.scrollTo(0,0);window.location.href = `/${currentLanguage}/media/${item._id}`}}>
@@ -184,17 +184,17 @@ function Media() {
                     </div>
                   {/* </LocalizedLink> */}
                   <div className='mt-4 p-2'>
-                    <h4 className='text-[14px] lg:text-[18px] text-txt-gray mb-2 lg:mb-4'>
+                    <h4 className='text-[14px] lg:text-[16px] xl:text-[18px] text-txt-gray mb-2 lg:mb-4'>
                       {formatCategory(item.category).toUpperCase()}
                     </h4>
-                    <h4 className='text-[20px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold mb-3 lg:mb-4 line-clamp-2 leading-tight'>
+                    <h4 className='text-[20px]  xl:text-[25px] font-subtitle text-txt-secondary font-semibold mb-3 lg:mb-4 line-clamp-2 leading-tight'>
                       {item.title}
                     </h4>
-                    <p className='text-[14px] lg:text-[18px] mb-4 line-clamp-3 leading-relaxed'>
+                    <p className='text-[14px] lg:text-[16px] xl:text-[18px] mb-4 line-clamp-2  lg:line-clamp-3 leading-relaxed'>
                       {getMediaExcerpt(item)}
                     </p>
                     {/* <LocalizedLink to={`/media/${item._id}`}> */}
-                      <button className='border border-txt-gray p-2 cursor-pointer text-[14px] lg:text-[18px] hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary transition-colors duration-200 w-full lg:w-auto'>
+                      <button className='border border-txt-gray p-2 cursor-pointer text-[14px]  xl:text-[18px]  hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary transition-colors duration-200 w-full lg:w-auto'>
                         READ MORE
                       </button>
                     {/* </LocalizedLink> */}

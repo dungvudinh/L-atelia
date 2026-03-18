@@ -29,7 +29,7 @@ const CustomAccordion = ({ data = [], className = "" }) => {
             className={`accordion-item border-b border-gray-200 last:border-b-0 `}
           >
             <button
-              className="accordion-header w-full  py-4 text-left transition-colors duration-200 flex items-center justify-between cursor-pointer"
+              className="accordion-header w-full  lg:py-4 py-2 text-left transition-colors duration-200 flex items-center justify-between cursor-pointer"
               onClick={() => toggleAccordion(index)}
               aria-expanded={activeIndex === index}
             >
@@ -37,9 +37,9 @@ const CustomAccordion = ({ data = [], className = "" }) => {
                 <div className={`transform transition-transform duration-300 ${
                     activeIndex === index ? 'rotate-90' : ''
                 }`}>
-                <ChevronRight size={25} />
+                <ChevronRight size={20} />
                 </div>
-                <span className="text-[16px] font-bold text-gray-800 ml-2">
+                <span className="text-[14px] lg:text-[16px] font-bold text-gray-800 ml-2">
                   {item.name}
                 </span>
               </div>
@@ -51,7 +51,7 @@ const CustomAccordion = ({ data = [], className = "" }) => {
                 activeIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
               }`}
             >
-              <div className=" pb-4 text-[16px]">
+              <div className=" pb-4 text-[14px] lg:text-[16px]">
                 {item.description}
               </div>
             </div>

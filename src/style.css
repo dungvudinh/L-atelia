@@ -211,3 +211,21 @@ body
     font-size: 1rem !important;
   }
 }
+.media-content-title 
+{
+  font-size: 16px;
+}
+/* @media (width >= 40rem)
+{
+  .media-content-title 
+  {
+    font-size: 16px;
+  }
+} */
+@media (width >= 64rem)
+{
+  .media-content-title 
+  {
+    font-size: 24px;
+  }
+}

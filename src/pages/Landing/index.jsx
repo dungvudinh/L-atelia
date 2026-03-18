@@ -60,7 +60,7 @@ function Landing() {
                 {
                     SLIDE_ITEMS.map(slideItem=>(
                         <SwiperSlide key={slideItem.id}>
-                            <div className="w-full h-screen  relative">
+                            <div className="w-full xl:h-screen h-[300px] md:h-[500px] relative">
                                 <OptimizedImage
                                     src={slideItem.src}
                                     className="w-full h-full object-cover object-center"
@@ -72,17 +72,17 @@ function Landing() {
             </Swiper>
 
             {/* SUBTITLE */}
-            <div className="mt-8 mb-20 lg:mb-40 flex justify-center px-4">
-                <div className="flex flex-col lg:flex-row items-center justify-center xl:max-w-screen-xl lg:max-w-[900px] w-full">
-                    <div className="w-full lg:w-auto flex justify-center mb-6 lg:mb-0">
-                    <OptimizedImage 
-    src={logoText} 
-    alt="" 
-    className="w-[200px] md:max-w-[500px] lg:max-w-[315px] xl:w-[800px]"
-/>
+            <div className="xl:mt-8 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
+                <div className="flex flex-col md:flex-row items-center justify-center xl:max-w-screen-xl lg:max-w-[900px] w-full">
+                    <div className="flex-basis md:basis-1/3 w-full lg:w-auto flex justify-center lg:mb-6 mb-0">
+                        <OptimizedImage 
+                                src={logoText} 
+                                alt="" 
+                                className="w-[200px] md:max-w-[200px] lg:max-w-[315px] xl:w-[800px]"
+                            />
                     </div>
-                    <div className="pl-0 lg:pl-20 mt-8 lg:mt-20 text-center lg:text-left w-full lg:w-auto">
-                        <p className="text-[20px] md:text-[24px] lg:text-[25px] text-txt-primary leading-tight">
+                    <div className="flex-basis md:basis-2/3 pl-0 lg:pl-20 mt-2 lg:mt-20 text-center md:text-left w-full lg:w-auto">
+                        <p className="text-[20px]  lg:text-[20px] xl:text-[25px] text-txt-primary leading-tight">
                             {t('landing:hero.subtitle')}
                         </p>
                         <LocalizedLink to={'/projects'} className="inline-block">
@@ -166,9 +166,9 @@ const FeatureProperties = ()=>
 {
     return (
         <div className="bg-bg-secondary text-white py-[40px] lg:py-[80px] flex justify-center px-4">
-            <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row lg:items-start w-full">
+            <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col md:flex-row lg:items-start w-full md:gap-4">
                 {/* LEFT */}
-                <div className="lg:mr-5 xl:mr-15 mb-8 lg:mb-0 lg:w-120 w-full lg:h-full flex lg:items-start item-center justify-between flex-col">
+                <div className="flex-basis md:basis-1/3  mb-8 lg:mb-0 lg:w-120 w-full lg:h-full flex lg:items-start item-center justify-between flex-col">
                     {/* LIST */}
                     <div className="mb-6">
                         <ul className="text-[24px] md:text-[32px] lg:text-[35px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
@@ -186,55 +186,55 @@ const FeatureProperties = ()=>
                 </div>
                 
                 {/* RIGHT - SLIDER */}
-                <div className="min-w-0 overflow-hidden w-full">
-    <Swiper 
-        modules={[Autoplay, Pagination, Navigation]} 
-        spaceBetween={0} // Thay đổi từ 16 thành 0 để không có khoảng cách
-        slidesPerView={1} // Thay đổi từ 1.2 thành 1 để full width
-        breakpoints={{
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20
-            },
-            1024: {
-                slidesPerView: 3,
-                spaceBetween: 30
-            }
-        }}
-        loop 
-        pagination={{ 
-            clickable: true,
-            renderBullet: function (index, className) {
-                return `
-                    <span class="${className} custom-bullet">
-                    </span>
-                `;
-            },
-            el: '.custom-pagination-wrapper'
-        }}
-    >
-        { 
-            SLIDE_ITEMS_2.map(slideItem=>(
-                <SwiperSlide key={slideItem.id}> 
-                    <div className="h-[200px] md:h-[300px] lg:h-auto">
-                        <OptimizedImage 
-                            src={slideItem.src} 
-                            className="object-cover object-center w-full h-70"
-                        />
-                    </div>
-                </SwiperSlide> 
-            )) 
-        } 
-    </Swiper>
+                <div className="flex-basis md:basis-2/3  min-w-0 overflow-hidden w-full">
+                        <Swiper 
+                            modules={[Autoplay, Pagination, Navigation]} 
+                            spaceBetween={0} // Thay đổi từ 16 thành 0 để không có khoảng cách
+                            slidesPerView={1} // Thay đổi từ 1.2 thành 1 để full width
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 30
+                                }
+                            }}
+                            loop 
+                            pagination={{ 
+                                clickable: true,
+                                renderBullet: function (index, className) {
+                                    return `
+                                        <span class="${className} custom-bullet">
+                                        </span>
+                                    `;
+                                },
+                                el: '.custom-pagination-wrapper'
+                            }}
+                        >
+                        { 
+                            SLIDE_ITEMS_2.map(slideItem=>(
+                                <SwiperSlide key={slideItem.id}> 
+                                    <div className="h-[200px] xl:h-[300px]">
+                                        <OptimizedImage 
+                                            src={slideItem.src} 
+                                            className="object-cover object-center w-full h-full"
+                                        />
+                                    </div>
+                                </SwiperSlide> 
+                            )) 
+                        } 
+                    </Swiper>
 
-    {/* Pagination */}
-    <div className="custom-pagination-wrapper mt-6 lg:mt-8 px-4"></div>
+                    {/* Pagination */}
+                    <div className="custom-pagination-wrapper mt-6 lg:mt-8 px-4"></div>
     
-    {/* Description */}
-    <p className="mt-4 lg:mt-5 text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed px-4">
-        "The Alley Le Duan Apartment" không chỉ là một công trình, mà là một cách tiếp cận kiến trúc khác biệt giữa lòng đô thị Đà Nẵng đang phát triển.
-    </p>
-</div>
+                    {/* Description */}
+                    <p className="mt-4 lg:mt-5 text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed px-4">
+                        "The Alley Le Duan Apartment" không chỉ là một công trình, mà là một cách tiếp cận kiến trúc khác biệt giữa lòng đô thị Đà Nẵng đang phát triển.
+                    </p>
+                </div>
             </div>  
         </div>
     )

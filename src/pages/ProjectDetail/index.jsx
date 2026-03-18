@@ -193,9 +193,9 @@ function ProjectDetail() {
     // Debug info
 
     return (
-        <div className="mt-20">
+        <div className="mt-16 lg:mt-20">
             {/* BANNER */}
-            <div className="w-full h-[300px] md:h-[500px] lg:h-[840px] relative">
+            <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative">
                 <OptimizedImage 
                     // src={project && `${BASE_CDN_URL}${project.heroImage.key}`} 
                     src={project && project.heroImage.url}
@@ -203,7 +203,7 @@ function ProjectDetail() {
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
                 />
                 <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4 flex flex-col items-center">
-                    <h1 className="font-subtitle text-[32px] md:text-[45px] lg:text-[45px]">FOR SALE</h1>
+                    <h1 className="font-subtitle text-[30px] lg:text-[40px] xl:text-[45px]">FOR SALE</h1>
                     <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
                         <button className="border border-bg-primary px-4 py-2 flex justify-between items-center
                             text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer 
@@ -217,10 +217,10 @@ function ProjectDetail() {
             
             {/* Project Details */}
             <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
-                <div className="flex flex-col lg:flex-row xl:max-w-screen-xl lg:max-w-[900px] gap-8 lg:gap-20 w-full px-4">
+                <div className="flex flex-col lg:flex-row xl:max-w-screen-xl lg:max-w-[900px] gap-8 lg:gap-20 w-full lg:px-4">
                     {/* LEFT */}
                     <div className="flex-basis lg:basis-1/2 mt-0 lg:mt-7 order-2 lg:order-1">
-                        <h1 className="text-[32px] md:text-[45px] lg:text-[45px] text-txt-secondary font-subtitle leading-tight">
+                        <h1 className="text-[30px] lg:text-[35px] xl:text-[45px] text-txt-secondary font-subtitle leading-tight">
                             {project.title || 'Patiki Townhouse'}
                         </h1>
                         <p className="mt-6 lg:mt-10 text-[16px] md:text-[18px] lg:text-[18px] leading-relaxed">
@@ -233,7 +233,7 @@ function ProjectDetail() {
                             // src={project && `${BASE_CDN_URL}${project.gallery[0].key}`} 
                             src={project && project.gallery[0].url}
                             alt={project.title} 
-                            className="w-full h-auto"
+                            className="w-full xl:h-auto h-full"
                         />
                     </div>
                 </div>
@@ -241,10 +241,10 @@ function ProjectDetail() {
 
             {/* PROPERTY FEATURES */}
             <div className="bg-bg-primary mt-10 lg:mt-20 flex justify-center px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full px-4">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full lg:px-4">
                     <ul className="flex flex-col md:flex-row justify-start gap-8 md:gap-10 lg:gap-30">
-                        <li className="md:mr-10 lg:mr-30">
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
+                        <li className="lg:mr-10 xl:mr-30">
+                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
                                     project?.propertyFeatures?.length > 0 && project.propertyFeatures.map(propertyFeature=>(
@@ -253,8 +253,8 @@ function ProjectDetail() {
                                 }
                             </p>
                         </li>
-                        <li className="md:mr-10 lg:mr-30">
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
+                        <li className="lg:mr-10 xl:mr-30">
+                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
                                     project?.specifications?.length > 0 && project.specifications.map(specification=>(
@@ -273,10 +273,10 @@ function ProjectDetail() {
                     <div className="mt-10 lg:mt-20 flex flex-col lg:flex-row gap-8 lg:gap-20">
                         {/* LEFT */}
                         <div className="flex-basis lg:basis-1/2">
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                            <h4 className="text-[20px]  lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
                                 {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].title}
                             </h4>
-                            <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[22px] lg:text-[20px] leading-relaxed">
+                            <p className="mt-6 lg:mt-10 text-txt-gray text-[16px] lg:text-[18px] xl:text-[20px] leading-relaxed">
                                 {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].description}
                             </p>
                             {
@@ -288,7 +288,7 @@ function ProjectDetail() {
                             }
                         </div>
                         {/* RIGHT */}
-                        <div className="flex-basis lg:basis-1/2 h-[300px] lg:h-150">
+                        <div className="flex-basis lg:basis-1/2 h-[300px] md:h-[400px] lg:h-150">
                             <OptimizedImage 
                             // src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                             src={project?.gallery?.[1]?.url}
@@ -299,21 +299,21 @@ function ProjectDetail() {
             </div>
 
             {/* ARCHITECTURE SECTION */}
-            <div className="relative mt-10 lg:mt-0">
+            <div className="relative lg:mt-10 mt-5 lg:mt-0">
                 <OptimizedImage 
                     // src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
                     src={project?.gallery?.[2]?.url}
-                    alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"
+                    alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"
                 />
                 <OptimizedImage 
                     // src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
                     src={project?.gallery?.[3]?.url}
-                    alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
-                <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                    alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
+                <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
+                    <h4 className="text-[20px] lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
                         {project?.specialSections?.[0]?.title}
                     </h4>
-                    <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
+                    <p className="mt-3 lg:mt-4 text-[14px] lg:text-[18px] xl:text-[20px] text-txt-gray leading-relaxed">
                         {project?.specialSections?.[0]?.shortDescription}
                     </p>
                     {
@@ -332,9 +332,9 @@ function ProjectDetail() {
                     <OptimizedImage 
                     // src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`} 
                     src={project?.gallery?.[4]?.url}
-                    alt="" className="w-full h-[300px] lg:h-auto object-cover" />
+                    alt="" className="w-full h-[250px] md:h-[400px] lg:h-auto object-cover" />
                 </div>
-                <div className="p-6 md:p-10 lg:p-20 flex-basis lg:basis-1/2">
+                <div className="p-6 xl:p-10 lg:p-10 flex-basis lg:basis-1/2">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                         {project?.specialSections?.[1]?.title}
                     </h4>
@@ -352,16 +352,16 @@ function ProjectDetail() {
             </div>
 
             {/* DETAILS SECTION */}
-            <div className="relative mt-10 lg:mt-0">
+            <div className="relative lg:mt-10 mt-0">
                 <OptimizedImage 
                 // src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
                 src={project?.gallery?.[5]?.url}
-                alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
+                alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
                 <OptimizedImage 
                 // src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
                 src={project?.gallery?.[6]?.url}
-                alt="" className="w-full h-[200px] md:h-[250px] lg:h-300 object-cover"/>
-                <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-4 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
+                alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
+                <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                          {project?.specialSections?.[2]?.title}
                     </h4>
@@ -380,10 +380,10 @@ function ProjectDetail() {
 
             {/* CONTACT US & TRACKING */}
             <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30 px-4">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30 lg:px-4">
                     {/* LEFT - TRACKING */}
                     <div className="flex-basis lg:basis-1/2 order-2 lg:order-1 mb-4">
-                        <h1 className="text-[32px] md:text-[40px] lg:text-[40px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
+                        <h1 className="text-[32px] lg:text-[35px] xl:text-[40px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
                         <ul className="mt-8 lg:mt-15">
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle font-semibold">Brochure</p>
@@ -413,8 +413,8 @@ function ProjectDetail() {
                     </div>
                     
                     {/* RIGHT - CONTACT FORM */}
-                    <div className="flex-basis lg:basis-1/2 mb-20 lg:mb-40 order-1 lg:order-2">
-                <h1 className="text-[32px] md:text-[40px] lg:text-[40px] font-subtitle text-txt-secondary leading-tight">
+                    <div className="flex-basis lg:basis-1/2 mb-10 lg:mb-40  order-1 lg:order-2">
+                <h1 className="text-[32px] lg:text-[35px] xl:text-[40px] font-subtitle text-txt-secondary leading-tight">
                     Liên Hệ Ngay
                 </h1>
                 

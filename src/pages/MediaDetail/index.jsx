@@ -180,7 +180,7 @@ function MediaDetail() {
     return ( 
         <div className="mt-20">
             {/* Featured Image */}
-            <div className='w-full h-64 md:h-96 lg:h-210'>
+            <div className='w-full xl:h-screen h-[300px] md:h-[500px]'>
                 <OptimizedImage 
                     src={getMediaImage(media)} 
                     alt={media.title} 

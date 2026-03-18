@@ -199,7 +199,7 @@ function Footer({withContact}) {
                 {/* LOCATION */}
                 <div className={`flex flex-col items-center text-txt-primary ${withContact ? 'mt-10' :''}`}>
                     <img src={logo} alt="Logo" className="w-[80px] md:w-[108px] text-center" />
-                    <img src={logoTextNoBg} alt="L'atelia" className="w-[160px] md:w-[190px] text-center mb-3 md:mb-4 mt-2" />
+                    <img src={logoTextNoBg} alt="L'atelia" className="w-[130px] md:w-[150px] lg:w-[180px] text-center mb-3 md:mb-4 mt-2" />
                     <p className="text-[16px] md:text-[18px] mb-2 text-center">Crafting luxury property</p>
                     <p className="text-[16px] md:text-[18px] mb-2 text-center">Da Nang City</p>
                     <p className="text-[16px] md:text-[18px] mb-4 md:mb-6 text-center">©2025 L'atelia</p>
