@@ -187,18 +187,18 @@ const getOriginalImageUrl = (image) => {
     if (!image) return '';
     
     // Ưu tiên key cho ảnh gốc
-    // const imageKey = image.key || (image.url && typeof image.url === 'string' && !image.url.startsWith('http') ? image.url : '');
-    // if (!imageKey) {
-    //     // Fallback: Nếu image.url là URL đầy đủ
-    //     if (image.url && typeof image.url === 'string' && image.url.startsWith('http')) {
-    //         return image.url;
-    //     }
-    //     return '';
-    // }
+    const imageKey = image.key || (image.url && typeof image.url === 'string' && !image.url.startsWith('http') ? image.url : '');
+    if (!imageKey) {
+        // Fallback: Nếu image.url là URL đầy đủ
+        if (image.url && typeof image.url === 'string' && image.url.startsWith('http')) {
+            return image.url;
+        }
+        return '';
+    }
     
     // Tạo URL đầy đủ cho ảnh gốc
-    // return `https://cdn.latelia.com/latelia/${imageKey}`;
-    return image.url;
+    return `https://cdn.latelia.com/latelia/${imageKey}`;
+    // return image.url;
 };
 
 // Hàm tạo URL từ key - DÙNG THUMBNAIL CHO TIẾN ĐỘ & CONCEPT
@@ -206,12 +206,12 @@ const getThumbnailUrl = (image) => {
     if (!image) return '';
     
     // Ưu tiên thumbnailKey, nếu không có thì dùng key
-    // const imageKey = image.thumbnailKey || image.key || '';
-    const imageKey = image.thumbnailUrl || image.url || '';
+    const imageKey = image.thumbnailKey || image.key || '';
+    // const imageKey = image.thumbnailUrl || image.url || '';
     if (!imageKey) return '';
     
-    // return `https://cdn.latelia.com/latelia/${imageKey}`;
-    return imageKey;
+    return `https://cdn.latelia.com/latelia/${imageKey}`;
+    // return imageKey;
 };
 
 // Hàm tạo URL từ URL string (cho backward compatibility)

@@ -197,8 +197,7 @@ function ProjectDetail() {
             {/* BANNER */}
             <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative">
                 <OptimizedImage 
-                    // src={project && `${BASE_CDN_URL}${project.heroImage.key}`} 
-                    src={project && project.heroImage.url}
+                    src={project && `${BASE_CDN_URL}${project.heroImage.key}`} 
                     alt="" 
                     className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
                 />
@@ -230,8 +229,7 @@ function ProjectDetail() {
                     {/* RIGHT */}
                     <div className="flex-basis lg:basis-1/2 order-1 lg:order-2">
                         <OptimizedImage 
-                            // src={project && `${BASE_CDN_URL}${project.gallery[0].key}`} 
-                            src={project && project.gallery[0].url}
+                            src={project && `${BASE_CDN_URL}${project.gallery[0].key}`} 
                             alt={project.title} 
                             className="w-full xl:h-auto h-full"
                         />
@@ -290,8 +288,7 @@ function ProjectDetail() {
                         {/* RIGHT */}
                         <div className="flex-basis lg:basis-1/2 h-[300px] md:h-[400px] lg:h-150">
                             <OptimizedImage 
-                            // src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
-                            src={project?.gallery?.[1]?.url}
+                            src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                             alt="" className="h-full w-full object-cover"/>
                         </div>
                     </div>
@@ -301,13 +298,11 @@ function ProjectDetail() {
             {/* ARCHITECTURE SECTION */}
             <div className="relative lg:mt-10 mt-5 lg:mt-0">
                 <OptimizedImage 
-                    // src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
-                    src={project?.gallery?.[2]?.url}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
                     alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"
                 />
                 <OptimizedImage 
-                    // src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
-                    src={project?.gallery?.[3]?.url}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
                     alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
                 <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[20px] lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
@@ -330,8 +325,7 @@ function ProjectDetail() {
             <div className="flex flex-col lg:flex-row">
                 <div className="flex-basis lg:basis-1/2">
                     <OptimizedImage 
-                    // src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`} 
-                    src={project?.gallery?.[4]?.url}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`} 
                     alt="" className="w-full h-[250px] md:h-[400px] lg:h-auto object-cover" />
                 </div>
                 <div className="p-6 xl:p-10 lg:p-10 flex-basis lg:basis-1/2">
@@ -354,12 +348,10 @@ function ProjectDetail() {
             {/* DETAILS SECTION */}
             <div className="relative lg:mt-10 mt-0">
                 <OptimizedImage 
-                // src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
-                src={project?.gallery?.[5]?.url}
+                src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
                 alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
                 <OptimizedImage 
-                // src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
-                src={project?.gallery?.[6]?.url}
+                src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
                 alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
                 <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
