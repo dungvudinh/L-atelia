@@ -109,7 +109,7 @@ function About()
                     
                     {/* Text - Hiển thị dưới mobile, bên trái trên desktop */}
                     <div className='w-full lg:w-auto lg:flex-basis xl:basis-2/3 lg:basis-3/5 px-4 order-2 md:order-1'>
-                        <h1 className='text-[28px] lg:text-[35px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
+                        <h1 className='text-[25px] lg:text-[35px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
                             Về chúng tôi 
                             <span className='mx-2 mt-2'>
                                 <Minus />
