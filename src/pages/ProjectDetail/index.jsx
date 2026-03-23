@@ -299,12 +299,12 @@ function ProjectDetail() {
             <div className="relative mt-5 lg:mt-0">
                 <OptimizedImage 
                     src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
-                    alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"
+                    alt="" className="w-full h-full object-cover"
                 />
                 <OptimizedImage 
                     src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
-                    alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
-                <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-0 -translate-y-1/2 md:-translate-y-1/2 xl:-translate-y-0.5 bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
+                    alt="" className="w-full h-full object-cover"/>
+                <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-1/4 -translate-y-1/2  bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[20px] lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
                         {project?.specialSections?.[0]?.title}
                     </h4>
@@ -353,7 +353,7 @@ function ProjectDetail() {
                 <OptimizedImage 
                 src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
                 alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
-                <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-0 -translate-y-1/2 md:-translate-y-1/2 xl:-translate-y-2/7 bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
+                <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-1/4 -translate-y-1/2   bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
                     <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
                          {project?.specialSections?.[2]?.title}
                     </h4>
