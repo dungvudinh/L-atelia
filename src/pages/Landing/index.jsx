@@ -13,6 +13,9 @@ import slide6 from '../../assets/images/slides/slide6.jpg';
 import slide7 from '../../assets/images/slides/slide7.jpg';
 import slide8 from '../../assets/images/slides/slide8.jpg';
 import slide9 from '../../assets/images/slides/slide9.jpg';
+import slide10 from '../../assets/images/slides/slide10.jpg';
+import slide11 from '../../assets/images/slides/slide11.jpg';
+import slide12 from '../../assets/images/slides/slide12.jpg';
 import logoText from '../../assets/images/logo-text.png';
 import { ArrowRight } from "lucide-react";
 import img2 from '../../assets/images/img2.jpg';
@@ -30,9 +33,9 @@ const SLIDE_ITEMS = [
     {id:4, src:slide9 },
 ]
 const SLIDE_ITEMS_2 = [
-    {id:1, src:slide3 },
-    {id:2, src:slide4 },
-    {id:3, src:slide5 },
+    {id:1, src:slide10 },
+    {id:2, src:slide11 },
+    {id:3, src:slide12 },
 ]
 
 function Landing() {
@@ -216,7 +219,7 @@ const FeatureProperties = ()=>
                         { 
                             SLIDE_ITEMS_2.map(slideItem=>(
                                 <SwiperSlide key={slideItem.id}> 
-                                    <div className="h-[200px] xl:h-[300px]">
+                                    <div className="h-full xl:h-[300px] w-full">
                                         <OptimizedImage 
                                             src={slideItem.src} 
                                             className="object-cover object-center w-full h-full"
