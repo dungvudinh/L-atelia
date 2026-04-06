@@ -1,10 +1,10 @@
 // components/PropertiesForRent.jsx
-import { useEffect,useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { useParams, useNavigate} from "react-router-dom";
 import Footer from "../../layouts/components/Footer";
-import { CalendarClock, ArrowDown, GroupSearch, Group, Face, Sort, AddLocation, Distance, FilterList, Payments, PaymentArrowDown,Star, OutdoorGrill, Bed, AddGroupOff, Balcony, ACUnit, CarLock, Exercise, DishWasher, FamilyRestRoom, VapeFree, Wifi, BeachAccess } from "../../assets/icons";
+import { CalendarClock, ArrowDown, GroupSearch, Group, Face, Sort, AddLocation, Distance, FilterList, Payments, PaymentArrowDown, Star, OutdoorGrill, Bed, AddGroupOff, Balcony, ACUnit, CarLock, Exercise, DishWasher, FamilyRestRoom, VapeFree, Wifi, BeachAccess } from "../../assets/icons";
 import PropertiesForRent1 from '../../assets/images/properties-for-rent-1.webp';
-import { ArrowRight, ChevronLeft, ChevronRight, Check, Highlighter } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Check, Highlighter, X } from "lucide-react";
 import { Swiper, SwiperSlide  } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { useTranslation } from "react-i18next";
@@ -103,6 +103,12 @@ function PropertiesForRent() {
   const [formSuccess, setFormSuccess] = useState(false);
   const [formError, setFormError] = useState('');
 
+  // THÊM: State cho image popup
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [allGalleryImages, setAllGalleryImages] = useState([]);
+
   const {t} = useTranslation('footer');
   const params = useParams();
   const navigate = useNavigate();
@@ -141,6 +147,24 @@ function PropertiesForRent() {
       const response = await rentService.getRentPropertyById(id);
       const property = response.data || response;
       setCurrentProperty(property);
+      
+      // THÊM: Lưu tất cả ảnh gallery vào state
+      if (property && property.gallery && property.gallery.length > 0) {
+        const images = property.gallery.map(img => ({
+          url: `https://cdn.latelia.com/latelia/${img.thumbnailKey || img.key}`,
+          fullUrl: `https://cdn.latelia.com/latelia/${img.key || img.thumbnailKey}`,
+          alt: property.title
+        }));
+        setAllGalleryImages(images);
+      } else if (property && property.featuredImage) {
+        // Nếu không có gallery thì dùng featured image
+        setAllGalleryImages([{
+          url: `https://cdn.latelia.com/latelia/${property.featuredImage.thumbnailKey || property.featuredImage.key}`,
+          fullUrl: `https://cdn.latelia.com/latelia/${property.featuredImage.key || property.featuredImage.thumbnailKey}`,
+          alt: property.title
+        }]);
+      }
+      
     } catch (err) {
       console.error(`Failed to fetch property ${id}:`, err);
       setError(err.message || 'Failed to load property details');
@@ -148,6 +172,67 @@ function PropertiesForRent() {
       setLoading(false);
     }
   };
+
+  // THÊM: Hàm mở popup ảnh
+  const openImagePopup = (imageUrl, index) => {
+    setSelectedImage(imageUrl);
+    setCurrentImageIndex(index);
+    setIsImagePopupOpen(true);
+    // Ngăn scroll khi popup mở
+    document.body.style.overflow = 'hidden';
+  };
+
+  // THÊM: Hàm đóng popup
+  const closeImagePopup = () => {
+    setIsImagePopupOpen(false);
+    setSelectedImage(null);
+    // Khôi phục scroll
+    document.body.style.overflow = 'auto';
+  };
+
+  // THÊM: Hàm chuyển ảnh tiếp theo
+  const nextImage = () => {
+    if (allGalleryImages.length > 0) {
+      const nextIndex = (currentImageIndex + 1) % allGalleryImages.length;
+      setCurrentImageIndex(nextIndex);
+      setSelectedImage(allGalleryImages[nextIndex].fullUrl);
+    }
+  };
+
+  // THÊM: Hàm chuyển ảnh trước đó
+  const prevImage = () => {
+    if (allGalleryImages.length > 0) {
+      const prevIndex = (currentImageIndex - 1 + allGalleryImages.length) % allGalleryImages.length;
+      setCurrentImageIndex(prevIndex);
+      setSelectedImage(allGalleryImages[prevIndex].fullUrl);
+    }
+  };
+
+  // THÊM: Xử lý phím tắt ESC để đóng popup
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && isImagePopupOpen) {
+        closeImagePopup();
+      }
+    };
+    
+    const handleArrowKeys = (event) => {
+      if (!isImagePopupOpen) return;
+      if (event.key === 'ArrowRight') {
+        nextImage();
+      } else if (event.key === 'ArrowLeft') {
+        prevImage();
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscKey);
+    document.addEventListener('keydown', handleArrowKeys);
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener('keydown', handleArrowKeys);
+    };
+  }, [isImagePopupOpen, currentImageIndex, allGalleryImages]);
 
   useEffect(() => {
     if (params.propertyId) {
@@ -513,31 +598,11 @@ function PropertiesForRent() {
     return otherProperties.slice(0, 4);
   };
 
-  const renderAmenities = (title)=>
-  {
-    switch(title)
-    {
-      case 'Balcony': 
-        return <Balcony />
-      case 'Air conditioning': 
-        return <ACUnit />
-      case 'Parking':
-        return <CarLock />
-      case 'Fitness center':
-        return <Exercise />
-      case 'Kitchen': 
-        return <DishWasher />
-      case 'Family rooms':
-        return <FamilyRestRoom />
-      case 'Non-smoking rooms':
-        return <VapeFree />
-      case 'Wifi in all areas': 
-        return <Wifi />
-      case 'Beachfront': 
-        return <BeachAccess />
-    }
-  }
-
+  const getDefaultIcon = () => {
+  return `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>`;
+};
   if (loading) {
     return (
       <div className="mt-20 flex justify-center items-center min-h-screen px-4">
@@ -909,9 +974,19 @@ function PropertiesForRent() {
           {currentProperty && (
             <div className="bg-bg-primary pb-10">
               <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
-                {/* Property Detail Content */}
+                {/* Property Detail Content - Cập nhật để click vào ảnh mở popup */}
                 <div className="flex flex-col lg:flex-row gap-4">
-                  <div className="lg:flex-1">
+                  {/* Ảnh lớn bên trái - có thể click */}
+                  <div 
+                    className="lg:flex-1 cursor-pointer"
+                    onClick={() => {
+                      const mainImageUrl = getPropertyImage(currentProperty);
+                      const mainImageFullUrl = currentProperty.featuredImage?.key 
+                        ? `https://cdn.latelia.com/latelia/${currentProperty.featuredImage.key}`
+                        : mainImageUrl;
+                      openImagePopup(mainImageFullUrl, 0);
+                    }}
+                  >
                     <OptimizedImage 
                       src={getPropertyImage(currentProperty)} 
                       alt={currentProperty.title} 
@@ -920,17 +995,26 @@ function PropertiesForRent() {
                   </div>
                   <div className="grid grid-cols-1 gap-4 lg:w-1/3">
                     {currentProperty.gallery && currentProperty.gallery.slice(0, 2).map((image, index) => (
-                      <OptimizedImage 
+                      <div 
                         key={image._id || index}
-                        src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`} 
-                        alt={currentProperty.title} 
-                        className="w-full h-[150px] lg:h-[190px] object-cover"
-                      />
+                        className="cursor-pointer"
+                        onClick={() => {
+                          const imageIndex = index + 1; // Vì ảnh đầu tiên là ảnh lớn bên trái
+                          const imageFullUrl = `https://cdn.latelia.com/latelia/${image.key || image.thumbnailKey}`;
+                          openImagePopup(imageFullUrl, imageIndex);
+                        }}
+                      >
+                        <OptimizedImage 
+                          src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`} 
+                          alt={currentProperty.title} 
+                          className="w-full h-[150px] lg:h-[190px] object-cover"
+                        />
+                      </div>
                     ))}
                   </div>
                 </div>
                 
-                {/* Gallery Slider */}
+                {/* Gallery Slider - Cập nhật để click vào ảnh mở popup */}
                 {currentProperty.gallery && currentProperty.gallery.length > 0 && (
                   <div className="mt-4 relative select-none">
                     <Swiper
@@ -951,15 +1035,27 @@ function PropertiesForRent() {
                         prevEl: '.custom-prev-button',
                       }}
                     >
-                      {currentProperty.gallery.map((image) => (
-                        <SwiperSlide key={image._id}>
-                          <OptimizedImage
-                            src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`}
-                            alt={currentProperty.title}
-                            className="w-full h-[120px] lg:h-[150px] object-cover"
-                          />
-                        </SwiperSlide>
-                      ))}
+                      {currentProperty.gallery.map((image, idx) => {
+                        // Xác định index thực tế trong danh sách ảnh đầy đủ
+                        const actualIndex = idx + 1; // +1 vì ảnh lớn bên trái là index 0
+                        return (
+                          <SwiperSlide key={image._id}>
+                            <div 
+                              className="cursor-pointer"
+                              onClick={() => {
+                                const imageFullUrl = `https://cdn.latelia.com/latelia/${image.key || image.thumbnailKey}`;
+                                openImagePopup(imageFullUrl, actualIndex);
+                              }}
+                            >
+                              <OptimizedImage
+                                src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`}
+                                alt={currentProperty.title}
+                                className="w-full h-[120px] lg:h-[150px] object-cover"
+                              />
+                            </div>
+                          </SwiperSlide>
+                        );
+                      })}
                     </Swiper>
                     <button className="custom-prev-button absolute -left-4 top-1/2 -translate-y-1/2 z-10 cursor-pointer bg-white/80 p-1">
                       <ChevronLeft className="w-4 h-4"/>
@@ -976,7 +1072,7 @@ function PropertiesForRent() {
                     <h1 className="text-[28px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold leading-tight">
                       {currentProperty.title}
                     </h1>
-                    <div className="flex items-center mt-4 flex-col lg:flex-row gap-3">
+                    {/* <div className="flex items-center mt-4 flex-col lg:flex-row gap-3">
                       <div className="bg-txt-secondary px-4 py-2 text-bg-primary rounded-4xl text-[14px] w-full lg:w-auto text-center">
                         {currentProperty.type || 'Hotel'}
                       </div>
@@ -987,7 +1083,7 @@ function PropertiesForRent() {
                         <Star className={'ml-2 w-4 h-4'}/>
                         <Star className={'ml-2 w-4 h-4'}/>
                       </div>
-                    </div>
+                    </div> */}
                     
                     <div className="flex items-center mt-6 flex-wrap gap-2">
                       <p className="text-[14px]">{currentProperty.beds || currentProperty.bedrooms} Beds</p>
@@ -996,20 +1092,20 @@ function PropertiesForRent() {
                     </div>
                     <div className="mt-6 flex items-center">
                       <h1 className="text-[24px] text-txt-secondary">
-                        ${currentProperty.price}
+                        {currentProperty.price}
                       </h1>
                       <h1 className="text-[18px] text-txt-secondary ml-2">
                         {currentProperty.priceUnit || 'per night'}
                       </h1>
                     </div>
                     <div className="w-full h-[1px] bg-txt-primary my-6"></div>
-                    <p className="text-[16px] lg:text-[18px] leading-relaxed">{currentProperty.descriptionShort}</p>
+                    <p className="text-[16px] lg:text-[18px] leading-relaxed whitespace-pre-line">{currentProperty.descriptionShort}</p>
                     
                     {/* THÊM: Phần description với show more */}
                     {currentProperty.description && (
                       <div className="mt-4">
                         {showFullDescription && (
-                          <p className={`text-[14px] lg:text-[16px] leading-relaxed ${!showFullDescription ? 'line-clamp-3' : ''}`}>
+                          <p className={`text-[14px] lg:text-[16px] leading-relaxed whitespace-pre-line ${!showFullDescription ? 'line-clamp-3' : ''} `}>
                             {currentProperty.description}
                           </p>
                         )}
@@ -1058,10 +1154,11 @@ function PropertiesForRent() {
                       <ul className="grid grid-cols-1 lg:grid-cols-2 mt-4 gap-3">
                         {currentProperty.amenities.map((amenity, index) => (
                           <li className="flex items-center" key={index}>
-                            <div className="w-4 h-4 flex items-center justify-center">
-                              {renderAmenities(amenity)}
-                            </div>
-                            <p className="ml-2 text-[14px]">{amenity}</p>
+                            <div 
+                              className="w-4 h-4 flex items-center justify-center"
+                              dangerouslySetInnerHTML={{ __html: amenity.icon || getDefaultIcon() }}
+                            />
+                            <p className="ml-2 text-[14px]">{amenity.name}</p>
                           </li>
                         ))}
                       </ul>
@@ -1072,7 +1169,7 @@ function PropertiesForRent() {
                   <div className="mt-8 lg:mt-0">
                     <div className="bg-white border p-4 lg:p-6 rounded-sm text-center">
                       <h1 className="text-[28px] lg:text-[32px] text-txt-secondary font-subtitle font-semibold mb-6 leading-tight">
-                        Get in touch
+                        Liên Hệ Ngay
                       </h1>
                       
                       {formSuccess && (
@@ -1152,24 +1249,26 @@ function PropertiesForRent() {
                           disabled={formLoading}
                           className="cursor-pointer text-[16px] uppercase w-full py-3 bg-txt-secondary text-bg-primary mt-6 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          {formLoading ? 'Submitting...' : 'Submit Booking Request'}
+                          {formLoading ? 'Đang Gửi' : 'Gửi Yêu Cầu Đặt Phòng'}
                         </button>
                       </form>
                     </div>
                     
                     {/* Map */}
-                    <div className="mt-10">
-                      <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.7484136613452!2d105.74611147590936!3d20.96261619004587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452efff394ce3%3A0x391a39d4325be464!2sPhenikaa%20University!5e0!3m2!1sen!2s!4v1761578035476!5m2!1sen!2s" 
-                        width="100%" 
-                        height="300"
-                        style={{border:0}} 
-                        allowFullScreen="" 
-                        loading="lazy" 
-                        referrerPolicy="no-referrer-when-downgrade" 
-                        className="rounded-sm"
-                      ></iframe>
-                    </div>
+                    {currentProperty.googleAddress && (
+                      <div className="mt-10">
+                        <iframe 
+                          src={currentProperty.googleAddress} 
+                          width="100%" 
+                          height="300"
+                          style={{border:0}} 
+                          allowFullScreen="" 
+                          loading="lazy" 
+                          referrerPolicy="no-referrer-when-downgrade" 
+                          className="rounded-sm"
+                        ></iframe>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1230,6 +1329,67 @@ function PropertiesForRent() {
         </div>
       )}
       <Footer withContact={false}/>
+
+      {/* THÊM: Image Popup Modal */}
+      {isImagePopupOpen && selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/90 z-[1000] flex items-center justify-center"
+          onClick={closeImagePopup}
+        >
+          <div 
+            className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Nút đóng */}
+            <button 
+              className="absolute -top-12 right-0 text-white hover:text-gray-300 cursor-pointer z-10"
+              onClick={closeImagePopup}
+            >
+              <X className="w-8 h-8" />
+            </button>
+            
+            {/* Nút previous */}
+            {allGalleryImages.length > 1 && (
+              <button 
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 cursor-pointer z-10 bg-black/50 rounded-full p-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
+              >
+                <ChevronLeft className="w-8 h-8" />
+              </button>
+            )}
+            
+            {/* Ảnh hiện tại */}
+            <img 
+              src={selectedImage} 
+              alt="Property"
+              className="max-w-[90vw] max-h-[90vh] object-contain"
+            />
+            
+            {/* Nút next */}
+            {allGalleryImages.length > 1 && (
+              <button 
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 cursor-pointer z-10 bg-black/50 rounded-full p-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
+              >
+                <ChevronRight className="w-8 h-8" />
+              </button>
+            )}
+            
+            {/* Thông tin số ảnh */}
+            {allGalleryImages.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white bg-black/50 px-3 py-1 rounded-full text-sm">
+                {currentImageIndex + 1} / {allGalleryImages.length}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
    );
 }
