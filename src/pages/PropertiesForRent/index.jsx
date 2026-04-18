@@ -635,257 +635,260 @@ function PropertiesForRent() {
 
   return ( 
     <div className="mt-20">
-      <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
-        {/* GROUP FILTER - MOBILE RESPONSIVE */}
-        <div className="pt-10 flex flex-col lg:flex-row w-full mb-6 gap-4">
-          {/* CHECK IN */}
-          <div className="relative flex-1" ref={checkInRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
-                 onClick={() => setShowCheckInDate(!showCheckInDate)}>
-              <div className="flex items-center">
-                <CalendarClock className='mr-2 w-4 h-4'/>
-                <span className={'text-[14px]'}>
-                {formatDisplayDate(tempFilters.checkIn, 'checkin')}
-                </span>
-              </div>
-              <ArrowDown className="w-3 h-3" />
-            </div>
-            {showCheckInDate && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
-                <DatePicker
-                  selected={tempFilters.checkIn}
-                  onChange={handleCheckInSelect}
-                  minDate={new Date()}
-                  inline
-                  className="w-full"
-                />
-              </div>
-            )}
-          </div>
-          
-          {/* CHECK OUT */}
-          <div className="relative flex-1" ref={checkOutRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
-                 onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
-              <div className="flex items-center">
-                <CalendarClock className='mr-2 w-4 h-4'/>
-                <span className={'text-[16px]'}>
-                {formatDisplayDate(tempFilters.checkOut, 'checkout')}
-                </span>
-              </div>
-              <ArrowDown className="w-3 h-3" />
-            </div>
-            {showCheckOutDate && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
-                <DatePicker
-                  selected={tempFilters.checkOut}
-                  onChange={handleCheckOutSelect}
-                  minDate={tempFilters.checkIn ? new Date(tempFilters.checkIn.getTime() + 24 * 60 * 60 * 1000) : new Date()}
-                  inline
-                  className="w-full"
-                />
-              </div>
-            )}
-          </div>
-          
-          {/* SELECT PERSON */}
-          <div className="relative flex-1" ref={selectPersonRef}>
-            <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
-                 onClick={() => setShowSelectPerson(!showSelectPerson)}>
-              <div className="flex items-center text-[16px]">
-                <GroupSearch className='mr-2 w-4 h-4'/>
-                {formatGuestDisplay()}
-              </div>
-              <ArrowDown className="w-3 h-3" />
-            </div>
-            {showSelectPerson && (
-              <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
-                <ul className="w-full">
-                  <li className="flex justify-between border-b border-b-txt-primary p-3 hover:bg-stone-200">
-                    <div className="flex items-center">
-                      <Group className="mr-4 w-4 h-4"/>
-                      <span className="text-[14px]">Adults</span>
-                    </div>
-                    <div className="flex items-center">
-                      <button 
-                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
-                        onClick={() => handleGuestCountChange('adults', 'decrement')}
-                        disabled={tempFilters.adults <= 1}
-                      >
-                        -
-                      </button>
-                      <span className="mx-3 text-[14px] min-w-[20px] text-center">
-                        {tempFilters.adults}
-                      </span>
-                      <button 
-                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
-                        onClick={() => handleGuestCountChange('adults', 'increment')}
-                        disabled={tempFilters.adults >= 10}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </li>
-                  <li className="flex justify-between p-3 hover:bg-stone-200">
-                    <div className="flex items-center">
-                      <Face className="mr-4 w-4 h-4"/>
-                      <span className="text-[14px]">Children</span>
-                    </div>
-                    <div className="flex items-center">
-                      <button 
-                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
-                        onClick={() => handleGuestCountChange('children', 'decrement')}
-                        disabled={tempFilters.children <= 0}
-                      >
-                        -
-                      </button>
-                      <span className="mx-3 text-[14px] min-w-[20px] text-center">
-                        {tempFilters.children}
-                      </span>
-                      <button 
-                        className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
-                        onClick={() => handleGuestCountChange('children', 'increment')}
-                        disabled={tempFilters.children >= 5}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-          
-          {/* THAY ĐỔI: Nút Search */}
-          <button 
-            className="bg-txt-secondary text-white cursor-pointer py-3 text-[16px] lg:flex-1"
-            onClick={handleSearch}
-          >
-            Search
-          </button>
-        </div>
-
-        <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold mb-6 leading-tight'>
-          CÁC DỰ ÁN CHO THUÊ
-        </h1>
-        
-        {/* Active Filters Display */}
-        {(selectedLocation || searchFilters.checkIn || selectedSorting.value !== 'per_room_per_night') && (
-          <div className="flex items-center mb-4 gap-2 flex-wrap">
-            <span className="text-[14px] font-semibold">Active Filters:</span>
-            {selectedLocation && (
-              <div className="flex items-center bg-txt-secondary text-white px-2 py-1 rounded-full">
-                <span className="text-[12px] mr-1">Location: {selectedLocation.name}</span>
-                <button 
-                  onClick={clearLocationFilter}
-                  className="text-white hover:text-gray-200 text-[12px]"
-                >
-                  ×
-                </button>
-              </div>
-            )}
-            {searchFilters.checkIn && searchFilters.checkOut && (
-              <div className="flex items-center bg-green-600 text-white px-2 py-1 rounded-full">
-                <span className="text-[12px] mr-1">
-                  {formatDisplayDate(searchFilters.checkIn)} - {formatDisplayDate(searchFilters.checkOut)}
-                </span>
-                <button 
-                  onClick={clearDateFilters}
-                  className="text-white hover:text-gray-200 text-[12px]"
-                >
-                  ×
-                </button>
-              </div>
-            )}
-            {selectedSorting && selectedSorting.value !== 'per_room_per_night' && (
-              <div className="flex items-center bg-txt-primary text-white px-2 py-1 rounded-full">
-                <span className="text-[12px] mr-1">Sort: {selectedSorting.name}</span>
-                <button 
-                  onClick={clearSortingFilter}
-                  className="text-white hover:text-gray-200 text-[12px]"
-                >
-                  ×
-                </button>
-              </div>
-            )}
-            <button 
-              onClick={clearAllFilters}
-              className="text-txt-secondary hover:text-blue-700 text-[12px] font-semibold"
-            >
-              Clear All
-            </button>
-          </div>
-        )}
-        
-        <div className="flex flex-col lg:flex-row w-full mb-10 gap-4">
-          <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-auto">
-            {/* LOCATION */}
-            <div className="relative w-full lg:w-[200px]" ref={locationRef}>
-              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
-                   onClick={() => setShowSelectLocation(!showSelectLocation)}>
-                <div className="flex items-center text-[16px] mr-2">
-                  <AddLocation className='mr-2 w-4 h-4'/>
-                  <div className="max-w-[200px] flex-1 truncate">
-                    {selectedLocation ? selectedLocation.name : 'Select your location'}
-                  </div>
+      {!params.propertyId && (
+        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
+          {/* GROUP FILTER - MOBILE RESPONSIVE */}
+          <div className="pt-10 flex flex-col lg:flex-row w-full mb-6 gap-4">
+            {/* CHECK IN */}
+            <div className="relative flex-1" ref={checkInRef}>
+              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
+                  onClick={() => setShowCheckInDate(!showCheckInDate)}>
+                <div className="flex items-center">
+                  <CalendarClock className='mr-2 w-4 h-4'/>
+                  <span className={'text-[14px]'}>
+                  {formatDisplayDate(tempFilters.checkIn, 'checkin')}
+                  </span>
                 </div>
-                <ArrowDown className="w-4 h-4" />
+                <ArrowDown className="w-3 h-3" />
               </div>
-              {showSelectLocation && (
+              {showCheckInDate && (
+                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
+                  <DatePicker
+                    selected={tempFilters.checkIn}
+                    onChange={handleCheckInSelect}
+                    minDate={new Date()}
+                    inline
+                    className="w-full"
+                  />
+                </div>
+              )}
+            </div>
+            
+            {/* CHECK OUT */}
+            <div className="relative flex-1" ref={checkOutRef}>
+              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
+                  onClick={() => setShowCheckOutDate(!showCheckOutDate)}>
+                <div className="flex items-center">
+                  <CalendarClock className='mr-2 w-4 h-4'/>
+                  <span className={'text-[16px]'}>
+                  {formatDisplayDate(tempFilters.checkOut, 'checkout')}
+                  </span>
+                </div>
+                <ArrowDown className="w-3 h-3" />
+              </div>
+              {showCheckOutDate && (
+                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none left-0 right-0 lg:left-auto lg:right-auto">
+                  <DatePicker
+                    selected={tempFilters.checkOut}
+                    onChange={handleCheckOutSelect}
+                    minDate={tempFilters.checkIn ? new Date(tempFilters.checkIn.getTime() + 24 * 60 * 60 * 1000) : new Date()}
+                    inline
+                    className="w-full"
+                  />
+                </div>
+              )}
+            </div>
+            
+            {/* SELECT PERSON */}
+            <div className="relative flex-1" ref={selectPersonRef}>
+              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none"  
+                  onClick={() => setShowSelectPerson(!showSelectPerson)}>
+                <div className="flex items-center text-[16px]">
+                  <GroupSearch className='mr-2 w-4 h-4'/>
+                  {formatGuestDisplay()}
+                </div>
+                <ArrowDown className="w-3 h-3" />
+              </div>
+              {showSelectPerson && (
                 <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
                   <ul className="w-full">
-                    {LOCATION_ITEMS.map(locationItem=>(
-                      <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
-                          key={locationItem.id}
-                          onClick={() => handleLocationSelect(locationItem)}>
-                          <div className="flex items-start">
-                            <Distance className="mr-3 w-4 h-4"/>
-                            <div>
-                              <p className="text-[14px] font-semibold">{locationItem.name}</p>
-                              <p className="text-[12px]">{locationItem.country}</p>
-                            </div>
-                          </div>
-                      </li>
-                    ))}
+                    <li className="flex justify-between border-b border-b-txt-primary p-3 hover:bg-stone-200">
+                      <div className="flex items-center">
+                        <Group className="mr-4 w-4 h-4"/>
+                        <span className="text-[14px]">Adults</span>
+                      </div>
+                      <div className="flex items-center">
+                        <button 
+                          className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
+                          onClick={() => handleGuestCountChange('adults', 'decrement')}
+                          disabled={tempFilters.adults <= 1}
+                        >
+                          -
+                        </button>
+                        <span className="mx-3 text-[14px] min-w-[20px] text-center">
+                          {tempFilters.adults}
+                        </span>
+                        <button 
+                          className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
+                          onClick={() => handleGuestCountChange('adults', 'increment')}
+                          disabled={tempFilters.adults >= 10}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </li>
+                    <li className="flex justify-between p-3 hover:bg-stone-200">
+                      <div className="flex items-center">
+                        <Face className="mr-4 w-4 h-4"/>
+                        <span className="text-[14px]">Children</span>
+                      </div>
+                      <div className="flex items-center">
+                        <button 
+                          className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
+                          onClick={() => handleGuestCountChange('children', 'decrement')}
+                          disabled={tempFilters.children <= 0}
+                        >
+                          -
+                        </button>
+                        <span className="mx-3 text-[14px] min-w-[20px] text-center">
+                          {tempFilters.children}
+                        </span>
+                        <button 
+                          className="w-6 h-6 flex items-center justify-center border border-txt-primary cursor-pointer disabled:opacity-50 text-sm"
+                          onClick={() => handleGuestCountChange('children', 'increment')}
+                          disabled={tempFilters.children >= 5}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               )}
             </div>
             
-            {/* SORTING */}
-            <div className="relative w-full lg:w-[210px]" ref={sortingRef}>
-              <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
-                   onClick={() => setShowSortingOptions(!showSortingOptions)}>
-                <div className="flex items-center text-[16px]">
-                  <FilterList className='mr-2 w-4 h-4'/>
-                  <span className="max-w-[300px] truncate">
-                    {selectedSorting ? selectedSorting.name : 'Default sorting'}
-                  </span>
-                </div>
-                <ArrowDown className="w-3 h-3" />
-              </div>
-              {showSortingOptions && (
-                <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
-                  <ul className="w-full">
-                    {SORTING_ITEMS.map(sortingItem=>(
-                      <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
-                          key={sortingItem.id}
-                          onClick={() => handleSortingSelect(sortingItem)}>
-                          <div className="flex items-start">
-                            {sortingItem.icon}
-                            <div className="ml-2">
-                              <p className="text-[14px] font-semibold">{sortingItem.name}</p>
-                            </div>
-                          </div>
-                      </li>
-                    ))}
-                  </ul>
+            {/* THAY ĐỔI: Nút Search */}
+            <button 
+              className="bg-txt-secondary text-white cursor-pointer py-3 text-[16px] lg:flex-1"
+              onClick={handleSearch}
+            >
+              Search
+            </button>
+          </div>
+
+          <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold mb-6 leading-tight'>
+            CÁC DỰ ÁN CHO THUÊ
+          </h1>
+          
+          {/* Active Filters Display */}
+          {(selectedLocation || searchFilters.checkIn || selectedSorting.value !== 'per_room_per_night') && (
+            <div className="flex items-center mb-4 gap-2 flex-wrap">
+              <span className="text-[14px] font-semibold">Active Filters:</span>
+              {selectedLocation && (
+                <div className="flex items-center bg-txt-secondary text-white px-2 py-1 rounded-full">
+                  <span className="text-[12px] mr-1">Location: {selectedLocation.name}</span>
+                  <button 
+                    onClick={clearLocationFilter}
+                    className="text-white hover:text-gray-200 text-[12px]"
+                  >
+                    ×
+                  </button>
                 </div>
               )}
+              {searchFilters.checkIn && searchFilters.checkOut && (
+                <div className="flex items-center bg-green-600 text-white px-2 py-1 rounded-full">
+                  <span className="text-[12px] mr-1">
+                    {formatDisplayDate(searchFilters.checkIn)} - {formatDisplayDate(searchFilters.checkOut)}
+                  </span>
+                  <button 
+                    onClick={clearDateFilters}
+                    className="text-white hover:text-gray-200 text-[12px]"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+              {selectedSorting && selectedSorting.value !== 'per_room_per_night' && (
+                <div className="flex items-center bg-txt-primary text-white px-2 py-1 rounded-full">
+                  <span className="text-[12px] mr-1">Sort: {selectedSorting.name}</span>
+                  <button 
+                    onClick={clearSortingFilter}
+                    className="text-white hover:text-gray-200 text-[12px]"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+              <button 
+                onClick={clearAllFilters}
+                className="text-txt-secondary hover:text-blue-700 text-[12px] font-semibold"
+              >
+                Clear All
+              </button>
+            </div>
+          )}
+          
+          <div className="flex flex-col lg:flex-row w-full mb-10 gap-4">
+            <div className="flex flex-col lg:flex-row gap-4 w-full lg:w-auto">
+              {/* LOCATION */}
+              <div className="relative w-full lg:w-[200px]" ref={locationRef}>
+                <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
+                    onClick={() => setShowSelectLocation(!showSelectLocation)}>
+                  <div className="flex items-center text-[16px] mr-2">
+                    <AddLocation className='mr-2 w-4 h-4'/>
+                    <div className="max-w-[200px] flex-1 truncate">
+                      {selectedLocation ? selectedLocation.name : 'Select your location'}
+                    </div>
+                  </div>
+                  <ArrowDown className="w-4 h-4" />
+                </div>
+                {showSelectLocation && (
+                  <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
+                    <ul className="w-full">
+                      {LOCATION_ITEMS.map(locationItem=>(
+                        <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
+                            key={locationItem.id}
+                            onClick={() => handleLocationSelect(locationItem)}>
+                            <div className="flex items-start">
+                              <Distance className="mr-3 w-4 h-4"/>
+                              <div>
+                                <p className="text-[14px] font-semibold">{locationItem.name}</p>
+                                <p className="text-[12px]">{locationItem.country}</p>
+                              </div>
+                            </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              
+              {/* SORTING */}
+              <div className="relative w-full lg:w-[210px]" ref={sortingRef}>
+                <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
+                    onClick={() => setShowSortingOptions(!showSortingOptions)}>
+                  <div className="flex items-center text-[16px]">
+                    <FilterList className='mr-2 w-4 h-4'/>
+                    <span className="max-w-[300px] truncate">
+                      {selectedSorting ? selectedSorting.name : 'Default sorting'}
+                    </span>
+                  </div>
+                  <ArrowDown className="w-3 h-3" />
+                </div>
+                {showSortingOptions && (
+                  <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
+                    <ul className="w-full">
+                      {SORTING_ITEMS.map(sortingItem=>(
+                        <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
+                            key={sortingItem.id}
+                            onClick={() => handleSortingSelect(sortingItem)}>
+                            <div className="flex items-start">
+                              {sortingItem.icon}
+                              <div className="ml-2">
+                                <p className="text-[14px] font-semibold">{sortingItem.name}</p>
+                              </div>
+                            </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )
+      }
       
       {/* LIST ITEM */}
       {!params.propertyId ? (
