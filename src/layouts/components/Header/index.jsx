@@ -24,23 +24,23 @@ function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
 
-    const handleChangeLanguage = (lang) => {
-        if (lang === language) return;
+    // const handleChangeLanguage = (lang) => {
+    //     if (lang === language) return;
         
-        // Thay đổi ngôn ngữ trong state và i18n
-        i18n.changeLanguage(lang);
-        dispatch(setLanguage(lang));
-        localStorage.setItem("language", lang);
+    //     // Thay đổi ngôn ngữ trong state và i18n
+    //     i18n.changeLanguage(lang);
+    //     dispatch(setLanguage(lang));
+    //     localStorage.setItem("language", lang);
         
-        // Lấy path hiện tại (loại bỏ phần ngôn ngữ)
-        const currentPath = location.pathname;
+    //     // Lấy path hiện tại (loại bỏ phần ngôn ngữ)
+    //     const currentPath = location.pathname;
         
-        // Tách path để lấy phần sau ngôn ngữ (bao gồm cả nested paths)
-        const pathWithoutLang = currentPath.replace(/^\/(en|vi)/, '') || '/';
+    //     // Tách path để lấy phần sau ngôn ngữ (bao gồm cả nested paths)
+    //     const pathWithoutLang = currentPath.replace(/^\/(en|vi)/, '') || '/';
         
-        // Chuyển đến cùng path với ngôn ngữ mới
-        navigate(`/${lang}${pathWithoutLang}`, { replace: true });
-    };
+    //     // Chuyển đến cùng path với ngôn ngữ mới
+    //     navigate(`/${lang}${pathWithoutLang}`, { replace: true });
+    // };
 
     const handleMenuItemClick = (menuItemId) => {
         setCurrentItem(menuItemId);
@@ -59,7 +59,7 @@ function Header() {
     };
     
     return ( 
-        <div className="bg-bg-primary flex justify-center items-center fixed top-0 left-0 z-100 w-full">
+        <div className="bg-transparent flex justify-center items-center fixed top-0 left-0 z-100 w-full">
             <div className="w-full xl:max-w-screen-xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
                 {/* LEFT HEADER - Logo */}
                 <Link to={'/'} className="flex-1 md:flex-none">
@@ -90,7 +90,7 @@ function Header() {
                                         <LocalizedLink 
                                             to={menuItem.to} 
                                             onClick={()=>setCurrentItem(menuItem.id)} 
-                                            className="text-[18px]"
+                                            className="text-[20px] text-white"
                                         >
                                             {t(`${menuItem.title}`)}
                                         </LocalizedLink>

@@ -26,12 +26,12 @@ import { motion } from 'framer-motion'
 
 const SLIDE_ITEMS = [
     {id:1, src:slide2 },
-    // {id:2, src:slide3 },
-    // {id:3, src:slide4 },
-    // {id:4, src:slide6 },
-    // {id:4, src:slide7 },
-    // {id:4, src:slide8 },
-    // {id:4, src:slide9 },
+    {id:2, src:slide3 },
+    {id:3, src:slide4 },
+    {id:4, src:slide6 },
+    {id:4, src:slide7 },
+    {id:4, src:slide8 },
+    {id:4, src:slide9 },
 ]
 const SLIDE_ITEMS_2 = [
     {id:1, src:slide10 },
@@ -69,41 +69,7 @@ function Landing() {
                                         if (index === 0) setLoaded(true); // 👈 chỉ trigger khi ảnh đầu tiên load xong
                                     }}
                                 />
-                                <div className="absolute inset-0 bg-black/50" />
-                                <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">
-                                    {/* <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={loaded ? { scaleX: 1 } : {}}
-                                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-                                        className="h-[1px] bg-white/60 w-16 mb-6"
-                                        style={{ originX: 0.5 }}
-                                    /> */}
-                                    <motion.h1
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={loaded ? { opacity: 1, y: 0 } : {}}
-                                        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.35 }}
-                                        className="text-white text-[18px] md:text-[18px] xl:text-[18px]  leading-tight tracking-widest flex items-center justify-center gap-3"
-                                    >
-                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
-                                        Projects
-                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
-                                    </motion.h1>
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={loaded ? { opacity: 1, y: 0 } : {}}
-                                        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
-                                        className="text-white/75 text-[64px] md:text-[64px] xl:text-[64px] mt-4 max-w-xl"
-                                    >
-                                        One-of-a-kind homes, developed by L'atelia
-                                    </motion.p>
-                                    {/* <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={loaded ? { scaleX: 1 } : {}}
-                                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-                                        className="h-[1px] bg-white/60 w-16 mt-6"
-                                        style={{ originX: 0.5 }}
-                                    /> */}
-                                </div>
+                                <div className="absolute inset-0 bg-black/30" />
                             </div>
                         </SwiperSlide>
                     ))
@@ -112,10 +78,44 @@ function Landing() {
 
             {/* SUBTITLE */}
             <div className="xl:mt-8 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
-                <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                    <h1 className="text-bg-secondary text-[48px] text-center font-medium">
-                    Our first project was a bold vision to transform more than a century of stories into a modern home that will last for the next 100 years and beyond.
-                    </h1>
+                <div className="flex flex-col md:flex-row items-center justify-center xl:max-w-screen-xl lg:max-w-[900px] w-full">
+                    <div className="flex-basis md:basis-1/3 w-full lg:w-auto flex justify-center lg:mb-6 mb-0">
+                        <OptimizedImage 
+                                src={logoText} 
+                                alt="" 
+                                className="w-[200px] md:max-w-[200px] lg:max-w-[315px] xl:w-[800px]"
+                            />
+                    </div>
+                    <div className="flex-basis md:basis-2/3 pl-0 lg:pl-20 mt-2 lg:mt-20 text-center md:text-left w-full lg:w-auto">
+                        <p className="text-[20px]  lg:text-[20px] xl:text-[25px] text-txt-primary leading-tight">
+                            {t('landing:hero.subtitle')}
+                        </p>
+                        <LocalizedLink to={'/projects'} className="inline-block">
+                            <button
+                                className="
+                                    mt-6 lg:mt-8 flex items-center justify-center lg:justify-start
+                                    text-txt-primary font-medium
+                                    border border-txt-primary
+                                    px-6 py-3
+                                    cursor-pointer
+                                    uppercase
+                                    group
+                                    hover:bg-txt-secondary
+                                    hover:text-bg-primary
+                                    w-full lg:w-auto
+                                "
+                            >
+                                {t('landing:button.view_our_properties')}
+                                <ArrowRight
+                                    className="
+                                        group-hover:text-bg-primary
+                                        text-txt-primary
+                                        ml-4
+                                    "
+                                />
+                            </button>
+                        </LocalizedLink>
+                    </div>
                 </div>
             </div>
 
