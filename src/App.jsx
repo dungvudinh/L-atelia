@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import MainLayout from "./layouts/MainLayout";
 import { publicRoutes } from "./routes/index";
+import PageTransition from "./components/PageTransition";
 
 // 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
 function LanguageRedirect() {
@@ -87,19 +88,19 @@ export default function App() {
   //   window.scrollTo(0,0);
   // }, [location.pathname])
   return (
-    <Routes>
-      {/* Nếu người dùng vào "/" → tự chuyển hướng */}
-      <Route path="/" element={<LanguageRedirect />} />
+      <Routes>
+        {/* Nếu người dùng vào "/" → tự chuyển hướng */}
+        <Route path="/" element={<LanguageRedirect />} />
 
-      {/* Các route có prefix ngôn ngữ */}
-      <Route
-        path="/:lng/*"
-        element={
-          <LanguageSync>
-            <LocalizedRoutes />
-          </LanguageSync>
-        }
-      />
-    </Routes>
+        {/* Các route có prefix ngôn ngữ */}
+        <Route
+          path="/:lng/*"
+          element={
+            <LanguageSync>
+              <LocalizedRoutes />
+            </LanguageSync>
+          }
+        />
+      </Routes>
   );
 }

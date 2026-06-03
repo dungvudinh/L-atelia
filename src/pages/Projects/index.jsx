@@ -1,359 +1,371 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import Footer from '../../layouts/components/Footer';
-import { LocalizedLink } from '../../components/LocalizedLink';
-import { ArrowRight } from 'lucide-react';
-import LazyImage from '../../components/LazyImage';
-import { projectsService } from '../../services/projectsService';
-
-// Fallback images in case API fails
-const FALLBACK_IMAGES = [
-  { id: 1, src: '../../assets/images/projects/project1.png', alt: "Project 1", title: "Modern Villa", type: 'for sale', status: 'available' },
-  { id: 2, src: '../../assets/images/projects/project2.png', alt: "Project 2", title: "Luxury Apartment", type: 'for sale', status: 'available' },
-  { id: 3, src: '../../assets/images/projects/project3.png', alt: "Project 3", title: "Office Building", type: 'for sale', status: 'sold' },
-  { id: 4, src: '../../assets/images/projects/project4.png', alt: "Project 4", title: "Restaurant Design", type: 'for sale', status: 'available' },
-  { id: 5, src: '../../assets/images/projects/project5.png', alt: "Project 5", title: "Hotel Resort", type: 'for sale', status: 'available' },
-  { id: 6, src: '../../assets/images/projects/project6.png', alt: "Project 6", title: "Beach House", type: 'for sale', status: 'sold' },
-  { id: 7, src: '../../assets/images/projects/project7.png', alt: "Project 7", title: "Beach House", type: 'for sale', status: 'available' },
-  { id: 8, src: '../../assets/images/projects/project8.png', alt: "Project 8", title: "Beach House", type: 'for sale', status: 'available' },
-];
-
-function Projects() {
-  const [projects, setProjects] = useState([]);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [preloadedImages, setPreloadedImages] = useState(new Set());
-  const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'available', 'sold'
-  
-  // Filter options
-  const filters = [
-    { id: 'all', label: 'All', count: projects.length },
-    { id: 'available', label: 'Available', count: projects.filter(p => p.status === 'available').length },
-    { id: 'sold', label: 'Sold', count: projects.filter(p => p.status === 'sold').length },
+import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import slide2 from '../../assets/images/slides/slide2.jpg';
+import slide3 from '../../assets/images/slides/slide3.jpg';
+import slide4 from '../../assets/images/slides/slide4.jpg';
+import slide5 from '../../assets/images/slides/slide5.jpg';
+import slide6 from '../../assets/images/slides/slide6.jpg';
+import slide7 from '../../assets/images/slides/slide7.jpg';
+import slide8 from '../../assets/images/slides/slide8.jpg';
+import slide9 from '../../assets/images/slides/slide9.jpg';
+import slide10 from '../../assets/images/slides/slide10.jpg';
+import slide11 from '../../assets/images/slides/slide11.jpg';
+import slide12 from '../../assets/images/slides/slide12.jpg';
+import logoText from '../../assets/images/logo-text.png';
+import { ArrowRight, ChevronRight } from "lucide-react";
+import img2 from '../../assets/images/img2.jpg';
+import Footer from "../../layouts/components/Footer";
+import { LocalizedLink } from "../../components/LocalizedLink";
+import OptimizedImage from "../../components/OptimizedImage";
+import { motion } from 'framer-motion'
+import { useInView } from "framer-motion";
+const SLIDE_ITEMS = [
+    {id:1, src:slide2 },
+    // {id:2, src:slide3 },
+    // {id:3, src:slide4 },
+    // {id:4, src:slide6 },
+    // {id:4, src:slide7 },
+    // {id:4, src:slide8 },
+    // {id:4, src:slide9 },
+]
+const PROJECT_FILTERS= ['All', 'For Sale', 'Sold'];
+const PROJECTS = [
+    {
+      title: "Mon Cor",
+      description: "Built in 1903 during the most prosperous time in Mallorca's modern history, Mon Cor was an architectural marvel that set the benchmark for 20th century living.",
+      status: "Sold",
+      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+    },
+    {
+      title: "Vistavall",
+      description: "Set atop Valldemossa, offering panoramic views and year-round sunshine.",
+      status: "Sold",
+      image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+    },
+    {
+        title: "Vistavall",
+        description: "Set atop Valldemossa, offering panoramic views and year-round sunshine.",
+        status: "Sold",
+        image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+      },
   ];
-  
-  // Fetch projects from API
-  const fetchProjects = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const response = await projectsService.getProjects();
-      console.log('Fetched projects:', response);
-      // Transform API data to match your component structure với field mapping chính xác
-      const transformedProjects = response.data?.projects?.map(project => ({
-        id: project._id || project.id,
-        src: project.heroImage?.thumbnailKey || project.gallery?.[0]?.thumbnailKey || project.heroImage?.key,
-        alt: project.title,
-        title: project.title,
-        type: 'for sale',
-        description: project.description,
-        propertyFeatures: project.propertyFeatures,
-        location: project.location,
-        price: project.price,
-        type: project.type, // Mặc định là 'sale' nếu không có type
-        status: project.status || 'available', // Mặc định là available nếu không có status
-        brochure: project.brochure,
-        constructionProgress: project.constructionProgress,
-        designImages: project.designImages,
-        floorPlans: project.floorPlans,
-        gallery: project.gallery,
-        createdAt: project.createdAt,
-        updatedAt: project.updatedAt
-      })) || [];
-      
-      const finalProjects = transformedProjects.length > 0 ? transformedProjects : FALLBACK_IMAGES;
-      setProjects(finalProjects);
-      setFilteredProjects(finalProjects); // Khởi tạo filtered projects với tất cả projects
-      
-    } catch (err) {
-      console.error('❌ Failed to fetch projects:', err);
-      setError('Failed to load projects. Using fallback data.');
-      setProjects(FALLBACK_IMAGES);
-      setFilteredProjects(FALLBACK_IMAGES);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const INSTAGRAM_IMAGES = [
+    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
+    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
+    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
+    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
+    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
+  ]
+const SLIDE_ITEMS_2 = [
+    {id:1, src:slide10 },
+    {id:2, src:slide11 },
+    {id:3, src:slide12 },
+]
 
-  // Filter projects based on active filter
-  useEffect(() => {
-    if (activeFilter === 'all') {
-      setFilteredProjects(projects);
-    } else {
-      const filtered = projects.filter(project => project.status === activeFilter);
-      setFilteredProjects(filtered);
-    }
-  }, [activeFilter, projects]);
+function Project() {
+    const {t} = useTranslation(["landing", "common"]);
+    const [projectFilterId, setProjectFilterId] = useState(0);
+    const [loaded, setLoaded] = useState(false);
+    return ( 
+        <div className="">
+            {/* MAIN SLIDER */}
+            <Swiper
+                modules={[Autoplay, Pagination, Navigation]}
+                spaceBetween={20}
+                slidesPerView={1}
+                loop
+                pagination={{ 
+                    clickable: true,
+                    dynamicBullets: true
+                }}
+                className="overflow-hidden"
+            >
+                {
+                    SLIDE_ITEMS.map((slideItem, index) => (
+                        <SwiperSlide key={slideItem.id}>
+                            <div className="w-full xl:h-screen h-[300px] md:h-[500px] relative bg-black"> {/* 👈 bg-black */}
+                                <OptimizedImage
+                                    src={slideItem.src}
+                                    className={`w-full h-full object-cover object-center transition-opacity duration-100
+                                        ${loaded ? 'slide-image-animate' : 'opacity-0'} // 👈 ẩn cho đến khi load
+                                    `}
+                                    onLoad={() => {
+                                        if (index === 0) setLoaded(true); // 👈 chỉ trigger khi ảnh đầu tiên load xong
+                                    }}
+                                />
+                                <div className="absolute inset-0 bg-black/50" />
+                                <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">
+                                    <motion.h1
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={loaded ? { opacity: 1, y: 0 } : {}}
+                                        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.35 }}
+                                        className="text-white text-[18px] md:text-[18px] xl:text-[18px]  leading-tight tracking-widest flex items-center justify-center gap-3"
+                                    >
+                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
+                                        Projects
+                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
+                                    </motion.h1>
+                                    <motion.p
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={loaded ? { opacity: 1, y: 0 } : {}}
+                                        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
+                                        className="text-white/75 text-[64px] md:text-[64px] xl:text-[64px] mt-4 max-w-xl"
+                                    >
+                                        One-of-a-kind homes, developed by L'atelia
+                                    </motion.p>
+                                    {/* <motion.div
+                                        initial={{ scaleX: 0 }}
+                                        animate={loaded ? { scaleX: 1 } : {}}
+                                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+                                        className="h-[1px] bg-white/60 w-16 mt-6"
+                                        style={{ originX: 0.5 }}
+                                    /> */}
+                                </div>
+                            </div>
+                        </SwiperSlide>
+                    ))
+                }
+            </Swiper>
 
-  useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
-  
-  // Preload images
-  useEffect(() => {
-    const preloadImages = async () => {
-      if (filteredProjects.length === 0) return;
-
-      const imagesToPreload = filteredProjects.slice(0, 4);
-      
-      const preloadPromises = imagesToPreload.map((project) => {
-        return new Promise((resolve) => {
-          if (!project.src) {
-            resolve();
-            return;
-          }
-          
-          const img = new Image();
-          img.src = getImageUrl(project.src);
-          img.onload = () => {
-            setPreloadedImages(prev => new Set([...prev, project.id]));
-            resolve();
-          };
-          img.onerror = () => {
-            console.warn(`Failed to preload image: ${project.src}`);
-            resolve();
-          };
-        });
-      });
-
-      await Promise.all(preloadPromises);
-    };
-
-    preloadImages();
-  }, [filteredProjects]);
-
-  const handleImageClick = useCallback((projectId) => {
-    // You can add navigation or modal opening logic here
-  }, []);
-
-  const handleFilterChange = (filterId) => {
-    setActiveFilter(filterId);
-  };
-
-  const convertToSlug = (title) => {
-    return title
-      ?.toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '') || 'project';
-  };
-
-  // Construct full image URL
-  const getImageUrl = (imagePath) => {
-    if (!imagePath) return '';
-    return `https://cdn.latelia.com/latelia/${imagePath}`;
-    // return imagePath;
-  };
-
-  if (loading) {
-    return (
-      <div className="mt-20 flex justify-center items-center min-h-screen px-4">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-txt-gray text-lg">Loading projects...</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <div className="mt-20 flex justify-center mb-10 lg:mb-20 !px-4 lg:px-0">
-        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-6 lg:mt-10">
-          {/* HEADER */}
-          <h1 className="text-[36px] md:text-[45px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight">
-            Các dự án của chúng tôi
-          </h1>
-          <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[20px] lg:text-[20px] leading-relaxed">
-            Chúng tôi đồng hành cùng KH với mục tiêu rõ ràng đó là mang đến những sản phẩm bất động sản có giá trị thật – cả về trải nghiệm sống lẫn tiềm năng gia tăng trong tương lai.
-          </p>
-          
-          {error && (
-            <div className="mt-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded text-sm md:text-base">
-              {error}
+            {/* SUBTITLE */}
+            <div className="xl:mt-40 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
+                <FadeUpSection>
+                    <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
+                        <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
+                        Our first project was a bold vision to transform more than a century of stories into a modern home that will last for the next 100 years and beyond.
+                        </h1>
+                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
+                        We have since completed several projects. Each one is close to our hearts and driven by our vision, without a specific buyer in mind. When searching for a new opportunity, we are drawn to the fundamentals that make a place feel special. The location, light, space, proportions, sense of history, energy, and relationship to its surroundings.
+                        </p>
+                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
+                        Then we transform this potential into a timeless home that’s luxurious, authentic, and feels like it has always belonged.
+                        </p>
+                    </div>
+                </FadeUpSection>
             </div>
-          )}
+            {/* LIST PROJECT */}
+            <div className="xl:mt-8 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
+                <div className="xl:max-w-screen-xl lg:max-w-[900px]  w-full md:gap-4">
+                    {/* FILTER */}
+                    <ul className="text-[20px] flex gap-3">
+                        {PROJECT_FILTERS.map((filter, index) => (
+                            <li
+                            key={index}
+                            onClick={() => setProjectFilterId(index)}
+                            className={`relative overflow-hidden px-6 py-2 rounded-md cursor-pointer text-bg-secondary group
+                                ${index === projectFilterId ? 'bg-bg-secondary text-white' : 'bg-[#f4f7f4]'}`}
+                            >
+                            {/* Text hiện tại - trượt lên khi hover */}
+                            <span className={`block transition-all duration-300 ease-in-out
+                                ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
+                                {filter}
+                            </span>
 
-          {/* FILTER SECTION */}
-          <div className="mt-8 lg:mt-10 flex flex-wrap gap-4 border-b border-gray-200 pb-4">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => handleFilterChange(filter.id)}
-                className={`relative px-4 py-2 text-[16px] md:text-[18px] font-medium transition-colors duration-200 ${
-                  activeFilter === filter.id
-                    ? 'text-txt-secondary border-b-2 border-txt-secondary'
-                    : 'text-gray-500 hover:text-txt-secondary'
-                }`}
-              >
-                {filter.label}
-                <span className={`ml-2 text-sm ${
-                  activeFilter === filter.id ? 'text-txt-secondary' : 'text-gray-400'
-                }`}>
-                  ({filter.count})
-                </span>
-              </button>
-            ))}
-          </div>
+                            {/* Text từ dưới lên - chỉ hiện khi hover */}
+                            <span className={`absolute inset-0 flex items-center justify-center
+                                transition-all duration-300 ease-in-out px-6
+                                ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
+                                {filter}
+                            </span>
+                            </li>
+                        ))}
+                        </ul>
+                    {/* CONTENT */}
+                    <div className="mt-8">
+                        <ul className={`grid ${projectFilterId === 2 ? 'md:grid-cols-2' : 'grid-cols-1'} gap-x-4 ${projectFilterId !== 2 ? 'gap-y-15' : 'gap-y-15'}`}>
+                            {PROJECTS.map((project, index) => (
+                                <FadeUpSection key={index}>
+                                    <li  className="group cursor-pointer">
+                                        {projectFilterId === 0 || projectFilterId === 1 ? (
+                                        // --- Style All / For Sale: text đè lên ảnh ---
+                                        <div className="relative overflow-hidden rounded-2xl h-[105%]">
+                                            <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover  "
+                                            />
 
-          {/* RESULTS COUNT */}
-          <div className="mt-4 text-gray-600">
-            Showing {filteredProjects.length} {filteredProjects.length === 1 ? 'project' : 'projects'}
-          </div>
+                                            {/* Gradient overlay phía dưới */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent rounded-2xl" />
 
-          {/* LIST PROJECTS */}
-          <div className="mt-6 lg:mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            {filteredProjects.length > 0 ? (
-              filteredProjects.map((project, index) => {
-                const isPriority = index < 2;
-                const isEager = index < 4 && !isPriority;
-                const titleSlug = convertToSlug(project.title);
-                
-                return (
-                  <ProjectItem 
-                    key={project.id} 
-                    project={project} 
-                    onImageClick={handleImageClick} 
-                    isPriority={isPriority} 
-                    isEager={isEager}
-                    preloadedImages={preloadedImages}
-                    titleSlug={titleSlug}
-                    getImageUrl={getImageUrl}
-                  />
-                );
-              })
-            ) : (
-              <div className="col-span-2 text-center py-10">
-                <p className="text-gray-500 text-lg">No projects found for the selected filter.</p>
-              </div>
-            )}
-          </div>
+                                            {/* Badge */}
+                                            <span className=" absolute top-10 left-10 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
+                                            For Sale
+                                            </span>
+
+                                            {/* Nội dung góc dưới trái */}
+                                            <div className="absolute bottom-8 left-10 right-10 text-white">
+                                                <h3 className=" md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px] xs:text-[28px] xs:leading-[34px]">{project.title}</h3>
+                                                <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{fontFamily:'InstrumentSans'}}>
+                                                    {project.description}
+                                                </p>
+                                                <a
+                                                    href="#"
+                                                    className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
+                                                style={{fontFamily:'InstrumentSans'}}>
+                                                    View Project
+                                                    <ChevronRight size={16} />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        ) : (
+                                        <>
+                                            <div className="relative overflow-hidden rounded-2xl mb-4 h-[105%]">
+                                                <img
+                                                    src={project.image}
+                                                    alt={project.title}
+                                                    className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                                />
+                                                <span className="absolute top-8 left-8 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
+                                                    {project.status}
+                                                </span>
+                                            </div>
+                                            <div className="text-bg-secondary">
+                                                <h3 className=" md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px] xs:text-[28px] xs:leading-[34px]">{project.title}</h3>
+                                                <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{fontFamily:'InstrumentSans'}}>
+                                                    {project.description}
+                                                </p>
+                                                <a
+                                                    href="#"
+                                                    className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
+                                                style={{fontFamily:'InstrumentSans'}}>
+                                                    View Project
+                                                    <ChevronRight size={16} />
+                                                </a>
+                                            </div>
+                                        </>
+                                        )}
+
+                                    </li>
+                                </FadeUpSection>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <section className="pb-24 px-4 text-center">
+                {/* Tiêu đề */}
+                <h2
+                    className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
+                >
+                    Join our world of Mediterranean design and quiet luxury.
+                </h2>
+
+                {/* Form */}
+                <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
+                    <input
+                    type="text"
+                    placeholder="Name"
+                    className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
+                    style={{ fontFamily: 'InstrumentSans' }}
+                    />
+                    <input
+                    type="email"
+                    placeholder="Email Address"
+                    className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
+                    style={{ fontFamily: 'InstrumentSans' }}
+                    />
+                    <button
+                        className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
+                        relative overflow-hidden group"
+                    >
+                     <span className={`block transition-all duration-300 ease-in-out
+                                ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
+                                Join Now
+                            </span>
+
+                            {/* Text từ dưới lên - chỉ hiện khi hover */}
+                            <span className={`absolute inset-0 flex items-center justify-center
+                                transition-all duration-300 ease-in-out px-6
+                                ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
+                                Join Now
+                            </span>
+                    </button>
+                </div>
+            </section>
+            {/* Follow Us Section */}
+            <section className="px-4 md:px-8 lg:px-12 pb-16">
+            {/* Label */}
+                <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
+                    Follow us
+                    @
+                    <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
+                    L'ateliaprojects
+                    </a>
+                </p>
+                <InViewSlider images={INSTAGRAM_IMAGES} />
+           
+            </section>
+            <Footer withContact={true}/>
         </div>
-      </div>
-      <Footer withContact={false}/>
-    </div>
-  );
+    );
 }
 
-const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloadedImages, getImageUrl }) => {
-  const handleClick = useCallback(() => {
-    onImageClick(project.id);
-  }, [onImageClick, project.id]);
-  console.log(project)
-  const imageUrl = getImageUrl(project.src);
-
-  // Format price function
-  const formatPrice = (price) => {
-    if (!price) return null;
-    
-    if (typeof price === 'number') {
-      return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-    
-    return price;
-  };
-
-  const formattedPrice = formatPrice(project.price);
-
-  // Get status badge color
-  // const getTypeBadgeColor = (type) => {
-  //   switch(type) {
-  //     case 'rent':
-  //       return 'bg-green-600';
-  //     case 'sold':
-  //       return 'bg-gray-600';
-  //     default:
-  //       return 'bg-txt-secondary';
-  //   }
-  // };
-
-  // Get status text
-  // const getTypeText = (status) => {
-  //   switch(status) {
-  //     case 'available':
-  //       return 'Available';
-  //     case 'sold':
-  //       return 'Sold';
-  //     default:
-  //       return project.status === 'sale' ? 'For Sale' : 'For Rent';
-  //   }
-  // };
-
-  return (
-    <div 
-      className="group relative overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer bg-white"
-      onClick={handleClick}
-    >
-      {/* Image container */}
-      <LocalizedLink className="relative block overflow-hidden" to={`/projects/${project.id}`}>
-        {/* Main image with scale effect on hover */}
-        <div className="overflow-hidden">
-          <LazyImage 
-            src={imageUrl} 
-            alt={project.alt}
-            className="w-full h-full lg:h-100 object-cover transition-transform duration-500 group-hover:scale-110"
-            priority={isPriority}
-            eager={isEager}
-            placeholder={
-              <div className="w-full h-[250px] md:h-[300px] lg:h-full bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-                <div className={`w-6 h-6 border-3 border-txt-secondary border-t-transparent rounded-full animate-spin ${
-                  preloadedImages.has(project.id) ? 'opacity-50' : ''
-                }`}></div>
-              </div>
-            }
-          />
-        </div>
-        
-        {/* Type badge */}
-        <button className='absolute right-3 md:right-5 top-3 md:top-5 bg-txt-secondary p-1 md:p-2 text-white text-[12px] md:text-[14px] lg:text-[18px] uppercase z-20'>
-          {project.type === 'sale' ? 'For Sale' : project.type === 'rent' ? 'For Rent' : ''}
-        </button>
-
-        {/* Gradient overlay for desktop */}
-        <div className="hidden lg:block absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent h-24 z-10"></div>
-      </LocalizedLink>
-
-      {/* Content section */}
-      <div className="p-4 bg-white relative z-30">
-        <h3 className="text-txt-secondary text-[18px] md:text-[20px] font-semibold mb-1 font-subtitle">{project.title}</h3>
-        
-        {/* Price */}
-        {formattedPrice && (
-          <p className="text-txt-secondary text-[18px] md:text-[20px] font-bold mb-3">
-            {formattedPrice}
-          </p>
-        )}
-        
-        {/* Location */}
-        {project.location && (
-          <p className="text-txt-secondary text-[16px] md:text-[16px] mb-2">{project.location}</p>
-        )}
-        
-        {/* Features */}
-        {project.propertyFeatures && project.propertyFeatures.length > 0 && (
-          <div className="mb-3">
-            {project.propertyFeatures.map((feature, idx) => (
-              <p key={idx} className="text-txt-secondary text-[16px] md:text-[16px] mb-1">{feature.text}</p>
+const FadeUpSection = ({ children }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+    return (
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 60 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {children}
+      </motion.div>
+    )
+}
+  const InViewSlider = ({ images }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+    return (
+      <div ref={ref} className="overflow-hidden">
+        <motion.div
+          initial={{ x: "30%" }}
+          animate={isInView ? { x: 0 } : { x: "30%" }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={"auto"}
+            scrollbar={{ draggable: true }}
+          >
+            {images.map((img, index) => (
+              <SwiperSlide
+                key={index}
+                style={{ width: "200px" }}
+                className="rounded-2xl overflow-hidden"
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.08,
+                    ease: "easeOut",
+                  }}
+                >
+                  <img
+                    src={img}
+                    alt={`instagram-${index}`}
+                    className="w-full h-[280px] object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </motion.div>
+              </SwiperSlide>
             ))}
-          </div>
-        )}
-        
-        {/* View More button */}
-        <div className="mt-4">
-          <LocalizedLink to={`/projects/${project.id}`} className="cursor-pointer">
-            <button className='flex items-center justify-center font-light uppercase text-[14px] py-2 text-txt-secondary 
-              transition-all duration-300 w-full md:w-auto font-semibold hover:underline underline-offset-4'>
-              view more
-              <ArrowRight className='ml-2 transition-transform duration-300 group-hover:translate-x-1' size={16}/>
-            </button>
-          </LocalizedLink>
-        </div>
+          </Swiper>
+        </motion.div>
       </div>
-    </div>
-  );
-});
-
-export default Projects;
+    )
+  }
+export default Project;

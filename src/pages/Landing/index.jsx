@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -17,13 +17,13 @@ import slide10 from '../../assets/images/slides/slide10.jpg';
 import slide11 from '../../assets/images/slides/slide11.jpg';
 import slide12 from '../../assets/images/slides/slide12.jpg';
 import logoText from '../../assets/images/logo-text.png';
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import img2 from '../../assets/images/img2.jpg';
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import OptimizedImage from "../../components/OptimizedImage";
-import { motion } from 'framer-motion'
-
+import { motion, AnimatePresence } from 'framer-motion'
+import { useInView } from "framer-motion";
 const SLIDE_ITEMS = [
     {id:1, src:slide2 },
     // {id:2, src:slide3 },
@@ -33,6 +33,41 @@ const SLIDE_ITEMS = [
     // {id:4, src:slide8 },
     // {id:4, src:slide9 },
 ]
+const PROJECT_FILTERS= ['All', 'For Sale', 'Sold'];
+const PROJECTS = [
+    {
+      title: "Mon Cor",
+      description: "Built in 1903 during the most prosperous time in Mallorca's modern history, Mon Cor was an architectural marvel that set the benchmark for 20th century living.",
+      status: "Sold",
+      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+    },
+    {
+      title: "Vistavall",
+      description: "Set atop Valldemossa, offering panoramic views and year-round sunshine.",
+      status: "Sold",
+      image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+    },
+    {
+        title: "Vistavall",
+        description: "Set atop Valldemossa, offering panoramic views and year-round sunshine.",
+        status: "Sold",
+        image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
+      },
+  ];
+  const INSTAGRAM_IMAGES = [
+    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
+    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
+    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
+    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
+    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
+]
+const BANNER_IMAGES = [
+    "https://cdn.sanity.io/images/bxdajbsn/production/228e1c8f6b1c6e96adacf0bbdedb4d0a418c04b1-4000x3076.jpg",
+    "https://cdn.sanity.io/images/bxdajbsn/production/96494324d88cc4526bdc56376411b6138e39e779-4000x4000.jpg",
+    "https://cdn.sanity.io/images/bxdajbsn/production/a726e8941d2121cd6566e13cbbc0b2a8716d1374-3780x2520.jpg",
+  ]
 const SLIDE_ITEMS_2 = [
     {id:1, src:slide10 },
     {id:2, src:slide11 },
@@ -40,210 +75,111 @@ const SLIDE_ITEMS_2 = [
 ]
 
 function Landing() {
+    const [currentScrollY, setCurrentScrollY] = useState(0);
     const {t} = useTranslation(["landing", "common"]);
-    const [loaded, setLoaded] = useState(false);
+    useEffect(()=>{
+      const handleScroll = () => 
+      {
+        const currentScrollY= window.scrollY;
+        setCurrentScrollY(currentScrollY);
+      }
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, [])
     return ( 
-        <div>
+        <div className="">
             {/* MAIN SLIDER */}
-            <Swiper
-                modules={[Autoplay, Pagination, Navigation]}
-                spaceBetween={20}
-                slidesPerView={1}
-                loop
-                pagination={{ 
-                    clickable: true,
-                    dynamicBullets: true
-                }}
-                className="overflow-hidden"
-            >
-                {
-                    SLIDE_ITEMS.map((slideItem, index) => (
-                        <SwiperSlide key={slideItem.id}>
-                            <div className="w-full xl:h-screen h-[300px] md:h-[500px] relative bg-black"> {/* 👈 bg-black */}
-                                <OptimizedImage
-                                    src={slideItem.src}
-                                    className={`w-full h-full object-cover object-center transition-opacity duration-100
-                                        ${loaded ? 'slide-image-animate' : 'opacity-0'} // 👈 ẩn cho đến khi load
-                                    `}
-                                    onLoad={() => {
-                                        if (index === 0) setLoaded(true); // 👈 chỉ trigger khi ảnh đầu tiên load xong
-                                    }}
-                                />
-                                <div className="absolute inset-0 bg-black/50" />
-                                <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">
-                                    {/* <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={loaded ? { scaleX: 1 } : {}}
-                                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-                                        className="h-[1px] bg-white/60 w-16 mb-6"
-                                        style={{ originX: 0.5 }}
-                                    /> */}
-                                    <motion.h1
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={loaded ? { opacity: 1, y: 0 } : {}}
-                                        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.35 }}
-                                        className="text-white text-[18px] md:text-[18px] xl:text-[18px]  leading-tight tracking-widest flex items-center justify-center gap-3"
-                                    >
-                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
-                                        Projects
-                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
-                                    </motion.h1>
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={loaded ? { opacity: 1, y: 0 } : {}}
-                                        transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
-                                        className="text-white/75 text-[64px] md:text-[64px] xl:text-[64px] mt-4 max-w-xl"
-                                    >
-                                        One-of-a-kind homes, developed by L'atelia
-                                    </motion.p>
-                                    {/* <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={loaded ? { scaleX: 1 } : {}}
-                                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-                                        className="h-[1px] bg-white/60 w-16 mt-6"
-                                        style={{ originX: 0.5 }}
-                                    /> */}
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))
-                }
-            </Swiper>
+            <Banner />
+            <div className="relative z-50 -translate-y-50 text-center text-white">
+              <h1 className="text-4xl opacity-0" style={{opacity: Math.min(currentScrollY / 500, 0.8)}}>Berrow is a family</h1>
 
-            {/* SUBTITLE */}
-            <div className="xl:mt-8 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
-                <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                    <h1 className="text-bg-secondary text-[48px] text-center font-medium">
-                    Our first project was a bold vision to transform more than a century of stories into a modern home that will last for the next 100 years and beyond.
-                    </h1>
-                </div>
             </div>
-
-            {/* FEATURE PROPERTIES */}
             
-            <FeatureProperties />
             
-            {/* OUR PHILOSOPHY */}
-            <div className="py-[60px] lg:py-[100px] flex justify-center px-4">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row gap-8 lg:gap-10">
-                    {/* LEFT CONTENT */}
-                    <div className="flex-basis lg:basis-1/2 order-2 lg:order-1">
-                        <h1 className="font-subtitle text-[36px] md:text-[40px] lg:text-[40px] text-bg-secondary font-semibold leading-tight">
-                            {t('landing:our_philosophy.title')}
-                        </h1>
-                        <h4 className="text-[24px] md:text-[30px] lg:text-[32px] text-txt-primary mt-6 lg:mt-8 leading-tight">
-                            {t('landing:our_philosophy.summary')}
-                        </h4>
-                        <div className="text-[16px] lg:text-[18px] text-txt-primary mt-6 lg:mt-8">
-                            <p className="mb-6 lg:mb-10">
-                                {t('landing:our_philosophy.desc_1')}
-                            </p>
-                            <p className="mb-6 lg:mb-10">
-                                {t('landing:our_philosophy.desc_2')}
-                            </p>
-                            <p className="mb-6 lg:mb-10">
-                                {t('landing:our_philosophy.desc_3')}
-                            </p>
-                            <p className="mb-6 lg:mb-10">
-                                {t('landing:our_philosophy.desc_4')}
-                            </p>
-                            <p>
-                                {t('landing:our_philosophy.desc_5')}
-                            </p>
-                        </div>
-                    </div>
-                    {/* RIGHT IMAGE */}
-                    <div className="flex-basis lg:basis-1/2 order-1 lg:order-2">
-                        <OptimizedImage 
-                            src={img2} 
-                            alt="" 
-                            className="w-full h-auto lg:h-full object-cover"
-                        />
-                    </div>
-                </div>
-            </div>
+            
             
             <Footer withContact={true}/>
         </div>
     );
 }
 
-const FeatureProperties = ()=>
-{
-    return (
-        <div className="bg-bg-secondary text-white py-[40px] lg:py-[80px] flex justify-center px-4">
-            <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col md:flex-row lg:items-start w-full md:gap-4">
-                {/* LEFT */}
-                <div className="flex-basis md:basis-1/3  mb-8 lg:mb-0 lg:w-120 w-full lg:h-full flex lg:items-start item-center justify-between flex-col">
-                    {/* LIST */}
-                    <div className="mb-6">
-                        <ul className="text-[24px] md:text-[32px] lg:text-[35px] font-subtitle flex flex-row justify-around md:block space-y-0 md:space-y-2 lg:space-y-4">
-                            <li className="cursor-pointer border-b-2 border-transparent hover:border-current transition-all duration-300 pb-1">
-                                <LocalizedLink to={`/projects/695d33be02d603f76992719e`}>
-                                    Le Duan Apartment
-                                </LocalizedLink>
-                            </li>
-                        </ul>
-                    </div>
-                    {/* BUTTON */}
-                    <button className="border p-3 lg:p-4 mt-4 lg:mt-15 cursor-pointer text-sm lg:text-base lg:w-auto w-full">
-                        FOR SALE
-                    </button>
-                </div>
-                
-                {/* RIGHT - SLIDER */}
-                <div className="flex-basis md:basis-2/3  min-w-0 overflow-hidden w-full">
-                        <Swiper 
-                            modules={[Autoplay, Pagination, Navigation]} 
-                            spaceBetween={0} // Thay đổi từ 16 thành 0 để không có khoảng cách
-                            slidesPerView={1} // Thay đổi từ 1.2 thành 1 để full width
-                            breakpoints={{
-                                640: {
-                                    slidesPerView: 2,
-                                    spaceBetween: 20
-                                },
-                                1024: {
-                                    slidesPerView: 3,
-                                    spaceBetween: 30
-                                }
-                            }}
-                            loop 
-                            pagination={{ 
-                                clickable: true,
-                                renderBullet: function (index, className) {
-                                    return `
-                                        <span class="${className} custom-bullet">
-                                        </span>
-                                    `;
-                                },
-                                el: '.custom-pagination-wrapper'
-                            }}
-                        >
-                        { 
-                            SLIDE_ITEMS_2.map(slideItem=>(
-                                <SwiperSlide key={slideItem.id}> 
-                                    <div className="h-full xl:h-[300px] w-full">
-                                        <OptimizedImage 
-                                            src={slideItem.src} 
-                                            className="object-cover object-center w-full h-full"
-                                        />
-                                    </div>
-                                </SwiperSlide> 
-                            )) 
-                        } 
-                    </Swiper>
 
-                    {/* Pagination */}
-                    <div className="custom-pagination-wrapper mt-6 lg:mt-8 px-4"></div>
-    
-                    {/* Description */}
-                    <p className="mt-4 lg:mt-5 text-[14px] md:text-[16px] lg:text-[18px] leading-relaxed px-4">
-                        "The Alley Le Duan Apartment" không chỉ là một công trình, mà là một cách tiếp cận kiến trúc khác biệt giữa lòng đô thị Đà Nẵng đang phát triển.
-                    </p>
-                </div>
-            </div>  
+
+const Banner = () => {
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [currentScrollY, setCurrentScrollY] = useState(0);
+    const divRef = useRef();
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCurrentIndex(prev => (prev + 1) % BANNER_IMAGES.length)
+      }, 5000) // đổi ảnh mỗi 5 giây
+  
+      return () => clearInterval(timer)
+    }, [])
+
+    useEffect(()=>{
+      const handleScroll = () => 
+      {
+        const currentScrollY= window.scrollY;
+        setCurrentScrollY(currentScrollY);
+      }
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, [])
+    return (
+      <div className="relative w-full h-svh overflow-hidden">
+        <div className="absolute inset-0 h-full w-full" style={{opacity: 1 - Math.min(currentScrollY / 500, 0.8)}}>
+          <div style={{filter: `blur(${Math.min(currentScrollY / 100, 10)}px)`}} className="relative w-full h-full">
+            <AnimatePresence>
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                {/* Hiệu ứng Ken Burns: ảnh zoom chậm từ 1 → 1.1 */}
+                <motion.img
+                  src={BANNER_IMAGES[currentIndex]}
+                  alt="banner"
+                  initial={{ scale: 1 }}
+                  animate={{ scale: 1.08 }}
+                  transition={{ duration: 6, ease: "linear" }}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute top-1/2 left-1/2 text-white text-4xl hover:underline cursor-pointer">
+              Dự án
+            </div>
+
+          </div>
         </div>
+  
+        {/* Overlay tối nhẹ */}
+
+        {/* Nội dung đè lên ảnh */}
+        {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
+          <h1 className="text-[48px] md:text-[64px] font-serif leading-tight max-w-3xl">
+            Berrow is a family-led architectural design-build team based in Mallorca.
+          </h1>
+        </div> */}
+  
+        {/* Dots indicator */}
+        {/* <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+          {BANNER_IMAGES.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 
+                ${index === currentIndex ? 'bg-white w-6' : 'bg-white/50'}`}
+            />
+          ))}
+        </div> */}
+      </div>
     )
 }
-
+  
 export default Landing;

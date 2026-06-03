@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import contact from '../../assets/images/contact.webp'
 import { useTranslation } from 'react-i18next';
-import { Check, Dot } from 'lucide-react';
+import { Check, Dot, ArrowRight, ChevronDown } from 'lucide-react';
 import Footer from '../../layouts/components/Footer';
 import OptimizedImage from '../../components/OptimizedImage';
-
+import { useInView,motion } from "framer-motion";
+import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
+import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
+import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
+import {LocalizedLink} from '../../components/LocalizedLink';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation,FreeMode}from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 const PRICE_RANGES = [
   "5 tỉ VND trở xuống",
   "5 tỉ VND - 10 tỉ VND",
@@ -13,7 +22,41 @@ const PRICE_RANGES = [
   "Trên 20 tỉ VND",
   "Không muốn đề cập",
 ];
-
+const LIFESTYLE_ITEMS = [
+    {
+        id: 1,
+        src: aboutUs2,
+        title: 'Sóller Tennis Club',
+        desc: 'A wellness and lifestyle community for local neighbours, international friends and touring pros.',
+        linkText: 'Visit Sóller Tennis Club',
+        link: '/soller-tennis-club',
+    },
+    {
+        id: 2,
+        src: aboutUs3,
+        title: 'Patiki Beach',
+        desc: 'An extension of home, a beach shack for us all. You are invited to eat, drink and just be.',
+        linkText: 'Visit Patiki Beach',
+        link: '/patiki-beach',
+    },
+    {
+        id: 3,
+        src: aboutUs4,
+        title: 'Pueblo',
+        desc: 'A modern bistro for the heart of Sóller, serving fresh, seasonal produce sustainably sourced.',
+        linkText: 'Visit Pueblo',
+        link: '/pueblo',
+    },
+]
+const INSTAGRAM_IMAGES = [
+    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
+    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
+    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
+    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
+    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
+  ]
 function Contact() {
     const [consent, setConsent] = useState(true);
     const {t} = useTranslation('footer');
@@ -95,174 +138,383 @@ function Contact() {
     };
 
     return ( 
-        <div className="mt-20">
-            <div className="h-[300px] md:h-[500px] lg:h-[840px] relative">
-                <OptimizedImage src={contact} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/40"></div>
-                <div className='absolute z-40 top-1/3 md:top-2/5 left-1/2 text-bg-primary text-[32px] md:text-[45px] lg:text-[45px] font-subtitle transform translate-x-[-50%] xl:max-w-screen-xl w-full lg:max-w-[900px] !px-4 md:px-0'>
-                    <div className='w-full'>
-                        <h1>Bắt đầu câu chuyện</h1>
-                        <h1>Tạo nên điều kỳ diệu</h1>
-                    </div>
+        <div className="">
+            <ContactForm />
+            <LifestyleSection />
+            <section className="pb-24 px-4 text-center">
+                {/* Tiêu đề */}
+                <h2
+                    className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
+                >
+                    Join our world of Mediterranean design and quiet luxury.
+                </h2>
+
+                {/* Form */}
+                <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
+                    <input
+                    type="text"
+                    placeholder="Name"
+                    className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
+                    style={{ fontFamily: 'InstrumentSans' }}
+                    />
+                    <input
+                    type="email"
+                    placeholder="Email Address"
+                    className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
+                    style={{ fontFamily: 'InstrumentSans' }}
+                    />
+                    <button
+                        className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
+                        relative overflow-hidden group"
+                    >
+                     <span className={`block transition-all duration-300 ease-in-out
+                                ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
+                                Join Now
+                            </span>
+
+                            {/* Text từ dưới lên - chỉ hiện khi hover */}
+                            <span className={`absolute inset-0 flex items-center justify-center
+                                transition-all duration-300 ease-in-out px-6
+                                ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
+                                Join Now
+                            </span>
+                    </button>
                 </div>
-            </div>
-
-            <div className='flex justify-center absolute xl:max-w-screen-xl lg:max-w-[900px] w-full left-1/2 transform translate-y-[35%] md:translate-y-[0] translate-x-[-50%] z-50 -mt-20 md:-mt-32 lg:top-230 px-4 md:px-0'>
-                <div className='w-full flex justify-center'>
-                    <div className='bg-txt-primary text-bg-primary px-6 md:px-8 py-6 md:py-4 w-full md:w-auto'>
-                        <h1 className='text-[28px] md:text-[36px] lg:text-[40px] font-subtitle'>Giờ làm việc</h1>
-                        <p className='mt-4 text-[14px] md:text-[15px] font-light'>
-                            <span>Thứ 2</span>
-                            <span> - </span>
-                            <span>Thứ 6</span>
-                        </p>
-                        <p className='mt-2 font-light text-[14px] md:text-[15px]'>
-                            <span>10.00h</span>
-                            <span> - </span>
-                            <span>14.00h</span>
-                        </p>
-                        <p className='mt-2 font-light text-[14px] md:text-[15px]'>
-                            <span>16.00h</span>
-                            <span> - </span>
-                            <span>20.00h</span>
-                        </p>
-                        <p className='mt-8 md:mt-12 font-light text-[14px] md:text-[15px]'>
-                            <span>Thứ 7</span>
-                            <span> - </span>
-                            <span>Chủ nhật</span>
-                        </p>
-                        <p className='mt-2 text-[14px] md:text-[15px]'>Chỉ dành cho hẹn trước</p>
-                    </div>
-                </div>
-            </div>
-
-            <div className='w-full bg-bg-primary text-center pt-75 md:pt-60 lg:pt-100  flex justify-center px-4 md:px-0'>
-                <div className='md:max-w-[500px] xl:max-w-[440px] mx-auto'>
-
-                    <form onSubmit={handleSubmit} className='flex flex-col justify-start w-full text-[16px] md:text-[18px] px-4'>
-                        <h1 className='text-[32px] md:text-[45px] lg:text-[45px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
-                        
-                        {/* Status Message */}
-                        {submitStatus && (
-                            <div className={`p-3 md:p-4 mb-4 md:mb-6 rounded text-[14px] md:text-[16px] ${
-                                submitStatus.type === 'success' 
-                                    ? 'bg-green-100 text-green-700 border border-green-300' 
-                                    : 'bg-red-100 text-red-700 border border-red-300'
-                            }`}>
-                                {submitStatus.message}
-                            </div>
-                        )}
-
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="firstName" className='text-[14px] md:text-[16px] lg:text-[18px]'>First Name *</label>
-                            <input 
-                                type="text" 
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleInputChange}
-                                placeholder='First Name' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                                required
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="lastName" className='text-[14px] md:text-[16px] lg:text-[18px]'>Last Name *</label>
-                            <input 
-                                type="text" 
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleInputChange}
-                                placeholder='Last Name' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                                required
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="email" className='text-[14px] md:text-[16px] lg:text-[18px]'>Email *</label>
-                            <input 
-                                type="email" 
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                placeholder='Email Address' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                                required
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="phone" className='text-[14px] md:text-[16px] lg:text-[18px]'>Phone</label>
-                            <input 
-                                type="tel" 
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                placeholder='Mobile phone number' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="budget" className='text-[14px] md:text-[16px] lg:text-[18px]'>Dự kiến Budget đầu tư *</label>
-                            <ul className='flex flex-col mt-3 md:mt-4 text-[14px] md:text-[16px] lg:text-[18px] w-full'>
-                                {PRICE_RANGES.map((range, index) => (
-                                    <li 
-                                        key={index} 
-                                        className='flex items-center mb-2 cursor-pointer p-2 rounded transition-colors hover:bg-gray-50'
-                                        onClick={() => handlePriceRangeSelect(range, index)}
-                                    >
-                                        <div className={`w-[18px] h-[18px] md:w-[20px] md:h-[20px] border-2 rounded-full border-txt-primary relative mr-2 md:mr-3 flex items-center justify-center `}>
-                                            <Dot className={`absolute text-txt-primary ${selectedPriceRange === range ? '' : 'hidden'}`} size={40} />
-                                        </div>
-                                        <p className='text-[14px] md:text-[16px] lg:text-[18px]'>
-                                            {range}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="message" className='text-[14px] md:text-[16px] lg:text-[18px]'>Message *</label>
-                            <textarea 
-                                name="message"
-                                value={formData.message}
-                                onChange={handleInputChange}
-                                placeholder='Write your message here ...' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300 h-24 md:h-32'
-                                required
-                            ></textarea>
-                        </div>
-                        
-                        <div className="flex flex-row items-start mt-2 text-txt-primary mt-4 md:mt-6">
-                            <div 
-                                className="border mt-1 mr-2 md:mr-3 cursor-pointer w-[30px] h-[15px] md:w-[34px] md:h-[17px] flex items-center justify-center border-gray-400"
-                                onClick={() => setConsent(!consent)}
-                            >
-                                {consent && (
-                                    <Check width={13} className="h-[15px] md:w-[15px] md:h-[17px] text-txt-primary"/>
-                                )}
-                            </div>
-                            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-left">
-                                {t('footer:policy')}
-                            </p>
-                        </div>
-                        
-                        <button 
-                            type="submit" 
-                            disabled={loading && !consent}
-                            className={`mt-4 md:mt-6 w-full rounded-sm bg-txt-secondary uppercase text-[14px] md:text-[16px] lg:text-[18px] text-bg-primary py-3 md:py-4 cursor-pointer transition-colors`}
-                        >
-                            {loading ? 'Sending...' : 'Submit Message'}
-                        </button>
-                    </form>
-                </div>
-            </div>
+            </section>
+            <section className="px-4 md:px-8 lg:px-12 pb-16">
+            {/* Label */}
+                <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
+                    Follow us
+                    @
+                    <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
+                    L'ateliaprojects
+                    </a>
+                </p>
+                <InViewSlider images={INSTAGRAM_IMAGES} />
+           
+            </section>
             <Footer withContact={false}/>
         </div>
     );
 }
+function ContactForm() {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-80px' })
+    const [formData, setFormData] = useState({
+        firstName: '', lastName: '', email: '', phone: '', service: '', description: ''
+    })
 
+    const fadeUp = (delay) => ({
+        initial: { opacity: 0, y: 30 },
+        animate: isInView ? { opacity: 1, y: 0 } : {},
+        transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
+    })
+
+    const inputStyle = {
+        width: '100%',
+        padding: '16px 20px',
+        background: '#f0f2f1',
+        border: 'none',
+        borderRadius: '8px',
+        fontSize: '14px',
+        color: '#1a3a3a',
+        outline: 'none',
+        fontFamily: 'InstrumentSans',
+    }
+
+    const handleChange = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
+
+    const handleSubmit = () => {
+        console.log(formData)
+        // gọi API submit ở đây
+    }
+
+    return (
+        <section ref={ref} className="w-full py-20 xl:py-32 px-4">
+            <div className="mx-auto" style={{ maxWidth: '560px' }}>
+
+                {/* Header */}
+                <motion.div {...fadeUp(0)} className="text-center mb-10">
+                    <div className="flex items-center justify-center gap-3 mb-3">
+                        <div style={{ width: '40px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
+                        <span style={{ fontSize: '20px', letterSpacing: '2px', color: '#1a3a3a', opacity: 0.7 }}>
+                            Contact
+                        </span>
+                        <div style={{ width: '40px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
+                    </div>
+                    <h2 className="text-bg-secondary"style={{fontSize: 'clamp(48px, 6vw, 72px)', fontWeight: 400, lineHeight: 1.1, marginBottom: '16px' }}>
+                        Hello. Hola.
+                    </h2>
+                    <p className="text-bg-secondary"style={{fontSize: '20px',lineHeight: 1.6 }}>
+                        Get in touch to see how we can help you make Mallorca your home.
+                    </p>
+                </motion.div>
+
+                {/* Form */}
+                <div className="flex flex-col gap-3">
+
+                    {/* Row 1: First + Last Name */}
+                    <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
+                        <input
+                            name="firstName"
+                            placeholder="First Name"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+                        <input
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+                    </motion.div>
+
+                    {/* Row 2: Email + Phone */}
+                    <motion.div {...fadeUp(0.2)} className="grid grid-cols-2 gap-3">
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email Address"
+                            value={formData.email}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+                        <input
+                            name="phone"
+                            type="tel"
+                            placeholder="Phone Number"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+                    </motion.div>
+
+                    {/* Row 3: Select Service */}
+                    <motion.div {...fadeUp(0.3)} className="relative">
+                        <select
+                            name="service"
+                            value={formData.service}
+                            onChange={handleChange}
+                            style={{
+                                ...inputStyle,
+                                appearance: 'none',
+                                WebkitAppearance: 'none',
+                                cursor: 'pointer',
+                                color: formData.service ? '#1a3a3a' : '#9aaeae',
+                            }}
+                        >
+                            <option value="" disabled hidden>Select a Service</option>
+                            <option value="architecture">Architecture & Design</option>
+                            <option value="development">Development</option>
+                            <option value="sales">Sales & Marketing</option>
+                            <option value="interior">Interior Design</option>
+                        </select>
+                        {/* Chevron icon */}
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <ChevronDown size={16} color="#1a3a3a" opacity={0.5} />
+                        </div>
+                    </motion.div>
+
+                    {/* Row 4: Textarea */}
+                    <motion.div {...fadeUp(0.4)}>
+                        <textarea
+                            name="description"
+                            placeholder="Give us a brief description of your project"
+                            value={formData.description}
+                            onChange={handleChange}
+                            rows={5}
+                            style={{
+                                ...inputStyle,
+                                resize: 'none',
+                                lineHeight: 1.6,
+                            }}
+                        />
+                    </motion.div>
+
+                    {/* Submit */}
+                    <motion.div {...fadeUp(0.5)} className="flex justify-center mt-2">
+                        <button
+                            onClick={handleSubmit}
+                            style={{
+                                background: '#1a3a3a',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '16px 48px',
+                                fontSize: '20px',
+                                letterSpacing: '0.5px',
+                                cursor: 'pointer',
+                                transition: 'background 0.3s ease, transform 0.2s ease',
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.background = '#2a4f4f'}
+                            onMouseLeave={e => e.currentTarget.style.background = '#1a3a3a'}
+                            onMouseDown={e => e.currentTarget.style.transform = 'scale(0.97)'}
+                            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+                        >
+                            Submit
+                        </button>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    )
+}
+function LifestyleSection() {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+    return (
+        <section ref={ref} className="w-full py-16 xl:py-24 px-6 xl:px-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {LIFESTYLE_ITEMS.map((item, i) => (
+                    <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{
+                            duration: 0.8,
+                            delay: i * 0.15,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
+                    >
+                        <LifestyleCard item={item} />
+                    </motion.div>
+                ))}
+            </div>
+        </section>
+    )
+}
+function LifestyleCard({ item }) {
+    const [hovered, setHovered] = useState(false)
+
+    return (
+        <div>
+            {/* Image */}
+            <LocalizedLink to={item.link}>
+                <div
+                    className="w-full overflow-hidden rounded-2xl mb-5"
+                    style={{ height: '420px' }}
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                >
+                    <img
+                        src={item.src}
+                        alt={item.title}
+                        draggable={false}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            transform: hovered ? 'scale(1.06)' : 'scale(1)',
+                            transition: 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                    />
+                </div>
+            </LocalizedLink>
+
+            {/* Title */}
+            <h3
+                className="mb-2"
+                style={{
+                    fontFamily: 'Georgia, serif',
+                    fontSize: 'clamp(20px, 2vw, 26px)',
+                    fontWeight: 400,
+                    color: '#1a3a3a',
+                    lineHeight: 1.2,
+                }}
+            >
+                {item.title}
+            </h3>
+
+            {/* Description */}
+            <p
+                className="mb-4"
+                style={{
+                    fontFamily: 'InstrumentSans',
+                    fontSize: '14px',
+                    color: '#4a5050',
+                    lineHeight: 1.7,
+                }}
+            >
+                {item.desc}
+            </p>
+
+            {/* Link */}
+            <LocalizedLink
+                to={item.link}
+                className="inline-flex items-center gap-1 group"
+                style={{
+                    fontFamily: 'InstrumentSans',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#1a3a3a',
+                    textDecoration: 'none',
+                }}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                {item.linkText}
+                <span
+                    style={{
+                        display: 'inline-block',
+                        transform: hovered ? 'translateX(5px)' : 'translateX(0px)',
+                        transition: 'transform 0.3s ease',
+                        marginLeft: '4px',
+                    }}
+                >
+                    <ArrowRight size={14} />
+                </span>
+            </LocalizedLink>
+        </div>
+    )
+}
+const InViewSlider = ({ images }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-100px" })
+  
+    return (
+      <div ref={ref} className="overflow-hidden">
+        <motion.div
+          initial={{ x: "30%" }}
+          animate={isInView ? { x: 0 } : { x: "30%" }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={"auto"}
+            scrollbar={{ draggable: true }}
+          >
+            {images.map((img, index) => (
+              <SwiperSlide
+                key={index}
+                style={{ width: "200px" }}
+                className="rounded-2xl overflow-hidden"
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.08,
+                    ease: "easeOut",
+                  }}
+                >
+                  <img
+                    src={img}
+                    alt={`instagram-${index}`}
+                    className="w-full h-[280px] object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
+      </div>
+    )
+  }
 export default Contact;

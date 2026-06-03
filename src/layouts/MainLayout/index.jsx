@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Header2 from "../components/Header2";
 import { useEffect } from "react";
 import Lenis from 'lenis';
 function MainLayout({children})
@@ -21,7 +22,7 @@ function MainLayout({children})
     }, [])
     return (
         <>
-            <Header />
+            <Header2 />
             {children}
         </>
     )

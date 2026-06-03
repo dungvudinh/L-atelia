@@ -6,27 +6,27 @@ import { Menu, X } from "lucide-react";
 import logo from '../../../assets/images/logo.png';
 import {setLanguage} from '../../../redux/actions/languageActions';
 import {LocalizedLink} from '../../../components/LocalizedLink';
-
+import { useLocation } from "react-router-dom";
 const MENU_ITEMS = [
     {id:1, title:'projects', to:'/projects'},
-    {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
+    // {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
     {id:4, title:'about us', to:'/about'}, 
-    {id:5, title:'media', to:'/media'}, 
+    // {id:5, title:'media', to:'/media'}, 
     {id:6, title:'contact', to:'/contact'}
 ]
 
 function Header() {
+    const location = useLocation();
     const {t,i18n} = useTranslation('header');
     const dispatch = useDispatch();
     const {language} = useSelector(state=>state.language);
     const [currentItem, setCurrentItem] = useState();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
-
     const [isVisible, setIsVisible] = useState(true);   // hiện/ẩn header
     const [isPastScreen, setIsPastScreen] = useState(false); // đã cuộn qua 1 màn hình chưa
     const lastScrollY = useRef(0);
-
+    const isContactPage = location.pathname.includes('/contact')
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
@@ -60,7 +60,7 @@ function Header() {
         if (e.target === e.currentTarget) setIsMenuOpen(false);
     };
 
-    const textColor = isPastScreen ? "text-bg-secondary" : "text-white"
+    const textColor = isContactPage || isPastScreen ? "text-bg-secondary" : "text-white"
     
     return ( 
         <div className={`bg-transparent flex justify-center items-center fixed top-0 left-0 z-100 w-full
