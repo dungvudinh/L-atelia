@@ -16,7 +16,7 @@
   }
   @font-face {
     font-family: 'PangaiaUltralight';
-    src: url('./assets/fonts/PangaiaUltralight.ttf') format('truetype');
+    src: url('./assets/fonts/PangaiaUltralight.otf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -258,4 +258,22 @@ body
 
 .slide-image-animate {
   animation: fadeInScale 1.2s ease-out forwards;
+}
+/* .link-underline {
+  position: relative;
+} */
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
+  width: 100%;
 }

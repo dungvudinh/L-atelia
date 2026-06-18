@@ -27,11 +27,11 @@ function Header() {
     const [isPastScreen, setIsPastScreen] = useState(false); // đã cuộn qua 1 màn hình chưa
     const lastScrollY = useRef(0);
     const isContactPage = location.pathname.includes('/contact')
+    const isHomePage = location.pathname === '/vi' || location.pathname === '/en' || location.pathname === '/';
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             const screenHeight = window.innerHeight;
-
             // Ẩn khi cuộn xuống, hiện khi cuộn lên
             if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
                 setIsVisible(false)
@@ -53,7 +53,35 @@ function Header() {
         setCurrentItem(menuItemId);
         setIsMenuOpen(false);
     };
-
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            const screenHeight = window.innerHeight;
+    
+            if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+                // Cuộn xuống → ẩn
+                setIsVisible(false)
+            } else {
+                // Cuộn lên → ẩn nếu homepage gần top, ngược lại hiện
+                if (isHomePage && currentScrollY <= 20) {
+                    setIsVisible(false)
+                } else {
+                    setIsVisible(true)
+                }
+            }
+    
+            setIsPastScreen(currentScrollY > screenHeight)
+            lastScrollY.current = currentScrollY
+        }
+    
+        // Set trạng thái ban đầu khi mount
+        if (isHomePage && window.scrollY <= 20) {
+            setIsVisible(false)
+        }
+    
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [isHomePage])
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleBackdropClick = (e) => {
@@ -67,7 +95,7 @@ function Header() {
             transition-transform duration-500 ease-in-out
             ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
         >
-            <div className="w-full xl:max-w-screen-xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
+            <div className="w-full xl:max-w-screen-2xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
                 {/* Logo */}
                 <Link to={'/'} className="flex-1 md:flex-none">
                     <img src={logo} alt="" className="w-16 md:w-20 md:mx-0" />

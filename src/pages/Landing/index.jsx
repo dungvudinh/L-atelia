@@ -22,8 +22,9 @@ import img2 from '../../assets/images/img2.jpg';
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import OptimizedImage from "../../components/OptimizedImage";
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence,useScroll,useTransform  } from 'framer-motion'
 import { useInView } from "framer-motion";
+import logo from '../../assets/images/logo.png';
 const SLIDE_ITEMS = [
     {id:1, src:slide2 },
     // {id:2, src:slide3 },
@@ -63,6 +64,35 @@ const PROJECTS = [
     "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
 ]
+const venues = [
+  {
+    id: 1,
+    slug: "soller-tennis-club",
+    name: "Sóller Tennis Club",
+    description: "A wellness and lifestyle community for local neighbours, international friends and touring pros.",
+    image: slide11, // import ảnh tương ứng
+    cta: "Visit Sóller Tennis Club",
+    link: "/venues/soller-tennis-club",
+  },
+  {
+    id: 2,
+    slug: "patiki-beach",
+    name: "Patiki Beach",
+    description: "An extension of home, a beach shack for us all. You are invited to eat, drink and just be.",
+    image: slide11,
+    cta: "Visit Patiki Beach",
+    link: "/venues/patiki-beach",
+  },
+  {
+    id: 3,
+    slug: "pueblo",
+    name: "Pueblo",
+    description: "A modern bistro for the heart of Sóller, serving fresh, seasonal produce sustainably sourced.",
+    image: slide11,
+    cta: "Visit Pueblo",
+    link: "/venues/pueblo",
+  },
+]
 const BANNER_IMAGES = [
     "https://cdn.sanity.io/images/bxdajbsn/production/228e1c8f6b1c6e96adacf0bbdedb4d0a418c04b1-4000x3076.jpg",
     "https://cdn.sanity.io/images/bxdajbsn/production/96494324d88cc4526bdc56376411b6138e39e779-4000x4000.jpg",
@@ -73,10 +103,28 @@ const SLIDE_ITEMS_2 = [
     {id:2, src:slide11 },
     {id:3, src:slide12 },
 ]
+const sizeMap = {
+  sm: { width: "25%",  height: 160 },
+  md: { width: "25%",  height: 240 },
+  lg: { width: "25%",  height: 340 },
+};
+const images = [
+  { src: slide10, size: "sm" },
+  { src: slide10, size: "md" },
+  { src: slide10, size: "lg" },
+  { src: slide10, size: "md" },
+  { src: slide10, size: "sm" },
+];
 
 function Landing() {
     const [currentScrollY, setCurrentScrollY] = useState(0);
+    const ref = useRef();
     const {t} = useTranslation(["landing", "common"]);
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      offset: ["start end", "end start"]
+    })
+    const y = useTransform(scrollYProgress, [0, 1], [40, -40])
     useEffect(()=>{
       const handleScroll = () => 
       {
@@ -90,13 +138,124 @@ function Landing() {
         <div className="">
             {/* MAIN SLIDER */}
             <Banner />
-            <div className="relative z-50 -translate-y-50 text-center text-white">
-              <h1 className="text-4xl opacity-0" style={{opacity: Math.min(currentScrollY / 500, 0.8)}}>Berrow is a family</h1>
+            <div className="py-[60px] lg:py-[100px] flex justify-center px-4">
+              <div className="xl:max-w-screen-2xl lg:max-w-[900px] flex flex-col items-center">
+                <div
+                  className="relative z-50 -translate-y-50 text-center bg-white h-[500px] flex flex-col items-center"
+                  style={{
+                    opacity: Math.min(currentScrollY / 500, 0.8),
+                    transform: `translateY(${-Math.min(currentScrollY * 0.3, 60)}px)`,
+                  }}
+                >
+                  <h1 className="text-4xl text-bg-secondary">
+                    Berrow is a family-led architectural design-build team based in Mallorca.
+                  </h1>
+                  <ProjectGallery />
+                  <div className="mb-5 w-full max-w-[772px] text-center md:mb-7 md:w-10/12">
+                    <h4 className="text-bg-secondary text-[20px] leading-[24px] xs:text-[24px] xs:leading-[28px] md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px] text-center">
+                    We transform local properties that are full of stories and character into luxury finished homes for modern buyers.
+                    </h4>
+                  </div>
+                  
+                </div>
+                <div ref={ref} className="mt-[-150px] relative w-full">
+                  <img src={slide2} className="rounded-2xl h-full w-full"/>
+                  <motion.h4
+                    style={{ y }}
+                    className="absolute top-1/2 left-1/2 text-white -translate-x-1/2 -translate-y-1/2 xs:text-[60px] sm:text-[70px] md:text-[80px] md:leading-[96px] lg:text-[96px]"
+                  >
+                    You've arrrived
+                  </motion.h4>
+                </div>
+                <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
+                  <FadeUpSection>
+                      <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
+                          <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
+                          Each project presents a different challenge.
+                          </h1>
+                          <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
+                          Whether we’re renovating a dilapidated building or designing a new low-impact home, our philosophy is always the same. We use the finest natural materials from the island and partner with local contractors who understand the region’s history and can help us build a home that respects its surroundings.
+                          </p>
+                          <a
+                              href="#"
+                              className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
+                              style={{fontFamily:'InstrumentSans'}}>
+                                View All Project
+                              <ChevronRight size={16} />
+                          </a>
+                      </div>
+                  </FadeUpSection>
+                </div>
 
+                <ProjectGrid/>
+
+                <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
+                  <FadeUpSection>
+                      <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
+                          <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
+                          Opened by Berrow for everyone in the community.
+                          </h1>
+                          <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
+                          A collection of social spaces and hospitality concepts where you can feel at home. We opened each of these businesses to strengthen our local community and welcome people moving into the area.
+                          </p>
+                      </div>
+                  </FadeUpSection>
+                </div>
+                <VenuesGrid />
+                <section className="pb-24 px-4 text-center mt-40">
+                    {/* Tiêu đề */}
+                    <h2
+                        className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
+                    >
+                        Join our world of Mediterranean design and quiet luxury.
+                    </h2>
+
+                    {/* Form */}
+                    <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
+                        <input
+                        type="text"
+                        placeholder="Name"
+                        className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
+                        style={{ fontFamily: 'InstrumentSans' }}
+                        />
+                        <input
+                        type="email"
+                        placeholder="Email Address"
+                        className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
+                        style={{ fontFamily: 'InstrumentSans' }}
+                        />
+                        <button
+                            className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
+                            relative overflow-hidden group"
+                        >
+                        <span className={`block transition-all duration-300 ease-in-out
+                                    ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
+                                    Join Now
+                                </span>
+
+                                {/* Text từ dưới lên - chỉ hiện khi hover */}
+                                <span className={`absolute inset-0 flex items-center justify-center
+                                    transition-all duration-300 ease-in-out px-6
+                                    ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
+                                    Join Now
+                                </span>
+                        </button>
+                    </div>
+                </section>
+                <section className="px-4 md:px-8 lg:px-12 pb-16">
+                  {/* Label */}
+                      <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
+                          Follow us
+                          @
+                          <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
+                          L'ateliaprojects
+                          </a>
+                      </p>
+                      <InViewSlider images={INSTAGRAM_IMAGES} />
+                
+                  </section>
+              </div>
             </div>
-            
-            
-            
             
             <Footer withContact={true}/>
         </div>
@@ -128,7 +287,7 @@ const Banner = () => {
     }, [])
     return (
       <div className="relative w-full h-svh overflow-hidden">
-        <div className="absolute inset-0 h-full w-full" style={{opacity: 1 - Math.min(currentScrollY / 500, 0.8)}}>
+        <div className="absolute inset-0 h-full w-full">
           <div style={{filter: `blur(${Math.min(currentScrollY / 100, 10)}px)`}} className="relative w-full h-full">
             <AnimatePresence>
               <motion.div
@@ -139,7 +298,6 @@ const Banner = () => {
                 transition={{ duration: 1.2, ease: "easeInOut" }}
                 className="absolute inset-0"
               >
-                {/* Hiệu ứng Ken Burns: ảnh zoom chậm từ 1 → 1.1 */}
                 <motion.img
                   src={BANNER_IMAGES[currentIndex]}
                   alt="banner"
@@ -151,35 +309,197 @@ const Banner = () => {
               </motion.div>
             </AnimatePresence>
             <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute top-1/2 left-1/2 text-white text-4xl hover:underline cursor-pointer">
-              Dự án
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-4xl gap-12 z-10">
+              <div className="flex items-center gap-12 relative">
+                <LocalizedLink to="/projects" className="link-underline cursor-pointer absolute left-[-140px]
+                text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
+                  Projects
+                </LocalizedLink>
+                <img src={logo} className="h-[130px]"/>
+                <LocalizedLink to="/about" className="link-underline cursor-pointer absolute right-[-140px]
+                text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
+                  About Us
+                </LocalizedLink>
+                <LocalizedLink to="/contact" className="link-underline cursor-pointer absolute right-[-300px]
+                text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
+                  Contact
+                </LocalizedLink>
+              </div>
             </div>
-
           </div>
         </div>
-  
-        {/* Overlay tối nhẹ */}
-
-        {/* Nội dung đè lên ảnh */}
-        {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-          <h1 className="text-[48px] md:text-[64px] font-serif leading-tight max-w-3xl">
-            Berrow is a family-led architectural design-build team based in Mallorca.
-          </h1>
-        </div> */}
-  
-        {/* Dots indicator */}
-        {/* <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-          {BANNER_IMAGES.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 
-                ${index === currentIndex ? 'bg-white w-6' : 'bg-white/50'}`}
-            />
-          ))}
-        </div> */}
+        {/* White overlay tăng dần khi cuộn, đạt 100% opacity = trắng hoàn toàn */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundColor: "white",
+            opacity: Math.min(currentScrollY / 250, 1)
+          }}
+        />
+    
+        {/* Gradient chân ảnh */}
+        <div
+          className="absolute bottom-0 left-0 w-full pointer-events-none"
+          style={{
+            height: "35%",
+            background: "linear-gradient(to bottom, transparent 0%, white 100%)",
+          }}
+        />
       </div>
     )
 }
+const ProjectGallery = () => (
+  <div className="flex items-center justify-center gap-4 px-8 py-12 w-full">
+    {images.map((img, i) => {
+      const { width, height } = sizeMap[img.size];
+      return (
+        <div
+          key={i}
+          className="flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer transition-transform duration-300 "
+          style={{ width, height }}
+        >
+          <img
+            src={img.src}
+            alt={`project-${i + 1}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      );
+    })}
+  </div>
+);const FadeUpSection = ({ children }) => {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+const ProjectGrid = ()=>
+{
+  return (
+    <div>
+      <ul className={`grid grid-cols-3 gap-5`}>
+        {PROJECTS.map((project, index) => (
+            <FadeUpSection key={index}>
+                <li  className="group cursor-pointer">
+                  <div className="relative overflow-hidden rounded-2xl mb-4 h-[400px]">
+                      <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                      />
+                      {/* <span className="absolute top-8 left-8 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
+                          {project.status}
+                      </span> */}
+                  </div>
+                  <div className="text-bg-secondary">
+                      <h3 className="md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px] text-[28px] leading-[34px] xs:text-[28px] xs:leading-[34px]">{project.title}</h3>
+                      <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{fontFamily:'InstrumentSans'}}>
+                          {project.description}
+                      </p>
+                      <a
+                          href="#"
+                          className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
+                      style={{fontFamily:'InstrumentSans'}}>
+                          View Project
+                          <ChevronRight size={16} />
+                      </a>
+                  </div>
+                </li>
+            </FadeUpSection>
+        ))}
+    </ul>
+    </div>
+  )
+}
+const VenuesGrid = ()=>
+  {
+    return (
+      <div>
+        <ul className={`grid grid-cols-3 gap-5`}>
+          {venues.map((venue, index) => (
+              <FadeUpSection key={index}>
+                  <li  className="group cursor-pointer">
+                    <div className="relative overflow-hidden rounded-2xl mb-4 h-[600px]">
+                        <img
+                            src={venue.image}
+                            alt={venue.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                        />
+                        {/* <span className="absolute top-8 left-8 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
+                            {project.status}
+                        </span> */}
+                    </div>
+                    <div className="text-bg-secondary">
+                        <h3 className="md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px] text-[28px] leading-[34px] xs:text-[28px] xs:leading-[34px]">{venue.name}</h3>
+                        <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{fontFamily:'InstrumentSans'}}>
+                            {venue.description}
+                        </p>
+                        <a
+                            href="#"
+                            className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
+                        style={{fontFamily:'InstrumentSans'}}>
+                            View Project
+                            <ChevronRight size={16} />
+                        </a>
+                    </div>
+                  </li>
+              </FadeUpSection>
+          ))}
+      </ul>
+      </div>
+    )
+  }
+  const InViewSlider = ({ images }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-100px" })
   
+    return (
+      <div ref={ref} className="overflow-hidden">
+        <motion.div
+          initial={{ x: "30%" }}
+          animate={isInView ? { x: 0 } : { x: "30%" }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Swiper
+            spaceBetween={20}
+            slidesPerView={"auto"}
+            scrollbar={{ draggable: true }}
+          >
+            {images.map((img, index) => (
+              <SwiperSlide
+                key={index}
+                style={{ width: "200px" }}
+                className="rounded-2xl overflow-hidden"
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.08,
+                    ease: "easeOut",
+                  }}
+                >
+                  <img
+                    src={img}
+                    alt={`instagram-${index}`}
+                    className="w-full h-[280px] object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
+      </div>
+    )
+  }
 export default Landing;
