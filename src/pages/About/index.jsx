@@ -9,90 +9,22 @@ import aboutUs7 from '../../assets/images/about-us/about-us-7.webp'
 import aboutUs8 from '../../assets/images/about-us/about-us-8.webp'
 import aboutUs9 from '../../assets/images/about-us/about-us-9.webp'
 import aboutUs10 from '../../assets/images/about-us/about-us-10.webp'
-import CEO from '../../assets/images/CEO.png'
-import img3 from '../../assets/images/img3.jpg'
-import img4 from '../../assets/images/img4.jpg'
 import logo from '../../assets/images/logo.png'
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation,FreeMode}from "swiper/modules";
+import { Autoplay, FreeMode}from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { ArrowRight, Check, ChevronLeft, ChevronRight, Building2, Target, ShieldCheck, Heart, MapPin, Users, Minus } from 'lucide-react';
+import {Building2, Target, ShieldCheck,  Users } from 'lucide-react';
 import Footer from '../../layouts/components/Footer'
 import OptimizedImage from '../../components/OptimizedImage'
 import {LocalizedLink} from '../../components/LocalizedLink';
 import { motion } from 'framer-motion'
 import { useInView } from "framer-motion";
+import JoinNewsletter from '../../components/JoinNewsletter'
+import FollowUs from '../../components/FollowUs'
+import ProjectCarousel from '../../components/ProjectCarousel'
 
-const SLIDE_ITEMS = [
-    {id:1, src:aboutUs7, name:'Trần Duy Tùng', position:'Founder & CEO' },
-    {id:2, src:aboutUs8,  name:'Nguyễn Thị Minh', position:'Kiến trúc sư trưởng'}, 
-    {id:3, src:aboutUs9,  name:'Lê Văn Hùng', position:'Trưởng phòng thi công'},
-    {id:4, src:aboutUs10,  name:'Phạm Thị Lan', position:'Trưởng phòng CSKH'},
-]
-
-const PROCESS_STEPS = [
-    {
-        id: 1,
-        title: 'LỰA CHỌN QUỸ ĐẤT',
-        desc: 'Latelia trực tiếp nghiên cứu và lựa chọn quỹ đất phù hợp tại thành phố Đà Nẵng, ưu tiên:\n\n• Vị trí thuận tiện\n• Khả năng khai thác tốt\n• Giá trị sử dụng và gia tăng lâu dài\n\nĐây là nền tảng quan trọng quyết định chất lượng và giá trị của toàn bộ dự án.'
-    },
-    {
-        id: 2,
-        title: 'LÊN Ý TƯỞNG THIẾT KẾ',
-        desc: 'Dựa trên đặc điểm khu đất và nhu cầu sử dụng thực tế, Latelia xây dựng ý tưởng kiến trúc tổng thể cho công trình:\n\n• Phong cách hiện đại, tinh tế\n• Định hướng công năng rõ ràng\n• Tối ưu án sáng và không gian sống'
-    },
-    {
-        id: 3,
-        title: 'THIẾT KẾ LAYOUT CÔNG NĂNG',
-        desc: 'Từ ý tưởng ban đầu, đội ngũ Latelia triển khai bản vẽ layout chi tiết, sắp xếp không gian hợp lý:\n\n• Phòng ốc khoa học\n• Lưu thông tiện lợi\n• Đảm bảo sự riêng tư và thoải mái cho gia chủ'
-    },
-    {
-        id: 4,
-        title: 'XIN GIẤY PHÉP XÂY DỰNG',
-        desc: 'Latelia thực hiện đầy đủ các thủ tục pháp lý cần thiết:\n\n• Xin giấy phép xây dựng theo đúng quy định\n• Đảm bảo hồ sơ pháp lý rõ ràng, minh bạch\n• Giúp khách hàng an tâm trước khi triển khai dự án'
-    },
-    {
-        id: 5,
-        title: 'TRIỂN KHAI THIẾT KẾ 3D',
-        desc: 'Sau khi hoàn tất pháp lý, Latelia xây dựng bản vẽ phối cảnh 3D chi tiết, thể hiện:\n\n• Hình dáng kiến trúc\n• Không gian nội – ngoại thất\n• Cảm xúc và trải nghiệm sống thực tế\n\nKhách hàng có thể hình dung chính xác ngôi nhà tương lai của mình.'
-    },
-    {
-        id: 6,
-        title: 'TRIỂN KHAI BÁN HÀNG & ĐIỀU CHỈNH THEO NHU CẦU KHÁCH',
-        desc: 'Trong giai đoạn này:\n\n• Latelia giới thiệu sản phẩm đến khách hàng\n• Khách hàng được quyền điều chỉnh thiết kế nội thất theo nhu cầu và phong cách riêng\n• Hai bên thống nhất phương án tối ưu nhất'
-    },
-    {
-        id: 7,
-        title: 'CHỐT BẢN VẼ 3D CUỐI CÙNG',
-        desc: 'Sau khi thống nhất:\n\n• Hai bên chốt bản vẽ 3D hoàn chỉnh\n• Đây là cơ sở kỹ thuật và pháp lý để triển khai thi công\n• Mọi hạng mục được xác định rõ ràng'
-    },
-    {
-        id: 8,
-        title: 'KÝ HỢP ĐỒNG & TRIỂN KHAI XÂY DỰNG',
-        desc: 'Latelia và khách hàng tiến hành:\n\n• Ký kết hợp đồng thi công\n• Cam kết xây dựng đúng thiết kế đã chốt\n• Quản lý tiến độ, chất lượng và kỹ thuật trong suốt quá trình thi công'
-    },
-    {
-        id: 9,
-        title: 'HOÀN THIỆN & BÀN GIAO NHÀ',
-        desc: 'Sau khi công trình hoàn tất:\n\n• Latelia nghiệm thu theo đúng bản vẽ đã cam kết\n• Bàn giao nhà cho khách hàng\n• Đảm bảo chất lượng, thẩm mỹ và công năng đúng như thiết kế ban đầu\n\nKhách hàng nhận nhà đúng cam kết – đúng chất lượng – đúng kỳ vọng.'
-    }
-];
-
-const CORE_VALUES = [
-    {id:1, title:'Tư duy đầu tư bài bản', desc:'Trực tiếp đầu tư và phát triển, không qua trung gian, đảm bảo tính minh bạch và giá trị thực', icon: Target},
-    {id:2, title:'Thiết kế khác biệt', desc:'Mỗi ngôi nhà đều mang dấu ấn riêng, hiện đại, tinh tế và không rập khuôn đại trà', icon: Building2},
-    {id:3, title:'Giá trị dài hạn', desc:'Không chỉ phù hợp để ở, sản phẩm Latelia còn có tiềm năng gia tăng giá trị bền vững theo thời gian', icon: ShieldCheck},
-    {id:4, title:'Minh bạch & đồng hành', desc:'Đề cao sự rõ ràng, trách nhiệm và đồng hành cùng khách hàng trong suốt quá trình', icon: Users},
-]
-
-const DA_NANG_FEATURES = [
-    {id:1, text:'Môi trường sống trong lành'},
-    {id:2, text:'Hạ tầng phát triển đồng bộ'},
-    {id:3, text:'Cộng đồng cư dân văn minh'},
-    {id:4, text:'Tiềm năng đầu tư lâu dài'},
-]
 const TIMELINE_ITEMS = [
     {
         id: 1,
@@ -147,45 +79,7 @@ const GALLERY_IMAGES = [
     { src: aboutUs5,  width: 1000, rounded: true  },
     { src: aboutUs6,   width: 1000, rounded: false },
 ]
-const PROJECTS = [
-    {
-        id: 1,
-        src: aboutUs2,
-        title: 'Cantonada',
-        desc: 'Nestled in the heart of Sóller, Cantonada is a century-old townhouse reimagined for modern living.',
-        link: '/projects/cantonada',
-    },
-    {
-        id: 2,
-        src: aboutUs3,
-        title: 'Vistavall',
-        desc: 'Set atop Valldemossa, offering panoramic views and year-round sunshine.',
-        link: '/projects/vistavall',
-    },
-    {
-        id: 3,
-        src: aboutUs4,
-        title: 'Mon Cor',
-        desc: 'Built in 1903 during the most prosperous time in Mallorca\'s modern history, Mon Cor was an architectural marvel that set the benchmark...',
-        link: '/projects/mon-cor',
-    },
-    {
-        id: 4,
-        src: aboutUs5,
-        title: 'Sa M...',
-        desc: 'Where the story of Berrow began...',
-        link: '/projects/sa-m',
-    },
-]
-const INSTAGRAM_IMAGES = [
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
-    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
-  ]
+
 function About()
 {
     const [loaded, setLoaded] = useState(true);
@@ -240,7 +134,7 @@ function About()
                     </div>
                 </FadeUpSection>
             </div>
-            <TimelineSection />
+            {/* <TimelineSection /> */}
             <ImageStrip />
             <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
                 <FadeUpSection>
@@ -271,58 +165,8 @@ function About()
                 </FadeUpSection>
             </div>
             <ProjectCarousel />
-            <section className="pb-24 px-4 text-center">
-                {/* Tiêu đề */}
-                <h2
-                    className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
-                >
-                    Join our world of Mediterranean design and quiet luxury.
-                </h2>
-
-                {/* Form */}
-                <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
-                    <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                    style={{ fontFamily: 'InstrumentSans' }}
-                    />
-                    <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                    style={{ fontFamily: 'InstrumentSans' }}
-                    />
-                    <button
-                        className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
-                        relative overflow-hidden group"
-                    >
-                     <span className={`block transition-all duration-300 ease-in-out
-                                ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
-                                Join Now
-                            </span>
-
-                            {/* Text từ dưới lên - chỉ hiện khi hover */}
-                            <span className={`absolute inset-0 flex items-center justify-center
-                                transition-all duration-300 ease-in-out px-6
-                                ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
-                                Join Now
-                            </span>
-                    </button>
-                </div>
-            </section>
-            <section className="px-4 md:px-8 lg:px-12 pb-16">
-            {/* Label */}
-                <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
-                    Follow us
-                    @
-                    <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
-                    L'ateliaprojects
-                    </a>
-                </p>
-                <InViewSlider images={INSTAGRAM_IMAGES} />
-           
-            </section>
+            <JoinNewsletter />
+            <FollowUs />
             <Footer withContact={false}/>
         </div>
     )
@@ -594,95 +438,95 @@ function VennDiagram() {
         </div>
     )
 }
-function ProjectCarousel() {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: '-80px' })
+// function ProjectCarousel() {
+//     const ref = useRef(null)
+//     const isInView = useInView(ref, { once: true, margin: '-80px' })
 
-    return (
-        <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
-            <Swiper
-                modules={[FreeMode]}
-                freeMode={{ enabled: true, momentum: true, momentumRatio: 0.8 }}
-                slidesPerView="auto"
-                spaceBetween={20}
-                grabCursor={true}
-                style={{ paddingLeft: '60px', paddingRight: '60px' }}
-            >
-                {PROJECTS.map((project, i) => (
-                    <SwiperSlide
-                        key={project.id}
-                        style={{ width: '380px' }}
-                        className="!h-auto"
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, x: 80 }}
-                            animate={isInView ? { opacity: 1, x: 0 } : {}}
-                            transition={{
-                                duration: 0.8,
-                                delay: i * 0.15,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                        >
-                            {/* Image */}
-                            <LocalizedLink to={project.link}>
-                                <div className="w-full h-[320px] rounded-2xl overflow-hidden mb-5">
-                                    <img
-                                        src={project.src}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                                        draggable={false}
-                                    />
-                                </div>
-                            </LocalizedLink>
+//     return (
+//         <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
+//             <Swiper
+//                 modules={[FreeMode]}
+//                 freeMode={{ enabled: true, momentum: true, momentumRatio: 0.8 }}
+//                 slidesPerView="auto"
+//                 spaceBetween={20}
+//                 grabCursor={true}
+//                 style={{ paddingLeft: '60px', paddingRight: '60px' }}
+//             >
+//                 {PROJECTS.map((project, i) => (
+//                     <SwiperSlide
+//                         key={project.id}
+//                         style={{ width: '380px' }}
+//                         className="!h-auto"
+//                     >
+//                         <motion.div
+//                             initial={{ opacity: 0, x: 80 }}
+//                             animate={isInView ? { opacity: 1, x: 0 } : {}}
+//                             transition={{
+//                                 duration: 0.8,
+//                                 delay: i * 0.15,
+//                                 ease: [0.22, 1, 0.36, 1],
+//                             }}
+//                         >
+//                             {/* Image */}
+//                             <LocalizedLink to={project.link}>
+//                                 <div className="w-full h-[320px] rounded-2xl overflow-hidden mb-5">
+//                                     <img
+//                                         src={project.src}
+//                                         alt={project.title}
+//                                         className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+//                                         draggable={false}
+//                                     />
+//                                 </div>
+//                             </LocalizedLink>
 
-                            {/* Title */}
-                            <h3
-                                className="text-bg-secondary mb-2"
-                                style={{
-                                    fontFamily: 'Georgia, serif',
-                                    fontSize: 'clamp(24px, 2.5vw, 32px)',
-                                    fontWeight: 400,
-                                    lineHeight: 1.2,
-                                }}
-                            >
-                                {project.title}
-                            </h3>
+//                             {/* Title */}
+//                             <h3
+//                                 className="text-bg-secondary mb-2"
+//                                 style={{
+//                                     fontFamily: 'Georgia, serif',
+//                                     fontSize: 'clamp(24px, 2.5vw, 32px)',
+//                                     fontWeight: 400,
+//                                     lineHeight: 1.2,
+//                                 }}
+//                             >
+//                                 {project.title}
+//                             </h3>
 
-                            {/* Description */}
-                            <p
-                                className="text-[#4a5050] mb-4"
-                                style={{
-                                    fontFamily: 'InstrumentSans',
-                                    fontSize: '14px',
-                                    lineHeight: 1.6,
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: 2,
-                                    WebkitBoxOrient: 'vertical',
-                                    overflow: 'hidden',
-                                }}
-                            >
-                                {project.desc}
-                            </p>
+//                             {/* Description */}
+//                             <p
+//                                 className="text-[#4a5050] mb-4"
+//                                 style={{
+//                                     fontFamily: 'InstrumentSans',
+//                                     fontSize: '14px',
+//                                     lineHeight: 1.6,
+//                                     display: '-webkit-box',
+//                                     WebkitLineClamp: 2,
+//                                     WebkitBoxOrient: 'vertical',
+//                                     overflow: 'hidden',
+//                                 }}
+//                             >
+//                                 {project.desc}
+//                             </p>
 
-                            {/* View Project link */}
-                            <LocalizedLink
-                                to={project.link}
-                                className="inline-flex items-center gap-2 text-bg-secondary text-[14px] group"
-                                style={{ fontFamily: 'InstrumentSans' }}
-                            >
-                                View Project
-                                <ArrowRight
-                                    size={14}
-                                    className="transition-transform duration-300 group-hover:translate-x-1"
-                                />
-                            </LocalizedLink>
-                        </motion.div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </section>
-    )
-}
+//                             {/* View Project link */}
+//                             <LocalizedLink
+//                                 to={project.link}
+//                                 className="inline-flex items-center gap-2 text-bg-secondary text-[14px] group"
+//                                 style={{ fontFamily: 'InstrumentSans' }}
+//                             >
+//                                 View Project
+//                                 <ArrowRight
+//                                     size={14}
+//                                     className="transition-transform duration-300 group-hover:translate-x-1"
+//                                 />
+//                             </LocalizedLink>
+//                         </motion.div>
+//                     </SwiperSlide>
+//                 ))}
+//             </Swiper>
+//         </section>
+//     )
+// }
 const FadeUpSection = ({ children }) => {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: "-100px" })

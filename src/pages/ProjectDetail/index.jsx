@@ -1,60 +1,18 @@
-// ─── COMPONENTS ─────────────────────────────────────────────────────────────
-
 import { useState, useRef } from "react"
-import { ChevronRight, ChevronDown, Check, ArrowRight } from "lucide-react"
+import { ChevronRight, ChevronDown, Check } from "lucide-react"
 import { motion, AnimatePresence, useInView } from "framer-motion"
 import { useParams } from "react-router-dom"
 import { LocalizedLink } from "../../components/LocalizedLink"
 import OptimizedImage from "../../components/OptimizedImage"
 import Footer from "../../layouts/components/Footer"
 import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation,FreeMode}from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import JoinNewsletter from "../../components/JoinNewsletter"
+import FollowUs from "../../components/FollowUs"
+import ProjectCarousel from "../../components/ProjectCarousel"
 
-// ─── DATA MODEL ────────────────────────────────────────────────────────────
-// Ví dụ cấu trúc project object từ API
-const INSTAGRAM_IMAGES = [
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
-    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
-  ]
-const PROJECTS = [
-    {
-        id: 1,
-        src: aboutUs2,
-        title: 'Cantonada',
-        desc: 'Nestled in the heart of Sóller, Cantonada is a century-old townhouse reimagined for modern living.',
-        link: '/projects/cantonada',
-    },
-    {
-        id: 2,
-        src: aboutUs2,
-        title: 'Vistavall',
-        desc: 'Set atop Valldemossa, offering panoramic views and year-round sunshine.',
-        link: '/projects/vistavall',
-    },
-    {
-        id: 3,
-        src: aboutUs2,
-        title: 'Mon Cor',
-        desc: 'Built in 1903 during the most prosperous time in Mallorca\'s modern history, Mon Cor was an architectural marvel that set the benchmark...',
-        link: '/projects/mon-cor',
-    },
-    {
-        id: 4,
-        src: aboutUs2,
-        title: 'Sa M...',
-        desc: 'Where the story of Berrow began...',
-        link: '/projects/sa-m',
-    },
-]
 const MOCK_PROJECT = {
     id: 1,
     name: 'Mira Calma',
@@ -151,14 +109,14 @@ const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0 }) => 
     return (
         <motion.div
             ref={ref}
-            className={`overflow-hidden ${className}`}
+            className={`overflow-hidden ${className} rounded-3xl`}
             style={style}
             initial={{ opacity: 0, y: 36 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay }}
         >
             <motion.div
-                className="w-full h-full"
+                className="w-full h-full rounded-3xl"
                 initial={{ scale: 1.07 }}
                 animate={isInView ? { scale: 1 } : {}}
                 transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay }}
@@ -374,30 +332,29 @@ function ProjectDetail() {
                 ③ PHOTO GALLERY — BLOCK 1-3
             ════════════════════════════════════════ */}
             <div className="px-4 md:px-8 xl:px-14 space-y-3">
+                {/* Ảnh 1 — full width */}
+                <FadeImage
+                    src={imgs[0]?.src}
+                    className="w-full"
+                    style={{ height: 'clamp(200px, 40vw, 560px)' }}
+                />
 
-                {/* Block 1: full-width */}
-                <FadeImage src={imgs[1]?.src} className="w-full"
-                    style={{ height: 'clamp(280px, 52vw, 740px)' }} />
-
-                {/* Block 2: landscape (3/5) + portrait (2/5) */}
+                {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
                 <div className="flex gap-3">
-                    <FadeImage src={imgs[2]?.src} className="flex-[3]"
-                        style={{ height: 'clamp(220px, 36vw, 520px)' }} delay={0} />
-                    <FadeImage src={imgs[3]?.src} className="flex-[2]"
-                        style={{ height: 'clamp(220px, 36vw, 520px)' }} delay={0.1} />
+                    <FadeImage
+                    src={imgs[1]?.src}
+                    className="flex-1"
+                    style={{ height: 'clamp(140px, 26vw, 380px)' }}
+                    delay={0}
+                    />
+                    <FadeImage
+                    src={imgs[2]?.src}
+                    className="flex-1"
+                    style={{ height: 'clamp(140px, 26vw, 380px)' }}
+                    delay={0.1}
+                    />
                 </div>
 
-                {/* Block 3: portrait tall (2/5) + 2 stacked (3/5) */}
-                {/* <div className="flex gap-3">
-                    <FadeImage src={imgs[4]?.src} className="flex-[2]"
-                        style={{ height: 'clamp(280px, 46vw, 660px)' }} delay={0} />
-                    <div className="flex-[3] flex flex-col gap-3">
-                        <FadeImage src={imgs[5]?.src} className="flex-1"
-                            style={{ minHeight: 0 }} delay={0.1} />
-                        <FadeImage src={imgs[6]?.src} className="flex-1"
-                            style={{ minHeight: 0 }} delay={0.18} />
-                    </div>
-                </div> */}
             </div>
 
             {/* ════════════════════════════════════════
@@ -417,12 +374,12 @@ function ProjectDetail() {
                                 { label: 'Plot', value: project.features.plotArea + ' Plot' },
                             ].map(({ label, value }) => (
                                 <div key={label}>
-                                    <p className="text-bg-secondary/40 text-xs uppercase tracking-widest mb-1"
+                                    <p className="text-bg-secondary/40 text-sm uppercase tracking-widest mb-1"
                                         style={{ fontFamily: 'InstrumentSans' }}>
                                         {label}
                                     </p>
                                     <p className="text-bg-secondary font-medium"
-                                        style={{ fontSize: 'clamp(15px, 1.2vw, 17px)' }}>
+                                        style={{ fontSize: 'clamp(15px, 1.2vw, 18px)' }}>
                                         {value}
                                     </p>
                                 </div>
@@ -488,11 +445,30 @@ function ProjectDetail() {
                 </div>
 
                 {/* Block 5: portrait (2/5) + landscape (3/5) */}
-                <div className="flex gap-3">
-                    <FadeImage src={imgs[8]?.src} className="flex-[2]"
-                        style={{ height: 'clamp(240px, 42vw, 600px)' }} delay={0} />
-                    <FadeImage src={imgs[9]?.src} className="flex-[3]"
-                        style={{ height: 'clamp(240px, 42vw, 600px)' }} delay={0.1} />
+                <div className="px-4 md:px-8 xl:px-14 space-y-3">
+                    {/* Ảnh 1 — full width */}
+                    <FadeImage
+                        src={imgs[8]?.src}
+                        className="w-full"
+                        style={{ height: 'clamp(200px, 40vw, 560px)' }}
+                    />
+
+                    {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
+                    <div className="flex gap-3">
+                        <FadeImage
+                        src={imgs[9]?.src}
+                        className="flex-1"
+                        style={{ height: 'clamp(140px, 26vw, 380px)' }}
+                        delay={0}
+                        />
+                        <FadeImage
+                        src={imgs[9]?.src}
+                        className="flex-1"
+                        style={{ height: 'clamp(140px, 26vw, 380px)' }}
+                        delay={0.1}
+                        />
+                    </div>
+
                 </div>
             </div>
 
@@ -508,9 +484,8 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ⑦ GALLERY CUỐI + CTA
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 space-y-3">
+            {/* <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 space-y-3">
 
-                {/* 3 ảnh equal */}
                 <div className="flex gap-3">
                     {[imgs[9], imgs[10], imgs[11]].map((img, i) => (
                         <FadeImage key={i} src={img?.src} className="flex-1"
@@ -518,202 +493,18 @@ function ProjectDetail() {
                     ))}
                 </div>
 
-                {/* CTA Brochure trung tâm */}
                 <FadeUpSection>
                     <div className="py-20 text-center">
                         <BrochureLink to={project.brochureUrl} />
                     </div>
                 </FadeUpSection>
-            </div>
+            </div> */}
 
             <ProjectCarousel />
-            <section className="pb-24 px-4 text-center mt-20">
-                {/* Tiêu đề */}
-                <h2
-                    className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
-                >
-                    Join our world of Mediterranean design and quiet luxury.
-                </h2>
-
-                {/* Form */}
-                <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
-                    <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                    style={{ fontFamily: 'InstrumentSans' }}
-                    />
-                    <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                    style={{ fontFamily: 'InstrumentSans' }}
-                    />
-                    <button
-                        className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
-                        relative overflow-hidden group"
-                    >
-                     <span className={`block transition-all duration-300 ease-in-out
-                                ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
-                                Join Now
-                            </span>
-
-                            {/* Text từ dưới lên - chỉ hiện khi hover */}
-                            <span className={`absolute inset-0 flex items-center justify-center
-                                transition-all duration-300 ease-in-out px-6
-                                ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
-                                Join Now
-                            </span>
-                    </button>
-                </div>
-            </section>
-            <section className="px-4 md:px-8 lg:px-12 pb-16">
-            {/* Label */}
-                <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
-                    Follow us
-                    @
-                    <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
-                    L'ateliaprojects
-                    </a>
-                </p>
-                <InViewSlider images={INSTAGRAM_IMAGES} />
-           
-            </section>
+            <JoinNewsletter />
+            <FollowUs />
             <Footer withContact={false} />
         </div>
     )
 }
-function ProjectCarousel() {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: '-80px' })
-
-    return (
-        <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
-            <Swiper
-                modules={[FreeMode]}
-                freeMode={{ enabled: true, momentum: true, momentumRatio: 0.8 }}
-                slidesPerView="auto"
-                spaceBetween={20}
-                grabCursor={true}
-                style={{ paddingLeft: '60px', paddingRight: '60px' }}
-            >
-                {PROJECTS.map((project, i) => (
-                    <SwiperSlide
-                        key={project.id}
-                        style={{ width: '380px' }}
-                        className="!h-auto"
-                    >
-                        <motion.div
-                            initial={{ opacity: 0, x: 80 }}
-                            animate={isInView ? { opacity: 1, x: 0 } : {}}
-                            transition={{
-                                duration: 0.8,
-                                delay: i * 0.15,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                        >
-                            {/* Image */}
-                            <LocalizedLink to={project.link}>
-                                <div className="w-full h-[320px] rounded-2xl overflow-hidden mb-5">
-                                    <img
-                                        src={project.src}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
-                                        draggable={false}
-                                    />
-                                </div>
-                            </LocalizedLink>
-
-                            {/* Title */}
-                            <h3
-                                className="text-bg-secondary mb-2"
-                                style={{
-                                    fontFamily: 'Georgia, serif',
-                                    fontSize: 'clamp(24px, 2.5vw, 32px)',
-                                    fontWeight: 400,
-                                    lineHeight: 1.2,
-                                }}
-                            >
-                                {project.title}
-                            </h3>
-
-                            {/* Description */}
-                            <p
-                                className="text-[#4a5050] mb-4"
-                                style={{
-                                    fontFamily: 'InstrumentSans',
-                                    fontSize: '14px',
-                                    lineHeight: 1.6,
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: 2,
-                                    WebkitBoxOrient: 'vertical',
-                                    overflow: 'hidden',
-                                }}
-                            >
-                                {project.desc}
-                            </p>
-
-                            {/* View Project link */}
-                            <LocalizedLink
-                                to={project.link}
-                                className="inline-flex items-center gap-2 text-bg-secondary text-[14px] group"
-                                style={{ fontFamily: 'InstrumentSans' }}
-                            >
-                                View Project
-                                <ArrowRight
-                                    size={14}
-                                    className="transition-transform duration-300 group-hover:translate-x-1"
-                                />
-                            </LocalizedLink>
-                        </motion.div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </section>
-    )
-}
-const InViewSlider = ({ images }) => {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
-    return (
-      <div ref={ref} className="overflow-hidden">
-        <motion.div
-          initial={{ x: "30%" }}
-          animate={isInView ? { x: 0 } : { x: "30%" }}
-          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={"auto"}
-            scrollbar={{ draggable: true }}
-          >
-            {images.map((img, index) => (
-              <SwiperSlide
-                key={index}
-                style={{ width: "200px" }}
-                className="rounded-2xl overflow-hidden"
-              >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.08,
-                    ease: "easeOut",
-                  }}
-                >
-                  <img
-                    src={img}
-                    alt={`instagram-${index}`}
-                    className="w-full h-[280px] object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </motion.div>
-      </div>
-    )
-  }
 export default ProjectDetail

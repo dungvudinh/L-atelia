@@ -25,6 +25,8 @@ import OptimizedImage from "../../components/OptimizedImage";
 import { motion, AnimatePresence,useScroll,useTransform  } from 'framer-motion'
 import { useInView } from "framer-motion";
 import logo from '../../assets/images/logo.png';
+import JoinNewsletter from "../../components/JoinNewsletter";
+import FollowUs from "../../components/FollowUs";
 const SLIDE_ITEMS = [
     {id:1, src:slide2 },
     // {id:2, src:slide3 },
@@ -202,58 +204,8 @@ function Landing() {
                   </FadeUpSection>
                 </div>
                 <VenuesGrid />
-                <section className="pb-24 px-4 text-center mt-40">
-                    {/* Tiêu đề */}
-                    <h2
-                        className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
-                    >
-                        Join our world of Mediterranean design and quiet luxury.
-                    </h2>
-
-                    {/* Form */}
-                    <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
-                        <input
-                        type="text"
-                        placeholder="Name"
-                        className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                        style={{ fontFamily: 'InstrumentSans' }}
-                        />
-                        <input
-                        type="email"
-                        placeholder="Email Address"
-                        className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                        style={{ fontFamily: 'InstrumentSans' }}
-                        />
-                        <button
-                            className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
-                            relative overflow-hidden group"
-                        >
-                        <span className={`block transition-all duration-300 ease-in-out
-                                    ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
-                                    Join Now
-                                </span>
-
-                                {/* Text từ dưới lên - chỉ hiện khi hover */}
-                                <span className={`absolute inset-0 flex items-center justify-center
-                                    transition-all duration-300 ease-in-out px-6
-                                    ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
-                                    Join Now
-                                </span>
-                        </button>
-                    </div>
-                </section>
-                <section className="px-4 md:px-8 lg:px-12 pb-16">
-                  {/* Label */}
-                      <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
-                          Follow us
-                          @
-                          <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
-                          L'ateliaprojects
-                          </a>
-                      </p>
-                      <InViewSlider images={INSTAGRAM_IMAGES} />
-                
-                  </section>
+                <JoinNewsletter />
+                <FollowUs />
               </div>
             </div>
             

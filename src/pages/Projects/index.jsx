@@ -6,24 +6,17 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import slide2 from '../../assets/images/slides/slide2.jpg';
-import slide3 from '../../assets/images/slides/slide3.jpg';
-import slide4 from '../../assets/images/slides/slide4.jpg';
-import slide5 from '../../assets/images/slides/slide5.jpg';
-import slide6 from '../../assets/images/slides/slide6.jpg';
-import slide7 from '../../assets/images/slides/slide7.jpg';
-import slide8 from '../../assets/images/slides/slide8.jpg';
-import slide9 from '../../assets/images/slides/slide9.jpg';
+
 import slide10 from '../../assets/images/slides/slide10.jpg';
 import slide11 from '../../assets/images/slides/slide11.jpg';
 import slide12 from '../../assets/images/slides/slide12.jpg';
-import logoText from '../../assets/images/logo-text.png';
-import { ArrowRight, ChevronRight } from "lucide-react";
-import img2 from '../../assets/images/img2.jpg';
+import {  ChevronRight } from "lucide-react";
 import Footer from "../../layouts/components/Footer";
-import { LocalizedLink } from "../../components/LocalizedLink";
 import OptimizedImage from "../../components/OptimizedImage";
 import { motion } from 'framer-motion'
 import { useInView } from "framer-motion";
+import JoinNewsletter from "../../components/JoinNewsletter";
+import FollowUs from "../../components/FollowUs";
 const SLIDE_ITEMS = [
     {id:1, src:slide2 },
     // {id:2, src:slide3 },
@@ -54,20 +47,6 @@ const PROJECTS = [
         image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
       },
   ];
-  const INSTAGRAM_IMAGES = [
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
-    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
-  ]
-const SLIDE_ITEMS_2 = [
-    {id:1, src:slide10 },
-    {id:2, src:slide11 },
-    {id:3, src:slide12 },
-]
 
 function Project() {
     const {t} = useTranslation(["landing", "common"]);
@@ -251,59 +230,8 @@ function Project() {
                     </div>
                 </div>
             </div>
-            <section className="pb-24 px-4 text-center">
-                {/* Tiêu đề */}
-                <h2
-                    className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
-                >
-                    Join our world of Mediterranean design and quiet luxury.
-                </h2>
-
-                {/* Form */}
-                <div className="flex flex-col items-center gap-3 w-full max-w-[360px] mx-auto">
-                    <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full px-5 py-3 rounded-md bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                    style={{ fontFamily: 'InstrumentSans' }}
-                    />
-                    <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="w-full px-5 py-3 rounded-lg bg-[#f0f4f0] text-bg-secondary placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition"
-                    style={{ fontFamily: 'InstrumentSans' }}
-                    />
-                    <button
-                        className="mt-2 py-3 px-8 rounded-lg bg-bg-secondary text-white text-[20px] cursor-pointer
-                        relative overflow-hidden group"
-                    >
-                     <span className={`block transition-all duration-300 ease-in-out
-                                ${'group-hover:-translate-y-full group-hover:opacity-0'}`}>
-                                Join Now
-                            </span>
-
-                            {/* Text từ dưới lên - chỉ hiện khi hover */}
-                            <span className={`absolute inset-0 flex items-center justify-center
-                                transition-all duration-300 ease-in-out px-6
-                                ${'translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100'}`}>
-                                Join Now
-                            </span>
-                    </button>
-                </div>
-            </section>
-            {/* Follow Us Section */}
-            <section className="px-4 md:px-8 lg:px-12 pb-16">
-            {/* Label */}
-                <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2" >
-                    Follow us
-                    @
-                    <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
-                    L'ateliaprojects
-                    </a>
-                </p>
-                <InViewSlider images={INSTAGRAM_IMAGES} />
-           
-            </section>
+            <JoinNewsletter />
+            <FollowUs />
             <Footer withContact={true}/>
         </div>
     );
@@ -324,48 +252,5 @@ const FadeUpSection = ({ children }) => {
       </motion.div>
     )
 }
-  const InViewSlider = ({ images }) => {
-    const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
-    return (
-      <div ref={ref} className="overflow-hidden">
-        <motion.div
-          initial={{ x: "30%" }}
-          animate={isInView ? { x: 0 } : { x: "30%" }}
-          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Swiper
-            spaceBetween={20}
-            slidesPerView={"auto"}
-            scrollbar={{ draggable: true }}
-          >
-            {images.map((img, index) => (
-              <SwiperSlide
-                key={index}
-                style={{ width: "200px" }}
-                className="rounded-2xl overflow-hidden"
-              >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: index * 0.08,
-                    ease: "easeOut",
-                  }}
-                >
-                  <img
-                    src={img}
-                    alt={`instagram-${index}`}
-                    className="w-full h-[280px] object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </motion.div>
-      </div>
-    )
-  }
+
 export default Project;
