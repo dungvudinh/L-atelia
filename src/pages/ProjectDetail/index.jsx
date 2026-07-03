@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { ChevronRight, ChevronDown, Check } from "lucide-react"
 import { motion, AnimatePresence, useInView } from "framer-motion"
 import { useParams } from "react-router-dom"
@@ -12,7 +12,8 @@ import "swiper/css/navigation";
 import JoinNewsletter from "../../components/JoinNewsletter"
 import FollowUs from "../../components/FollowUs"
 import ProjectCarousel from "../../components/ProjectCarousel"
-
+import { projectsService } from "../../services/projectsService"
+const BASE_CDN_URL = 'https://cdn.latelia.com/latelia/'
 const MOCK_PROJECT = {
     id: 1,
     name: 'Mira Calma',
@@ -218,11 +219,189 @@ const SectionAccordion = ({ section }) => {
 
 // ── 6. MAIN COMPONENT ─────────────────────────────────────────────────────
 function ProjectDetail() {
-    const { projectId } = useParams()
+    const { projectId } = useParams();
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const imgs = project?.images;  // alias ngắn
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: ''
+    });
+    const [formErrors, setFormErrors] = useState({});
+    const [submitting, setSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    // Fetch project detail from API
+    const fetchProjectDetail = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            
+            
+            if (!projectId) {
+                throw new Error('Project ID is required');
+            }
+
+            const response = await projectsService.getProjectById(projectId);
+            
+            // Set project data
+            setProject(response.data || response);
+            
+        } catch (err) {
+            console.error('❌ Failed to fetch project detail:', err);
+            setError(err.message || 'Failed to load project details');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [id]: value
+        }));
+        
+        // Clear error for this field when user types
+        if (formErrors[id]) {
+            setFormErrors(prev => ({
+                ...prev,
+                [id]: ''
+            }));
+        }
+    };
+        const validateForm = () => {
+        const errors = {};
+        
+        if (!formData.firstName.trim()) {
+            errors.firstName = 'First name is required';
+        }
+        if (!formData.lastName.trim()) {
+            errors.lastName = 'Last name is required';
+        }
+        if (!formData.email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            errors.email = 'Email is invalid';
+        }
+        if (!formData.phone.trim()) {
+            errors.phone = 'Phone number is required';
+        }
+        
+        return errors;
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const errors = validateForm();
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+        
+        try {
+            setSubmitting(true);
+            setFormErrors({});
+            
+            // Gửi chỉ 5 trường: 4 từ form + projectTitle
+            const requestData = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                projectTitle: project?.title || 'Unknown Project'
+            };
+            
+            
+            const response = await projectsService.submitProjectContactForm(
+                projectId, 
+                requestData
+            );
+            
+            if (response.success) {
+                setSubmitSuccess(true);
+                // Reset form
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    phone: ''
+                });
+                
+                setTimeout(() => {
+                    setSubmitSuccess(false);
+                }, 5000);
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setFormErrors({
+                submit: error.response?.data?.message || 'Failed to submit form. Please try again.'
+            });
+        } finally {
+            setSubmitting(false);
+        }
+    };
+    useEffect(() => {
+        if (projectId) {
+            fetchProjectDetail();
+        }
+    }, [projectId]);
+
+    // Loading state
+    if (loading) {
+        return (
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
+                <div className="text-center">
+                    <div className="w-12 h-12 border-4 border-txt-secondary border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p className="mt-4 text-txt-gray text-lg">Loading project details...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Error state
+    if (error) {
+        return (
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
+                <div className="text-center">
+                    <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                        <h2 className="text-xl font-semibold">Error</h2>
+                        <p>{error}</p>
+                        <button 
+                            onClick={fetchProjectDetail}
+                            className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700"
+                        >
+                            Retry
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Project not found
+    if (!project) {
+        return (
+            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
+                <div className="text-center">
+                    <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+                        <h2 className="text-xl font-semibold">Project Not Found</h2>
+                        <p>The requested project could not be found.</p>
+                        <LocalizedLink to="/projects">
+                            <button className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700">
+                                Back to Projects
+                            </button>
+                        </LocalizedLink>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // TODO: thay bằng fetch thực tế
-    const project = MOCK_PROJECT
-    const imgs = project.images  // alias ngắn
+    // const project = MOCK_PROJECT
 
     return (
         <div>
@@ -231,7 +410,7 @@ function ProjectDetail() {
             ════════════════════════════════════════ */}
             <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative overflow-hidden">
                 <OptimizedImage
-                    src={imgs[0]?.src}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                     alt={project.name}
                     className="object-cover w-full h-full object-center"
                     style={{ filter: 'brightness(0.68)' }}
@@ -260,7 +439,7 @@ function ProjectDetail() {
                         className="flex flex-wrap items-center justify-center gap-0 mb-6"
                         style={{ fontSize: 'clamp(13px, 1.1vw, 16px)', letterSpacing: '0.2px' }}
                     >
-                        {[
+                        {/* {[
                             `${project.features.bedrooms} Bedrooms${project.features.studio ? ' + Independent Studio' : ''}`,
                             `${project.features.bathrooms} Bathrooms`,
                             `${project.features.constructedArea} Constructed Area`,
@@ -269,6 +448,12 @@ function ProjectDetail() {
                             <span key={i} className="flex items-center opacity-90">
                                 {spec}
                                 {i < arr.length - 1 && <span className="mx-3 opacity-40">|</span>}
+                            </span>
+                        ))} */}
+                        {project?.propertyFeatures?.length > 0 && project.propertyFeatures.map((feature, i) => (
+                            <span key={i} className="flex items-center opacity-90">
+                                {feature}
+                                {i < project.propertyFeatures.length - 1 && <span className="mx-3 opacity-40">|</span>}
                             </span>
                         ))}
                     </motion.div>
@@ -302,10 +487,9 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ② INTRO TEXT
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-40 mb-16 xl:mb-32 flex justify-center px-6">
+            {/* <div className="mt-20 xl:mt-40 mb-16 xl:mb-32 flex justify-center px-6">
                 <FadeUpSection>
                     <div className="max-w-[760px] text-center">
-                        {/* Headline lấy từ section đầu tiên */}
                         <h2
                             className="text-bg-secondary font-medium"
                             style={{ fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2 }}
@@ -326,7 +510,7 @@ function ProjectDetail() {
                         </div>
                     </div>
                 </FadeUpSection>
-            </div>
+            </div> */}
 
             {/* ════════════════════════════════════════
                 ③ PHOTO GALLERY — BLOCK 1-3
@@ -334,7 +518,7 @@ function ProjectDetail() {
             <div className="px-4 md:px-8 xl:px-14 space-y-3">
                 {/* Ảnh 1 — full width */}
                 <FadeImage
-                    src={imgs[0]?.src}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                     className="w-full"
                     style={{ height: 'clamp(200px, 40vw, 560px)' }}
                 />
@@ -342,13 +526,13 @@ function ProjectDetail() {
                 {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
                 <div className="flex gap-3">
                     <FadeImage
-                    src={imgs[1]?.src}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                     className="flex-1"
                     style={{ height: 'clamp(140px, 26vw, 380px)' }}
                     delay={0}
                     />
                     <FadeImage
-                    src={imgs[2]?.src}
+                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                     className="flex-1"
                     style={{ height: 'clamp(140px, 26vw, 380px)' }}
                     delay={0.1}
@@ -366,7 +550,7 @@ function ProjectDetail() {
                         {/* Property Features grid */}
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mb-14 pb-14 border-b border-bg-secondary/10">
                             {[
-                                { label: 'Location', value: project.location },
+                                { label: 'Location', value: project?.projectFeatures[0]},
                                 { label: 'Price', value: project.price },
                                 { label: 'Bedrooms', value: project.features.bedrooms },
                                 { label: 'Bathrooms', value: project.features.bathrooms },
@@ -425,7 +609,7 @@ function ProjectDetail() {
             <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 space-y-3">
 
                 {/* Block 4: full-width */}
-                <FadeImage src={imgs[7]?.src} className="w-full"
+                <FadeImage src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`}  className="w-full"
                     style={{ height: 'clamp(280px, 52vw, 740px)' }} />
 
                 {/* Text xen giữa ảnh */}
@@ -448,7 +632,7 @@ function ProjectDetail() {
                 <div className="px-4 md:px-8 xl:px-14 space-y-3">
                     {/* Ảnh 1 — full width */}
                     <FadeImage
-                        src={imgs[8]?.src}
+                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                         className="w-full"
                         style={{ height: 'clamp(200px, 40vw, 560px)' }}
                     />
@@ -456,13 +640,13 @@ function ProjectDetail() {
                     {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
                     <div className="flex gap-3">
                         <FadeImage
-                        src={imgs[9]?.src}
+                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                         className="flex-1"
                         style={{ height: 'clamp(140px, 26vw, 380px)' }}
                         delay={0}
                         />
                         <FadeImage
-                        src={imgs[9]?.src}
+                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
                         className="flex-1"
                         style={{ height: 'clamp(140px, 26vw, 380px)' }}
                         delay={0.1}
