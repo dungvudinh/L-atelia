@@ -41,90 +41,11 @@ const LIFESTYLE_ITEMS = [
 ]
 
 function Contact() {
-    const [consent, setConsent] = useState(true);
-    const {t} = useTranslation('footer');
-    const [selectedPriceRange, setSelectedPriceRange] = useState(null);
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        message: ''
-    });
-    const [loading, setLoading] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null);
-
-    const handlePriceRangeSelect = (range, index) => {
-        setSelectedPriceRange(prev => prev === range ? null : range);
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        // Validation
-        if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
-            setSubmitStatus({ type: 'error', message: 'Please fill in all required fields.' });
-            return;
-        }
-
-        if (!consent) {
-            setSubmitStatus({ type: 'error', message: 'Please agree to the privacy policy.' });
-            return;
-        }
-
-        setLoading(true);
-        setSubmitStatus(null);
-
-        try {
-            const response = await fetch('https://api.latelia.com/v1/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    budget: selectedPriceRange,
-                    consent: consent
-                })
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                setSubmitStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' });
-                // Reset form
-                setFormData({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    phone: '',
-                    message: ''
-                });
-                setSelectedPriceRange(null);
-            } else {
-                throw new Error(result.message || 'Failed to send message');
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setSubmitStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' });
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return ( 
         <div className="">
             <ContactForm />
-            <LifestyleSection />
-            <JoinNewsletter />
+            {/* <LifestyleSection /> */}
+            {/* <JoinNewsletter /> */}
             <FollowUs />
             <Footer withContact={false}/>
         </div>
@@ -134,8 +55,10 @@ function ContactForm() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
     const [formData, setFormData] = useState({
-        firstName: '', lastName: '', email: '', phone: '', service: '', description: ''
+        firstName: '', lastName: '', email: '', phone: '', bugdetRange: '', description: ''
     })
+    const [loading, setLoading] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState(null)
 
     const fadeUp = (delay) => ({
         initial: { opacity: 0, y: 30 },
@@ -159,9 +82,50 @@ function ContactForm() {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
-    const handleSubmit = () => {
-        console.log(formData)
-        // gọi API submit ở đây
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        // Validation
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.description) {
+            setSubmitStatus({ type: 'error', message: 'Please fill in all required fields.' })
+            return
+        }
+
+        setLoading(true)
+        setSubmitStatus(null)
+
+        try {
+            const response = await fetch('https://api.latelia.com/v1/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    phone: formData.phone,
+                    bugdetRange: formData.bugdetRange,
+                    message: formData.description,
+                })
+            })
+
+            const result = await response.json()
+
+            if (response.ok) {
+                setSubmitStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' })
+                setFormData({
+                    firstName: '', lastName: '', email: '', phone: '', bugdetRange: '', description: ''
+                })
+            } else {
+                throw new Error(result.message || 'Failed to send message')
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error)
+            setSubmitStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' })
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -177,16 +141,32 @@ function ContactForm() {
                         </span>
                         <div style={{ width: '40px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
                     </div>
-                    <h2 className="text-bg-secondary"style={{fontSize: 'clamp(48px, 6vw, 72px)', fontWeight: 400, lineHeight: 1.1, marginBottom: '16px' }}>
+                    <h2 className="text-bg-secondary" style={{ fontSize: 'clamp(48px, 6vw, 72px)', fontWeight: 400, lineHeight: 1.1, marginBottom: '16px' }}>
                         Hello. Hola.
                     </h2>
-                    <p className="text-bg-secondary"style={{fontSize: '20px',lineHeight: 1.6 }}>
+                    <p className="text-bg-secondary" style={{ fontSize: '20px', lineHeight: 1.6 }}>
                         Get in touch to see how we can help you make Mallorca your home.
                     </p>
                 </motion.div>
 
+                {/* Status Message */}
+                {submitStatus && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-4 md:mb-6 p-3 md:p-4 rounded-lg text-[14px] md:text-[15px] text-center"
+                        style={{
+                            background: submitStatus.type === 'success' ? '#e6f4ef' : '#fdecea',
+                            color: submitStatus.type === 'success' ? '#1a3a3a' : '#a3342c',
+                            fontFamily: 'InstrumentSans',
+                        }}
+                    >
+                        {submitStatus.message}
+                    </motion.div>
+                )}
+
                 {/* Form */}
-                <div className="flex flex-col gap-3">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
 
                     {/* Row 1: First + Last Name */}
                     <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
@@ -196,6 +176,7 @@ function ContactForm() {
                             value={formData.firstName}
                             onChange={handleChange}
                             style={inputStyle}
+                            required
                         />
                         <input
                             name="lastName"
@@ -203,6 +184,7 @@ function ContactForm() {
                             value={formData.lastName}
                             onChange={handleChange}
                             style={inputStyle}
+                            required
                         />
                     </motion.div>
 
@@ -215,6 +197,7 @@ function ContactForm() {
                             value={formData.email}
                             onChange={handleChange}
                             style={inputStyle}
+                            required
                         />
                         <input
                             name="phone"
@@ -229,24 +212,25 @@ function ContactForm() {
                     {/* Row 3: Select Service */}
                     <motion.div {...fadeUp(0.3)} className="relative">
                         <select
-                            name="service"
-                            value={formData.service}
+                            name="bugdetRange"
+                            value={formData.bugdetRange}
                             onChange={handleChange}
                             style={{
                                 ...inputStyle,
                                 appearance: 'none',
                                 WebkitAppearance: 'none',
                                 cursor: 'pointer',
-                                color: formData.service ? '#1a3a3a' : '#9aaeae',
+                                color: formData.bugdetRange ? '#1a3a3a' : '#9aaeae',
                             }}
                         >
-                            <option value="" disabled hidden>Select a Service</option>
-                            <option value="architecture">Architecture & Design</option>
-                            <option value="development">Development</option>
-                            <option value="sales">Sales & Marketing</option>
-                            <option value="interior">Interior Design</option>
+                            <option value="" disabled hidden>Dự kiến Budget đầu tư</option>
+                            <option value="5 tỉ VND trở xuống">5 tỉ VND trở xuống</option>
+                            <option value="5 tỉ VND - 10 tỉ VND">5 tỉ VND - 10 tỉ VND</option>
+                            <option value="10 tỉ VND - 15 tỉ VND">10 tỉ VND - 15 tỉ VND</option>
+                            <option value="15 tỉ VND - 20 tỉ VND">15 tỉ VND - 20 tỉ VND</option>
+                            <option value="Trên 20 tỉ VND">Trên 20 tỉ VND</option>
+                            <option value="Không muốn đề cập">Không muốn đề cập</option>
                         </select>
-                        {/* Chevron icon */}
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                             <ChevronDown size={16} color="#1a3a3a" opacity={0.5} />
                         </div>
@@ -265,33 +249,35 @@ function ContactForm() {
                                 resize: 'none',
                                 lineHeight: 1.6,
                             }}
+                            required
                         />
                     </motion.div>
 
                     {/* Submit */}
                     <motion.div {...fadeUp(0.5)} className="flex justify-center mt-2">
                         <button
-                            onClick={handleSubmit}
+                            type="submit"
+                            disabled={loading}
                             style={{
-                                background: '#1a3a3a',
+                                background: loading ? '#4a5f5f' : '#1a3a3a',
                                 color: '#fff',
                                 border: 'none',
                                 borderRadius: '8px',
                                 padding: '16px 48px',
                                 fontSize: '20px',
                                 letterSpacing: '0.5px',
-                                cursor: 'pointer',
+                                cursor: loading ? 'not-allowed' : 'pointer',
                                 transition: 'background 0.3s ease, transform 0.2s ease',
                             }}
-                            onMouseEnter={e => e.currentTarget.style.background = '#2a4f4f'}
-                            onMouseLeave={e => e.currentTarget.style.background = '#1a3a3a'}
-                            onMouseDown={e => e.currentTarget.style.transform = 'scale(0.97)'}
-                            onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+                            onMouseEnter={e => !loading && (e.currentTarget.style.background = '#2a4f4f')}
+                            onMouseLeave={e => !loading && (e.currentTarget.style.background = '#1a3a3a')}
+                            onMouseDown={e => !loading && (e.currentTarget.style.transform = 'scale(0.97)')}
+                            onMouseUp={e => !loading && (e.currentTarget.style.transform = 'scale(1)')}
                         >
-                            Submit
+                            {loading ? 'Sending...' : 'Submit'}
                         </button>
                     </motion.div>
-                </div>
+                </form>
             </div>
         </section>
     )

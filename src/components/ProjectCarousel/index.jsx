@@ -1,22 +1,17 @@
 import { useInView, motion } from "framer-motion"
-import { useRef } from "react"
+import { useRef,useState,useCallback,useEffect  } from "react"
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation,FreeMode}from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import aboutUs from '../../assets/images/about-us/about-us-final.jpg'
 import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
 import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
 import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
 import aboutUs5 from '../../assets/images/about-us/about-us-5.webp'
-import aboutUs6 from '../../assets/images/about-us/about-us-6.webp'
-import aboutUs7 from '../../assets/images/about-us/about-us-7.webp'
-import aboutUs8 from '../../assets/images/about-us/about-us-8.webp'
-import aboutUs9 from '../../assets/images/about-us/about-us-9.webp'
-import aboutUs10 from '../../assets/images/about-us/about-us-10.webp'
+import { projectsService } from "../../services/projectsService";
 import {LocalizedLink} from '../../components/LocalizedLink';
-import { ArrowRight, Building2, Target, ShieldCheck, Heart, MapPin, Users, Minus } from 'lucide-react';
+import { ArrowRight} from 'lucide-react';
 const PROJECTS = [
     {
         id: 1,
@@ -47,10 +42,51 @@ const PROJECTS = [
         link: '/projects/sa-m',
     },
 ]
+const getImageUrl = (imagePath) => {
+    if (!imagePath) return '';
+    return `https://cdn.latelia.com/latelia/${imagePath}`;
+  };
 function ProjectCarousel() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
-
+    const [projects, setProjects] = useState([]);
+    console.log(projects)
+    
+    const fetchProjects = useCallback(async () => {
+            try {
+    
+            const response = await projectsService.getProjects();
+            const transformedProjects = response.data?.projects?.map(project => ({
+                id: project._id || project.id,
+                src: project.heroImage?.thumbnailKey || project.gallery?.[0]?.thumbnailKey || project.heroImage?.key,
+                alt: project.title,
+                title: project.title,
+                description: project.description,
+                location: project.location,
+                price: project.price,
+                type: project.type,
+                status: project.status || 'available',
+                brochure: project.brochure,
+                constructionProgress: project.constructionProgress,
+                designImages: project.designImages,
+                floorPlans: project.floorPlans,
+                gallery: project.gallery,
+                propertyFeatures: project.propertyFeatures,
+                createdAt: project.createdAt,
+                updatedAt: project.updatedAt,
+            })) || [];
+    
+            // const finalProjects = transformedProjects.length > 0 ? transformedProjects : FALLBACK_IMAGES;
+            setProjects(transformedProjects);
+            } catch (err) {
+                console.error('Failed to fetch projects:', err);
+            // setProjects(FALLBACK_IMAGES);
+            // setFilteredProjects(FALLBACK_IMAGES);
+            } 
+    }, []);
+    useEffect(() => {
+            fetchProjects();
+        }, []);
     return (
         <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
             <Swiper
@@ -61,7 +97,7 @@ function ProjectCarousel() {
                 grabCursor={true}
                 style={{ paddingLeft: '60px', paddingRight: '60px' }}
             >
-                {PROJECTS.map((project, i) => (
+                {projects.map((project, i) => (
                     <SwiperSlide
                         key={project.id}
                         style={{ width: '380px' }}
@@ -77,10 +113,10 @@ function ProjectCarousel() {
                             }}
                         >
                             {/* Image */}
-                            <LocalizedLink to={project.link}>
+                            <LocalizedLink to={`/projects/${project.id}`}>
                                 <div className="w-full h-[320px] rounded-2xl overflow-hidden mb-5">
                                     <img
-                                        src={project.src}
+                                        src={getImageUrl(project.src)}
                                         alt={project.title}
                                         className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                                         draggable={false}
@@ -114,13 +150,13 @@ function ProjectCarousel() {
                                     overflow: 'hidden',
                                 }}
                             >
-                                {project.desc}
+                                {project.description}
                             </p>
 
                             {/* View Project link */}
                             <LocalizedLink
-                                to={project.link}
-                                className="inline-flex items-center gap-2 text-bg-secondary text-[14px] group"
+                                to={`/projects/${project.id}`}
+                                className="inline-flex items-center gap-2 text-bg-secondary text-[14px] group font-bold"
                                 style={{ fontFamily: 'InstrumentSans' }}
                             >
                                 View Project

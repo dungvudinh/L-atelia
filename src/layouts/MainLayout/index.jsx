@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Header2 from "../components/Header2";
 import { useEffect } from "react";
 import Lenis from 'lenis';
+import { ScrollRestoration } from "react-router-dom";
 function MainLayout({children})
 {
     useEffect(() => {

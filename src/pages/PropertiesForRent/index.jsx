@@ -287,10 +287,10 @@ function PropertiesForRent() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
-    if (!consent) {
-      setFormError('Please agree to the privacy policy');
-      return;
-    }
+    // if (!consent) {
+    //   setFormError('Please agree to the privacy policy');
+    //   return;
+    // }
 
     if (!currentProperty) {
       setFormError('No property selected');

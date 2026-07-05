@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import MainLayout from "./layouts/MainLayout";
 import { publicRoutes } from "./routes/index";
-import PageTransition from "./components/PageTransition";
-
+import { ScrollRestoration } from "react-router-dom";
 // 🧩 Tự động chuyển hướng theo ngôn ngữ trình duyệt khi vào "/"
 function LanguageRedirect() {
   const userLang = navigator.language.startsWith("vi") ? "vi" : "en";
@@ -82,13 +81,14 @@ function LocalizedRoutes() {
 
 // 🧩 App chính
 export default function App() {
-  // const location= useLocation();
-  // useEffect(()=>
-  // {
-  //   window.scrollTo(0,0);
-  // }, [location.pathname])
+  const location= useLocation();
+  useEffect(()=>
+  {
+    window.scrollTo(0,0);
+  }, [location.pathname])
   return (
       <Routes>
+        
         {/* Nếu người dùng vào "/" → tự chuyển hướng */}
         <Route path="/" element={<LanguageRedirect />} />
 

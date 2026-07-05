@@ -5,17 +5,12 @@ import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
 import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
 import aboutUs5 from '../../assets/images/about-us/about-us-5.webp'
 import aboutUs6 from '../../assets/images/about-us/about-us-6.webp'
-import aboutUs7 from '../../assets/images/about-us/about-us-7.webp'
-import aboutUs8 from '../../assets/images/about-us/about-us-8.webp'
-import aboutUs9 from '../../assets/images/about-us/about-us-9.webp'
-import aboutUs10 from '../../assets/images/about-us/about-us-10.webp'
 import logo from '../../assets/images/logo.png'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode}from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import {Building2, Target, ShieldCheck,  Users } from 'lucide-react';
 import Footer from '../../layouts/components/Footer'
 import OptimizedImage from '../../components/OptimizedImage'
 import {LocalizedLink} from '../../components/LocalizedLink';
