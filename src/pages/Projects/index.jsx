@@ -15,6 +15,7 @@ import { useInView } from "framer-motion";
 import JoinNewsletter from "../../components/JoinNewsletter";
 import FollowUs from "../../components/FollowUs";
 import {projectsService} from '../../services/projectsService.js'
+import { LocalizedLink } from "../../components/LocalizedLink/index.jsx";
 const SLIDE_ITEMS = [
     {id:1, src:slide2 },
 ]
@@ -59,7 +60,7 @@ function Project() {
     const [error, setError] = useState(null);
     const filters = [
         { id: 'all', label: 'All', count: projects.length },
-        { id: 'available', label: 'For Sale', count: projects.filter(p => p.status === 'available').length },
+        { id: 'available', label: 'Available', count: projects.filter(p => p.status === 'available').length },
         { id: 'sold', label: 'Sold', count: projects.filter(p => p.status === 'sold').length },
     ];
     const fetchProjects = useCallback(async () => {
@@ -243,7 +244,7 @@ function Project() {
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent rounded-2xl" />
                                     <span className="absolute top-10 left-10 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
-                                        For Sale
+                                        {project.type === 'sale' ? 'For sale' : 'For rent'}
                                     </span>
                                     <div className="absolute bottom-8 left-10 right-10 text-white">
                                         <h3 className="md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px]">
@@ -252,14 +253,14 @@ function Project() {
                                         <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'InstrumentSans' }}>
                                         {project.description}
                                         </p>
-                                        <a
-                                        href={`/projects/${convertToSlug(project.title)}`}
+                                        <LocalizedLink
+                                        to={`/projects/${project.id}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
                                         style={{ fontFamily: 'InstrumentSans' }}
                                         >
                                         View Project
                                         <ChevronRight size={16} />
-                                        </a>
+                                        </LocalizedLink>
                                     </div>
                                     </div>
                                 ) : (

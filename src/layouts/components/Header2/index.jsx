@@ -9,6 +9,7 @@ import {LocalizedLink} from '../../../components/LocalizedLink';
 import { useLocation } from "react-router-dom";
 const MENU_ITEMS = [
     {id:1, title:'projects', to:'/projects'},
+    {id:2, title:'media', to:'/media'},
     // {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
     {id:4, title:'about us', to:'/about'}, 
     // {id:5, title:'media', to:'/media'}, 
@@ -27,6 +28,8 @@ function Header() {
     const [isPastScreen, setIsPastScreen] = useState(false); // đã cuộn qua 1 màn hình chưa
     const lastScrollY = useRef(0);
     const isContactPage = location.pathname.includes('/contact')
+    const isBrochurePage = location.pathname.includes('/view-brochure');
+    const isMediaPage = location.pathname.includes('/media');
     const isHomePage = location.pathname === '/vi' || location.pathname === '/en' || location.pathname === '/';
     useEffect(() => {
         const handleScroll = () => {
@@ -88,7 +91,7 @@ function Header() {
         if (e.target === e.currentTarget) setIsMenuOpen(false);
     };
 
-    const textColor = isContactPage || isPastScreen ? "text-bg-secondary" : "text-white"
+    const textColor = isContactPage || isBrochurePage || isMediaPage || isPastScreen ? "text-bg-secondary" : "text-white"
     
     return ( 
         <div className={`bg-transparent flex justify-center items-center fixed top-0 left-0 z-100 w-full

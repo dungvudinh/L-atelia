@@ -795,7 +795,7 @@ function Brochure() {
                     </p>
                     
                     {/* FILTER TABS */}
-                    <ul className="mt-10 lg:mt-20 text-[16px] md:text-[20px] lg:text-[25px] flex flex-col sm:flex-row font-subtitle font-semibold gap-4 sm:gap-2 lg:gap-0">
+                    <ul className="mt-10 lg:mt-20 text-[16px] md:text-[20px] lg:text-[22px] flex flex-col sm:flex-row font-subtitle font-semibold gap-4 sm:gap-2 lg:gap-0">
                         {FILTERS.map(filterItem => (
                             <li 
                                 className={`w-full sm:w-[200px] md:w-[300px] lg:w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-4 md:px-6 lg:px-10 py-2 md:py-2 cursor-pointer select-none transition-all duration-300 ${

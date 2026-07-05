@@ -1,42 +1,22 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import slide2 from '../../assets/images/slides/slide2.jpg';
-import slide3 from '../../assets/images/slides/slide3.jpg';
-import slide4 from '../../assets/images/slides/slide4.jpg';
-import slide5 from '../../assets/images/slides/slide5.jpg';
-import slide6 from '../../assets/images/slides/slide6.jpg';
-import slide7 from '../../assets/images/slides/slide7.jpg';
-import slide8 from '../../assets/images/slides/slide8.jpg';
-import slide9 from '../../assets/images/slides/slide9.jpg';
+
 import slide10 from '../../assets/images/slides/slide10.jpg';
 import slide11 from '../../assets/images/slides/slide11.jpg';
-import slide12 from '../../assets/images/slides/slide12.jpg';
-import logoText from '../../assets/images/logo-text.png';
-import { ArrowRight, ChevronRight } from "lucide-react";
-import img2 from '../../assets/images/img2.jpg';
+import {  ChevronRight } from "lucide-react";
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
-import OptimizedImage from "../../components/OptimizedImage";
 import { motion, AnimatePresence,useScroll,useTransform  } from 'framer-motion'
 import { useInView } from "framer-motion";
 import logo from '../../assets/images/logo.png';
 import JoinNewsletter from "../../components/JoinNewsletter";
 import FollowUs from "../../components/FollowUs";
-const SLIDE_ITEMS = [
-    {id:1, src:slide2 },
-    // {id:2, src:slide3 },
-    // {id:3, src:slide4 },
-    // {id:4, src:slide6 },
-    // {id:4, src:slide7 },
-    // {id:4, src:slide8 },
-    // {id:4, src:slide9 },
-]
-const PROJECT_FILTERS= ['All', 'For Sale', 'Sold'];
+
 const PROJECTS = [
     {
       title: "Mon Cor",
@@ -57,15 +37,6 @@ const PROJECTS = [
         image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800",
       },
   ];
-  const INSTAGRAM_IMAGES = [
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400",
-    "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=400",
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400",
-]
 const venues = [
   {
     id: 1,
@@ -100,11 +71,7 @@ const BANNER_IMAGES = [
     "https://cdn.sanity.io/images/bxdajbsn/production/96494324d88cc4526bdc56376411b6138e39e779-4000x4000.jpg",
     "https://cdn.sanity.io/images/bxdajbsn/production/a726e8941d2121cd6566e13cbbc0b2a8716d1374-3780x2520.jpg",
   ]
-const SLIDE_ITEMS_2 = [
-    {id:1, src:slide10 },
-    {id:2, src:slide11 },
-    {id:3, src:slide12 },
-]
+
 const sizeMap = {
   sm: { width: "25%",  height: 160 },
   md: { width: "25%",  height: 240 },
@@ -263,9 +230,13 @@ const Banner = () => {
             <div className="absolute inset-0 bg-black/20" />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-4xl gap-12 z-10">
               <div className="flex items-center gap-12 relative">
-                <LocalizedLink to="/projects" className="link-underline cursor-pointer absolute left-[-140px]
+                <LocalizedLink to="/projects" className="link-underline cursor-pointer absolute left-[-300px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Projects
+                </LocalizedLink>
+                <LocalizedLink to="/media" className="link-underline cursor-pointer absolute left-[-140px]
+                text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
+                  Media
                 </LocalizedLink>
                 <img src={logo} className="h-[130px]"/>
                 <LocalizedLink to="/about" className="link-underline cursor-pointer absolute right-[-140px]

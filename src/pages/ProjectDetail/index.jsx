@@ -14,79 +14,7 @@ import FollowUs from "../../components/FollowUs"
 import ProjectCarousel from "../../components/ProjectCarousel"
 import { projectsService } from "../../services/projectsService"
 const BASE_CDN_URL = 'https://cdn.latelia.com/latelia/'
-const MOCK_PROJECT = {
-    id: 1,
-    name: 'Mira Calma',
-    status: 'For Sale',                          // 'For Sale' | 'Sold' | 'Under Offer'
-    price: '4.250.000 €',
-    location: 'Valldemossa',
-    brochureUrl: '/view-brochure/1?filter=0',
 
-    // Property Features (hiển thị ở banner + specs section)
-    features: {
-        bedrooms: 4,
-        bathrooms: 4,
-        studio: true,                            // Independent studio
-        constructedArea: '345 m²',
-        plotArea: '687 m²',
-    },
-
-    // Specifications — array of strings
-    specifications: [
-        'Infinity saltwater pool with green tiling',
-        'Private roof terrace with spectacular views',
-        'Underfloor heating & ducted A/C',
-        'Sound system integrated',
-        'Parking for 2 cars',
-        'Immaculate renovation',
-    ],
-
-    // Property Highlights — array of strings (bullet points)
-    highlights: [
-        'Located in UNESCO Serra de Tramuntana',
-        'En-suite bedrooms throughout',
-        'Single-level living with panoramic views',
-        'Ancient pines and Mediterranean planting',
-    ],
-
-    // Ảnh — array theo thứ tự layout gallery
-    images: [
-        { id: 1, src: aboutUs2, aspect: 'landscape' },
-        { id: 2, src: aboutUs2, aspect: 'landscape' },
-        { id: 3, src: aboutUs2, aspect: 'portrait' },
-        { id: 4, src: aboutUs2, aspect: 'portrait-tall' },
-        { id: 5, src: aboutUs2, aspect: 'landscape' },
-        { id: 6, src: aboutUs2, aspect: 'landscape' },
-        { id: 7, src: aboutUs2, aspect: 'landscape' },
-        { id: 8, src: aboutUs2, aspect: 'portrait' },
-        { id: 9, src: aboutUs2, aspect: 'landscape' },
-        { id: 10, src: aboutUs2, aspect: 'landscape' },
-        { id: 11, src: aboutUs2, aspect: 'landscape' },
-        { id: 12, src: aboutUs2, aspect: 'landscape' },
-    ],
-
-    // Các phần đặc biệt — array với read more
-    sections: [
-        {
-            id: 'architecture',
-            title: 'Architecture & Setting',
-            shortDescription: 'Set above Valldemossa within the UNESCO-protected Serra de Tramuntana, Miracalma enjoys a privileged position among ancient pines.',
-            fullDescription: "Set above Valldemossa within the UNESCO-protected Serra de Tramuntana, Miracalma enjoys a privileged position among ancient pines and Mediterranean planting, with sweeping views across the mountains. Designed to embrace Mallorca's afternoon light, the house sits naturally within its surroundings, combining contemporary architecture with traditional Mallorcan craftsmanship.",
-        },
-        {
-            id: 'interiors',
-            title: 'Interiors',
-            shortDescription: "Natural stone and oak define the home's character, creating warm, tactile interiors.",
-            fullDescription: "Natural stone and oak define the home's character, creating warm, tactile interiors that feel both timeless and deeply connected to the landscape. Living spaces unfold across a single level, where generous openings frame the mountains and establish a seamless relationship between indoors and out.",
-        },
-        {
-            id: 'outdoor',
-            title: 'Outdoor Living',
-            shortDescription: "Private, peaceful and immersed in nature, Miracalma offers a rare opportunity to live within one of Mallorca's most distinguished settings.",
-            fullDescription: 'The infinity saltwater pool with signature green tiling reflects the surrounding pine canopy. A private roof terrace commands 360° views of the Serra de Tramuntana, while the generous plot of 687m² ensures complete privacy and serenity.',
-        },
-    ],
-}
 // ── 1. FadeUpSection ──────────────────────────────────────────────────────
 const FadeUpSection = ({ children, delay = 0 }) => {
     const ref = useRef(null)
@@ -147,12 +75,12 @@ const BrochureLink = ({ to, light = false, className = "" }) => (
 )
 
 // ── 4. SpecBadge — pill specification ────────────────────────────────────
-const SpecBadge = ({ text }) => (
+const SpecBadge = ({ spec }) => (
     <span
         className="inline-block px-3 py-1.5 text-sm border border-bg-secondary/20 rounded-full text-bg-secondary"
         style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(12px, 1vw, 14px)' }}
     >
-        {text}
+        {spec.text}
     </span>
 )
 
@@ -348,7 +276,7 @@ function ProjectDetail() {
             fetchProjectDetail();
         }
     }, [projectId]);
-
+    console.log(project)
     // Loading state
     if (loading) {
         return (
@@ -437,22 +365,12 @@ function ProjectDetail() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
                         className="flex flex-wrap items-center justify-center gap-0 mb-6"
-                        style={{ fontSize: 'clamp(13px, 1.1vw, 16px)', letterSpacing: '0.2px' }}
+                        style={{ fontSize: 'clamp(15px, 1.1vw, 20px)', letterSpacing: '0.2px' }}
                     >
-                        {/* {[
-                            `${project.features.bedrooms} Bedrooms${project.features.studio ? ' + Independent Studio' : ''}`,
-                            `${project.features.bathrooms} Bathrooms`,
-                            `${project.features.constructedArea} Constructed Area`,
-                            project.location,
-                        ].map((spec, i, arr) => (
-                            <span key={i} className="flex items-center opacity-90">
-                                {spec}
-                                {i < arr.length - 1 && <span className="mx-3 opacity-40">|</span>}
-                            </span>
-                        ))} */}
+                        
                         {project?.propertyFeatures?.length > 0 && project.propertyFeatures.map((feature, i) => (
-                            <span key={i} className="flex items-center opacity-90">
-                                {feature}
+                            <span key={feature._id || i} className="flex items-center opacity-90">
+                                {feature.text}
                                 {i < project.propertyFeatures.length - 1 && <span className="mx-3 opacity-40">|</span>}
                             </span>
                         ))}
@@ -467,9 +385,9 @@ function ProjectDetail() {
                     >
                         <span
                             className="inline-block px-4 py-1.5 rounded-lg bg-white text-bg-secondary font-medium"
-                            style={{ fontSize: 'clamp(13px, 1vw, 15px)' }}
+                            style={{ fontSize: 'clamp(20px, 1vw, 25px)' }}
                         >
-                            {project.status}
+                            {project.type === 'sale' ? 'For Sale' : 'For Rent'}
                         </span>
                     </motion.div>
 
@@ -479,7 +397,7 @@ function ProjectDetail() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
                     >
-                        <BrochureLink to={project.brochureUrl} light />
+                        <BrochureLink to={`/view-brochure/${project._id}`} light />
                     </motion.div>
                 </div>
             </div>
@@ -487,30 +405,27 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ② INTRO TEXT
             ════════════════════════════════════════ */}
-            {/* <div className="mt-20 xl:mt-40 mb-16 xl:mb-32 flex justify-center px-6">
+            <div className="mt-20 xl:mt-40 mb-16 xl:mb-32 flex justify-center px-6">
                 <FadeUpSection>
                     <div className="max-w-[760px] text-center">
                         <h2
                             className="text-bg-secondary font-medium"
                             style={{ fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2 }}
                         >
-                            {project.sections[0]?.fullDescription}
+                            {project.title}
                         </h2>
-                        {project.sections.slice(1, 3).map((s, i) => (
-                            <p
-                                key={i}
-                                className="text-bg-secondary/70 mt-8"
-                                style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(16px, 1.3vw, 20px)', lineHeight: 1.7 }}
-                            >
-                                {s.shortDescription}
-                            </p>
-                        ))}
+                        <p
+                            className="text-bg-secondary/70 mt-8"
+                            style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(16px, 1.3vw, 20px)', lineHeight: 1.7 }}
+                        >
+                            {project.description}
+                        </p>
                         <div className="mt-10 flex justify-center">
-                            <BrochureLink to={project.brochureUrl} />
+                            <BrochureLink to={`/view-brochure/${project._id}`}  />
                         </div>
                     </div>
                 </FadeUpSection>
-            </div> */}
+            </div>
 
             {/* ════════════════════════════════════════
                 ③ PHOTO GALLERY — BLOCK 1-3
@@ -549,25 +464,18 @@ function ProjectDetail() {
                     <FadeUpSection>
                         {/* Property Features grid */}
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mb-14 pb-14 border-b border-bg-secondary/10">
-                            {[
-                                { label: 'Location', value: project?.projectFeatures[0]},
-                                { label: 'Price', value: project.price },
-                                { label: 'Bedrooms', value: project.features.bedrooms },
-                                { label: 'Bathrooms', value: project.features.bathrooms },
-                                { label: 'Size', value: project.features.constructedArea + ' Constructed Area' },
-                                { label: 'Plot', value: project.features.plotArea + ' Plot' },
-                            ].map(({ label, value }) => (
-                                <div key={label}>
-                                    <p className="text-bg-secondary/40 text-sm uppercase tracking-widest mb-1"
-                                        style={{ fontFamily: 'InstrumentSans' }}>
-                                        {label}
-                                    </p>
-                                    <p className="text-bg-secondary font-medium"
+                        {project?.propertyFeatures?.map(({ text, _id }, index) => (
+                            <div key={_id || index}>
+                                <p className="text-bg-secondary/40 text-sm uppercase tracking-widest mb-1"
+                                    style={{ fontFamily: 'InstrumentSans' }}>
+                                    {text}
+                                </p>
+                                {/* <p className="text-bg-secondary font-medium"
                                         style={{ fontSize: 'clamp(15px, 1.2vw, 18px)' }}>
                                         {value}
-                                    </p>
-                                </div>
-                            ))}
+                                    </p> */}
+                            </div>
+                        ))}
                         </div>
 
                         {/* Property Highlights */}
@@ -576,15 +484,73 @@ function ProjectDetail() {
                                 style={{ fontSize: 'clamp(13px, 1vw, 15px)', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.5 }}>
                                 Property Highlights
                             </h3>
-                            <ul className="space-y-2">
-                                {project.highlights.map((h, i) => (
+                            {/* <ul className="space-y-2">
+                                {project?.propertyHighlights.map((h, i) => (
                                     <li key={i} className="flex items-start gap-3 text-bg-secondary/70"
                                         style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}>
                                         <Check size={16} className="mt-0.5 flex-shrink-0 text-bg-secondary" />
                                         {h}
                                     </li>
                                 ))}
-                            </ul>
+                            </ul> */}
+                            <div className="space-y-10">
+    {project?.propertyHighlights.map((highlight, i) => {
+        const features = highlight.featureSections?.filter(
+            (f) => f.name?.trim() || f.description?.trim()
+        );
+
+        return (
+            <div key={highlight._id ?? i} className="space-y-3">
+                {/* Title */}
+                {highlight.title && (
+                    <h3
+                        className="text-bg-secondary flex items-start gap-3"
+                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(18px, 1.6vw, 22px)' }}
+                    >
+                        <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
+                        {highlight.title}
+                    </h3>
+                )}
+
+                {/* Description */}
+                {highlight.description && (
+                    <p
+                        className="text-bg-secondary/70 pl-8 whitespace-pre-line"
+                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}
+                    >
+                        {highlight.description}
+                    </p>
+                )}
+
+                {/* Feature sections */}
+                {features?.length > 0 && (
+                    <ul className="pl-8 space-y-2 border-l border-bg-secondary/15">
+                        {features.map((f) => (
+                            <li key={f._id} className="pl-4">
+                                {f.name && (
+                                    <span
+                                        className="block text-bg-secondary/90"
+                                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(14px, 1.1vw, 16px)' }}
+                                    >
+                                        {f.name}
+                                    </span>
+                                )}
+                                {f.description && (
+                                    <span
+                                        className="block text-bg-secondary/60"
+                                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)' }}
+                                    >
+                                        {f.description}
+                                    </span>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+        );
+    })}
+</div>
                         </div>
 
                         {/* Specifications pills */}
@@ -595,7 +561,7 @@ function ProjectDetail() {
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {project.specifications.map((spec, i) => (
-                                    <SpecBadge key={i} text={spec} />
+                                    <SpecBadge key={i} spec={spec} />
                                 ))}
                             </div>
                         </div>
@@ -660,9 +626,11 @@ function ProjectDetail() {
                 ⑥ CÁC PHẦN ĐẶC BIỆT — Accordion
             ════════════════════════════════════════ */}
             <div className="mt-20 xl:mt-36">
-                {project.sections.map(section => (
-                    <SectionAccordion key={section.id} section={section} />
-                ))}
+                {project?.specialSections.map(section => {
+                    return (
+                        <SectionAccordion key={section._id} section={section} />
+                    )
+                })}
             </div>
 
             {/* ════════════════════════════════════════
