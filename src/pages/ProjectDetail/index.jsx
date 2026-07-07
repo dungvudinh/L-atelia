@@ -338,14 +338,14 @@ function ProjectDetail() {
             ════════════════════════════════════════ */}
             <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative overflow-hidden">
                 <OptimizedImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                    src={`${BASE_CDN_URL}${project?.gallery?.[0]?.key}`} 
                     alt={project.name}
                     className="object-cover w-full h-full object-center"
                     style={{ filter: 'brightness(0.68)' }}
                 />
                 <div
                     className="absolute inset-0"
-                    style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)' }}
+                    style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5) 100%, transparent 60%)' }}
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
 
@@ -441,13 +441,13 @@ function ProjectDetail() {
                 {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
                 <div className="flex gap-3">
                     <FadeImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                    src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
                     className="flex-1"
                     style={{ height: 'clamp(140px, 26vw, 380px)' }}
                     delay={0}
                     />
                     <FadeImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                    src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
                     className="flex-1"
                     style={{ height: 'clamp(140px, 26vw, 380px)' }}
                     delay={0.1}
@@ -575,7 +575,7 @@ function ProjectDetail() {
             <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 space-y-3">
 
                 {/* Block 4: full-width */}
-                <FadeImage src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`}  className="w-full"
+                <FadeImage src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`}  className="w-full"
                     style={{ height: 'clamp(280px, 52vw, 740px)' }} />
 
                 {/* Text xen giữa ảnh */}
@@ -598,7 +598,7 @@ function ProjectDetail() {
                 <div className="px-4 md:px-8 xl:px-14 space-y-3">
                     {/* Ảnh 1 — full width */}
                     <FadeImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                        src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
                         className="w-full"
                         style={{ height: 'clamp(200px, 40vw, 560px)' }}
                     />
@@ -606,13 +606,13 @@ function ProjectDetail() {
                     {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
                     <div className="flex gap-3">
                         <FadeImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                        src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
                         className="flex-1"
                         style={{ height: 'clamp(140px, 26vw, 380px)' }}
                         delay={0}
                         />
                         <FadeImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                        src={`${BASE_CDN_URL}${project?.gallery?.[7]?.key}`} 
                         className="flex-1"
                         style={{ height: 'clamp(140px, 26vw, 380px)' }}
                         delay={0.1}

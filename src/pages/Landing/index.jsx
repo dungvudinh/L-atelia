@@ -110,12 +110,12 @@ function Landing() {
                   }}
                 >
                   <h1 className="text-4xl text-bg-secondary">
-                    Berrow is a family-led architectural design-build team based in Mallorca.
+                  Latelia là đơn vị phát triển bất động sản tại thành phố biển Đà Nẵng
                   </h1>
                   <ProjectGallery />
                   <div className="mb-5 w-full max-w-[772px] text-center md:mb-7 md:w-10/12">
                     <h4 className="text-bg-secondary text-[20px] leading-[24px] xs:text-[24px] xs:leading-[28px] md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px] text-center">
-                    We transform local properties that are full of stories and character into luxury finished homes for modern buyers.
+                    Chúng tôi phát triển các dự án tại Đà Nẵng – thành phố đáng sống, nơi hội tụ thiên nhiên, nhịp sống hiện đại và tiềm năng bền vững.
                     </h4>
                   </div>
                   
@@ -123,23 +123,30 @@ function Landing() {
                 <div ref={ref} className="mt-[-150px]  w-full flex justify-center items-center" >
                   <div className="relative w-full xl:max-w-screen-2xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
                     <img src={img10} className="rounded-2xl h-full w-full"/>
-                    <motion.h4
+                    <motion.div
                       style={{ y }}
-                      className="absolute top-1/2 left-1/2 text-white -translate-x-1/2 -translate-y-1/2 xs:text-[60px] sm:text-[70px] md:text-[80px] md:leading-[96px] lg:text-[96px]"
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center"
                     >
-                      You've arrrived
-                    </motion.h4>
+                      <h4 className="xs:text-[60px] sm:text-[70px] md:text-[80px] md:leading-[96px] lg:text-[96px] font-medium tracking-tight">
+                        L'ATELIA
+                      </h4>
+                      <p className="xs:text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-light italic mt-2 md:mt-4">
+                        Khởi đầu từ một niềm tin
+                      </p>
+                    </motion.div>
 
                   </div>
                 </div>
                 <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
                   <FadeUpSection>
-                      <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
+                      <div className="mx-auto max-w-[800px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
                           <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                          Each project presents a different challenge.
+                          Chúng tôi chọn xây những ngôi nhà có dấu ấn.
                           </h1>
-                          <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
-                          Whether we’re renovating a dilapidated building or designing a new low-impact home, our philosophy is always the same. We use the finest natural materials from the island and partner with local contractors who understand the region’s history and can help us build a home that respects its surroundings.
+                          <p  className="text-[20px] text-bg-secondary mt-2" style={{fontFamily:'Nunito Sans'}}>
+                          Art Latelia được hình thành từ mong muốn kiến tạo nên những công trình nhà ở mang giá trị nghệ thuật, kiến trúc hiện đại và cảm xúc sống trọn vẹn cho chủ nhân. 
+                          Mỗi ngôi nhà là một tác phẩm được “đo ni đóng giày” theo phong cách sống, gu thẩm mĩ và tầm nhìn dài hạn của người sở hữu.
+
                           </p>
                           <LocalizedLink
                               to="/projects"
@@ -228,20 +235,20 @@ const Banner = () => {
               <div className="flex items-center gap-12 relative">
                 <LocalizedLink to="/projects" className="link-underline cursor-pointer absolute left-[-300px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
-                  Projects
+                  Dự án
                 </LocalizedLink>
                 <LocalizedLink to="/media" className="link-underline cursor-pointer absolute left-[-140px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Media
                 </LocalizedLink>
                 <img src={logo} className="h-[130px]"/>
-                <LocalizedLink to="/about" className="link-underline cursor-pointer absolute right-[-140px]
+                <LocalizedLink to="/about" className="link-underline cursor-pointer absolute right-[-180px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
-                  About Us
+                  Về chúng tôi
                 </LocalizedLink>
-                <LocalizedLink to="/contact" className="link-underline cursor-pointer absolute right-[-300px]
+                <LocalizedLink to="/contact" className="link-underline cursor-pointer absolute right-[-340px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
-                  Contact
+                  Liên hệ
                 </LocalizedLink>
               </div>
             </div>

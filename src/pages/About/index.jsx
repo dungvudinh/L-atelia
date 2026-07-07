@@ -19,7 +19,12 @@ import { useInView } from "framer-motion";
 import JoinNewsletter from '../../components/JoinNewsletter'
 import FollowUs from '../../components/FollowUs'
 import ProjectCarousel from '../../components/ProjectCarousel'
-
+import { Check } from 'lucide-react'
+import img11 from '../../assets/images/img11.webp'
+import img12 from '../../assets/images/img12.webp'
+import img13 from '../../assets/images/img13.webp'
+import img14 from '../../assets/images/img14.webp'
+import img15 from '../../assets/images/img15.webp'
 const TIMELINE_ITEMS = [
     {
         id: 1,
@@ -67,13 +72,54 @@ const TIMELINE_ITEMS = [
         ]
     },
 ]
-const GALLERY_IMAGES = [
-    { src: aboutUs2,  width: 1000, rounded: false },
-    { src: aboutUs3,   width: 1000, rounded: true  },
-    { src: aboutUs4,  width: 1000, rounded: true  },
-    { src: aboutUs5,  width: 1000, rounded: true  },
-    { src: aboutUs6,   width: 1000, rounded: false },
-]
+const PROCESS_STEPS = [
+    {
+        id: 1,
+        title: 'LỰA CHỌN QUỸ ĐẤT',
+        desc: 'Latelia trực tiếp nghiên cứu và lựa chọn quỹ đất phù hợp tại thành phố Đà Nẵng, ưu tiên:\n\n• Vị trí thuận tiện\n• Khả năng khai thác tốt\n• Giá trị sử dụng và gia tăng lâu dài\n\nĐây là nền tảng quan trọng quyết định chất lượng và giá trị của toàn bộ dự án.'
+    },
+    {
+        id: 2,
+        title: 'LÊN Ý TƯỞNG THIẾT KẾ',
+        desc: 'Dựa trên đặc điểm khu đất và nhu cầu sử dụng thực tế, Latelia xây dựng ý tưởng kiến trúc tổng thể cho công trình:\n\n• Phong cách hiện đại, tinh tế\n• Định hướng công năng rõ ràng\n• Tối ưu án sáng và không gian sống'
+    },
+    {
+        id: 3,
+        title: 'THIẾT KẾ LAYOUT CÔNG NĂNG',
+        desc: 'Từ ý tưởng ban đầu, đội ngũ Latelia triển khai bản vẽ layout chi tiết, sắp xếp không gian hợp lý:\n\n• Phòng ốc khoa học\n• Lưu thông tiện lợi\n• Đảm bảo sự riêng tư và thoải mái cho gia chủ'
+    },
+    {
+        id: 4,
+        title: 'XIN GIẤY PHÉP XÂY DỰNG',
+        desc: 'Latelia thực hiện đầy đủ các thủ tục pháp lý cần thiết:\n\n• Xin giấy phép xây dựng theo đúng quy định\n• Đảm bảo hồ sơ pháp lý rõ ràng, minh bạch\n• Giúp khách hàng an tâm trước khi triển khai dự án'
+    },
+    {
+        id: 5,
+        title: 'TRIỂN KHAI THIẾT KẾ 3D',
+        desc: 'Sau khi hoàn tất pháp lý, Latelia xây dựng bản vẽ phối cảnh 3D chi tiết, thể hiện:\n\n• Hình dáng kiến trúc\n• Không gian nội – ngoại thất\n• Cảm xúc và trải nghiệm sống thực tế\n\nKhách hàng có thể hình dung chính xác ngôi nhà tương lai của mình.'
+    },
+    {
+        id: 6,
+        title: 'TRIỂN KHAI BÁN HÀNG & ĐIỀU CHỈNH THEO NHU CẦU KHÁCH',
+        desc: 'Trong giai đoạn này:\n\n• Latelia giới thiệu sản phẩm đến khách hàng\n• Khách hàng được quyền điều chỉnh thiết kế nội thất theo nhu cầu và phong cách riêng\n• Hai bên thống nhất phương án tối ưu nhất'
+    },
+    {
+        id: 7,
+        title: 'CHỐT BẢN VẼ 3D CUỐI CÙNG',
+        desc: 'Sau khi thống nhất:\n\n• Hai bên chốt bản vẽ 3D hoàn chỉnh\n• Đây là cơ sở kỹ thuật và pháp lý để triển khai thi công\n• Mọi hạng mục được xác định rõ ràng'
+    },
+    {
+        id: 8,
+        title: 'KÝ HỢP ĐỒNG & TRIỂN KHAI XÂY DỰNG',
+        desc: 'Latelia và khách hàng tiến hành:\n\n• Ký kết hợp đồng thi công\n• Cam kết xây dựng đúng thiết kế đã chốt\n• Quản lý tiến độ, chất lượng và kỹ thuật trong suốt quá trình thi công'
+    },
+    {
+        id: 9,
+        title: 'HOÀN THIỆN & BÀN GIAO NHÀ',
+        desc: 'Sau khi công trình hoàn tất:\n\n• Latelia nghiệm thu theo đúng bản vẽ đã cam kết\n• Bàn giao nhà cho khách hàng\n• Đảm bảo chất lượng, thẩm mỹ và công năng đúng như thiết kế ban đầu\n\nKhách hàng nhận nhà đúng cam kết – đúng chất lượng – đúng kỳ vọng.'
+    }
+];
+const GALLERY_IMAGES = [img11,img12,img13, img14,img15]
 
 function About()
 {
@@ -103,7 +149,7 @@ function About()
                         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
                         className="text-white/75 text-[64px] md:text-[64px] xl:text-[64px] mt-4 max-w-xl"
                     >
-                        One team. <br/> One set of standards.
+                       Một đội ngũ. <br/> Một tiêu chuẩn.
                     </motion.p>
                     {/* <motion.div
                         initial={{ scaleX: 0 }}
@@ -121,21 +167,92 @@ function About()
                 <FadeUpSection>
                     <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
                         <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                        Berrow is a multi-disciplinary property practice, working exclusively across Mallorca. We design and build exceptional homes that stand the test of time.
+                        LỰA CHỌN ĐẤT – NỀN TẢNG CỦA GIÁ TRỊ LÂU DÀI
                         </h1>
-                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
-                        Our in-house expertise spans the entire property development cycle, including search and acquisition, architecture and design, project management, interior design, and sales — offering a fully integrated approach whether working on an in-house development or on behalf of our clients.
+                        <p  className="text-[20px] text-bg-secondary mt-2">
+                        Đằng sau mỗi ngôi nhà Art Latelia không chỉ là bản vẽ hay vật liệu, mà là một quá trình được tính toán kỹ lưỡng ngay từ viên gạch đầu tiên.
+                        </p>
+                        <p  className="text-[20px] text-bg-secondary mt-2">
+                        Art Latelia không chọn đất theo số lượng. Chúng tôi chọn theo các tiêu chí cốt lõi: vị trí thuận tiện cho sinh hoạt, kết nối tốt. Pháp lý rõ ràng, phù hợp với phát triển lâu dài. Phù hợp để tạo nên không gian sống chất lượng, không chỉ để ở mà còn để giữ gìn giá trị tài sản. Đất tốt là điều kiện tiên quyết để một ngôi nhà trở nên đáng sống và đáng đầu tư.
                         </p>
                     </div>
                 </FadeUpSection>
             </div>
             {/* <TimelineSection /> */}
+            <div className='mt-10 lg:mt-20 bg-gray-50 py-10 lg:py-20'>
+                <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
+                    <div className='text-center mb-10 lg:mb-16'>
+                        <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
+                            QUY TRÌNH TRIỂN KHAI DỰ ÁN TẠI LATELIA
+                        </h1>
+                        <p className='text-[16px] lg:text-[18px] text-gray-600'>
+                            Minh bạch – Đồng hành – Cam kết đúng như thiết kế
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                        {PROCESS_STEPS.map((step, index) => (
+                            <div key={step.id} className='p-6 xl:p-8 p-2 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
+                                <div className='flex xl:items-start justify-center items-center gap-4 xl:flex-row flex-col'>
+                                    <div className='flex-shrink-0 w-10 h-10 bg-txt-secondary text-white rounded-full flex items-center justify-center font-semibold text-[18px]'>
+                                        {index + 1}
+                                    </div>
+                                    <div className='flex-1'>
+                                        <h4 className='text-[18px] lg:text-[20px] font-semibold font-subtitle text-txt-secondary mb-4 lg:mb-5 leading-tight' >
+                                            {step.title}
+                                        </h4>
+                                        <div className='text-[15px] lg:text-[16px] text-gray-600 whitespace-pre-line space-y-2' style={{fontFamily:'Nunito Sans'}}>
+                                            {step.desc.split('\n').map((line, idx) => (
+                                                <p key={idx} className={`${line.startsWith('•') ? 'flex items-start' : ''} ${line.trim() === '' ? 'mt-3' : ''}`}>
+                                                    {line.startsWith('•') ? (
+                                                        <>
+                                                            <span className='mr-2 mt-1 flex-shrink-0'>•</span>
+                                                            <span>{line.substring(1).trim()}</span>
+                                                        </>
+                                                    ) : (
+                                                        line
+                                                    )}
+                                                </p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className='mt-16 lg:mt-20 text-center'>
+                        <div className='inline-block p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl'>
+                            <h3 className='text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-6 font-subtitle'>
+                                CAM KẾT CỦA LATELIA
+                            </h3>
+                            <div className='space-y-4 text-left mb-6' style={{fontFamily:'Nunito Sans'}}>
+                                <p className='text-[16px] lg:text-[17px] flex items-start' >
+                                    <Check className='text-green-500 mr-3 mt-1 flex-shrink-0' size={20}/>
+                                    Quy trình rõ ràng, minh bạch từng giai đoạn
+                                </p>
+                                <p className='text-[16px] lg:text-[17px] flex items-start'>
+                                    <Check className='text-green-500 mr-3 mt-1 flex-shrink-0' size={20}/>
+                                    Khách hàng được đồng hành và tham gia vào quá trình thiết kế
+                                </p>
+                                <p className='text-[16px] lg:text-[17px] flex items-start'>
+                                    <Check className='text-green-500 mr-3 mt-1 flex-shrink-0' size={20}/>
+                                    Thi công đúng bản vẽ, đúng cam kết hai bên
+                                </p>
+                            </div>
+                            <p className='text-[18px] lg:text-[20px] font-subtitle text-txt-secondary italic'>
+                                "Latelia không chỉ xây nhà – chúng tôi xây dựng niềm tin dài hạn."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <ImageStrip />
             <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
                 <FadeUpSection>
                     <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
                         <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                        An architecture & design studio, property developer, and collection of lifestyle brands, all under one roof.
+                        Một đơn vị thiết kế và thi công, phát triển bất động sản và tập hợp thương hiệu phong cách sống, tất cả nằm trong Latelia
                         </h1>
                     </div>
                 </FadeUpSection>
@@ -143,20 +260,41 @@ function About()
             <VennDiagram />
             <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
                 <FadeUpSection>
-                    <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                        <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                        Creating iconic homes we’re all proud to walk our families through for generations to come.
-                        </h1>
-                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
-                        Although we moved here from the UK, we have a lifetime of memories from Sóller. It’s where we spent our childhood holidays and it’s home to our first property renovation, Patiki Townhouse.
-                        </p>
-                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-4">
-                        Our development approach is rooted in collaboration with local artisans, builders and suppliers. As well as supporting our community, they share their unparalleled understanding of the island’s history and traditional building practices. This means that when we breathe new life into neglected properties, we’re able to honour their character, protect their stories, and ensure they're enjoyed for generations to come.
-                        </p>
-                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-4">
-                        We’re a family business that puts families first. This value runs through everything we do, from our projects at Berrow to the hospitality and community projects we are creating in the area.
-                        </p>
+                <div className="mx-auto max-w-[1100px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{ transform: 'none' }}>
+                    <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{ lineHeight: 1.2 }}>
+                        Triết lý thiết kế của Art L'Atelia
+                    </h1>
+
+                    <p style={{ fontFamily: 'InstrumentSans' }} className="text-[20px] text-bg-secondary mt-4">
+                        Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại Latelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
+                    </p>
+                    <p style={{ fontFamily: 'InstrumentSans' }} className="text-[20px] text-bg-secondary mt-2">
+                        Mỗi công trình được hình thành dựa trên 3 giá trị cốt lõi:
+                    </p>
+
+                    {/* 3 giá trị cốt lõi */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mt-10 text-left">
+                        <CoreValue
+                            title="Cá nhân hoá"
+                            desc="Mỗi ngôi nhà là một dấu ấn riêng. Latelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."
+                        />
+                        <CoreValue
+                            title="Kiến trúc hiện đại"
+                            desc="Sống thoải mái theo thời gian. Thiết kế ưu tiên ánh sáng tự nhiên, thông gió và công năng tối ưu, bền vững theo năm tháng. Một ngôi nhà đẹp là ngôi nhà 10 năm sau vẫn thấy đúng."
+                        />
+                        <CoreValue
+                            title="Nghệ thuật trong sự tinh giản"
+                            desc="Art Latelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."
+                        />
                     </div>
+
+                    {/* Câu kết luận */}
+                    <p className="text-bg-secondary text-[24px] font-medium mt-12" style={{ lineHeight: 1.4 }}>
+                        Chúng tôi không xây thật nhanh.
+                        <br />
+                        Chúng tôi xây đúng ngay từ đầu.
+                    </p>
+                </div>
                 </FadeUpSection>
             </div>
             <ProjectCarousel />
@@ -214,7 +352,29 @@ function TimelineSection() {
         </section>
     )
 }
+function CoreValue({ title, desc }) {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-60px' })
 
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+            <h3 className="text-bg-secondary text-[22px] font-medium mb-3 tracking-wide">
+                {title}
+            </h3>
+            <p
+                className="text-[16px] text-[#4a5050] leading-relaxed"
+                style={{ fontFamily: 'Nunito Sans' }}
+            >
+                {desc}
+            </p>
+        </motion.div>
+    )
+}
 function DotOnly({ index, isSectionInView }) {
     return (
         <div className="flex items-center py-2">
@@ -294,20 +454,19 @@ function ImageStrip() {
                 {GALLERY_IMAGES.map((img, i) => (
                     <SwiperSlide
                         key={i}
-                        style={{ width: img.width }}
+                        style={{ width: '1000px' }}
                         className="!h-auto"
                     >
                         <div
                             className={`
                                 overflow-hidden
                                 h-[82vh] 
-                                                             
-                                ${img.rounded ? 'rounded-2xl' : ''}
+                                rounded-2xl
                             `}
                             style={{ width: img.width }}
                         >
                             <img
-                                src={img.src}
+                                src={img}
                                 alt=""
                                 className="w-full h-full object-cover object-center"
                                 draggable={false}
@@ -376,13 +535,13 @@ function VennDiagram() {
                     {...fadeScale(0.1)}
                     className="absolute text-center"
                     style={{
-                        left: '43%',
+                        left: '39%',
                         top: '20%',          // cy=210 → 210/620 ≈ 34%, phần trên circle
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
                     <p style={{ fontSize: 'clamp(20px, 1.5vw, 30px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                        Architecture<br />& Design
+                    Thiết kế kiến trúc
                     </p>
                 </motion.div>
 
@@ -397,7 +556,7 @@ function VennDiagram() {
                     }}
                 >
                     <p style={{ fontSize: 'clamp(20px, 1.5vw, 30px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                        Sales &amp;<br />Marketing
+                    Truyền thông <br/> & Bán hàng 
                     </p>
                 </motion.div>
 
@@ -412,7 +571,7 @@ function VennDiagram() {
                     }}
                 >
                     <p style={{ fontSize: 'clamp(20px, 1.5vw, 30px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                        Development
+                    Phát triển
                     </p>
                 </motion.div>
 

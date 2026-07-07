@@ -142,7 +142,8 @@ function Media() {
           </h1>
           
           {/* FILTER */}
-          <div className="flex flex-col lg:flex-row justify-center items-center mt-6 lg:mt-0 text-[16px] lg:text-[18px] text-txt-gray">
+          <div className="flex flex-col lg:flex-row justify-center items-center mt-6 lg:mt-4 text-[16px] lg:text-[18px] text-txt-gray"
+          >
             <p className="mb-2 lg:mb-0">Filter by:</p>
             <ul className="flex flex-wrap justify-center lg:ml-2 gap-2 lg:gap-0">
               {CATEGORIES.map(category => (

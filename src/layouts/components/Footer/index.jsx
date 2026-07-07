@@ -5,10 +5,10 @@ import logo from '../../../assets/images/logo.png'
 import { Instagram } from '../../../assets/icons';
 import { LocalizedLink } from "../../../components/LocalizedLink";
 const NAV_LINKS = [
-{name:'Projects', to:'/projects'}, 
+{name:'Dự án', to:'/projects'}, 
 {name:'Media', to:'/media'},
-{name:'About us', to:'/about'},
-{name:'Contact', to:'/contact'}
+{name:'Về chúng tôi', to:'/about'},
+{name:'Liên hệ', to:'/contact'}
 ]
 const WELCOME_TEXT = "Welcome home."
 
@@ -37,17 +37,16 @@ const Footer = () => {
             <div className="flex flex-col items-end justify-between h-full gap-12">
               <img src={logo} className="w-16 md:w-25 md:mx-0" />
               <div className="text-right text-white/80 text-[20px] leading-[24px] leading-[1.6]">
-                <p className="cursor-pointer hover:opacity-70 transition-opacity duration-300">Carrer de Batac, 19</p>
-                <p className="mb-4 hover:opacity-70 transition-opacity duration-300">07100 Sóller, Illes Balears, Spain</p>
-                <p className="hover:opacity-70 transition-opacity duration-300">+34 854 55 82 57</p>
-                <p className="mb-4 hover:opacity-70 transition-opacity duration-300">studio@berrow.com</p>
-                <a
+                <p className="cursor-pointer hover:opacity-70 transition-opacity duration-300">Đà Nẵng</p>
+                <p className="hover:opacity-70 transition-opacity duration-300">+84 12345678</p>
+                <p className="mb-4 hover:opacity-70 transition-opacity duration-300">latelia.sale@gmail.com</p>
+                {/* <a
                   href="https://instagram.com/berrowprojects"
                   className="inline-flex items-center gap-2 hover:opacity-40 transition-opacity duration-300"
                 >
                   @berrowprojects
                   <Instagram />
-                </a>
+                </a> */}
               </div>
             </div>
         </div>

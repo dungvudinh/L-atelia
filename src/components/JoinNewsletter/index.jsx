@@ -92,7 +92,7 @@ function JoinNewsletter()
         <h2
             className="text-bg-secondary leading-[34px] text-[28px] lg:leading-[54px] md:text-[38px] lg:text-[48px] leading-[1.15]  max-w-[772px] mx-auto mb-10"
         >
-            Join our world of Mediterranean design and quiet luxury.
+            Kết nối cùng Art Latelia để bắt đầu hành trình kiến tạo không gian sống của riêng bạn 
         </h2>
 
         {/* Form */}

@@ -8,12 +8,12 @@ import {setLanguage} from '../../../redux/actions/languageActions';
 import {LocalizedLink} from '../../../components/LocalizedLink';
 import { useLocation } from "react-router-dom";
 const MENU_ITEMS = [
-    {id:1, title:'projects', to:'/projects'},
+    {id:1, title:'Dự án', to:'/projects'},
     {id:2, title:'media', to:'/media'},
     // {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
-    {id:4, title:'about us', to:'/about'}, 
+    {id:4, title:'Về chúng tôi', to:'/about'}, 
     // {id:5, title:'media', to:'/media'}, 
-    {id:6, title:'contact', to:'/contact'}
+    {id:6, title:'Liên hệ', to:'/contact'}
 ]
 
 function Header() {

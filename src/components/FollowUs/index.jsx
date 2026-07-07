@@ -27,7 +27,7 @@ function FollowUs() {
             <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2">
                 Follow us
                 @
-                <a href="https://instagram.com/berrowprojects" className="underline decoration-1 underline-offset-2">
+                <a href="#" className="underline decoration-1 underline-offset-2">
                     L'ateliaprojects
                 </a>
             </p>

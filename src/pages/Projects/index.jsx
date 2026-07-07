@@ -187,15 +187,21 @@ function Project() {
             <div className="xl:mt-40 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
                 <FadeUpSection>
                     <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                        <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                        Our first project was a bold vision to transform more than a century of stories into a modern home that will last for the next 100 years and beyond.
-                        </h1>
-                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
-                        We have since completed several projects. Each one is close to our hearts and driven by our vision, without a specific buyer in mind. When searching for a new opportunity, we are drawn to the fundamentals that make a place feel special. The location, light, space, proportions, sense of history, energy, and relationship to its surroundings.
+                        <div className="text-center">
+                            <p className="text-bg-secondary/70 text-[20px] md:text-[24px] font-medium uppercase tracking-wide">
+                                Mô hình bán trước - xây sau
+                            </p>
+                            <h1 className="text-bg-secondary text-[36px] md:text-[48px] font-medium mt-2" style={{ lineHeight: 1.2 }}>
+                                Vì sao Art Latelia được lựa chọn?
+                            </h1>
+                        </div>
+                        <p  className="text-[20px] text-bg-secondary mt-2" style={{fontFamily:'Nunito Sans'}}>
+                            Trong bất động sản, điều quan trọng không chỉ là mua được gì,
+                            mà là mua theo cách nào. Latelia phát triển các công trình theo mô hình bán trước – xây sau, bởi chúng tôi tin đây là cách làm minh bạch – tối ưu – bền vững cho cả người mua ở thực lẫn nhà đầu tư.
                         </p>
-                        <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
+                        {/* <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
                         Then we transform this potential into a timeless home that’s luxurious, authentic, and feels like it has always belonged.
-                        </p>
+                        </p> */}
                     </div>
                 </FadeUpSection>
             </div>
@@ -250,7 +256,7 @@ function Project() {
                                         <h3 className="md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px]">
                                         {project.title}
                                         </h3>
-                                        <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'InstrumentSans' }}>
+                                        <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'Nunito Sans' }}>
                                         {project.description}
                                         </p>
                                         <LocalizedLink

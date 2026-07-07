@@ -75,7 +75,7 @@ function ContactForm() {
         fontSize: '14px',
         color: '#1a3a3a',
         outline: 'none',
-        fontFamily: 'InstrumentSans',
+        fontFamily: 'Nunito Sans',
     }
 
     const handleChange = (e) => {
@@ -141,12 +141,12 @@ function ContactForm() {
                         </span>
                         <div style={{ width: '40px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
                     </div>
-                    <h2 className="text-bg-secondary" style={{ fontSize: 'clamp(48px, 6vw, 72px)', fontWeight: 400, lineHeight: 1.1, marginBottom: '16px' }}>
-                        Hello. Hola.
+                    <h2 className="text-bg-secondary" style={{ fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 400, lineHeight: 1.1, marginBottom: '16px' }}>
+                    Liên hệ với chúng tôi
                     </h2>
-                    <p className="text-bg-secondary" style={{ fontSize: '20px', lineHeight: 1.6 }}>
+                    {/* <p className="text-bg-secondary" style={{ fontSize: '20px', lineHeight: 1.6 }}>
                         Get in touch to see how we can help you make Mallorca your home.
-                    </p>
+                    </p> */}
                 </motion.div>
 
                 {/* Status Message */}
@@ -158,7 +158,7 @@ function ContactForm() {
                         style={{
                             background: submitStatus.type === 'success' ? '#e6f4ef' : '#fdecea',
                             color: submitStatus.type === 'success' ? '#1a3a3a' : '#a3342c',
-                            fontFamily: 'InstrumentSans',
+                            fontFamily: 'Nunino Sans',
                         }}
                     >
                         {submitStatus.message}
@@ -166,7 +166,7 @@ function ContactForm() {
                 )}
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3" >
 
                     {/* Row 1: First + Last Name */}
                     <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
@@ -177,6 +177,7 @@ function ContactForm() {
                             onChange={handleChange}
                             style={inputStyle}
                             required
+                            
                         />
                         <input
                             name="lastName"
@@ -240,7 +241,7 @@ function ContactForm() {
                     <motion.div {...fadeUp(0.4)}>
                         <textarea
                             name="description"
-                            placeholder="Give us a brief description of your project"
+                            placeholder="Message"
                             value={formData.description}
                             onChange={handleChange}
                             rows={5}
