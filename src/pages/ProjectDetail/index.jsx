@@ -579,7 +579,7 @@ function ProjectDetail() {
                     style={{ height: 'clamp(280px, 52vw, 740px)' }} />
 
                 {/* Text xen giữa ảnh */}
-                <div className="py-20 xl:py-32 flex justify-center px-6">
+                {/* <div className="py-20 xl:py-32 flex justify-center px-6">
                     <FadeUpSection>
                         <div className="max-w-[600px] text-center">
                             <p className="text-bg-secondary"
@@ -592,18 +592,16 @@ function ProjectDetail() {
                             </p>
                         </div>
                     </FadeUpSection>
-                </div>
+                </div> */}
 
                 {/* Block 5: portrait (2/5) + landscape (3/5) */}
-                <div className="px-4 md:px-8 xl:px-14 space-y-3">
-                    {/* Ảnh 1 — full width */}
+                {/* <div className="px-4 md:px-8 xl:px-14 space-y-3">
                     <FadeImage
                         src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
                         className="w-full"
                         style={{ height: 'clamp(200px, 40vw, 560px)' }}
                     />
 
-                    {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
                     <div className="flex gap-3">
                         <FadeImage
                         src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
@@ -619,7 +617,7 @@ function ProjectDetail() {
                         />
                     </div>
 
-                </div>
+                </div> */}
             </div>
 
             {/* ════════════════════════════════════════
@@ -629,7 +627,7 @@ function ProjectDetail() {
                 {project?.specialSections && project?.gallery && (() => {
                     const sections = project.specialSections;
                     const images = project.gallery;
-                    let imageIndex = 8; // Bắt đầu từ gallery[8]
+                    let imageIndex = 5; // Bắt đầu từ gallery[8]
                     const elements = [];
 
                     // Hàm lấy 3 ảnh tiếp theo
