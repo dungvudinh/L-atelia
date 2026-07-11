@@ -49,7 +49,7 @@ const convertToSlug = (title) => {
     .replace(/-+$/, '') || 'project';
 };
 
-function Project() {
+function Projects() {
     const {t} = useTranslation(["landing", "common"]);
     const [projectFilterId, setProjectFilterId] = useState(0);
     const [loaded, setLoaded] = useState(false);
@@ -123,8 +123,8 @@ function Project() {
         );
     }
     return ( 
-        <div className="">
-            {/* MAIN SLIDER */}
+        <div className="w-full overflow-x-hidden">
+            {/* MAIN SLIDER - Full screen trên mobile và tablet */}
             <Swiper
                 modules={[Autoplay, Pagination, Navigation]}
                 spaceBetween={20}
@@ -134,19 +134,19 @@ function Project() {
                     clickable: true,
                     dynamicBullets: true
                 }}
-                className="overflow-hidden"
+                className="overflow-hidden w-screen h-screen sm:h-screen md:h-screen lg:h-screen"
             >
                 {
                     SLIDE_ITEMS.map((slideItem, index) => (
-                        <SwiperSlide key={slideItem.id}>
-                            <div className="w-full xl:h-screen h-[300px] md:h-[500px] relative bg-black"> {/* 👈 bg-black */}
+                        <SwiperSlide key={slideItem.id} className="w-screen h-screen">
+                            <div className="w-full h-full relative bg-black">
                                 <OptimizedImage
                                     src={slideItem.src}
                                     className={`w-full h-full object-cover object-center transition-opacity duration-100
-                                        ${loaded ? 'slide-image-animate' : 'opacity-0'} // 👈 ẩn cho đến khi load
+                                        ${loaded ? 'slide-image-animate' : 'opacity-0'}
                                     `}
                                     onLoad={() => {
-                                        if (index === 0) setLoaded(true); // 👈 chỉ trigger khi ảnh đầu tiên load xong
+                                        if (index === 0) setLoaded(true);
                                     }}
                                 />
                                 <div className="absolute inset-0 bg-black/50" />
@@ -155,27 +155,20 @@ function Project() {
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={loaded ? { opacity: 1, y: 0 } : {}}
                                         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.35 }}
-                                        className="text-white text-[18px] md:text-[18px] xl:text-[18px]  leading-tight tracking-widest flex items-center justify-center gap-3"
+                                        className="text-white text-[14px] sm:text-[16px] md:text-[18px] leading-tight tracking-widest flex items-center justify-center gap-2 sm:gap-3"
                                     >
-                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
-                                        Projects
-                                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
+                                        <div className="h-[1px] bg-white w-8 sm:w-12" style={{opacity: 1, transformOrigin:'100% 50% 0px'}}></div>
+                                        Dự án
+                                        <div className="h-[1px] bg-white w-8 sm:w-12" style={{opacity: 1, transformOrigin:'100% 50% 0px'}}></div>
                                     </motion.h1>
                                     <motion.p
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={loaded ? { opacity: 1, y: 0 } : {}}
                                         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
-                                        className="text-white/75 text-[64px] md:text-[64px] xl:text-[64px] mt-4 max-w-xl"
+                                        className="text-white/75 text-[24px] sm:text-[36px] md:text-[48px] lg:text-[55px]xl:text-[64px] mt-3 sm:mt-4 max-w-3xl leading-tight px-4"
                                     >
-                                        One-of-a-kind homes, developed by L'atelia
+                                        Những thiết kế nhà độc bản được phát triển bởi Latelia
                                     </motion.p>
-                                    {/* <motion.div
-                                        initial={{ scaleX: 0 }}
-                                        animate={loaded ? { scaleX: 1 } : {}}
-                                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-                                        className="h-[1px] bg-white/60 w-16 mt-6"
-                                        style={{ originX: 0.5 }}
-                                    /> */}
                                 </div>
                             </div>
                         </SwiperSlide>
@@ -184,130 +177,152 @@ function Project() {
             </Swiper>
 
             {/* SUBTITLE */}
-            <div className="xl:mt-40 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
+            <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-40 flex justify-center px-4">
                 <FadeUpSection>
-                    <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
+                    <div className="mx-auto w-full sm:w-11/12 md:w-9/12 lg:w-10/12 xl:max-w-[1000px] text-center">
                         <div className="text-center">
-                            <p className="text-bg-secondary/70 text-[20px] md:text-[24px] font-medium uppercase tracking-wide">
+                            <p className="text-bg-secondary/70 text-[16px] sm:text-[18px] md:text-[20px] lg:text-[24px] font-medium uppercase tracking-wide">
                                 Mô hình bán trước - xây sau
                             </p>
-                            <h1 className="text-bg-secondary text-[36px] md:text-[48px] font-medium mt-2" style={{ lineHeight: 1.2 }}>
+                            <h1 className="text-bg-secondary text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] font-medium mt-2" style={{ lineHeight: 1.2 }}>
                                 Vì sao Art Latelia được lựa chọn?
                             </h1>
                         </div>
-                        <p  className="text-[20px] text-bg-secondary mt-2" style={{fontFamily:'Nunito Sans'}}>
+                        <p className="text-[16px] sm:text-[18px] md:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
                             Trong bất động sản, điều quan trọng không chỉ là mua được gì,
                             mà là mua theo cách nào. Latelia phát triển các công trình theo mô hình bán trước – xây sau, bởi chúng tôi tin đây là cách làm minh bạch – tối ưu – bền vững cho cả người mua ở thực lẫn nhà đầu tư.
                         </p>
-                        {/* <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
-                        Then we transform this potential into a timeless home that’s luxurious, authentic, and feels like it has always belonged.
-                        </p> */}
                     </div>
                 </FadeUpSection>
             </div>
+
             {/* LIST PROJECT */}
-            <div className="xl:mt-8 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px]  w-full md:gap-4">
-                    {/* FILTER */}
-                    <ul className="text-[20px] flex gap-3">
-                        {filters.map((filter, index) => (
-                        <li
-                            key={filter.id}
-                            onClick={() => setProjectFilterId(index)}
-                            className={`relative overflow-hidden px-6 py-2 rounded-md cursor-pointer text-bg-secondary group
-                            ${index === projectFilterId ? 'bg-bg-secondary text-white' : 'bg-[#f4f7f4]'}`}
-                        >
-                            <span className="block transition-all duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0">
-                            {filter.label}
-                            {filter.count > 0 && (
-                                <span className="ml-1 text-sm opacity-60">({filter.count})</span>
-                            )}
-                            </span>
-                            <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out px-6 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
-                            {filter.label}
-                            </span>
-                        </li>
-                        ))}
-                    </ul>
+            <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-8 mb-10 xl:mb-40 lg:mb-20 flex justify-center px-4">
+                <div className="w-full max-w-full sm:max-w-[900px] xl:max-w-screen-xl">
+                    {/* FILTER - Mobile responsive */}
+                    <div className="overflow-x-auto pb-2 -mx-2 px-2">
+                        <ul className="text-[14px] sm:text-[16px] md:text-[20px] flex gap-2 sm:gap-3 min-w-max">
+                            {filters.map((filter, index) => (
+                                <li
+                                    key={filter.id}
+                                    onClick={() => setProjectFilterId(index)}
+                                    className={`relative overflow-hidden px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-md cursor-pointer text-bg-secondary group whitespace-nowrap
+                                        ${index === projectFilterId ? 'bg-bg-secondary text-white' : 'bg-[#f4f7f4]'}`}
+                                >
+                                    <span className="block transition-all duration-300 ease-in-out group-hover:-translate-y-full group-hover:opacity-0 text-[16px] sm:text-[14px] md:text-[20px]">
+                                        {filter.label}
+                                        {filter.count > 0 && (
+                                            <span className="ml-1 text-[12px] md:text-sm xl:text-lg opacity-60">({filter.count})</span>
+                                        )}
+                                    </span>
+                                    <span className="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out px-4 sm:px-6 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 text-[12px] sm:text-[14px] md:text-[16px]">
+                                        {filter.label}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
                     {/* CONTENT */}
                     <div className="mt-8">
-                        {filteredProjects.length === 0 ? (
-                        <p className="text-center text-bg-secondary text-[18px] py-20" style={{ fontFamily: 'InstrumentSans' }}>
-                            No projects found.
-                        </p>
-                        ) : (
-                        <ul className={`grid ${projectFilterId === 2 ? 'md:grid-cols-2' : 'grid-cols-1'} gap-x-4 gap-y-15`}>
-                            {filteredProjects.map((project, index) => (
-                            <FadeUpSection key={project.id || index}>
-                                <li className="group cursor-pointer">
-                                {projectFilterId === 0 || projectFilterId === 1 ? (
-                                    // Style All / For Sale
-                                    <div className="relative overflow-hidden rounded-2xl h-[105%]">
+    {filteredProjects.length === 0 ? (
+        <p className="text-center text-bg-secondary text-[18px] py-20" style={{ fontFamily: 'InstrumentSans' }}>
+            No projects found.
+        </p>
+    ) : (
+        <ul className={`grid ${projectFilterId === 2 ? 'md:grid-cols-2' : 'grid-cols-1'} gap-x-4 gap-y-5 md:gap-y-15`}>
+            {filteredProjects.map((project, index) => (
+                <FadeUpSection key={project.id || index}>
+                    <li className="group cursor-pointer">
+                        {projectFilterId === 0 || projectFilterId === 1 ? (
+                            // Style All / For Sale
+                            <>
+                                <div className="relative overflow-hidden rounded-2xl">
                                     <img
                                         src={getImageUrl(project.src)}
                                         alt={project.alt || project.title}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-[300px] sm:h-[400px] md:h-[105%] object-cover"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent rounded-2xl" />
-                                    <span className="absolute top-10 left-10 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
+                                    <span className="absolute top-4 md:top-10 left-4 md:left-10 bg-white text-bg-secondary text-[16px] md:text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
                                         {project.type === 'sale' ? 'For sale' : 'For rent'}
                                     </span>
-                                    <div className="absolute bottom-8 left-10 right-10 text-white">
+                                    {/* Text overlay - chỉ hiển thị trên tablet/desktop */}
+                                    <div className="hidden md:block absolute bottom-4 md:bottom-8 left-4 md:left-10 text-white">
                                         <h3 className="md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px]">
-                                        {project.title}
+                                            {project.title}
                                         </h3>
                                         <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'Nunito Sans' }}>
-                                        {project.description}
+                                            {project.description}
                                         </p>
                                         <LocalizedLink
+                                            to={`/projects/${project.id}`}
+                                            className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
+                                            style={{ fontFamily: 'InstrumentSans' }}
+                                        >
+                                            View Project
+                                            <ChevronRight size={16} />
+                                        </LocalizedLink>
+                                    </div>
+                                </div>
+                                {/* Text bên dưới ảnh - chỉ hiển thị trên mobile */}
+                                <div className="md:hidden text-bg-secondary mt-3">
+                                    <h3 className="text-[28px] leading-[34px]">
+                                        {project.title}
+                                    </h3>
+                                    <p className="text-[14px] leading-[20px] mt-2 line-clamp-2" style={{ fontFamily: 'Nunito Sans' }}>
+                                        {project.description}
+                                    </p>
+                                    <LocalizedLink
                                         to={`/projects/${project.id}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
                                         style={{ fontFamily: 'InstrumentSans' }}
-                                        >
+                                    >
                                         View Project
                                         <ChevronRight size={16} />
-                                        </LocalizedLink>
-                                    </div>
-                                    </div>
-                                ) : (
-                                    // Style Sold
-                                    <>
-                                    <div className="relative overflow-hidden rounded-2xl mb-4 h-[105%]">
-                                        <img
+                                    </LocalizedLink>
+                                </div>
+                            </>
+                        ) : (
+                            // Style Sold
+                            <>
+                                <div className="relative overflow-hidden rounded-2xl mb-4">
+                                    <img
                                         src={getImageUrl(project.src)}
                                         alt={project.alt || project.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-                                        />
-                                        <span className="absolute top-8 left-8 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
+                                        className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                    />
+                                    <span className="absolute top-8 left-8 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
                                         {project.status === 'sold' ? 'Sold' : 'For Sale'}
-                                        </span>
-                                    </div>
-                                    <div className="text-bg-secondary">
-                                        <h3 className="md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px]">
+                                    </span>
+                                </div>
+                                <div className="text-bg-secondary">
+                                    <h3 className="md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px]">
                                         {project.title}
-                                        </h3>
-                                        <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'InstrumentSans' }}>
+                                    </h3>
+                                    <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'InstrumentSans' }}>
                                         {project.description}
-                                        </p>
-                                        <a
+                                    </p>
+                                    <a
                                         href={`/projects/${convertToSlug(project.title)}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
                                         style={{ fontFamily: 'InstrumentSans' }}
-                                        >
+                                    >
                                         View Project
                                         <ChevronRight size={16} />
-                                        </a>
-                                    </div>
-                                    </>
-                                )}
-                                </li>
-                            </FadeUpSection>
-                            ))}
-                        </ul>
+                                    </a>
+                                </div>
+                            </>
                         )}
-                    </div>
+                    </li>
+                </FadeUpSection>
+            ))}
+        </ul>
+    )}
+</div>
                 </div>
             </div>
+            
             <JoinNewsletter />
             <FollowUs />
             <Footer withContact={true}/>
@@ -331,4 +346,4 @@ const FadeUpSection = ({ children }) => {
     )
 }
 
-export default Project;
+export default Projects;

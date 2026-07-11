@@ -790,7 +790,7 @@ function Brochure() {
                         {project.title}
                     </h1>
                     
-                    <p className="text-[18px] md:text-[20px] lg:text-[20px] text-txt-gray leading-relaxed">
+                    <p className="text-[18px] md:text-[20px] lg:text-[20px] text-txt-gray leading-relaxed" style={{fontFamily:'Nunito Sans'}}>
                         {project.description}
                     </p>
                     
@@ -839,7 +839,7 @@ function Brochure() {
                                             }
                                         />
                                         {/* Thêm số trang brochure */}
-                                        <p className="text-center text-txt-gray mt-2 text-sm">
+                                        <p className="text-center text-txt-gray mt-2 text-md">
                                             Page {index + 1} of {currentFilterData.length}
                                         </p>
                                     </div>

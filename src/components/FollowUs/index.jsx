@@ -22,7 +22,7 @@ const INSTAGRAM_IMAGES = [
 
 function FollowUs() {
     return (
-        <div className="pb-16 w-full d-flex justify-center">
+        <div className=" md:pb-16 w-full d-flex justify-center">
           <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] mx-auto !px-4 md:px-0">
             <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2">
                 Follow us
@@ -51,7 +51,10 @@ const InViewSlider = ({ images }) => {
                 <Swiper
                     modules={[FreeMode, Mousewheel]}
                     style={{ width: "100%" }}
-                    spaceBetween={20}
+                    spaceBetween={10}
+                    sm={{ spaceBetween: 14 }}
+                    md={{ spaceBetween: 16 }}
+                    lg={{ spaceBetween: 20 }}
                     slidesPerView={"auto"}
                     freeMode={{
                         enabled: true,
@@ -68,7 +71,7 @@ const InViewSlider = ({ images }) => {
                         <SwiperSlide
                             key={index}
                             style={{ width: "200px" }}
-                            className="rounded-2xl overflow-hidden"
+                            className="rounded-xl md:rounded-2xl overflow-hidden"
                         >
                             <motion.div
                                 initial={{ opacity: 0 }}

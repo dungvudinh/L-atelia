@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import {ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import Footer from '../../layouts/components/Footer';
-import { useInView,motion } from "framer-motion";
+import { useInView, motion } from "framer-motion";
 import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
 import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
 import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
-import {LocalizedLink} from '../../components/LocalizedLink';
+import { LocalizedLink } from '../../components/LocalizedLink';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -42,15 +42,14 @@ const LIFESTYLE_ITEMS = [
 
 function Contact() {
     return ( 
-        <div className="">
+        <div className="w-full overflow-x-hidden">
             <ContactForm />
-            {/* <LifestyleSection /> */}
-            {/* <JoinNewsletter /> */}
             <FollowUs />
             <Footer withContact={false}/>
         </div>
     );
 }
+
 function ContactForm() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
@@ -68,7 +67,7 @@ function ContactForm() {
 
     const inputStyle = {
         width: '100%',
-        padding: '16px 20px',
+        padding: '14px 16px',
         background: '#f0f2f1',
         border: 'none',
         borderRadius: '8px',
@@ -85,7 +84,6 @@ function ContactForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // Validation
         if (!formData.firstName || !formData.lastName || !formData.email || !formData.description) {
             setSubmitStatus({ type: 'error', message: 'Please fill in all required fields.' })
             return
@@ -129,24 +127,22 @@ function ContactForm() {
     }
 
     return (
-        <section ref={ref} className="w-full py-20 xl:py-32 px-4">
-            <div className="mx-auto" style={{ maxWidth: '560px' }}>
+        <section ref={ref} className="w-full pb-20 pt-40 sm:py-16 md:pt-50 xl:py-32 px-4">
+            <div className="mx-auto w-full max-w-[560px]">
 
                 {/* Header */}
-                <motion.div {...fadeUp(0)} className="text-center mb-10">
-                    <div className="flex items-center justify-center gap-3 mb-3">
-                        <div style={{ width: '40px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
-                        <span style={{ fontSize: '20px', letterSpacing: '2px', color: '#1a3a3a', opacity: 0.7 }}>
+                <motion.div {...fadeUp(0)} className="text-center mb-8 sm:mb-10">
+                    <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                        <div style={{ width: '30px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
+                        <span style={{ fontSize: '16px', letterSpacing: '2px', color: '#1a3a3a', opacity: 0.7 }}>
                             Contact
                         </span>
-                        <div style={{ width: '40px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
+                        <div style={{ width: '30px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
                     </div>
-                    <h2 className="text-bg-secondary" style={{ fontSize: 'clamp(40px, 6vw, 60px)', fontWeight: 400, lineHeight: 1.1, marginBottom: '16px' }}>
-                    Liên hệ với chúng tôi
+                    <h2 className="text-bg-secondary text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] font-light" 
+                        style={{ lineHeight: 1.1, marginBottom: '12px' }}>
+                        Liên hệ với chúng tôi
                     </h2>
-                    {/* <p className="text-bg-secondary" style={{ fontSize: '20px', lineHeight: 1.6 }}>
-                        Get in touch to see how we can help you make Mallorca your home.
-                    </p> */}
                 </motion.div>
 
                 {/* Status Message */}
@@ -154,11 +150,11 @@ function ContactForm() {
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mb-4 md:mb-6 p-3 md:p-4 rounded-lg text-[14px] md:text-[15px] text-center"
+                        className="mb-4 p-3 rounded-lg text-[13px] sm:text-[14px] text-center"
                         style={{
                             background: submitStatus.type === 'success' ? '#e6f4ef' : '#fdecea',
                             color: submitStatus.type === 'success' ? '#1a3a3a' : '#a3342c',
-                            fontFamily: 'Nunino Sans',
+                            fontFamily: 'Nunito Sans',
                         }}
                     >
                         {submitStatus.message}
@@ -166,10 +162,10 @@ function ContactForm() {
                 )}
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="flex flex-col gap-3" >
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
 
                     {/* Row 1: First + Last Name */}
-                    <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
+                    <motion.div {...fadeUp(0.1)} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <input
                             name="firstName"
                             placeholder="First Name"
@@ -177,7 +173,6 @@ function ContactForm() {
                             onChange={handleChange}
                             style={inputStyle}
                             required
-                            
                         />
                         <input
                             name="lastName"
@@ -190,7 +185,7 @@ function ContactForm() {
                     </motion.div>
 
                     {/* Row 2: Email + Phone */}
-                    <motion.div {...fadeUp(0.2)} className="grid grid-cols-2 gap-3">
+                    <motion.div {...fadeUp(0.2)} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <input
                             name="email"
                             type="email"
@@ -232,7 +227,7 @@ function ContactForm() {
                             <option value="Trên 20 tỉ VND">Trên 20 tỉ VND</option>
                             <option value="Không muốn đề cập">Không muốn đề cập</option>
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                             <ChevronDown size={16} color="#1a3a3a" opacity={0.5} />
                         </div>
                     </motion.div>
@@ -244,7 +239,7 @@ function ContactForm() {
                             placeholder="Message"
                             value={formData.description}
                             onChange={handleChange}
-                            rows={5}
+                            rows={4}
                             style={{
                                 ...inputStyle,
                                 resize: 'none',
@@ -264,8 +259,8 @@ function ContactForm() {
                                 color: '#fff',
                                 border: 'none',
                                 borderRadius: '8px',
-                                padding: '16px 48px',
-                                fontSize: '20px',
+                                padding: '14px 32px',
+                                fontSize: '16px',
                                 letterSpacing: '0.5px',
                                 cursor: loading ? 'not-allowed' : 'pointer',
                                 transition: 'background 0.3s ease, transform 0.2s ease',
@@ -283,13 +278,14 @@ function ContactForm() {
         </section>
     )
 }
+
 function LifestyleSection() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
 
     return (
-        <section ref={ref} className="w-full py-16 xl:py-24 px-6 xl:px-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <section ref={ref} className="w-full py-12 sm:py-16 md:py-20 xl:py-24 px-4 sm:px-6 xl:px-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8">
                 {LIFESTYLE_ITEMS.map((item, i) => (
                     <motion.div
                         key={item.id}
@@ -308,6 +304,7 @@ function LifestyleSection() {
         </section>
     )
 }
+
 function LifestyleCard({ item }) {
     const [hovered, setHovered] = useState(false)
 
@@ -316,8 +313,8 @@ function LifestyleCard({ item }) {
             {/* Image */}
             <LocalizedLink to={item.link}>
                 <div
-                    className="w-full overflow-hidden rounded-2xl mb-5"
-                    style={{ height: '420px' }}
+                    className="w-full overflow-hidden rounded-2xl mb-4 sm:mb-5"
+                    style={{ height: '280px' }}
                     onMouseEnter={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
                 >
@@ -339,10 +336,9 @@ function LifestyleCard({ item }) {
 
             {/* Title */}
             <h3
-                className="mb-2"
+                className="mb-2 text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px]"
                 style={{
                     fontFamily: 'Georgia, serif',
-                    fontSize: 'clamp(20px, 2vw, 26px)',
                     fontWeight: 400,
                     color: '#1a3a3a',
                     lineHeight: 1.2,
@@ -353,10 +349,9 @@ function LifestyleCard({ item }) {
 
             {/* Description */}
             <p
-                className="mb-4"
+                className="mb-4 text-[13px] sm:text-[14px]"
                 style={{
                     fontFamily: 'InstrumentSans',
-                    fontSize: '14px',
                     color: '#4a5050',
                     lineHeight: 1.7,
                 }}

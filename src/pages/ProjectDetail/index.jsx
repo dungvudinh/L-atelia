@@ -89,7 +89,7 @@ const SectionAccordion = ({ section }) => {
     const [open, setOpen] = useState(false)
     return (
         <FadeUpSection>
-            <div className="border-t border-bg-secondary/10 py-10 md:py-14">
+            <div className=" py-10 md:py-14">
                 <div className="max-w-[900px] mx-auto px-4">
                     {/* Layout: title bên trái, text bên phải — giống Berrow */}
                     <div className="md:grid md:grid-cols-[2fr_3fr] md:gap-16">
@@ -416,7 +416,7 @@ function ProjectDetail() {
                         </h2>
                         <p
                             className="text-bg-secondary/70 mt-8"
-                            style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(16px, 1.3vw, 20px)', lineHeight: 1.7 }}
+                            style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(16px, 1.3vw, 20px)', lineHeight: 1.7 }}
                         >
                             {project.description}
                         </p>
@@ -494,63 +494,63 @@ function ProjectDetail() {
                                 ))}
                             </ul> */}
                             <div className="space-y-10">
-    {project?.propertyHighlights.map((highlight, i) => {
-        const features = highlight.featureSections?.filter(
-            (f) => f.name?.trim() || f.description?.trim()
-        );
+                                {project?.propertyHighlights.map((highlight, i) => {
+                                    const features = highlight.featureSections?.filter(
+                                        (f) => f.name?.trim() || f.description?.trim()
+                                    );
 
-        return (
-            <div key={highlight._id ?? i} className="space-y-3">
-                {/* Title */}
-                {highlight.title && (
-                    <h3
-                        className="text-bg-secondary flex items-start gap-3"
-                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(18px, 1.6vw, 22px)' }}
-                    >
-                        <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
-                        {highlight.title}
-                    </h3>
-                )}
+                                    return (
+                                        <div key={highlight._id ?? i} className="space-y-3">
+                                            {/* Title */}
+                                            {highlight.title && (
+                                                <h3
+                                                    className="text-bg-secondary flex items-start gap-3"
+                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(18px, 1.6vw, 22px)' }}
+                                                >
+                                                    <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
+                                                    {highlight.title}
+                                                </h3>
+                                            )}
 
-                {/* Description */}
-                {highlight.description && (
-                    <p
-                        className="text-bg-secondary/70 pl-8 whitespace-pre-line"
-                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}
-                    >
-                        {highlight.description}
-                    </p>
-                )}
+                                            {/* Description */}
+                                            {highlight.description && (
+                                                <p
+                                                    className="text-bg-secondary/70 pl-8 whitespace-pre-line"
+                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}
+                                                >
+                                                    {highlight.description}
+                                                </p>
+                                            )}
 
-                {/* Feature sections */}
-                {features?.length > 0 && (
-                    <ul className="pl-8 space-y-2 border-l border-bg-secondary/15">
-                        {features.map((f) => (
-                            <li key={f._id} className="pl-4">
-                                {f.name && (
-                                    <span
-                                        className="block text-bg-secondary/90"
-                                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(14px, 1.1vw, 16px)' }}
-                                    >
-                                        {f.name}
-                                    </span>
-                                )}
-                                {f.description && (
-                                    <span
-                                        className="block text-bg-secondary/60"
-                                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)' }}
-                                    >
-                                        {f.description}
-                                    </span>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
-        );
-    })}
-</div>
+                                            {/* Feature sections */}
+                                            {features?.length > 0 && (
+                                                <ul className="pl-8 space-y-2 border-l border-bg-secondary/15">
+                                                    {features.map((f) => (
+                                                        <li key={f._id} className="pl-4">
+                                                            {f.name && (
+                                                                <span
+                                                                    className="block text-bg-secondary/90"
+                                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(14px, 1.1vw, 16px)' }}
+                                                                >
+                                                                    {f.name}
+                                                                </span>
+                                                            )}
+                                                            {f.description && (
+                                                                <span
+                                                                    className="block text-bg-secondary/60"
+                                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)' }}
+                                                                >
+                                                                    {f.description}
+                                                                </span>
+                                                            )}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
 
                         {/* Specifications pills */}
@@ -626,11 +626,70 @@ function ProjectDetail() {
                 ⑥ CÁC PHẦN ĐẶC BIỆT — Accordion
             ════════════════════════════════════════ */}
             <div className="mt-20 xl:mt-36">
-                {project?.specialSections.map(section => {
-                    return (
-                        <SectionAccordion key={section._id} section={section} />
-                    )
-                })}
+                {project?.specialSections && project?.gallery && (() => {
+                    const sections = project.specialSections;
+                    const images = project.gallery;
+                    let imageIndex = 8; // Bắt đầu từ gallery[8]
+                    const elements = [];
+
+                    // Hàm lấy 3 ảnh tiếp theo
+                    const getNextThreeImages = () => {
+                        if (imageIndex >= images.length) return null;
+                        
+                        const result = [];
+                        for (let i = 0; i < 3 && imageIndex < images.length; i++) {
+                            result.push(images[imageIndex]);
+                            imageIndex++;
+                        }
+                        return result;
+                    };
+
+                    // Lặp qua từng section và thêm 3 ảnh sau mỗi section
+                    sections.forEach((section, index) => {
+                        // Thêm Section
+                        elements.push(
+                            <SectionAccordion key={`section-${index}`} section={section} />
+                        );
+
+                        // Thêm 3 ảnh sau section (nếu còn ảnh)
+                        const nextImages = getNextThreeImages();
+                        if (nextImages && nextImages.length > 0) {
+                            elements.push(
+                                <div key={`images-${index}`} className="px-4 md:px-8 xl:px-14 space-y-3">
+                                    {/* Ảnh 1 — full width */}
+                                    <FadeImage
+                                        src={`${BASE_CDN_URL}${nextImages[0]?.key}`}
+                                        className="w-full"
+                                        style={{ height: 'clamp(200px, 40vw, 560px)' }}
+                                        delay={0}
+                                    />
+
+                                    {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
+                                    <div className="flex gap-3">
+                                        {nextImages[1] && (
+                                            <FadeImage
+                                                src={`${BASE_CDN_URL}${nextImages[1].key}`}
+                                                className="flex-1"
+                                                style={{ height: 'clamp(140px, 26vw, 380px)' }}
+                                                delay={0}
+                                            />
+                                        )}
+                                        {nextImages[2] && (
+                                            <FadeImage
+                                                src={`${BASE_CDN_URL}${nextImages[2].key}`}
+                                                className="flex-1"
+                                                style={{ height: 'clamp(140px, 26vw, 380px)' }}
+                                                delay={0.1}
+                                            />
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        }
+                    });
+
+                    return elements;
+                })()}
             </div>
 
             {/* ════════════════════════════════════════
@@ -652,7 +711,7 @@ function ProjectDetail() {
                 </FadeUpSection>
             </div> */}
 
-            <ProjectCarousel />
+            <ProjectCarousel excludeProjectId={projectId}/>
             <JoinNewsletter />
             <FollowUs />
             <Footer withContact={false} />

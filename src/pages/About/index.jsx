@@ -25,6 +25,8 @@ import img12 from '../../assets/images/img12.webp'
 import img13 from '../../assets/images/img13.webp'
 import img14 from '../../assets/images/img14.webp'
 import img15 from '../../assets/images/img15.webp'
+import img10 from '../../assets/images/img10.jpg'
+
 const TIMELINE_ITEMS = [
     {
         id: 1,
@@ -121,92 +123,84 @@ const PROCESS_STEPS = [
 ];
 const GALLERY_IMAGES = [img11,img12,img13, img14,img15]
 
-function About()
-{
+function About() {
     const [loaded, setLoaded] = useState(true);
     return (
-        <div className="">
-            {/* Hero Image */}
-            <div className='w-full xl:h-screen h-[300px] md:h-[500px] relative'>
-                <OptimizedImage src={aboutUs} alt="" 
+        <div className="w-full overflow-x-hidden">
+            {/* Hero Image - Full screen trên mọi thiết bị */}
+            <div className='w-screen h-screen relative'>
+                <OptimizedImage 
+                    src={img10} 
+                    alt="" 
                     className={`w-full h-full object-cover object-center transition-opacity duration-100
-                                ${loaded ? 'slide-image-animate' : 'opacity-0'} // 👈 ẩn cho đến khi load`} />
+                                ${loaded ? 'slide-image-animate' : 'opacity-0'}`} 
+                />
                 <div className="absolute inset-0 bg-black/50" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 text-center">
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={loaded ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.35 }}
-                        className="text-white text-[18px] md:text-[18px] xl:text-[18px]  leading-tight tracking-widest flex items-center justify-center gap-3"
+                        className="text-white text-[12px] sm:text-[14px] md:text-[16px] lg:text-[18px] leading-tight tracking-widest flex items-center justify-center gap-2 sm:gap-3"
                     >
-                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
-                        About Us
-                        <div className="h-[1px] bg-white" style={{width:'3rem', opacity:1, transformOrigin:'100% 50% 0px'}}></div>
+                        <div className="h-[1px] bg-white w-6 sm:w-8 md:w-10 lg:w-12" style={{opacity: 1, transformOrigin:'100% 50% 0px'}}></div>
+                        Về chúng tôi
+                        <div className="h-[1px] bg-white w-6 sm:w-8 md:w-10 lg:w-12" style={{opacity: 1, transformOrigin:'100% 50% 0px'}}></div>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={loaded ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1], delay: 0.55 }}
-                        className="text-white/75 text-[64px] md:text-[64px] xl:text-[64px] mt-4 max-w-xl"
+                        className="text-white/75 text-[28px] sm:text-[36px] md:text-[48px] lg:text-[64px] mt-3 sm:mt-4 max-w-xl leading-tight"
                     >
                        Một đội ngũ. <br/> Một tiêu chuẩn.
                     </motion.p>
-                    {/* <motion.div
-                        initial={{ scaleX: 0 }}
-                        animate={loaded ? { scaleX: 1 } : {}}
-                        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-                        className="h-[1px] bg-white/60 w-16 mt-6"
-                        style={{ originX: 0.5 }}
-                    /> */}
                 </div>
             </div>
             
             {/* Section 1: About History */}
-            {/* SUBTITLE */}
-            <div className="xl:mt-40 mb-10 xl:mb-40 lg:mb-20 mt-4 flex justify-center px-4">
+            <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-40 flex justify-center px-4">
                 <FadeUpSection>
-                    <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                        <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
+                    <div className="mx-auto max-w-[772px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
+                        <h1 className="text-bg-secondary text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-center font-medium leading-tight sm:leading-normal" style={{lineHeight:1.2}} >
                         LỰA CHỌN ĐẤT – NỀN TẢNG CỦA GIÁ TRỊ LÂU DÀI
                         </h1>
-                        <p  className="text-[20px] text-bg-secondary mt-2">
+                        <p className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2 sm:mt-3 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
                         Đằng sau mỗi ngôi nhà Art Latelia không chỉ là bản vẽ hay vật liệu, mà là một quá trình được tính toán kỹ lưỡng ngay từ viên gạch đầu tiên.
                         </p>
-                        <p  className="text-[20px] text-bg-secondary mt-2">
+                        <p className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2 sm:mt-3 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
                         Art Latelia không chọn đất theo số lượng. Chúng tôi chọn theo các tiêu chí cốt lõi: vị trí thuận tiện cho sinh hoạt, kết nối tốt. Pháp lý rõ ràng, phù hợp với phát triển lâu dài. Phù hợp để tạo nên không gian sống chất lượng, không chỉ để ở mà còn để giữ gìn giá trị tài sản. Đất tốt là điều kiện tiên quyết để một ngôi nhà trở nên đáng sống và đáng đầu tư.
                         </p>
                     </div>
                 </FadeUpSection>
             </div>
-            {/* <TimelineSection /> */}
-            <div className='mt-10 lg:mt-20 bg-gray-50 py-10 lg:py-20'>
+
+            {/* Process Section */}
+            <div className='mt-8 sm:mt-10 lg:mt-20 bg-gray-50 py-8 sm:py-10 lg:py-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
-                    <div className='text-center mb-10 lg:mb-16'>
-                        <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
+                    <div className='text-center mb-8 sm:mb-10 lg:mb-16'>
+                        <h1 className='text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-3 sm:mb-4'>
                             QUY TRÌNH TRIỂN KHAI DỰ ÁN TẠI LATELIA
                         </h1>
-                        <p className='text-[16px] lg:text-[18px] text-gray-600'>
+                        <p className='text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-gray-600'>
                             Minh bạch – Đồng hành – Cam kết đúng như thiết kế
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
                         {PROCESS_STEPS.map((step, index) => (
-                            <div key={step.id} className='p-6 xl:p-8 p-2 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
-                                <div className='flex xl:items-start justify-center items-center gap-4 xl:flex-row flex-col'>
-                                    <div className='flex-shrink-0 w-10 h-10 bg-txt-secondary text-white rounded-full flex items-center justify-center font-semibold text-[18px]'>
-                                        {index + 1}
-                                    </div>
-                                    <div className='flex-1'>
-                                        <h4 className='text-[18px] lg:text-[20px] font-semibold font-subtitle text-txt-secondary mb-4 lg:mb-5 leading-tight' >
+                            <div key={step.id} className='p-4 sm:p-5 md:p-6 xl:p-8 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
+                                <div className='flex flex-col items-start gap-3 sm:gap-4'>
+                                    <div className='flex-1 w-full'>
+                                        <h4 className='text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] font-semibold font-subtitle text-txt-secondary mb-3 sm:mb-4 leading-tight'>
                                             {step.title}
                                         </h4>
-                                        <div className='text-[15px] lg:text-[16px] text-gray-600 whitespace-pre-line space-y-2' style={{fontFamily:'Nunito Sans'}}>
+                                        <div className='text-[14px] sm:text-[15px] md:text-[15px] lg:text-[16px] text-gray-600 whitespace-pre-line space-y-1 sm:space-y-2' style={{fontFamily:'Nunito Sans'}}>
                                             {step.desc.split('\n').map((line, idx) => (
-                                                <p key={idx} className={`${line.startsWith('•') ? 'flex items-start' : ''} ${line.trim() === '' ? 'mt-3' : ''}`}>
+                                                <p key={idx} className={`${line.startsWith('•') ? 'flex items-start' : ''} ${line.trim() === '' ? 'mt-2 sm:mt-3' : ''}`}>
                                                     {line.startsWith('•') ? (
                                                         <>
-                                                            <span className='mr-2 mt-1 flex-shrink-0'>•</span>
+                                                            <span className='mr-2 mt-0.5 flex-shrink-0'>•</span>
                                                             <span>{line.substring(1).trim()}</span>
                                                         </>
                                                     ) : (
@@ -221,82 +215,87 @@ function About()
                         ))}
                     </div>
 
-                    <div className='mt-16 lg:mt-20 text-center'>
-                        <div className='inline-block p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl'>
-                            <h3 className='text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-6 font-subtitle'>
+                    <div className='mt-12 sm:mt-14 lg:mt-20 text-center'>
+                        <div className='inline-block p-5 sm:p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl w-full sm:w-auto'>
+                            <h3 className='text-[18px] sm:text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-4 sm:mb-6 font-subtitle'>
                                 CAM KẾT CỦA LATELIA
                             </h3>
-                            <div className='space-y-4 text-left mb-6' style={{fontFamily:'Nunito Sans'}}>
-                                <p className='text-[16px] lg:text-[17px] flex items-start' >
-                                    <Check className='text-green-500 mr-3 mt-1 flex-shrink-0' size={20}/>
+                            <div className='space-y-3 sm:space-y-4 text-left mb-4 sm:mb-6' style={{fontFamily:'Nunito Sans'}}>
+                                <p className='text-[14px] sm:text-[15px] lg:text-[16px] flex items-start'>
+                                    <Check className='text-green-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0' size={18} />
                                     Quy trình rõ ràng, minh bạch từng giai đoạn
                                 </p>
-                                <p className='text-[16px] lg:text-[17px] flex items-start'>
-                                    <Check className='text-green-500 mr-3 mt-1 flex-shrink-0' size={20}/>
+                                <p className='text-[14px] sm:text-[15px] lg:text-[16px] flex items-start'>
+                                    <Check className='text-green-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0' size={18} />
                                     Khách hàng được đồng hành và tham gia vào quá trình thiết kế
                                 </p>
-                                <p className='text-[16px] lg:text-[17px] flex items-start'>
-                                    <Check className='text-green-500 mr-3 mt-1 flex-shrink-0' size={20}/>
+                                <p className='text-[14px] sm:text-[15px] lg:text-[16px] flex items-start'>
+                                    <Check className='text-green-500 mr-2 sm:mr-3 mt-0.5 flex-shrink-0' size={18} />
                                     Thi công đúng bản vẽ, đúng cam kết hai bên
                                 </p>
                             </div>
-                            <p className='text-[18px] lg:text-[20px] font-subtitle text-txt-secondary italic'>
+                            <p className='text-[16px] sm:text-[17px] lg:text-[18px] font-subtitle text-txt-secondary italic'>
                                 "Latelia không chỉ xây nhà – chúng tôi xây dựng niềm tin dài hạn."
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
+
             <ImageStrip />
-            <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
+
+            <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-20 flex justify-center px-4">
                 <FadeUpSection>
-                    <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                        <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
+                    <div className="mx-auto max-w-[1000px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
+                        <h1 className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[36px] lg:text-[48px] text-center font-medium leading-tight" style={{lineHeight:1.2}} >
                         Một đơn vị thiết kế và thi công, phát triển bất động sản và tập hợp thương hiệu phong cách sống, tất cả nằm trong Latelia
                         </h1>
                     </div>
                 </FadeUpSection>
             </div>
+
             <VennDiagram />
-            <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
+
+            <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-20 flex justify-center px-4">
                 <FadeUpSection>
-                <div className="mx-auto max-w-[1100px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{ transform: 'none' }}>
-                    <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{ lineHeight: 1.2 }}>
-                        Triết lý thiết kế của Art L'Atelia
-                    </h1>
+                    <div className="mx-auto max-w-[1100px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
+                        <h1 className="text-bg-secondary text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-center font-medium leading-tight" style={{ lineHeight: 1.2 }}>
+                            Triết lý thiết kế của Art L'Atelia
+                        </h1>
 
-                    <p style={{ fontFamily: 'InstrumentSans' }} className="text-[20px] text-bg-secondary mt-4">
-                        Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại Latelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
-                    </p>
-                    <p style={{ fontFamily: 'InstrumentSans' }} className="text-[20px] text-bg-secondary mt-2">
-                        Mỗi công trình được hình thành dựa trên 3 giá trị cốt lõi:
-                    </p>
+                        <p style={{ fontFamily: 'Nunito Sans' }} className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0">
+                            Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại Latelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
+                        </p>
+                        <p style={{ fontFamily: 'InstrumentSans' }} className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2">
+                            Mỗi công trình được hình thành dựa trên 3 giá trị cốt lõi:
+                        </p>
 
-                    {/* 3 giá trị cốt lõi */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 mt-10 text-left">
-                        <CoreValue
-                            title="Cá nhân hoá"
-                            desc="Mỗi ngôi nhà là một dấu ấn riêng. Latelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."
-                        />
-                        <CoreValue
-                            title="Kiến trúc hiện đại"
-                            desc="Sống thoải mái theo thời gian. Thiết kế ưu tiên ánh sáng tự nhiên, thông gió và công năng tối ưu, bền vững theo năm tháng. Một ngôi nhà đẹp là ngôi nhà 10 năm sau vẫn thấy đúng."
-                        />
-                        <CoreValue
-                            title="Nghệ thuật trong sự tinh giản"
-                            desc="Art Latelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."
-                        />
+                        {/* 3 giá trị cốt lõi */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-8 mt-8 sm:mt-10 text-left">
+                            <CoreValue
+                                title="Cá nhân hoá"
+                                desc="Mỗi ngôi nhà là một dấu ấn riêng. Latelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."
+                            />
+                            <CoreValue
+                                title="Kiến trúc hiện đại"
+                                desc="Sống thoải mái theo thời gian. Thiết kế ưu tiên ánh sáng tự nhiên, thông gió và công năng tối ưu, bền vững theo năm tháng. Một ngôi nhà đẹp là ngôi nhà 10 năm sau vẫn thấy đúng."
+                            />
+                            <CoreValue
+                                title="Nghệ thuật trong sự tinh giản"
+                                desc="Art Latelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."
+                            />
+                        </div>
+
+                        {/* Câu kết luận */}
+                        <p className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[32px] lg:text-[35px] font-medium mt-8 sm:mt-10 md:mt-12" style={{ lineHeight: 1.4 }}>
+                            Chúng tôi không xây thật nhanh.
+                            <br />
+                            Chúng tôi xây đúng ngay từ đầu.
+                        </p>
                     </div>
-
-                    {/* Câu kết luận */}
-                    <p className="text-bg-secondary text-[24px] font-medium mt-12" style={{ lineHeight: 1.4 }}>
-                        Chúng tôi không xây thật nhanh.
-                        <br />
-                        Chúng tôi xây đúng ngay từ đầu.
-                    </p>
-                </div>
                 </FadeUpSection>
             </div>
+
             <ProjectCarousel />
             <JoinNewsletter />
             <FollowUs />
@@ -454,13 +453,12 @@ function ImageStrip() {
                 {GALLERY_IMAGES.map((img, i) => (
                     <SwiperSlide
                         key={i}
-                        style={{ width: '1000px' }}
-                        className="!h-auto"
+                        className="!h-auto w-[400px] md:w-[600px] lg:w-[1000px]"
                     >
                         <div
                             className={`
                                 overflow-hidden
-                                h-[82vh] 
+                                xl:h-[82vh] md:h-[70vh] sm:h-[60vh] h-[40vh]
                                 rounded-2xl
                             `}
                             style={{ width: img.width }}
@@ -533,14 +531,13 @@ function VennDiagram() {
                 {/* Architecture & Design — tâm circle trên */}
                 <motion.div
                     {...fadeScale(0.1)}
-                    className="absolute text-center"
+                    className="absolute text-center md:left-80 lg:left-80 left-40"
                     style={{
-                        left: '39%',
                         top: '20%',          // cy=210 → 210/620 ≈ 34%, phần trên circle
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(20px, 1.5vw, 30px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
                     Thiết kế kiến trúc
                     </p>
                 </motion.div>
@@ -555,7 +552,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(20px, 1.5vw, 30px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
                     Truyền thông <br/> & Bán hàng 
                     </p>
                 </motion.div>
@@ -563,15 +560,16 @@ function VennDiagram() {
                 {/* Development — tâm circle phải dưới */}
                 <motion.div
                     {...fadeScale(0.5)}
-                    className="absolute text-center"
+                    className="absolute text-center  md:left-80 lg:left-80 left-65"
                     style={{
-                        left: '70%',         // cx=415 → 415/600 ≈ 69%
                         top: '65%',
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(20px, 1.5vw, 30px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
                     Phát triển
+                    <br/>
+                    bất động sản dòng tiền
                     </p>
                 </motion.div>
 

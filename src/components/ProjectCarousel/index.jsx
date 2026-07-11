@@ -46,12 +46,11 @@ const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     return `https://cdn.latelia.com/latelia/${imagePath}`;
   };
-function ProjectCarousel() {
+function ProjectCarousel({ excludeProjectId = null }) {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
     const [projects, setProjects] = useState([]);
-    console.log(projects)
-    
+    const [filteredProjects, setFilteredProjects] = useState([]);
     const fetchProjects = useCallback(async () => {
             try {
     
@@ -87,6 +86,17 @@ function ProjectCarousel() {
     useEffect(() => {
             fetchProjects();
         }, []);
+    useEffect(() => {
+        if (projects.length > 0) {
+            if (excludeProjectId) {
+                const filtered = projects.filter(project => project.id !== excludeProjectId);
+                setFilteredProjects(filtered);
+            } else {
+                setFilteredProjects(projects);
+            }
+        }
+    }, [projects, excludeProjectId]);
+    
     return (
         <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
             <Swiper
@@ -97,7 +107,7 @@ function ProjectCarousel() {
                 grabCursor={true}
                 style={{ paddingLeft: '60px', paddingRight: '60px' }}
             >
-                {projects.map((project, i) => (
+                {filteredProjects.map((project, i) => (
                     <SwiperSlide
                         key={project.id}
                         style={{ width: '380px' }}

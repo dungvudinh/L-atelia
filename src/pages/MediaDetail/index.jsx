@@ -160,7 +160,7 @@ function MediaDetail() {
     // Media not found state
     if (!media) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
+            <div className="flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-6 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-lg max-w-md">
                         <h2 className="text-xl font-semibold mb-2">Media Not Found</h2>
@@ -178,9 +178,9 @@ function MediaDetail() {
     }
 
     return ( 
-        <div className="mt-20">
+        <div className="">
             {/* Featured Image */}
-            <div className='w-full xl:h-screen h-[300px] md:h-[500px]'>
+            <div className='w-full h-screen '>
                 <OptimizedImage 
                     src={getMediaImage(media)} 
                     alt={media.title} 
@@ -188,7 +188,7 @@ function MediaDetail() {
                 />
             </div>
 
-            <div className='flex flex-col items-center mt-8 md:mt-16 lg:mt-30 px-4'>
+            <div className='flex flex-col items-center mt-8 md:mt-16 lg:mt-30 px-12'>
                 {/* Content Field */}
                 <div className='w-full flex justify-center'>
                     <div 

@@ -91,43 +91,41 @@ function Header() {
         if (e.target === e.currentTarget) setIsMenuOpen(false);
     };
 
-    const textColor = isContactPage || isBrochurePage || isMediaPage || isPastScreen ? "text-bg-secondary" : "text-white"
+    const textColor = isContactPage || isBrochurePage || isMediaPage || isPastScreen ? "bg-secondary" : "white"
     
     return ( 
         <div className={`bg-transparent flex justify-center items-center fixed top-0 left-0 z-100 w-full
             transition-transform duration-500 ease-in-out
             ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
         >
-            <div className="w-full xl:max-w-screen-2xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
+            <div className="w-full xl:max-w-screen-2xl flex items-center justify-between lg:max-w-[900px] mx-auto pr-4 pl-2 relative pt-2">
                 {/* Logo */}
-                <Link to={'/'} className="flex-1 md:flex-none">
+                <LocalizedLink to={'/'} className="flex-1 md:flex-none">
                     <img src={logo} alt="" className="w-16 md:w-20 md:mx-0" />
-                </Link>
+                </LocalizedLink>
 
                 {/* Mobile menu icon */}
                 <div className="md:hidden flex-1 flex justify-end">
                     <button 
                         onClick={toggleMenu}
-                        className={`${textColor} p-2 transition-all duration-300 hover:scale-110`}
+                        className={`text-black transition-all duration-300 hover:scale-110 space-y-[6px]`}
                     >
-                        {isMenuOpen ? (
-                            <X size={24} className="rotate-90 transition-all duration-300" />
-                        ) : (
-                            <Menu size={24} className="transition-all duration-300" />
-                        )}
+                        <div class={`h-[1.5px] w-[27px] transition ease transform duration-500 delay-0 bg-black`} data-menu-line="true"></div>
+                        <div class="h-[1.5px] w-[27px] transition ease transform duration-500 delay-0 ml-auto !w-3 bg-black" data-menu-line="true"></div>
+                        <div class="h-[1.5px] w-[27px] transition ease transform duration-500 delay-0 bg-black" data-menu-line="true"></div>
                     </button>
                 </div>
 
                 {/* Desktop menu */}
                 <div className="hidden md:flex">
-                    <ul className={`flex transition-colors duration-300 ${textColor}`}>
+                    <ul className={`flex transition-colors duration-300 text-${textColor}`}>
                         {MENU_ITEMS.map(menuItem => (
                             <li key={menuItem.id} className={`ml-7 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 
                                 ${currentItem === menuItem.id ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}>
                                 <LocalizedLink 
                                     to={menuItem.to} 
                                     onClick={() => setCurrentItem(menuItem.id)} 
-                                    className={`text-[20px] transition-colors duration-300 ${textColor}`}
+                                    className={`text-[20px] transition-colors duration-300 text-${textColor}`}
                                 >
                                     {t(`${menuItem.title}`)}
                                 </LocalizedLink>

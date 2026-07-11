@@ -4,51 +4,59 @@ import { useRef } from "react"
 import logo from '../../../assets/images/logo.png'
 import { Instagram } from '../../../assets/icons';
 import { LocalizedLink } from "../../../components/LocalizedLink";
+
 const NAV_LINKS = [
-{name:'Dự án', to:'/projects'}, 
-{name:'Media', to:'/media'},
-{name:'Về chúng tôi', to:'/about'},
-{name:'Liên hệ', to:'/contact'}
+  { name: 'Dự án', to: '/projects' },
+  { name: 'Media', to: '/media' },
+  { name: 'Về chúng tôi', to: '/about' },
+  { name: 'Liên hệ', to: '/contact' }
 ]
 const WELCOME_TEXT = "Welcome home."
 
 const Footer = () => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  
+
   return (
     <footer className="bg-bg-secondary rounded-t-3xl mt-16 overflow-hidden">
-      
-      {/* Top: nav + brand + contact */}
-      <div className="flex justify-center items-center pt-16 pb-20">
-        <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] flex justify-between items-start mx-auto !px-4 md:px-0">
+
+      {/* Top: logo + nav + contact */}
+      <div className="flex justify-center items-center pt-12 md:pt-16 pb-12 md:pb-20">
+        <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] flex flex-col md:flex-row md:justify-between md:items-start mx-auto !px-4 md:px-0 gap-10 md:gap-0">
+
+          {/* Logo: hiện riêng ở đầu trên mobile, ẩn ở tablet/desktop (dùng logo trong cột phải) */}
+          <img src={logo} alt="" className="w-14 md:hidden" />
+
           <nav className="flex flex-col gap-1">
             {NAV_LINKS.map((link, index) => (
               <LocalizedLink
                 key={index}
                 to={link.to}
-                className="text-white text-[32px] leading-[38px] md:text-[48px] md:leading-[54px] 
+                className="text-white text-[28px] leading-[34px] sm:text-[32px] sm:leading-[38px] md:text-[48px] md:leading-[54px] 
                   translate-x-0 hover:translate-x-4 transition-transform duration-300 ease-out inline-block"
               >
                 {link.name}
               </LocalizedLink>
             ))}
           </nav>
-            <div className="flex flex-col items-end justify-between h-full gap-12">
-              <img src={logo} className="w-16 md:w-25 md:mx-0" />
-              <div className="text-right text-white/80 text-[20px] leading-[24px] leading-[1.6]">
-                <p className="cursor-pointer hover:opacity-70 transition-opacity duration-300">Đà Nẵng</p>
-                <p className="hover:opacity-70 transition-opacity duration-300">+84 12345678</p>
-                <p className="mb-4 hover:opacity-70 transition-opacity duration-300">latelia.sale@gmail.com</p>
-                {/* <a
-                  href="https://instagram.com/berrowprojects"
-                  className="inline-flex items-center gap-2 hover:opacity-40 transition-opacity duration-300"
-                >
-                  @berrowprojects
-                  <Instagram />
-                </a> */}
-              </div>
+
+          <div className="flex flex-col items-start md:items-end justify-between md:h-full gap-8 md:gap-12">
+            {/* Logo mặc định cho tablet/desktop */}
+            <img src={logo} alt="" className="hidden md:block w-20 lg:w-25 md:mx-0" />
+
+            <div className="text-left md:text-right text-white/80 text-[18px] md:text-[20px] leading-[1.6]">
+              <p className="cursor-pointer hover:opacity-70 transition-opacity duration-300">Đà Nẵng</p>
+              <p className="hover:opacity-70 transition-opacity duration-300">+84 12345678</p>
+              <p className="mb-4 hover:opacity-70 transition-opacity duration-300">latelia.sale@gmail.com</p>
+              {/* <a
+                href="https://instagram.com/berrowprojects"
+                className="inline-flex items-center gap-2 hover:opacity-40 transition-opacity duration-300"
+              >
+                @berrowprojects
+                <Instagram />
+              </a> */}
             </div>
+          </div>
         </div>
       </div>
 

@@ -32,6 +32,10 @@ const sizeMap = {
   md: { width: "16%",  height: 240 },
   lg: { width: "16%",  height: 340 },
 };
+const mobileSizeMap = {
+  md: { width: "30%", height: 120 },
+  lg: { width: "30%", height: 160 },
+};
 const images = [
   { src: img5, size: "sm" },
   { src: img6, size: "md" },
@@ -96,92 +100,94 @@ function Landing() {
         fetchProjects();
     }, []);
     
-    return ( 
-        <div className="">
-            {/* MAIN SLIDER */}
-            <Banner />
-            <div className="py-[60px] lg:py-[100px] flex justify-center px-4">
-              <div className="xl:max-w-screen-2xl lg:max-w-[900px] flex flex-col items-center mx-auto !px-4 md:px-0 ">
-                <div
-                  className="relative z-50 -translate-y-50 text-center bg-white h-[500px] flex flex-col items-center w-full"
+    // Thêm các class này vào component Landing của bạn
+
+return ( 
+  <div className="w-full overflow-x-hidden">
+      {/* MAIN SLIDER */}
+      <Banner />
+      
+      <div className="py-[30px] sm:py-[60px] lg:py-[100px] flex justify-center px-4">
+          <div className="w-full max-w-full sm:max-w-[900px] xl:max-w-screen-2xl flex flex-col items-center mx-auto md:px-4 px-0">
+              
+              {/* Hero Section - Mobile responsive */}
+              <div
+                  className="relative z-50 -translate-y-[30px] sm:-translate-y-[50px] text-center bg-white min-h-[300px] sm:h-[500px] flex flex-col items-center w-full md:px-4 sm:px-0"
                   style={{
-                    opacity: Math.min(currentScrollY / 500, 0.8),
-                    transform: `translateY(${-Math.min(currentScrollY * 0.3, 60)}px)`,
+                      opacity: Math.min(currentScrollY / 800, 0.8),
+                      transform: `translateY(${-Math.min(currentScrollY * 0.3, 60)}px)`,
                   }}
-                >
-                  <h1 className="text-4xl text-bg-secondary">
-                  Latelia là đơn vị phát triển bất động sản tại thành phố biển Đà Nẵng
+              >
+                  <h1 className="text-[20px] sm:text-[28px] md:text-[32px] lg:text-[40px] text-bg-secondary font-medium leading-tight sm:leading-normal ">
+                      Latelia là đơn vị phát triển bất động sản tại thành phố biển Đà Nẵng
                   </h1>
-                  <ProjectGallery />
-                  <div className="mb-5 w-full max-w-[772px] text-center md:mb-7 md:w-10/12">
-                    <h4 className="text-bg-secondary text-[20px] leading-[24px] xs:text-[24px] xs:leading-[28px] md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px] text-center">
-                    Chúng tôi phát triển các dự án tại Đà Nẵng – thành phố đáng sống, nơi hội tụ thiên nhiên, nhịp sống hiện đại và tiềm năng bền vững.
-                    </h4>
-                  </div>
                   
-                </div>
-                <div ref={ref} className="mt-[-150px]  w-full flex justify-center items-center" >
-                  <div className="relative w-full xl:max-w-screen-2xl flex items-center justify-between lg:max-w-[900px] mx-auto !px-4 md:px-0">
-                    <img src={img10} className="rounded-2xl h-full w-full"/>
-                    <motion.div
-                      style={{ y }}
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center"
-                    >
-                      <h4 className="xs:text-[60px] sm:text-[70px] md:text-[80px] md:leading-[96px] lg:text-[96px] font-medium tracking-tight">
-                        L'ATELIA
+                  <ProjectGallery />
+                  
+                  <div className="mb-5 w-full max-w-full sm:max-w-[772px] text-center md:mb-7 px-4 sm:px-0">
+                      <h4 className="text-bg-secondary text-[16px] leading-[22px] xs:text-[20px] xs:leading-[26px] md:text-[24px] md:leading-[30px] lg:text-[32px] lg:leading-[38px] text-center">
+                          Chúng tôi phát triển các dự án tại Đà Nẵng – thành phố đáng sống, nơi hội tụ thiên nhiên, nhịp sống hiện đại và tiềm năng bền vững.
                       </h4>
-                      <p className="xs:text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-light italic mt-2 md:mt-4">
-                        Khởi đầu từ một niềm tin
-                      </p>
-                    </motion.div>
-
                   </div>
-                </div>
-                <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
-                  <FadeUpSection>
-                      <div className="mx-auto max-w-[800px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                          <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                          Chúng tôi chọn xây những ngôi nhà có dấu ấn.
-                          </h1>
-                          <p  className="text-[20px] text-bg-secondary mt-2" style={{fontFamily:'Nunito Sans'}}>
-                          Art Latelia được hình thành từ mong muốn kiến tạo nên những công trình nhà ở mang giá trị nghệ thuật, kiến trúc hiện đại và cảm xúc sống trọn vẹn cho chủ nhân. 
-                          Mỗi ngôi nhà là một tác phẩm được “đo ni đóng giày” theo phong cách sống, gu thẩm mĩ và tầm nhìn dài hạn của người sở hữu.
+              </div>
 
+              {/* Image with overlay - Mobile */}
+              <div ref={ref} className="xl:mt-[80px] md:mt-[-80px] mt-[-80px] w-full flex justify-center items-center px-4 sm:px-0">
+                  <div className="relative w-full max-w-full sm:max-w-[900px] xl:max-w-screen-2xl flex items-center justify-between mx-auto">
+                      <img 
+                          src={img10} 
+                          className="rounded-2xl h-[300px] sm:h-[400px] md:h-[500px] lg:h-full w-full object-cover"
+                          alt="Latelia" 
+                      />
+
+                      <div className="absolute inset-0 bg-black/40 rounded-2xl" />
+
+                      <motion.div
+                          style={{ y }}
+                          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center w-full px-4"
+                      >
+                          <h4 className="text-[36px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[96px] font-medium tracking-tight">
+                              L'ATELIA
+                          </h4>
+                          <p className="text-[16px] xs:text-[18px] sm:text-[24px] md:text-[28px] lg:text-[32px] font-light italic mt-2 md:mt-4">
+                              Khởi đầu từ một niềm tin
+                          </p>
+                      </motion.div>
+                  </div>
+              </div>
+
+              {/* About Section - Mobile */}
+              <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-8 sm:mt-4 flex justify-center px-4">
+                  <FadeUpSection>
+                      <div className="mx-auto w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
+                          <h1 className="text-bg-secondary text-[28px] sm:text-[36px] md:text-[48px] text-center font-medium leading-tight sm:leading-normal">
+                              Chúng tôi chọn xây những ngôi nhà có dấu ấn.
+                          </h1>
+                          <p className="text-[16px] sm:text-[18px] md:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
+                              Art Latelia được hình thành từ mong muốn kiến tạo nên những công trình nhà ở mang giá trị nghệ thuật, kiến trúc hiện đại và cảm xúc sống trọn vẹn cho chủ nhân. 
+                              Mỗi ngôi nhà là một tác phẩm được "đo ni đóng giày" theo phong cách sống, gu thẩm mĩ và tầm nhìn dài hạn của người sở hữu.
                           </p>
                           <LocalizedLink
                               to="/projects"
-                              className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
+                              className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] sm:text-[16px] font-bold hover:gap-2 transition-all duration-200"
                               style={{fontFamily:'InstrumentSans'}}>
-                                View All Project
+                              View All Project
                               <ChevronRight size={16} />
                           </LocalizedLink>
                       </div>
                   </FadeUpSection>
-                </div>
-
-                <ProjectGrid projects={projects}/>
-
-                {/* <div className="xl:mt-40 mb-10 xl:mb-20 lg:mb-20 mt-4 flex justify-center px-4">
-                  <FadeUpSection>
-                      <div className="mx-auto max-w-[772px] sm:w-11/12 md:w-9/12 lg:w-10/12 text-center" style={{transform:'none'}}>
-                          <h1 className="text-bg-secondary text-[48px] text-center font-medium" style={{lineHeight:1.2}} >
-                          Opened by Berrow for everyone in the community.
-                          </h1>
-                          <p style={{fontFamily:'InstrumentSans'}} className="text-[20px] text-bg-secondary mt-2">
-                          A collection of social spaces and hospitality concepts where you can feel at home. We opened each of these businesses to strengthen our local community and welcome people moving into the area.
-                          </p>
-                      </div>
-                  </FadeUpSection>
-                </div> */}
-                {/* <VenuesGrid /> */}
-                <JoinNewsletter />
-                <FollowUs />
               </div>
-            </div>
-            
-            <Footer withContact={true}/>
-        </div>
-    );
+
+              <ProjectGrid projects={projects}/>
+
+              <JoinNewsletter />
+              <FollowUs />
+          </div>
+      </div>
+      
+      <Footer withContact={true}/>
+  </div>
+);
 }
 
 
@@ -230,23 +236,23 @@ const Banner = () => {
                 />
               </motion.div>
             </AnimatePresence>
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/25" />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-4xl gap-12 z-10">
               <div className="flex items-center gap-12 relative">
-                <LocalizedLink to="/projects" className="link-underline cursor-pointer absolute left-[-300px]
+                <LocalizedLink to="/projects" className="hidden md:block link-underline cursor-pointer absolute left-[-300px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Dự án
                 </LocalizedLink>
-                <LocalizedLink to="/media" className="link-underline cursor-pointer absolute left-[-140px]
+                <LocalizedLink to="/media" className="hidden md:block link-underline cursor-pointer absolute left-[-140px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Media
                 </LocalizedLink>
-                <img src={logo} className="h-[130px]"/>
-                <LocalizedLink to="/about" className="link-underline cursor-pointer absolute right-[-180px]
+                <img src={logo} className="h-[100px] md:h[130px]"/>
+                <LocalizedLink to="/about" className="hidden md:block link-underline cursor-pointer absolute right-[-180px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Về chúng tôi
                 </LocalizedLink>
-                <LocalizedLink to="/contact" className="link-underline cursor-pointer absolute right-[-340px]
+                <LocalizedLink to="/contact" className="hidden md:block link-underline cursor-pointer absolute right-[-340px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Liên hệ
                 </LocalizedLink>
@@ -256,7 +262,7 @@ const Banner = () => {
         </div>
         {/* White overlay tăng dần khi cuộn, đạt 100% opacity = trắng hoàn toàn */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none h-full"
           style={{
             backgroundColor: "white",
             opacity: Math.min(currentScrollY / 250, 1)
@@ -274,26 +280,57 @@ const Banner = () => {
       </div>
     )
 }
-const ProjectGallery = () => (
-  <div className="flex items-center justify-center gap-4 px-8 py-12 w-full">
-    {images.map((img, i) => {
-      const { width, height } = sizeMap[img.size];
-      return (
-        <div
-          key={i}
-          className="flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer transition-transform duration-300 "
-          style={{ width, height }}
-        >
-          <img
-            src={img.src}
-            alt={`project-${i + 1}`}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      );
-    })}
-  </div>
-);
+const ProjectGallery = () => {
+  // Lấy 3 item ở giữa (md, lg, md)
+  const mobileImages = images.slice(1, 4); // index 1, 2, 3
+  
+  return (
+    <>
+      {/* Mobile: hiển thị 3 item md, lg, md */}
+      <div className="flex items-center justify-center gap-2 px-2 py-6 w-full md:hidden">
+        {mobileImages.map((img, i) => {
+          const size = mobileSizeMap[img.size];
+          return (
+            <div
+              key={i}
+              className="flex-shrink-0 overflow-hidden rounded-xl cursor-pointer transition-transform duration-300 hover:scale-105"
+              style={{ 
+                width: size.width, 
+                height: size.height 
+              }}
+            >
+              <img
+                src={img.src}
+                alt={`project-${i + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          );
+        })}
+      </div>
+      
+      {/* Desktop: hiển thị tất cả 5 item */}
+      <div className="hidden md:flex items-center justify-center gap-4 xl:px-8 py-12 px-0 w-full">
+        {images.map((img, i) => {
+          const { width, height } = sizeMap[img.size];
+          return (
+            <div
+              key={i}
+              className={`flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer transition-transform duration-300 hover:scale-105  md:h-[${height*3/2}px]`}
+              style={{ width }}
+            >
+              <img
+                src={img.src}
+                alt={`project-${i + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
 const FadeUpSection = ({ children }) => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
@@ -309,50 +346,49 @@ const FadeUpSection = ({ children }) => {
     </motion.div>
   )
 }
-const ProjectGrid = ({projects})=>
-{
+const ProjectGrid = ({projects}) => {
   const getImageUrl = (imagePath) => {
-    if (!imagePath) return '';
-    return `https://cdn.latelia.com/latelia/${imagePath}`;
+      if (!imagePath) return '';
+      return `https://cdn.latelia.com/latelia/${imagePath}`;
   };
+  
   return (
-    <div className="flex justify-center items-center">
-      <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] mx-auto !px-4 md:px-0">
-          <ul className={`grid grid-cols-3 gap-5`}>
-            {projects.map((project, index) => (
-                <FadeUpSection key={index}>
-                    <li  className="group cursor-pointer">
-                      <div className="relative overflow-hidden rounded-2xl mb-4 h-[400px]">
-                          <img
-                              src={getImageUrl(project.src)}
-                              alt={project.title}
-                              className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-                          />
-                          {/* <span className="absolute top-8 left-8 bg-white text-bg-secondary text-[20px] font-medium px-3 py-1 rounded-md shadow-sm">
-                              {project.status}
-                          </span> */}
-                      </div>
-                      <div className="text-bg-secondary">
-                          <h3 className="md:text-[28px] md:leading-[34px] lg:text-[32px] lg:leading-[38px] text-[28px] leading-[34px] xs:text-[28px] xs:leading-[34px]">{project.title}</h3>
-                          <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{fontFamily:'InstrumentSans'}}>
-                              {project.description}
-                          </p>
-                          <LocalizedLink
-                            to={`/projects/${project.id}`}
-                              className="mt-4 inline-flex items-center justify-center gap-1 text-[12px] leading-[18px] xs:text-[14px] xs:leading-[20px] sm:text-[16px] sm:leading-[24px] font-bold hover:gap-2 transition-all duration-200"
-                          style={{fontFamily:'InstrumentSans'}}>
-                              View Project
-                              <ChevronRight size={16} />
-                          </LocalizedLink>
-                      </div>
-                    </li>
-                </FadeUpSection>
-            ))}
-        </ul>
-
+      <div className="flex justify-center items-center w-full px-4 sm:px-0">
+          <div className="w-full max-w-full sm:max-w-[900px] xl:max-w-screen-2xl mx-auto">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                  {projects.map((project, index) => (
+                      <FadeUpSection key={index}>
+                          <li className="group cursor-pointer">
+                              <div className="relative overflow-hidden rounded-2xl mb-3 sm:mb-4 h-[250px] sm:h-[350px] md:h-[400px]">
+                                  <img
+                                      src={getImageUrl(project.src)}
+                                      alt={project.title}
+                                      className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                  />
+                              </div>
+                              <div className="text-bg-secondary px-2 sm:px-0">
+                                  <h3 className="text-[20px] sm:text-[24px] md:text-[28px] lg:text-[32px] leading-tight sm:leading-normal">
+                                      {project.title}
+                                  </h3>
+                                  <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2 sm:line-clamp-3" 
+                                     style={{fontFamily:'InstrumentSans'}}>
+                                      {project.description}
+                                  </p>
+                                  <LocalizedLink
+                                      to={`/projects/${project.id}`}
+                                      className="mt-3 sm:mt-4 inline-flex items-center justify-center gap-1 text-[14px] sm:text-[16px] font-bold hover:gap-2 transition-all duration-200"
+                                      style={{fontFamily:'InstrumentSans'}}>
+                                      View Project
+                                      <ChevronRight size={16} />
+                                  </LocalizedLink>
+                              </div>
+                          </li>
+                      </FadeUpSection>
+                  ))}
+              </ul>
+          </div>
       </div>
-    </div>
-  )
-}
+  );
+};
 
 export default Landing;
