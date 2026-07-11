@@ -20,13 +20,22 @@ import JoinNewsletter from '../../components/JoinNewsletter'
 import FollowUs from '../../components/FollowUs'
 import ProjectCarousel from '../../components/ProjectCarousel'
 import { Check } from 'lucide-react'
-import img11 from '../../assets/images/img11.webp'
-import img12 from '../../assets/images/img12.webp'
-import img13 from '../../assets/images/img13.webp'
-import img14 from '../../assets/images/img14.webp'
-import img15 from '../../assets/images/img15.webp'
 import img10 from '../../assets/images/img10.jpg'
-
+import gl1 from '../../assets/images/gallery/gl1.webp'
+import gl2 from '../../assets/images/gallery/gl2.webp'
+import gl3 from '../../assets/images/gallery/gl3.webp'
+import gl4 from '../../assets/images/gallery/gl4.webp'
+import gl5 from '../../assets/images/gallery/gl5.webp'
+import gl6 from '../../assets/images/gallery/gl6.webp'
+import gl7 from '../../assets/images/gallery/gl7.webp'
+import gl8 from '../../assets/images/gallery/gl8.webp'
+import gl9 from '../../assets/images/gallery/gl9.webp'
+import gl10 from '../../assets/images/gallery/gl10.webp'
+import gl11 from '../../assets/images/gallery/gl11.webp'
+import gl12 from '../../assets/images/gallery/gl12.webp'
+import gl13 from '../../assets/images/gallery/gl13.webp'
+import gl14 from '../../assets/images/gallery/gl14.webp'
+import gl15 from '../../assets/images/gallery/gl15.webp'
 const TIMELINE_ITEMS = [
     {
         id: 1,
@@ -121,7 +130,7 @@ const PROCESS_STEPS = [
         desc: 'Sau khi công trình hoàn tất:\n\n• Latelia nghiệm thu theo đúng bản vẽ đã cam kết\n• Bàn giao nhà cho khách hàng\n• Đảm bảo chất lượng, thẩm mỹ và công năng đúng như thiết kế ban đầu\n\nKhách hàng nhận nhà đúng cam kết – đúng chất lượng – đúng kỳ vọng.'
     }
 ];
-const GALLERY_IMAGES = [img11,img12,img13, img14,img15]
+const GALLERY_IMAGES = [gl1,gl2,gl3, gl4,gl5,gl6,gl7,gl8,gl9,gl10,gl11,gl12,gl13,gl14,gl15]
 
 function About() {
     const [loaded, setLoaded] = useState(true);
@@ -446,22 +455,46 @@ function ImageStrip() {
                 loop={true}
                 loopAdditionalSlides={2}
                 speed={5000}
-                slidesPerView="auto"
-                spaceBetween={20}
+                breakpoints={{
+                    // Mobile
+                    0: {
+                        slidesPerView: 2,
+                        spaceBetween: 10,
+                    },
+                    // Tablet
+                    640: {
+                        slidesPerView: 2,
+                        spaceBetween: 15,
+                    },
+                    // Desktop nhỏ
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    // Desktop lớn
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    },
+                    // Desktop rất lớn
+                    1280: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    },
+                }}
                 grabCursor={true}
             >
                 {GALLERY_IMAGES.map((img, i) => (
                     <SwiperSlide
                         key={i}
-                        className="!h-auto w-[400px] md:w-[600px] lg:w-[1000px]"
+                        className="!h-auto"
                     >
                         <div
                             className={`
                                 overflow-hidden
-                                xl:h-[82vh] md:h-[70vh] sm:h-[60vh] h-[40vh]
+                                xl:h-[82vh] lg:h-[60vh] md:h-[40vh] sm:h-[35vh] h-[25vh]
                                 rounded-2xl
                             `}
-                            style={{ width: img.width }}
                         >
                             <img
                                 src={img}
@@ -545,7 +578,7 @@ function VennDiagram() {
                 {/* Sales & Marketing — tâm circle trái dưới */}
                 <motion.div
                     {...fadeScale(0.3)}
-                    className="absolute text-center"
+                    className="absolute text-center "
                     style={{
                         left: '14%',         // cx=185 → 185/600 ≈ 31%
                         top: '65%',          // cy=410 → 410/620 ≈ 66%, phần dưới circle
@@ -560,7 +593,7 @@ function VennDiagram() {
                 {/* Development — tâm circle phải dưới */}
                 <motion.div
                     {...fadeScale(0.5)}
-                    className="absolute text-center  md:left-80 lg:left-80 left-65"
+                    className="absolute text-center md:right-25 lg:right-20 right-6"
                     style={{
                         top: '65%',
                         transform: 'translate(-50%, -50%)',

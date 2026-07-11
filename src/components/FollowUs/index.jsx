@@ -16,8 +16,14 @@ import img6 from '../../assets/images/instagram/img6.webp'
 import img7 from '../../assets/images/instagram/img7.webp'
 import img8 from '../../assets/images/instagram/img8.webp'
 import img9 from '../../assets/images/instagram/img9.webp'
+import img10 from '../../assets/images/instagram/img9.webp'
+import img11 from '../../assets/images/instagram/img9.webp'
+import img12 from '../../assets/images/instagram/img9.webp'
+import img13 from '../../assets/images/instagram/img9.webp'
+import img14 from '../../assets/images/instagram/img9.webp'
+
 const INSTAGRAM_IMAGES = [
-  img1,img2,img3,,img4,img5,img6,img7,img8,img9
+  img1,img2,img3,,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14
 ]
 
 function FollowUs() {

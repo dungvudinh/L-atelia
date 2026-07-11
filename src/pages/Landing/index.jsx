@@ -21,10 +21,16 @@ import img7 from '../../assets/images/img7.webp'
 import img8 from '../../assets/images/img8.webp'
 import img9 from '../../assets/images/img9.webp'
 import img10 from '../../assets/images/img10.jpg'
+import banner2 from '../../assets/images/banner/banner2.webp'
+import banner3 from '../../assets/images/banner/banner3.webp'
+import banner4 from '../../assets/images/banner/banner4.webp'
+import banner5 from '../../assets/images/banner/banner5.webp'
+
 const BANNER_IMAGES = [
-    "https://cdn.sanity.io/images/bxdajbsn/production/228e1c8f6b1c6e96adacf0bbdedb4d0a418c04b1-4000x3076.jpg",
-    "https://cdn.sanity.io/images/bxdajbsn/production/96494324d88cc4526bdc56376411b6138e39e779-4000x4000.jpg",
-    "https://cdn.sanity.io/images/bxdajbsn/production/a726e8941d2121cd6566e13cbbc0b2a8716d1374-3780x2520.jpg",
+  banner2,
+  banner3,
+  banner4,
+  banner5
   ]
 
 const sizeMap = {

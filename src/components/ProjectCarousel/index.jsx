@@ -96,7 +96,7 @@ function ProjectCarousel({ excludeProjectId = null }) {
             }
         }
     }, [projects, excludeProjectId]);
-    
+    console.log(projects)
     return (
         <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
             <Swiper

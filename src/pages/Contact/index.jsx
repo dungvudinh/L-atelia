@@ -54,7 +54,7 @@ function ContactForm() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
     const [formData, setFormData] = useState({
-        firstName: '', lastName: '', email: '', phone: '', bugdetRange: '', description: ''
+        firstName: '', lastName: '', email: '', phone: '', bugdet: '', description: ''
     })
     const [loading, setLoading] = useState(false)
     const [submitStatus, setSubmitStatus] = useState(null)
@@ -103,7 +103,7 @@ function ContactForm() {
                     lastName: formData.lastName,
                     email: formData.email,
                     phone: formData.phone,
-                    bugdetRange: formData.bugdetRange,
+                    bugdet: formData.bugdet,
                     message: formData.description,
                 })
             })
@@ -113,7 +113,7 @@ function ContactForm() {
             if (response.ok) {
                 setSubmitStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' })
                 setFormData({
-                    firstName: '', lastName: '', email: '', phone: '', bugdetRange: '', description: ''
+                    firstName: '', lastName: '', email: '', phone: '', bugdet: '', description: ''
                 })
             } else {
                 throw new Error(result.message || 'Failed to send message')
@@ -208,15 +208,15 @@ function ContactForm() {
                     {/* Row 3: Select Service */}
                     <motion.div {...fadeUp(0.3)} className="relative">
                         <select
-                            name="bugdetRange"
-                            value={formData.bugdetRange}
+                            name="bugdet"
+                            value={formData.bugdet}
                             onChange={handleChange}
                             style={{
                                 ...inputStyle,
                                 appearance: 'none',
                                 WebkitAppearance: 'none',
                                 cursor: 'pointer',
-                                color: formData.bugdetRange ? '#1a3a3a' : '#9aaeae',
+                                color: formData.bugdet ? '#1a3a3a' : '#9aaeae',
                             }}
                         >
                             <option value="" disabled hidden>Dự kiến Budget đầu tư</option>
