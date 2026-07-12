@@ -88,9 +88,9 @@ function JoinNewsletter() {
         <section className="pb-12 sm:pb-16 md:pb-20 lg:pb-24 px-4 text-center mt-10 sm:mt-14 md:mt-16 lg:mt-20 flex items-center justify-center flex-col w-full">
             
             {/* Tiêu đề */}
-            <h2 className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[34px] lg:text-[48px] 
-                leading-[1.15] max-w-[772px] mx-auto mb-6 sm:mb-8 md:mb-10 
-                px-2 sm:px-0"
+            <h2 className="text-bg-secondary text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px]
+                leading-[1.15] max-w-[1000px] mx-auto mb-6 sm:mb-8 md:mb-10 
+                px-2 sm:px-0 font-semibold"
             >
                 Kết nối cùng Art Latelia để bắt đầu hành trình kiến tạo không gian sống của riêng bạn
             </h2>

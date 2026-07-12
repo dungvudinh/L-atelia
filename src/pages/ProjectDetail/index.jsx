@@ -89,55 +89,60 @@ const SectionAccordion = ({ section }) => {
     const [open, setOpen] = useState(false)
     return (
         <FadeUpSection>
-            <div className=" py-10 md:py-14">
-                <div className="max-w-[900px] mx-auto px-4">
-                    {/* Layout: title bên trái, text bên phải — giống Berrow */}
-                    <div className="md:grid md:grid-cols-[2fr_3fr] md:gap-16">
-                        <h3
-                            className="text-bg-secondary font-medium mb-4 md:mb-0"
-                            style={{ fontSize: 'clamp(22px, 2.5vw, 32px)', lineHeight: 1.2 }}
+            <div className="py-10 md:py-14">
+                <div className="max-w-[820px] mx-auto px-4 text-center">
+                    <h3
+                        className="text-bg-secondary font-semibold mb-6 md:mb-8 tracking-wide"
+                        style={{
+                            fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2,
+                            letterSpacing: '0.02em',
+                        }}
+                    >
+                        {section.title}
+                    </h3>
+
+                    <div className="w-full mx-auto">
+                        <p
+                            className="text-bg-secondary/70"
+                            style={{
+                                fontSize: 'clamp(15px, 1.3vw, 18px)',
+                                lineHeight: 1.9,
+                                fontFamily:'Nunito Sans'
+                            }}
                         >
-                            {section.title}
-                        </h3>
-                        <div>
-                            <p
-                                className="text-bg-secondary/70"
-                                style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 18px)', lineHeight: 1.7 }}
-                            >
-                                {section.shortDescription}
-                            </p>
+                            {section.shortDescription}
+                        </p>
 
-                            {/* Read More expand */}
-                            <AnimatePresence>
-                                {open && (
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                        className="overflow-hidden"
+                        {/* Read More expand */}
+                        <AnimatePresence>
+                            {open && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                    className="overflow-hidden"
+                                >
+                                    <p
+                                        className="text-bg-secondary/70 mt-4"
+                                        style={{ fontSize: 'clamp(15px, 1.1vw, 20px)', letterSpacing: '0.2px' }}
                                     >
-                                        <p
-                                            className="text-bg-secondary/70 mt-4"
-                                            style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 18px)', lineHeight: 1.7 }}
-                                        >
-                                            {section.fullDescription}
-                                        </p>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                        {section.fullDescription}
+                                    </p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                            <button
-                                onClick={() => setOpen(o => !o)}
-                                className="flex items-center gap-1.5 mt-5 text-bg-secondary font-medium group"
-                                style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-                            >
-                                {open ? 'Read less' : 'Read more'}
-                                <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                                    <ChevronDown size={14} />
-                                </motion.span>
-                            </button>
-                        </div>
+                        {/* <button
+                            onClick={() => setOpen(o => !o)}
+                            className="flex items-center gap-1.5 mt-5 mx-auto text-bg-secondary font-medium group"
+                            style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                        >
+                            {open ? 'Read less' : 'Read more'}
+                            <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                                <ChevronDown size={14} />
+                            </motion.span>
+                        </button> */}
                     </div>
                 </div>
             </div>
@@ -336,7 +341,7 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ① HERO BANNER
             ════════════════════════════════════════ */}
-            <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative overflow-hidden">
+            <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative overflow-hidden ">
                 <OptimizedImage
                     src={`${BASE_CDN_URL}${project?.gallery?.[0]?.key}`} 
                     alt={project.name}
@@ -355,6 +360,7 @@ function ProjectDetail() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                         style={{ fontSize: 'clamp(40px, 7vw, 72px)', fontWeight: 400, lineHeight: 1.05, marginBottom: '16px' }}
+                        className="font-semibold"
                     >
                         {project.name}
                     </motion.h1>
@@ -409,7 +415,7 @@ function ProjectDetail() {
                 <FadeUpSection>
                     <div className="max-w-[760px] text-center">
                         <h2
-                            className="text-bg-secondary font-medium"
+                            className="text-bg-secondary font-semibold"
                             style={{ fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2 }}
                         >
                             {project.title}

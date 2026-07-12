@@ -20,7 +20,7 @@ import JoinNewsletter from '../../components/JoinNewsletter'
 import FollowUs from '../../components/FollowUs'
 import ProjectCarousel from '../../components/ProjectCarousel'
 import { Check } from 'lucide-react'
-import img10 from '../../assets/images/img10.jpg'
+import img10 from '../../assets/images/img10.webp'
 import gl1 from '../../assets/images/gallery/gl1.webp'
 import gl2 from '../../assets/images/gallery/gl2.webp'
 import gl3 from '../../assets/images/gallery/gl3.webp'
@@ -170,9 +170,9 @@ function About() {
             {/* Section 1: About History */}
             <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-40 flex justify-center px-4">
                 <FadeUpSection>
-                    <div className="mx-auto max-w-[772px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
-                        <h1 className="text-bg-secondary text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-center font-medium leading-tight sm:leading-normal" style={{lineHeight:1.2}} >
-                        LỰA CHỌN ĐẤT – NỀN TẢNG CỦA GIÁ TRỊ LÂU DÀI
+                    <div className="mx-auto max-w-[1000px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
+                        <h1 className="text-bg-secondary text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] text-center font-semibold leading-tight sm:leading-normal" style={{lineHeight:1.2}} >
+                        Lựa chọn đất - Nền tảng của giá trị lâu dài
                         </h1>
                         <p className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2 sm:mt-3 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
                         Đằng sau mỗi ngôi nhà Art Latelia không chỉ là bản vẽ hay vật liệu, mà là một quá trình được tính toán kỹ lưỡng ngay từ viên gạch đầu tiên.
@@ -189,9 +189,9 @@ function About() {
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
                     <div className='text-center mb-8 sm:mb-10 lg:mb-16'>
                         <h1 className='text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-3 sm:mb-4'>
-                            QUY TRÌNH TRIỂN KHAI DỰ ÁN TẠI LATELIA
+                            Quy trình triển khai dự án tại L'atelia
                         </h1>
-                        <p className='text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-gray-600'>
+                        <p className='text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary' style={{fontFamily:'Nunito Sans'}}>
                             Minh bạch – Đồng hành – Cam kết đúng như thiết kế
                         </p>
                     </div>
@@ -244,7 +244,7 @@ function About() {
                                 </p>
                             </div>
                             <p className='text-[16px] sm:text-[17px] lg:text-[18px] font-subtitle text-txt-secondary italic'>
-                                "Latelia không chỉ xây nhà – chúng tôi xây dựng niềm tin dài hạn."
+                                "L'atelia không chỉ xây nhà – chúng tôi xây dựng niềm tin dài hạn."
                             </p>
                         </div>
                     </div>
@@ -256,7 +256,7 @@ function About() {
             <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-20 flex justify-center px-4">
                 <FadeUpSection>
                     <div className="mx-auto max-w-[1000px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
-                        <h1 className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[36px] lg:text-[48px] text-center font-medium leading-tight" style={{lineHeight:1.2}} >
+                        <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold" style={{lineHeight:1.2}} >
                         Một đơn vị thiết kế và thi công, phát triển bất động sản và tập hợp thương hiệu phong cách sống, tất cả nằm trong Latelia
                         </h1>
                     </div>
@@ -267,39 +267,39 @@ function About() {
 
             <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-20 flex justify-center px-4">
                 <FadeUpSection>
-                    <div className="mx-auto max-w-[1100px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
-                        <h1 className="text-bg-secondary text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] text-center font-medium leading-tight" style={{ lineHeight: 1.2 }}>
+                    <div className="mx-auto  max-w-[1500px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center flex justify-center flex-col items-center">
+                        <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold" style={{ lineHeight: 1.2 }}>
                             Triết lý thiết kế của Art L'Atelia
                         </h1>
 
-                        <p style={{ fontFamily: 'Nunito Sans' }} className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0">
+                        <p style={{ fontFamily: 'Nunito Sans' }} className=" text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0">
                             Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại Latelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
                         </p>
-                        <p style={{ fontFamily: 'InstrumentSans' }} className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2">
+                        <p className="text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px] text-bg-secondary mt-10 font-semibold" >
                             Mỗi công trình được hình thành dựa trên 3 giá trị cốt lõi:
                         </p>
 
                         {/* 3 giá trị cốt lõi */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-8 mt-8 sm:mt-10 text-left">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-20 mt-12 sm:mt-10 text-left">
                             <CoreValue
                                 title="Cá nhân hoá"
-                                desc="Mỗi ngôi nhà là một dấu ấn riêng. Latelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."
+                                descLines={["Mỗi ngôi nhà là một dấu ấn riêng."," Latelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."]}
                             />
                             <CoreValue
                                 title="Kiến trúc hiện đại"
-                                desc="Sống thoải mái theo thời gian. Thiết kế ưu tiên ánh sáng tự nhiên, thông gió và công năng tối ưu, bền vững theo năm tháng. Một ngôi nhà đẹp là ngôi nhà 10 năm sau vẫn thấy đúng."
+                                descLines={["Sống thoải mái theo thời gian.", "Thiết kế ưu tiên ánh sáng tự nhiên, thông gió và công năng tối ưu, bền vững theo năm tháng. Một ngôi nhà đẹp là ngôi nhà 10 năm sau vẫn thấy đúng."]}
                             />
                             <CoreValue
                                 title="Nghệ thuật trong sự tinh giản"
-                                desc="Art Latelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."
+                                descLines={["Art Latelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."]}
                             />
                         </div>
 
                         {/* Câu kết luận */}
-                        <p className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[32px] lg:text-[35px] font-medium mt-8 sm:mt-10 md:mt-12" style={{ lineHeight: 1.4 }}>
-                            Chúng tôi không xây thật nhanh.
+                        <p className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[32px] lg:text-[35px] font-medium mt-8 sm:mt-10 md:mt-20 italic font-semibold" style={{ lineHeight: 1.4 }}>
+                            "Chúng tôi không xây thật nhanh.
                             <br />
-                            Chúng tôi xây đúng ngay từ đầu.
+                            Chúng tôi xây đúng ngay từ đầu."
                         </p>
                     </div>
                 </FadeUpSection>
@@ -360,7 +360,7 @@ function TimelineSection() {
         </section>
     )
 }
-function CoreValue({ title, desc }) {
+function CoreValue({ title, descLines }) {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-60px' })
 
@@ -371,15 +371,19 @@ function CoreValue({ title, desc }) {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-            <h3 className="text-bg-secondary text-[22px] font-medium mb-3 tracking-wide">
+            <h3 className="text-bg-secondary text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px] font-semibold mb-3 tracking-wide">
                 {title}
             </h3>
-            <p
-                className="text-[16px] text-[#4a5050] leading-relaxed"
-                style={{ fontFamily: 'Nunito Sans' }}
+            <div
+                className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] text-[#6b7280] leading-[1.9] mt-4"
+                style={{ fontFamily: 'Nunito Sans', fontWeight: 400 }}
             >
-                {desc}
-            </p>
+                {descLines.map((line, i) => (
+                    <p key={i} className="mb-1 last:mb-0">
+                        {line}
+                    </p>
+                ))}
+            </div>
         </motion.div>
     )
 }
@@ -570,7 +574,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className='font-semibold'>
                     Thiết kế kiến trúc
                     </p>
                 </motion.div>
@@ -585,7 +589,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className='font-semibold'>
                     Truyền thông <br/> & Bán hàng 
                     </p>
                 </motion.div>
@@ -599,7 +603,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className='font-semibold'>
                     Phát triển
                     <br/>
                     bất động sản dòng tiền

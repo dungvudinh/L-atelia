@@ -16,11 +16,11 @@ import img6 from '../../assets/images/instagram/img6.webp'
 import img7 from '../../assets/images/instagram/img7.webp'
 import img8 from '../../assets/images/instagram/img8.webp'
 import img9 from '../../assets/images/instagram/img9.webp'
-import img10 from '../../assets/images/instagram/img9.webp'
-import img11 from '../../assets/images/instagram/img9.webp'
-import img12 from '../../assets/images/instagram/img9.webp'
-import img13 from '../../assets/images/instagram/img9.webp'
-import img14 from '../../assets/images/instagram/img9.webp'
+import img10 from '../../assets/images/instagram/img10.webp'
+import img11 from '../../assets/images/instagram/img11.webp'
+import img12 from '../../assets/images/instagram/img12.webp'
+import img13 from '../../assets/images/instagram/img13.webp'
+import img14 from '../../assets/images/instagram/img14.webp'
 
 const INSTAGRAM_IMAGES = [
   img1,img2,img3,,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14
@@ -30,7 +30,7 @@ function FollowUs() {
     return (
         <div className=" md:pb-16 w-full d-flex justify-center">
           <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] mx-auto !px-4 md:px-0">
-            <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2">
+            <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2 font-semibold">
                 Follow us
                 @
                 <a href="#" className="underline decoration-1 underline-offset-2">
@@ -76,7 +76,7 @@ const InViewSlider = ({ images }) => {
                     {images.map((img, index) => (
                         <SwiperSlide
                             key={index}
-                            style={{ width: "200px" }}
+                            style={{ width: "250px" }}
                             className="rounded-xl md:rounded-2xl overflow-hidden"
                         >
                             <motion.div
@@ -91,7 +91,7 @@ const InViewSlider = ({ images }) => {
                                 <img
                                     src={img}
                                     alt={`instagram-${index}`}
-                                    className="w-full h-[280px] object-cover hover:scale-105 transition-transform duration-500"
+                                    className="w-full h-[250px] object-cover hover:scale-105 transition-transform duration-500"
                                     draggable={false}
                                 />
                             </motion.div>

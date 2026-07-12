@@ -20,7 +20,7 @@ import img6 from '../../assets/images/img6.webp'
 import img7 from '../../assets/images/img7.webp'
 import img8 from '../../assets/images/img8.webp'
 import img9 from '../../assets/images/img9.webp'
-import img10 from '../../assets/images/img10.jpg'
+import img11 from '../../assets/images/img11.webp'
 import banner2 from '../../assets/images/banner/banner2.webp'
 import banner3 from '../../assets/images/banner/banner3.webp'
 import banner4 from '../../assets/images/banner/banner4.webp'
@@ -141,7 +141,7 @@ return (
               <div ref={ref} className="xl:mt-[80px] md:mt-[-80px] mt-[-80px] w-full flex justify-center items-center px-4 sm:px-0">
                   <div className="relative w-full max-w-full sm:max-w-[900px] xl:max-w-screen-2xl flex items-center justify-between mx-auto">
                       <img 
-                          src={img10} 
+                          src={img11} 
                           className="rounded-2xl h-[300px] sm:h-[400px] md:h-[500px] lg:h-full w-full object-cover"
                           alt="Latelia" 
                       />
