@@ -164,7 +164,7 @@ function Projects() {
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 !px-4 lg:px-0">
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-6 lg:mt-10">
           {/* HEADER */}
-          <h1 className="text-[36px] md:text-[45px] lg:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight">
+          <h1 className="text-[36px] md:text-[45px] lg:text-[45px] font-subtitle text-txt-secondary leading-tight">
             Các dự án của chúng tôi
           </h1>
           <p className="mt-6 lg:mt-10 text-txt-gray text-[18px] md:text-[20px] lg:text-[20px] leading-relaxed">
@@ -318,7 +318,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
 
       {/* Content section */}
       <div className="p-4 bg-white relative z-30">
-        <h3 className="text-txt-secondary text-[18px] md:text-[20px] font-semibold mb-1 font-subtitle">{project.title}</h3>
+        <h3 className="text-txt-secondary text-[18px] md:text-[20px] mb-1 font-subtitle">{project.title}</h3>
         
         {/* Price */}
         {formattedPrice && (
@@ -345,7 +345,7 @@ const ProjectItem = memo(({ project, onImageClick, isPriority, isEager, preloade
         <div className="mt-4">
           <LocalizedLink to={`/projects/${project.id}`} className="cursor-pointer">
             <button className='flex items-center justify-center font-light uppercase text-[14px] py-2 text-txt-secondary 
-              transition-all duration-300 w-full md:w-auto font-semibold hover:underline underline-offset-4'>
+              transition-all duration-300 w-full md:w-auto hover:underline underline-offset-4'>
               view more
               <ArrowRight className='ml-2 transition-transform duration-300 group-hover:translate-x-1' size={16}/>
             </button>

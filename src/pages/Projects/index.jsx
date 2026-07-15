@@ -226,7 +226,7 @@ function Projects() {
                     {/* CONTENT */}
                     <div className="mt-8">
     {filteredProjects.length === 0 ? (
-        <p className="text-center text-bg-secondary text-[18px] py-20" style={{ fontFamily: 'InstrumentSans' }}>
+        <p className="text-center text-bg-secondary text-[18px] py-20" style={{ fontFamily: 'Nunito Sans' }}>
             No projects found.
         </p>
     ) : (
@@ -258,7 +258,7 @@ function Projects() {
                                         <LocalizedLink
                                             to={`/projects/${project.id}`}
                                             className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
-                                            style={{ fontFamily: 'InstrumentSans' }}
+                                            style={{ fontFamily: 'Nunito Sans' }}
                                         >
                                             View Project
                                             <ChevronRight size={16} />
@@ -276,7 +276,7 @@ function Projects() {
                                     <LocalizedLink
                                         to={`/projects/${project.id}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
-                                        style={{ fontFamily: 'InstrumentSans' }}
+                                        
                                     >
                                         View Project
                                         <ChevronRight size={16} />
@@ -300,13 +300,12 @@ function Projects() {
                                     <h3 className="md:text-[38px] md:leading-[44px] lg:text-[48px] lg:leading-[54px] text-[28px] leading-[34px]">
                                         {project.title}
                                     </h3>
-                                    <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'InstrumentSans' }}>
+                                    <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2" style={{ fontFamily: 'Nunito Sans' }}>
                                         {project.description}
                                     </p>
                                     <a
                                         href={`/projects/${convertToSlug(project.title)}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
-                                        style={{ fontFamily: 'InstrumentSans' }}
                                     >
                                         View Project
                                         <ChevronRight size={16} />

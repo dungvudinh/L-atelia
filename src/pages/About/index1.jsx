@@ -109,7 +109,7 @@ function About()
                     
                     {/* Text - Hiển thị dưới mobile, bên trái trên desktop */}
                     <div className='w-full lg:w-auto lg:flex-basis xl:basis-2/3 lg:basis-3/5 px-4 order-2 md:order-1'>
-                        <h1 className='text-[25px] lg:text-[35px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-4 lg:mb-5 leading-tight flex items-center'>
+                        <h1 className='text-[25px] lg:text-[35px] xl:text-[45px] font-subtitle text-txt-secondary  mb-4 lg:mb-5 leading-tight flex items-center'>
                             Về chúng tôi 
                             <span className='mx-2 mt-2'>
                                 <Minus />
@@ -124,19 +124,19 @@ function About()
                         <div className='space-y-4 mb-6'>
                             <p className='text-[16px] lg:text-[18px] font-medium'>Chúng tôi trực tiếp:</p>
                             <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                <span className='text-txt-secondary  mr-2'>•</span>
                                 Lựa chọn quỹ đất phù hợp
                             </p>
                             <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                <span className='text-txt-secondary  mr-2'>•</span>
                                 Nghiên cứu nhu cầu sử dụng thực tế
                             </p>
                             <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                <span className='text-txt-secondary  mr-2'>•</span>
                                 Thiết kế kiến trúc tối ưu công năng và cảm xúc
                             </p>
                             <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                <span className='text-txt-secondary  mr-2'>•</span>
                                 Kiểm soát chất lượng xây dựng từ đầu đến cuối
                             </p>
                         </div>
@@ -144,7 +144,7 @@ function About()
                         <p className='text-[16px] lg:text-[18px] mt-6 lg:mt-8'>
                             Dù mới thành lập hơn một năm, Latelia lựa chọn con đường làm ít – làm kỹ – làm có chiều sâu, lấy uy tín và chất lượng làm nền tảng phát triển bền vững.
                         </p>  
-                        <p className='text-[25px] mt-6 lg:mt-8 font-subtitle font-semibold text-txt-secondary'>
+                        <p className='text-[25px] mt-6 lg:mt-8 font-subtitle  text-txt-secondary'>
                             Trần Duy Tùng
                             Founder & CEO
                         </p>  
@@ -160,9 +160,9 @@ function About()
                         <div className='mt-8 lg:mt-30 lg:mr-7 lg:w-auto w-full pb-4  px-4'>
                             <div className='flex items-center gap-3 mb-4'>
                                 <Building2 className='text-txt-secondary' size={24}/>
-                                <h4 className='text-[20px] lg:text-[25px] text-txt-secondary font-subtitle font-semibold'>TRIẾT LÝ KIẾN TRÚC</h4>
+                                <h4 className='text-[20px] lg:text-[25px] text-txt-secondary font-subtitle '>TRIẾT LÝ KIẾN TRÚC</h4>
                             </div>
-                            <h1 className=' text-[20px] lg:text-[30px]  xl:text-[45px] font-subtitle text-txt-secondary font-semibold mb-6 lg:mb-6 leading-tight'>
+                            <h1 className=' text-[20px] lg:text-[30px]  xl:text-[45px] font-subtitle text-txt-secondary  mb-6 lg:mb-6 leading-tight'>
                                 Kiến trúc không chỉ để ở – mà để tận hưởng
                             </h1>
                             <p className='text-[16px] lg:text-[18px] mb-6'>
@@ -171,19 +171,19 @@ function About()
                             
                             <div className='space-y-3 mb-8'>
                                 <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    <span className='text-txt-secondary  mr-2'>•</span>
                                     Ánh sáng tự nhiên & thông gió
                                 </p>
                                 <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    <span className='text-txt-secondary  mr-2'>•</span>
                                     Sự riêng tư và tiện nghi trong sinh hoạt
                                 </p>
                                 <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    <span className='text-txt-secondary  mr-2'>•</span>
                                     Cảm xúc khi bước vào không gian sống
                                 </p>
                                 <p className='text-[16px] lg:text-[18px] flex items-start'>
-                                    <span className='text-txt-secondary font-semibold mr-2'>•</span>
+                                    <span className='text-txt-secondary  mr-2'>•</span>
                                     Tính thẩm mỹ bền vững theo thời gian
                                 </p>
                             </div>
@@ -209,9 +209,9 @@ function About()
                     <div className='text-center mb-10 lg:mb-16'>
                         <div className='flex items-center justify-center gap-3 mb-4'>
                             <Target className='text-txt-secondary' size={24}/>
-                            <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle font-semibold'>GIÁ TRỊ CỐT LÕI CỦA LATELIA</h4>
+                            <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle '>GIÁ TRỊ CỐT LÕI CỦA LATELIA</h4>
                         </div>
-                        <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight'>
+                        <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary  leading-tight'>
                             Những điều tạo nên sự khác biệt
                         </h1>
                     </div>
@@ -226,7 +226,7 @@ function About()
                                             <Icon className='text-txt-secondary' size={24}/>
                                         </div>
                                         <div>
-                                            <h4 className='text-[20px] lg:text-[24px] font-semibold font-subtitle text-txt-secondary mb-2'>
+                                            <h4 className='text-[20px] lg:text-[24px]  font-subtitle text-txt-secondary mb-2'>
                                                 {value.title}
                                             </h4>
                                             <p className='text-[16px] lg:text-[18px] text-gray-600'>
@@ -294,9 +294,9 @@ function About()
                     <div className='text-center mb-10 lg:mb-16 flex flex-col items-center'>
                         <div className='flex items-center justify-center gap-3 mb-4'>
                             <ShieldCheck className='text-txt-secondary' size={24}/>
-                            <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle font-semibold'>CAM KẾT TỪ LATELIA</h4>
+                            <h4 className='text-[20px] xl:text-[26px] text-txt-secondary font-subtitle '>CAM KẾT TỪ LATELIA</h4>
                         </div>
-                        <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight lg:w-[740px]'>
+                        <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary  leading-tight lg:w-[740px]'>
                             Latelia không chỉ bán nhà – chúng tôi trao gửi một phong cách sống
                         </h1>
                     </div>
@@ -304,19 +304,19 @@ function About()
                     <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
                         <div className='p-6 bg-white border border-gray-100 rounded-lg'>
                             <Heart className='text-txt-secondary mb-4' size={32}/>
-                            <h4 className='text-[18px] lg:text-[20px] font-semibold mb-3'>Chỉ phát triển sản phẩm tin tưởng</h4>
+                            <h4 className='text-[18px] lg:text-[20px]  mb-3'>Chỉ phát triển sản phẩm tin tưởng</h4>
                             <p className='text-gray-600'>Chúng tôi chỉ làm những sản phẩm mà chính mình thật sự tin tưởng</p>
                         </div>
                         
                         <div className='p-6 bg-white border border-gray-100 rounded-lg'>
                             <Target className='text-txt-secondary mb-4' size={32}/>
-                            <h4 className='text-[18px] lg:text-[20px] font-semibold mb-3'>Chất lượng trên số lượng</h4>
+                            <h4 className='text-[18px] lg:text-[20px]  mb-3'>Chất lượng trên số lượng</h4>
                             <p className='text-gray-600'>Không chạy theo số lượng, không làm hời hợt, mỗi sản phẩm đều là tâm huyết</p>
                         </div>
                         
                         <div className='p-6 bg-white border border-gray-100 rounded-lg'>
                             <Users className='text-txt-secondary mb-4' size={32}/>
-                            <h4 className='text-[18px] lg:text-[20px] font-semibold mb-3'>Khách hàng là trung tâm</h4>
+                            <h4 className='text-[18px] lg:text-[20px]  mb-3'>Khách hàng là trung tâm</h4>
                             <p className='text-gray-600'>Luôn đặt lợi ích và trải nghiệm của khách hàng lên hàng đầu</p>
                         </div>
                     </div>
@@ -338,7 +338,7 @@ function About()
 <div className='mt-10 lg:mt-20 bg-gray-50 py-10 lg:py-20'>
     <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
         <div className='text-center mb-10 lg:mb-16'>
-            <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-4'>
+            <h1 className='text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary  leading-tight mb-4'>
                 QUY TRÌNH TRIỂN KHAI DỰ ÁN TẠI LATELIA
             </h1>
             <p className='text-[16px] lg:text-[18px] text-gray-600'>
@@ -350,11 +350,11 @@ function About()
             {PROCESS_STEPS.map((step, index) => (
                 <div key={step.id} className='p-6 xl:p-8 p-2 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
                     <div className='flex xl:items-start justify-center items-center gap-4 xl:flex-row flex-col'>
-                        <div className='flex-shrink-0 w-10 h-10 bg-txt-secondary text-white rounded-full flex items-center justify-center font-semibold text-[18px]'>
+                        <div className='flex-shrink-0 w-10 h-10 bg-txt-secondary text-white rounded-full flex items-center justify-center  text-[18px]'>
                             {index + 1}
                         </div>
                         <div className='flex-1'>
-                            <h4 className='text-[18px] lg:text-[20px] font-semibold font-subtitle text-txt-secondary mb-4 lg:mb-5 leading-tight'>
+                            <h4 className='text-[18px] lg:text-[20px]  font-subtitle text-txt-secondary mb-4 lg:mb-5 leading-tight'>
                                 {step.title}
                             </h4>
                             <div className='text-[15px] lg:text-[16px] text-gray-600 whitespace-pre-line space-y-2'>
@@ -379,7 +379,7 @@ function About()
 
         <div className='mt-16 lg:mt-20 text-center'>
             <div className='inline-block p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl'>
-                <h3 className='text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-6 font-subtitle'>
+                <h3 className='text-[20px] lg:text-[24px]  text-txt-secondary mb-6 font-subtitle'>
                     CAM KẾT CỦA LATELIA
                 </h3>
                 <div className='space-y-4 text-left mb-6'>
@@ -409,7 +409,7 @@ function About()
             {/* CTA Section */}
             <div className='mt-10 lg:mt-20 bg-txt-secondary text-bg-primary py-16 lg:py-24 px-4'>
                 <div className='max-w-4xl mx-auto text-center'>
-                    <h2 className='text-[25px] lg:text-[32px] xl:text-[56px] font-subtitle font-semibold mb-6'>
+                    <h2 className='text-[25px] lg:text-[32px] xl:text-[56px] font-subtitle  mb-6'>
                         Chọn Latelia – chọn sự an tâm, giá trị và niềm tự hào dài lâu
                     </h2>
                     <p className='text-[16px] xl:text-[22px] mb-10 max-w-2xl mx-auto'>

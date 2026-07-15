@@ -176,7 +176,7 @@ return (
                           <LocalizedLink
                               to="/projects"
                               className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] sm:text-[16px] font-bold hover:gap-2 transition-all duration-200"
-                              style={{fontFamily:'InstrumentSans'}}>
+                              style={{fontFamily:'Nunito Sans'}}>
                               View All Project
                               <ChevronRight size={16} />
                           </LocalizedLink>
@@ -377,13 +377,13 @@ const ProjectGrid = ({projects}) => {
                                       {project.title}
                                   </h3>
                                   <p className="text-[14px] leading-[20px] sm:text-[16px] sm:leading-[24px] mt-2 line-clamp-2 sm:line-clamp-3" 
-                                     style={{fontFamily:'InstrumentSans'}}>
+                                     style={{fontFamily:'Nunito Sans'}}>
                                       {project.description}
                                   </p>
                                   <LocalizedLink
                                       to={`/projects/${project.id}`}
                                       className="mt-3 sm:mt-4 inline-flex items-center justify-center gap-1 text-[14px] sm:text-[16px] font-bold hover:gap-2 transition-all duration-200"
-                                      style={{fontFamily:'InstrumentSans'}}>
+                                      style={{fontFamily:'Nunito Sans'}}>
                                       View Project
                                       <ChevronRight size={16} />
                                   </LocalizedLink>

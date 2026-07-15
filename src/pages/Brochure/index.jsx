@@ -732,7 +732,7 @@ function Brochure() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <h2 className="text-xl font-semibold">Error</h2>
+                        <h2 className="text-xl ">Error</h2>
                         <p>{error}</p>
                         <button 
                             onClick={fetchProjectData}
@@ -751,7 +751,7 @@ function Brochure() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
-                        <h2 className="text-xl font-semibold">Project Not Found</h2>
+                        <h2 className="text-xl ">Project Not Found</h2>
                         <p>The requested project could not be found.</p>
                     </div>
                 </div>
@@ -795,7 +795,7 @@ function Brochure() {
                     </p>
                     
                     {/* FILTER TABS */}
-                    <ul className="mt-10 lg:mt-20 text-[16px] md:text-[20px] lg:text-[22px] flex flex-col sm:flex-row font-subtitle font-semibold gap-4 sm:gap-2 lg:gap-0">
+                    <ul className="mt-10 lg:mt-20 text-[16px] md:text-[20px] lg:text-[22px] flex flex-col sm:flex-row font-subtitle  gap-4 sm:gap-2 lg:gap-0">
                         {FILTERS.map(filterItem => (
                             <li 
                                 className={`w-full sm:w-[200px] md:w-[300px] lg:w-[370px] rounded-4xl text-center text-txt-gray border border-txt-secondary px-4 md:px-6 lg:px-10 py-2 md:py-2 cursor-pointer select-none transition-all duration-300 ${
@@ -853,7 +853,7 @@ function Brochure() {
                                 {dateGroup.images.some(img => img.type === 'image') && (
                                     <div className="flex items-center mb-4 lg:mb-6 px-2">
                                         <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>
-                                        <p className="w-full md:w-150 text-center font-semibold text-sm md:text-base lg:text-lg px-2 md:px-0">
+                                        <p className="w-full md:w-150 text-center  text-sm md:text-base lg:text-lg px-2 md:px-0">
                                             {dateGroup.uploadDate}
                                         </p>
                                         <div className="w-full h-[1px] md:h-[2px] bg-txt-primary opacity-50"></div>

@@ -62,7 +62,7 @@ const BrochureLink = ({ to, light = false, className = "" }) => (
         to={to}
         className={`inline-flex items-center gap-2 group font-bold ${className}`}
         style={{
-            fontFamily: 'InstrumentSans',
+            fontFamily: 'Nunito Sans',
             fontSize: 'clamp(14px, 1.2vw, 16px)',
             color: light ? '#fff' : 'var(--color-bg-secondary, #1a1a1a)',
             textDecoration: 'none',
@@ -78,7 +78,7 @@ const BrochureLink = ({ to, light = false, className = "" }) => (
 const SpecBadge = ({ spec }) => (
     <span
         className="inline-block px-3 py-1.5 text-sm border border-bg-secondary/20 rounded-full text-bg-secondary"
-        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(12px, 1vw, 14px)' }}
+        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(12px, 1vw, 14px)' }}
     >
         {spec.text}
     </span>
@@ -92,7 +92,7 @@ const SectionAccordion = ({ section }) => {
             <div className="py-10 md:py-14">
                 <div className="max-w-[820px] mx-auto px-4 text-center">
                     <h3
-                        className="text-bg-secondary font-semibold mb-6 md:mb-8 tracking-wide"
+                        className="text-bg-secondary mb-6 md:mb-8 tracking-wide"
                         style={{
                             fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2,
                             letterSpacing: '0.02em',
@@ -136,7 +136,7 @@ const SectionAccordion = ({ section }) => {
                         {/* <button
                             onClick={() => setOpen(o => !o)}
                             className="flex items-center gap-1.5 mt-5 mx-auto text-bg-secondary font-medium group"
-                            style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                            style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(13px, 1vw, 15px)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                         >
                             {open ? 'Read less' : 'Read more'}
                             <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.3 }}>
@@ -300,7 +300,7 @@ function ProjectDetail() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <h2 className="text-xl font-semibold">Error</h2>
+                        <h2 className="text-xl">Error</h2>
                         <p>{error}</p>
                         <button 
                             onClick={fetchProjectDetail}
@@ -320,7 +320,7 @@ function ProjectDetail() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
-                        <h2 className="text-xl font-semibold">Project Not Found</h2>
+                        <h2 className="text-xl">Project Not Found</h2>
                         <p>The requested project could not be found.</p>
                         <LocalizedLink to="/projects">
                             <button className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700">
@@ -360,7 +360,6 @@ function ProjectDetail() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                         style={{ fontSize: 'clamp(40px, 7vw, 72px)', fontWeight: 400, lineHeight: 1.05, marginBottom: '16px' }}
-                        className="font-semibold"
                     >
                         {project.name}
                     </motion.h1>
@@ -371,7 +370,7 @@ function ProjectDetail() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
                         className="flex flex-wrap items-center justify-center gap-0 mb-6"
-                        style={{ fontSize: 'clamp(15px, 1.1vw, 20px)', letterSpacing: '0.2px' }}
+                        style={{ fontSize: 'clamp(15px, 1.1vw, 22px)', letterSpacing: '0.2px' }}
                     >
                         
                         {project?.propertyFeatures?.length > 0 && project.propertyFeatures.map((feature, i) => (
@@ -415,7 +414,7 @@ function ProjectDetail() {
                 <FadeUpSection>
                     <div className="max-w-[760px] text-center">
                         <h2
-                            className="text-bg-secondary font-semibold"
+                            className="text-bg-secondary"
                             style={{ fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2 }}
                         >
                             {project.title}
@@ -473,7 +472,7 @@ function ProjectDetail() {
                         {project?.propertyFeatures?.map(({ text, _id }, index) => (
                             <div key={_id || index}>
                                 <p className="text-bg-secondary/40 text-sm uppercase tracking-widest mb-1"
-                                    style={{ fontFamily: 'InstrumentSans' }}>
+                                    style={{ fontFamily: 'Nunito Sans' }}>
                                     {text}
                                 </p>
                                 {/* <p className="text-bg-secondary font-medium"
@@ -493,7 +492,7 @@ function ProjectDetail() {
                             {/* <ul className="space-y-2">
                                 {project?.propertyHighlights.map((h, i) => (
                                     <li key={i} className="flex items-start gap-3 text-bg-secondary/70"
-                                        style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}>
+                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}>
                                         <Check size={16} className="mt-0.5 flex-shrink-0 text-bg-secondary" />
                                         {h}
                                     </li>
@@ -511,7 +510,7 @@ function ProjectDetail() {
                                             {highlight.title && (
                                                 <h3
                                                     className="text-bg-secondary flex items-start gap-3"
-                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(18px, 1.6vw, 22px)' }}
+                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(18px, 1.6vw, 22px)' }}
                                                 >
                                                     <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
                                                     {highlight.title}
@@ -522,7 +521,7 @@ function ProjectDetail() {
                                             {highlight.description && (
                                                 <p
                                                     className="text-bg-secondary/70 pl-8 whitespace-pre-line"
-                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}
+                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}
                                                 >
                                                     {highlight.description}
                                                 </p>
@@ -536,7 +535,7 @@ function ProjectDetail() {
                                                             {f.name && (
                                                                 <span
                                                                     className="block text-bg-secondary/90"
-                                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(14px, 1.1vw, 16px)' }}
+                                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(14px, 1.1vw, 16px)' }}
                                                                 >
                                                                     {f.name}
                                                                 </span>
@@ -544,7 +543,7 @@ function ProjectDetail() {
                                                             {f.description && (
                                                                 <span
                                                                     className="block text-bg-secondary/60"
-                                                                    style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(13px, 1vw, 15px)' }}
+                                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(13px, 1vw, 15px)' }}
                                                                 >
                                                                     {f.description}
                                                                 </span>
@@ -589,11 +588,11 @@ function ProjectDetail() {
                     <FadeUpSection>
                         <div className="max-w-[600px] text-center">
                             <p className="text-bg-secondary"
-                                style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.65 }}>
+                                style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.65 }}>
                                 Living spaces unfold across a single level, where generous openings frame the mountains and establish a seamless relationship between indoors and out.
                             </p>
                             <p className="text-bg-secondary mt-6"
-                                style={{ fontFamily: 'InstrumentSans', fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.65 }}>
+                                style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.65 }}>
                                 Private, peaceful and immersed in nature, Miracalma offers a rare opportunity to live within one of Mallorca's most distinguished settings.
                             </p>
                         </div>

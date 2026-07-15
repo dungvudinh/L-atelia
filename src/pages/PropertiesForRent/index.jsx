@@ -619,7 +619,7 @@ function PropertiesForRent() {
       <div className="mt-20 flex justify-center items-center min-h-screen px-4">
         <div className="text-center">
           <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            <h2 className="text-xl font-semibold">Error</h2>
+            <h2 className="text-xl ">Error</h2>
             <p>{error}</p>
             <button 
               onClick={params.propertyId ? () => fetchPropertyDetail(params.propertyId) : fetchData}
@@ -766,14 +766,14 @@ function PropertiesForRent() {
             </button>
           </div>
 
-          <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold mb-6 leading-tight'>
+          <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary  mb-6 leading-tight'>
             CÁC DỰ ÁN CHO THUÊ
           </h1>
           
           {/* Active Filters Display */}
           {(selectedLocation || searchFilters.checkIn || selectedSorting.value !== 'per_room_per_night') && (
             <div className="flex items-center mb-4 gap-2 flex-wrap">
-              <span className="text-[14px] font-semibold">Active Filters:</span>
+              <span className="text-[14px] ">Active Filters:</span>
               {selectedLocation && (
                 <div className="flex items-center bg-txt-secondary text-white px-2 py-1 rounded-full">
                   <span className="text-[12px] mr-1">Location: {selectedLocation.name}</span>
@@ -811,7 +811,7 @@ function PropertiesForRent() {
               )}
               <button 
                 onClick={clearAllFilters}
-                className="text-txt-secondary hover:text-blue-700 text-[12px] font-semibold"
+                className="text-txt-secondary hover:text-blue-700 text-[12px] "
               >
                 Clear All
               </button>
@@ -842,7 +842,7 @@ function PropertiesForRent() {
                             <div className="flex items-start">
                               <Distance className="mr-3 w-4 h-4"/>
                               <div>
-                                <p className="text-[14px] font-semibold">{locationItem.name}</p>
+                                <p className="text-[14px] ">{locationItem.name}</p>
                                 <p className="text-[12px]">{locationItem.country}</p>
                               </div>
                             </div>
@@ -875,7 +875,7 @@ function PropertiesForRent() {
                             <div className="flex items-start">
                               {sortingItem.icon}
                               <div className="ml-2">
-                                <p className="text-[14px] font-semibold">{sortingItem.name}</p>
+                                <p className="text-[14px] ">{sortingItem.name}</p>
                               </div>
                             </div>
                         </li>
@@ -924,12 +924,12 @@ function PropertiesForRent() {
                     />
                   </div>
                   <div className="p-4">
-                    <h1 className="mt-3 text-[20px] lg:text-[24px] font-subtitle font-semibold text-txt-secondary leading-tight">
+                    <h1 className="mt-3 text-[20px] lg:text-[24px] font-subtitle  text-txt-secondary leading-tight">
                       {property.title}
                     </h1>
                     <p className="mt-2 text-[14px]">{property.location}</p>
                     <div className="flex items-center mt-2 flex-wrap gap-1">
-                      <p className="text-[13px] font-semibold">
+                      <p className="text-[13px] ">
                         {formatPrice(property.price, property.priceUnit)}
                       </p>
                       <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
@@ -938,7 +938,7 @@ function PropertiesForRent() {
                       <p className="text-[13px]">{property.bathrooms} Bathrooms</p>
                     </div>
                     {searchFilters.checkIn && searchFilters.checkOut && (
-                      <div className="mt-2 text-green-600 text-[12px] font-semibold">
+                      <div className="mt-2 text-green-600 text-[12px] ">
                         ✓ Available for selected dates
                       </div>
                     )}
@@ -1072,7 +1072,7 @@ function PropertiesForRent() {
                 {/* Property Details */}
                 <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2">
-                    <h1 className="text-[28px] lg:text-[32px] font-subtitle text-txt-secondary font-semibold leading-tight">
+                    <h1 className="text-[28px] lg:text-[32px] font-subtitle text-txt-secondary  leading-tight">
                       {currentProperty.title}
                     </h1>
                     {/* <div className="flex items-center mt-4 flex-col lg:flex-row gap-3">
@@ -1113,7 +1113,7 @@ function PropertiesForRent() {
                           </p>
                         )}
                         <button 
-                          className="underline font-semibold text-[14px] mt-3 cursor-pointer hover:text-txt-secondary"
+                          className="underline  text-[14px] mt-3 cursor-pointer hover:text-txt-secondary"
                           onClick={handleShowMoreClick}
                         >
                           {showFullDescription ? 'Show less' : 'Show more'}
@@ -1138,7 +1138,7 @@ function PropertiesForRent() {
                             <li className="flex items-start mb-6" key={highlight._id || index}>
                               <Icon className="w-5 h-5 mt-1 flex-shrink-0" />
                               <div className="ml-3 text-[14px]">
-                                <h4 className="font-semibold">{highlight.title}</h4>
+                                <h4 className="">{highlight.title}</h4>
                                 <p className="mt-1">{highlight.description}</p>
                               </div>
                             </li>
@@ -1148,7 +1148,7 @@ function PropertiesForRent() {
                     )}
 
                     <div className="w-full h-[1px] bg-txt-primary my-6"></div>
-                    <h1 className="text-[24px] font-subtitle font-semibold text-txt-secondary">
+                    <h1 className="text-[24px] font-subtitle  text-txt-secondary">
                       Amenities
                     </h1>
                     
@@ -1171,7 +1171,7 @@ function PropertiesForRent() {
                   {/* Contact Form */}
                   <div className="mt-8 lg:mt-0">
                     <div className="bg-white border p-4 lg:p-6 rounded-sm text-center">
-                      <h1 className="text-[28px] lg:text-[32px] text-txt-secondary font-subtitle font-semibold mb-6 leading-tight">
+                      <h1 className="text-[28px] lg:text-[32px] text-txt-secondary font-subtitle  mb-6 leading-tight">
                         Liên Hệ Ngay
                       </h1>
                       
@@ -1281,7 +1281,7 @@ function PropertiesForRent() {
           {/* Related Properties */}
           <div>
             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
-              <h1 className="text-[24px] font-subtitle font-semibold text-txt-secondary">
+              <h1 className="text-[24px] font-subtitle  text-txt-secondary">
                 You might also like this
               </h1>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mt-6 mb-20">
@@ -1296,12 +1296,12 @@ function PropertiesForRent() {
                         />
                       </div>
                       <div className="p-4">
-                        <h1 className="mt-3 text-[20px] font-subtitle font-semibold text-txt-secondary leading-tight">
+                        <h1 className="mt-3 text-[20px] font-subtitle  text-txt-secondary leading-tight">
                           {property.title}
                         </h1>
                         <p className="mt-2 text-[13px]">{property.location}</p>
                         <div className="flex items-center mt-2 flex-wrap gap-1">
-                          <p className="text-[13px] font-semibold">
+                          <p className="text-[13px] ">
                             {formatPrice(property.price, property.priceUnit)}
                           </p>
                           <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>

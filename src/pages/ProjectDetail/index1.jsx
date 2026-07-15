@@ -157,7 +157,7 @@ function ProjectDetail() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <h2 className="text-xl font-semibold">Error</h2>
+                        <h2 className="text-xl ">Error</h2>
                         <p>{error}</p>
                         <button 
                             onClick={fetchProjectDetail}
@@ -177,7 +177,7 @@ function ProjectDetail() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
-                        <h2 className="text-xl font-semibold">Project Not Found</h2>
+                        <h2 className="text-xl ">Project Not Found</h2>
                         <p>The requested project could not be found.</p>
                         <LocalizedLink to="/projects">
                             <button className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700">
@@ -242,7 +242,7 @@ function ProjectDetail() {
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full lg:px-4">
                     <ul className="flex flex-col md:flex-row justify-start gap-8 md:gap-10 lg:gap-30">
                         <li className="lg:mr-10 xl:mr-30">
-                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
+                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary ">PROPERTY FEATURES</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
                                     project?.propertyFeatures?.length > 0 && project.propertyFeatures.map(propertyFeature=>(
@@ -252,7 +252,7 @@ function ProjectDetail() {
                             </p>
                         </li>
                         <li className="lg:mr-10 xl:mr-30">
-                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
+                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary ">SPECIFICATION</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
                                 {
                                     project?.specifications?.length > 0 && project.specifications.map(specification=>(
@@ -262,7 +262,7 @@ function ProjectDetail() {
                             </p>
                         </li>
                         <li>
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">LOCATION</h4>
+                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary ">LOCATION</h4>
                             <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray">
                                 <span>{project?.location}</span>
                             </p>
@@ -271,7 +271,7 @@ function ProjectDetail() {
                     <div className="mt-10 lg:mt-20 flex flex-col lg:flex-row gap-8 lg:gap-20">
                         {/* LEFT */}
                         <div className="flex-basis lg:basis-1/2">
-                            <h4 className="text-[20px]  lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                            <h4 className="text-[20px]  lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary ">
                                 {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].title}
                             </h4>
                             <p className="mt-6 lg:mt-10 text-txt-gray text-[16px] lg:text-[18px] xl:text-[20px] leading-relaxed">
@@ -305,7 +305,7 @@ function ProjectDetail() {
                     src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
                     alt="" className="w-full h-full object-cover"/>
                 <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-1/4 -translate-y-1/2  bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[20px] lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                    <h4 className="text-[20px] lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary ">
                         {project?.specialSections?.[0]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] lg:text-[18px] xl:text-[20px] text-txt-gray leading-relaxed">
@@ -329,7 +329,7 @@ function ProjectDetail() {
                     alt="" className="w-full h-[250px] md:h-[400px] lg:h-auto object-cover" />
                 </div>
                 <div className="p-6 xl:p-10 lg:p-10 flex-basis lg:basis-1/2">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary ">
                         {project?.specialSections?.[1]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
@@ -354,7 +354,7 @@ function ProjectDetail() {
                 src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
                 alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
                 <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-1/4 -translate-y-1/2   bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
+                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary ">
                          {project?.specialSections?.[2]?.title}
                     </h4>
                     <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
@@ -378,7 +378,7 @@ function ProjectDetail() {
                         <h1 className="text-[32px] lg:text-[35px] xl:text-[40px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
                         <ul className="mt-8 lg:mt-15">
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Brochure</p>
+                                <p className="font-subtitle ">Brochure</p>
                                 <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
                                     <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
@@ -386,7 +386,7 @@ function ProjectDetail() {
                                 </LocalizedLink>
                             </li>
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Tiến độ xây dựng</p>
+                                <p className="font-subtitle ">Tiến độ xây dựng</p>
                                 <LocalizedLink to={`/view-brochure/${project._id}?filter=1`}>
                                     <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
@@ -394,7 +394,7 @@ function ProjectDetail() {
                                 </LocalizedLink>
                             </li>
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Hình ảnh Concept</p>
+                                <p className="font-subtitle ">Hình ảnh Concept</p>
                                 <LocalizedLink to={`/view-brochure/${project._id}?filter=2`}>
                                     <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
@@ -411,14 +411,14 @@ function ProjectDetail() {
                 </h1>
                 
                 {/* <p className="mt-4 text-txt-gray text-[16px] lg:text-[18px]">
-                    Quan tâm đến dự án <span className="font-semibold text-txt-secondary">
+                    Quan tâm đến dự án <span className=" text-txt-secondary">
                         {project?.title || 'này'}
                     </span>? Để lại thông tin, chúng tôi sẽ liên hệ tư vấn cho bạn.
                 </p> */}
                 
                 {submitSuccess && (
                     <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-                        <p className="font-semibold">✓ Cảm ơn bạn đã liên hệ!</p>
+                        <p className="">✓ Cảm ơn bạn đã liên hệ!</p>
                         <p>Chúng tôi đã nhận được thông tin của bạn và sẽ liên hệ trong thời gian sớm nhất.</p>
                         <p className="text-sm mt-2">Email xác nhận đã được gửi đến {formData.email}</p>
                     </div>
@@ -426,7 +426,7 @@ function ProjectDetail() {
                 
                 {formErrors.submit && (
                     <div className="mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <p className="font-semibold">Lỗi:</p>
+                        <p className="">Lỗi:</p>
                         <p>{formErrors.submit}</p>
                     </div>
                 )}
@@ -510,7 +510,7 @@ function ProjectDetail() {
                         {/* Project Info (read-only) */}
                         <div className="mt-6 p-4 bg-gray-50 border border-gray-200 ">
                             <p className="text-sm text-gray-600 mb-2">Dự án bạn quan tâm:</p>
-                            <p className="font-semibold text-txt-secondary">
+                            <p className=" text-txt-secondary">
                                 {project?.title || 'Loading...'}
                             </p>
                         </div>

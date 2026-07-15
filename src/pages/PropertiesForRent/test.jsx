@@ -386,7 +386,7 @@ function PropertiesForRent() {
             <div className="mt-20 flex justify-center items-center min-h-screen">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <h2 className="text-xl font-semibold">Error</h2>
+                        <h2 className="text-xl ">Error</h2>
                         <p>{error}</p>
                         <button 
                             onClick={params.propertyId ? () => fetchPropertyDetail(params.propertyId) : fetchData}
@@ -553,12 +553,12 @@ function PropertiesForRent() {
                     </button>
                 </div>
 
-                <h1 className='uppercase text-[45px] font-subtitle text-txt-secondary font-semibold mb-10'>CÁC DỰ ÁN CHO THUÊ</h1>
+                <h1 className='uppercase text-[45px] font-subtitle text-txt-secondary  mb-10'>CÁC DỰ ÁN CHO THUÊ</h1>
                 
                 {/* Active Filters Display */}
                 {(selectedLocation || selectedCheckInDate || selectedSorting.value !== 'price_asc') && (
                     <div className="flex items-center mb-6 gap-4 flex-wrap">
-                        <span className="text-[18px] font-semibold">Active Filters:</span>
+                        <span className="text-[18px] ">Active Filters:</span>
                         {selectedLocation && (
                             <div className="flex items-center bg-txt-secondary text-white px-3 py-1 rounded-full">
                                 <span className="text-[14px] mr-2">Location: {selectedLocation.name}</span>
@@ -596,7 +596,7 @@ function PropertiesForRent() {
                         )}
                         <button 
                             onClick={clearAllFilters}
-                            className="text-txt-secondary hover:text-blue-700 text-[14px] font-semibold"
+                            className="text-txt-secondary hover:text-blue-700 text-[14px] "
                         >
                             Clear All
                         </button>
@@ -632,7 +632,7 @@ function PropertiesForRent() {
                                                 <div className="flex items-start">
                                                     <Distance className="mr-4"/>
                                                     <div>
-                                                        <p className="text-[18px] font-semibold">{locationItem.name}</p>
+                                                        <p className="text-[18px] ">{locationItem.name}</p>
                                                         <p>{locationItem.country}</p>
                                                     </div>
                                                 </div>
@@ -666,7 +666,7 @@ function PropertiesForRent() {
                                             <div className="flex items-start">
                                                 {sortingItem.icon}
                                                 <div>
-                                                    <p className="text-[18px] font-semibold">{sortingItem.name}</p>
+                                                    <p className="text-[18px] ">{sortingItem.name}</p>
                                                     <p className="text-[14px] text-gray-600">{sortingItem.desc}</p>
                                                 </div>
                                             </div>
@@ -703,10 +703,10 @@ function PropertiesForRent() {
                                         />
                                     </div>
                                     <div className="p-4">
-                                        <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">{property.title}</h1>
+                                        <h1 className="mt-4 text-[40px] font-subtitle  text-txt-secondary">{property.title}</h1>
                                         <p className="mt-4 text-[15px]">{property.location}</p>
                                         <div className="flex items-center mt-2">
-                                            <p className="text-[15px] font-semibold">
+                                            <p className="text-[15px] ">
                                                 {formatPrice(property.price, property.priceUnit)}
                                             </p>
                                             <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>
@@ -715,7 +715,7 @@ function PropertiesForRent() {
                                             <p>{property.bathrooms} Bathrooms</p>
                                         </div>
                                         {selectedCheckInDate && selectedCheckOutDate && (
-                                            <div className="mt-2 text-green-600 text-[14px] font-semibold">
+                                            <div className="mt-2 text-green-600 text-[14px] ">
                                                 ✓ Available for selected dates
                                             </div>
                                         )}
@@ -811,7 +811,7 @@ function PropertiesForRent() {
                                 {/* Property Details */}
                                 <div className="mt-10 grid grid-cols-5 gap-10">
                                     <div className="col-span-3">
-                                        <h1 className="text-[45px] font-subtitle text-txt-secondary font-semibold">{currentProperty.title}</h1>
+                                        <h1 className="text-[45px] font-subtitle text-txt-secondary ">{currentProperty.title}</h1>
                                         <div className="flex items-center">
                                             <div className="bg-txt-secondary  px-15 py-2 text-bg-primary rounded-4xl text-[18px]">
                                                 {currentProperty.type || 'Property'}
@@ -837,7 +837,7 @@ function PropertiesForRent() {
                                         </div>
                                         <div className="w-full h-[1px] bg-txt-primary my-10"></div>
                                         <p className="text-[26px]">{currentProperty.description}</p>
-                                        <p className="underline font-semibold text-[18px] mt-8">Show more</p>
+                                        <p className="underline  text-[18px] mt-8">Show more</p>
                                         <div className="w-full h-[1px] bg-txt-primary my-10"></div>
                                         
                                         {/* Highlights */}
@@ -848,7 +848,7 @@ function PropertiesForRent() {
                                                         {/* You can map icons based on highlight.icon */}
                                                         <OutdoorGrill />
                                                         <div className="ml-4 text-[18px]">
-                                                            <h4 className="font-semibold">{highlight.title}</h4>
+                                                            <h4 className="">{highlight.title}</h4>
                                                             <p>{highlight.description}</p>
                                                         </div>
                                                     </li>
@@ -857,7 +857,7 @@ function PropertiesForRent() {
                                         )}
 
                                         <div className="w-full h-[1px] bg-txt-primary my-10"></div>
-                                        <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">Great for your stay</h1>
+                                        <h1 className="text-[40px] font-subtitle  text-txt-secondary">Great for your stay</h1>
                                         
                                         {/* Amenities */}
                                         {currentProperty.amenities && currentProperty.amenities.length > 0 && (
@@ -876,7 +876,7 @@ function PropertiesForRent() {
                                     {/* Contact Form */}
                                     <div className="col-span-2">
                                         <div className="bg-white border p-4 rounded-sm text-center">
-                                            <h1 className="text-[45px] text-txt-secondary font-subtitle font-semibold mb-8">Get in touch</h1>
+                                            <h1 className="text-[45px] text-txt-secondary font-subtitle  mb-8">Get in touch</h1>
                                             <input type="text" placeholder="First Name" className="w-full rounded-sm mb-8"/>
                                             <input type="text" placeholder="Last Name" className="w-full rounded-sm mb-8"/>
                                             <input type="text" placeholder="Email Address" className="w-full rounded-sm mb-8"/>
@@ -915,7 +915,7 @@ function PropertiesForRent() {
                     {/* Related Properties */}
                     <div>
                         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 ">
-                            <h1 className="text-[40px] font-subtitle font-semibold text-txt-secondary">You might also like this</h1>
+                            <h1 className="text-[40px] font-subtitle  text-txt-secondary">You might also like this</h1>
                             <div className="grid grid-cols-4 md:grid-cols-3 gap-6 mt-10 mb-40">
                                 {rentProperties.slice(0, 4).map(property => (
                                     <div className="cursor-pointer bg-bg-primary" key={property._id} >
@@ -927,10 +927,10 @@ function PropertiesForRent() {
                                             />
                                         </div>
                                         <div className="p-4">
-                                            <h1 className="mt-4 text-[40px] font-subtitle font-semibold text-txt-secondary">{property.title}</h1>
+                                            <h1 className="mt-4 text-[40px] font-subtitle  text-txt-secondary">{property.title}</h1>
                                             <p className="mt-4 text-[15px]">{property.location}</p>
                                             <div className="flex items-center mt-2">
-                                                <p className="text-[15px] font-semibold">
+                                                <p className="text-[15px] ">
                                                     {formatPrice(property.price, property.priceUnit)}
                                                 </p>
                                                 <div className="w-[8px] h-[8px] rounded-full bg-dot mx-2"></div>

@@ -128,7 +128,7 @@ function Landing() {
                 <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row gap-8 lg:gap-10">
                     {/* LEFT CONTENT */}
                     <div className="flex-basis lg:basis-1/2 order-2 lg:order-1">
-                        <h1 className="font-subtitle text-[36px] md:text-[40px] lg:text-[40px] text-bg-secondary font-semibold leading-tight">
+                        <h1 className="font-subtitle text-[36px] md:text-[40px] lg:text-[40px] text-bg-secondary  leading-tight">
                             {t('landing:our_philosophy.title')}
                         </h1>
                         <h4 className="text-[24px] md:text-[30px] lg:text-[32px] text-txt-primary mt-6 lg:mt-8 leading-tight">

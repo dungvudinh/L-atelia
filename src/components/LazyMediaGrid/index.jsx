@@ -88,7 +88,7 @@ const MediaCard = memo(({ item }) => {
         <h4 className='text-[14px] lg:text-[18px] text-txt-gray mb-2 lg:mb-4'>
           {item.category?.toUpperCase()}
         </h4>
-        <h4 className='text-[20px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold mb-3 lg:mb-4 line-clamp-2'>
+        <h4 className='text-[20px] lg:text-[25px] font-subtitle text-txt-secondary  mb-3 lg:mb-4 line-clamp-2'>
           {item.title}
         </h4>
         <p className='text-[14px] lg:text-[18px] mb-4 line-clamp-3'>

@@ -54,7 +54,7 @@ function ContactForm() {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: '-80px' })
     const [formData, setFormData] = useState({
-        firstName: '', lastName: '', email: '', phone: '', bugdet: '', description: ''
+        firstName: '', lastName: '', email: '', phone: '', budget: '', description: ''
     })
     const [loading, setLoading] = useState(false)
     const [submitStatus, setSubmitStatus] = useState(null)
@@ -71,7 +71,7 @@ function ContactForm() {
         background: '#f0f2f1',
         border: 'none',
         borderRadius: '8px',
-        fontSize: '14px',
+        fontSize: '15px',
         color: '#1a3a3a',
         outline: 'none',
         fontFamily: 'Nunito Sans',
@@ -103,7 +103,7 @@ function ContactForm() {
                     lastName: formData.lastName,
                     email: formData.email,
                     phone: formData.phone,
-                    bugdet: formData.bugdet,
+                    budget: formData.budget,
                     message: formData.description,
                 })
             })
@@ -113,7 +113,7 @@ function ContactForm() {
             if (response.ok) {
                 setSubmitStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' })
                 setFormData({
-                    firstName: '', lastName: '', email: '', phone: '', bugdet: '', description: ''
+                    firstName: '', lastName: '', email: '', phone: '', budget: '', description: ''
                 })
             } else {
                 throw new Error(result.message || 'Failed to send message')
@@ -139,7 +139,7 @@ function ContactForm() {
                         </span>
                         <div style={{ width: '30px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
                     </div>
-                    <h2 className="text-bg-secondary text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px] font-light" 
+                    <h2 className="text-bg-secondary text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px]" 
                         style={{ lineHeight: 1.1, marginBottom: '12px' }}>
                         Liên hệ với chúng tôi
                     </h2>
@@ -208,15 +208,15 @@ function ContactForm() {
                     {/* Row 3: Select Service */}
                     <motion.div {...fadeUp(0.3)} className="relative">
                         <select
-                            name="bugdet"
-                            value={formData.bugdet}
+                            name="budget"
+                            value={formData.budget}
                             onChange={handleChange}
                             style={{
                                 ...inputStyle,
                                 appearance: 'none',
                                 WebkitAppearance: 'none',
                                 cursor: 'pointer',
-                                color: formData.bugdet ? '#1a3a3a' : '#9aaeae',
+                                color: formData.budget ? '#1a3a3a' : '#9aaeae',
                             }}
                         >
                             <option value="" disabled hidden>Dự kiến Budget đầu tư</option>
@@ -351,7 +351,7 @@ function LifestyleCard({ item }) {
             <p
                 className="mb-4 text-[13px] sm:text-[14px]"
                 style={{
-                    fontFamily: 'InstrumentSans',
+                    fontFamily: 'Nunito Sans',
                     color: '#4a5050',
                     lineHeight: 1.7,
                 }}
@@ -364,7 +364,7 @@ function LifestyleCard({ item }) {
                 to={item.link}
                 className="inline-flex items-center gap-1 group"
                 style={{
-                    fontFamily: 'InstrumentSans',
+                    fontFamily: 'Nunito Sans',
                     fontSize: '14px',
                     fontWeight: 600,
                     color: '#1a3a3a',

@@ -151,7 +151,7 @@ function ProjectCarousel({ excludeProjectId = null }) {
                             <p
                                 className="text-[#4a5050] mb-4"
                                 style={{
-                                    fontFamily: 'InstrumentSans',
+                                    fontFamily: 'Nunito Sans',
                                     fontSize: '14px',
                                     lineHeight: 1.6,
                                     display: '-webkit-box',
@@ -167,7 +167,7 @@ function ProjectCarousel({ excludeProjectId = null }) {
                             <LocalizedLink
                                 to={`/projects/${project.id}`}
                                 className="inline-flex items-center gap-2 text-bg-secondary text-[14px] group font-bold"
-                                style={{ fontFamily: 'InstrumentSans' }}
+                                style={{ fontFamily: 'Nunito Sans' }}
                             >
                                 View Project
                                 <ArrowRight

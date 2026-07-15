@@ -90,7 +90,7 @@ function JoinNewsletter() {
             {/* Tiêu đề */}
             <h2 className="text-bg-secondary text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px]
                 leading-[1.15] max-w-[1000px] mx-auto mb-6 sm:mb-8 md:mb-10 
-                px-2 sm:px-0 font-semibold"
+                px-2 sm:px-0"
             >
                 Kết nối cùng Art Latelia để bắt đầu hành trình kiến tạo không gian sống của riêng bạn
             </h2>
@@ -118,12 +118,12 @@ function JoinNewsletter() {
                             className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-md bg-[#f0f4f0] text-bg-secondary 
                                 placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition
                                 text-[14px] sm:text-[15px] md:text-[16px]"
-                            style={{ fontFamily: 'InstrumentSans' }}
+                            style={{ fontFamily: 'Nunito Sans' }}
                             disabled={submitting}
                         />
                         {formErrors.fullName && (
                             <p className="text-red-500 text-[11px] sm:text-xs mt-1 text-left" 
-                               style={{ fontFamily: 'InstrumentSans' }}>
+                               style={{ fontFamily: 'Nunito Sans' }}>
                                 {formErrors.fullName}
                             </p>
                         )}
@@ -140,12 +140,12 @@ function JoinNewsletter() {
                             className="w-full px-4 sm:px-5 py-2.5 sm:py-3 rounded-md bg-[#f0f4f0] text-bg-secondary 
                                 placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-bg-secondary transition
                                 text-[14px] sm:text-[15px] md:text-[16px]"
-                            style={{ fontFamily: 'InstrumentSans' }}
+                            style={{ fontFamily: 'Nunito Sans' }}
                             disabled={submitting}
                         />
                         {formErrors.email && (
                             <p className="text-red-500 text-[11px] sm:text-xs mt-1 text-left" 
-                               style={{ fontFamily: 'InstrumentSans' }}>
+                               style={{ fontFamily: 'Nunito Sans' }}>
                                 {formErrors.email}
                             </p>
                         )}
@@ -178,7 +178,7 @@ function JoinNewsletter() {
                     {/* Submit Error */}
                     {formErrors.submit && (
                         <p className="text-red-500 text-[11px] sm:text-xs mt-2 text-center" 
-                           style={{ fontFamily: 'InstrumentSans' }}>
+                           style={{ fontFamily: 'Nunito Sans' }}>
                             {formErrors.submit}
                         </p>
                     )}

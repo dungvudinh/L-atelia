@@ -140,7 +140,7 @@ function Contact() {
                 <div className='md:max-w-[500px] xl:max-w-[440px] mx-auto'>
 
                     <form onSubmit={handleSubmit} className='flex flex-col justify-start w-full text-[16px] md:text-[18px] px-4'>
-                        <h1 className='text-[32px] md:text-[45px] lg:text-[45px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
+                        <h1 className='text-[32px] md:text-[45px] lg:text-[45px] font-subtitle  text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
                         
                         {/* Status Message */}
                         {submitStatus && (

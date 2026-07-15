@@ -30,7 +30,7 @@ function FollowUs() {
     return (
         <div className=" md:pb-16 w-full d-flex justify-center">
           <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] mx-auto !px-4 md:px-0">
-            <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2 font-semibold">
+            <p className="text-bg-secondary md:text-[20px] md:leading-[24px] text-[16px] leading-[20px] mb-6 mr-2 ">
                 Follow us
                 @
                 <a href="#" className="underline decoration-1 underline-offset-2">

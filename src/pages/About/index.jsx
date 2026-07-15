@@ -171,7 +171,7 @@ function About() {
             <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-40 flex justify-center px-4">
                 <FadeUpSection>
                     <div className="mx-auto max-w-[1000px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
-                        <h1 className="text-bg-secondary text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] text-center font-semibold leading-tight sm:leading-normal" style={{lineHeight:1.2}} >
+                        <h1 className="text-bg-secondary text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] text-center  leading-tight sm:leading-normal" style={{lineHeight:1.2}} >
                         Lựa chọn đất - Nền tảng của giá trị lâu dài
                         </h1>
                         <p className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2 sm:mt-3 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
@@ -188,7 +188,7 @@ function About() {
             <div className='mt-8 sm:mt-10 lg:mt-20 bg-gray-50 py-8 sm:py-10 lg:py-20'>
                 <div className='xl:max-w-screen-xl lg:max-w-[900px] mx-auto px-4'>
                     <div className='text-center mb-8 sm:mb-10 lg:mb-16'>
-                        <h1 className='text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold leading-tight mb-3 sm:mb-4'>
+                        <h1 className='text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary  leading-tight mb-3 sm:mb-4'>
                             Quy trình triển khai dự án tại L'atelia
                         </h1>
                         <p className='text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary' style={{fontFamily:'Nunito Sans'}}>
@@ -201,7 +201,7 @@ function About() {
                             <div key={step.id} className='p-4 sm:p-5 md:p-6 xl:p-8 bg-white rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300'>
                                 <div className='flex flex-col items-start gap-3 sm:gap-4'>
                                     <div className='flex-1 w-full'>
-                                        <h4 className='text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] font-semibold font-subtitle text-txt-secondary mb-3 sm:mb-4 leading-tight'>
+                                        <h4 className='text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] font-subtitle text-txt-secondary mb-3 sm:mb-4 leading-tight'>
                                             {step.title}
                                         </h4>
                                         <div className='text-[14px] sm:text-[15px] md:text-[15px] lg:text-[16px] text-gray-600 whitespace-pre-line space-y-1 sm:space-y-2' style={{fontFamily:'Nunito Sans'}}>
@@ -226,7 +226,7 @@ function About() {
 
                     <div className='mt-12 sm:mt-14 lg:mt-20 text-center'>
                         <div className='inline-block p-5 sm:p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl w-full sm:w-auto'>
-                            <h3 className='text-[18px] sm:text-[20px] lg:text-[24px] font-semibold text-txt-secondary mb-4 sm:mb-6 font-subtitle'>
+                            <h3 className='text-[18px] sm:text-[20px] lg:text-[24px]  text-txt-secondary mb-4 sm:mb-6 font-subtitle'>
                                 CAM KẾT CỦA LATELIA
                             </h3>
                             <div className='space-y-3 sm:space-y-4 text-left mb-4 sm:mb-6' style={{fontFamily:'Nunito Sans'}}>
@@ -256,7 +256,7 @@ function About() {
             <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-20 flex justify-center px-4">
                 <FadeUpSection>
                     <div className="mx-auto max-w-[1000px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
-                        <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold" style={{lineHeight:1.2}} >
+                        <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary " style={{lineHeight:1.2}} >
                         Một đơn vị thiết kế và thi công, phát triển bất động sản và tập hợp thương hiệu phong cách sống, tất cả nằm trong Latelia
                         </h1>
                     </div>
@@ -268,14 +268,14 @@ function About() {
             <div className="mt-8 sm:mt-12 md:mt-16 xl:mt-40 mb-8 sm:mb-12 md:mb-16 xl:mb-20 flex justify-center px-4">
                 <FadeUpSection>
                     <div className="mx-auto  max-w-[1500px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center flex justify-center flex-col items-center">
-                        <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary font-semibold" style={{ lineHeight: 1.2 }}>
+                        <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary " style={{ lineHeight: 1.2 }}>
                             Triết lý thiết kế của Art L'Atelia
                         </h1>
 
                         <p style={{ fontFamily: 'Nunito Sans' }} className=" text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0">
                             Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại Latelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
                         </p>
-                        <p className="text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px] text-bg-secondary mt-10 font-semibold" >
+                        <p className="text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px] text-bg-secondary mt-10 " >
                             Mỗi công trình được hình thành dựa trên 3 giá trị cốt lõi:
                         </p>
 
@@ -296,7 +296,7 @@ function About() {
                         </div>
 
                         {/* Câu kết luận */}
-                        <p className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[32px] lg:text-[35px] font-medium mt-8 sm:mt-10 md:mt-20 italic font-semibold" style={{ lineHeight: 1.4 }}>
+                        <p className="text-bg-secondary text-[24px] sm:text-[28px] md:text-[32px] lg:text-[35px] font-medium mt-8 sm:mt-10 md:mt-20 italic " style={{ lineHeight: 1.4 }}>
                             "Chúng tôi không xây thật nhanh.
                             <br />
                             Chúng tôi xây đúng ngay từ đầu."
@@ -371,7 +371,7 @@ function CoreValue({ title, descLines }) {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-            <h3 className="text-bg-secondary text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px] font-semibold mb-3 tracking-wide">
+            <h3 className="text-bg-secondary text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px]  mb-3 tracking-wide">
                 {title}
             </h3>
             <div
@@ -420,14 +420,14 @@ function TimelineItem({ item, index }) {
             }}
         >
             {/* Year */}
-            <p className="text-bg-secondary text-[15px] font-semibold tracking-wide mb-4">
+            <p className="text-bg-secondary text-[15px]  tracking-wide mb-4">
                 {item.year}
             </p>
 
             {/* Events */}
             <ul className="space-y-2">
                 {item.events.map((ev, i) => (
-                    <li key={i} className="text-[13px] text-[#4a5050] leading-relaxed" style={{ fontFamily: 'InstrumentSans' }}>
+                    <li key={i} className="text-[13px] text-[#4a5050] leading-relaxed" style={{ fontFamily: 'Nunito Sans' }}>
                         {ev.text}
                         {ev.link && (
                             <LocalizedLink to="#" className="underline underline-offset-2 decoration-[#c5bba8] hover:decoration-[#1a2a2a] transition-colors text-bg-secondary">
@@ -574,7 +574,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className='font-semibold'>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className=''>
                     Thiết kế kiến trúc
                     </p>
                 </motion.div>
@@ -589,7 +589,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className='font-semibold'>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className=''>
                     Truyền thông <br/> & Bán hàng 
                     </p>
                 </motion.div>
@@ -603,7 +603,7 @@ function VennDiagram() {
                         transform: 'translate(-50%, -50%)',
                     }}
                 >
-                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className='font-semibold'>
+                    <p style={{ fontSize: 'clamp(15px, 1.5vw, 22px)', color: '#1a3a3a', opacity: 0.85, lineHeight: 1.5, whiteSpace: 'nowrap' }} className=''>
                     Phát triển
                     <br/>
                     bất động sản dòng tiền
