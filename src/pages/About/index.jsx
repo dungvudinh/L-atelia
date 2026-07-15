@@ -87,32 +87,32 @@ const PROCESS_STEPS = [
     {
         id: 1,
         title: 'LỰA CHỌN QUỸ ĐẤT',
-        desc: 'Latelia trực tiếp nghiên cứu và lựa chọn quỹ đất phù hợp tại thành phố Đà Nẵng, ưu tiên:\n\n• Vị trí thuận tiện\n• Khả năng khai thác tốt\n• Giá trị sử dụng và gia tăng lâu dài\n\nĐây là nền tảng quan trọng quyết định chất lượng và giá trị của toàn bộ dự án.'
+        desc:"L'atelia trực tiếp nghiên cứu và lựa chọn quỹ đất phù hợp tại thành phố Đà Nẵng, ưu tiên:\n\n• Vị trí thuận tiện\n• Khả năng khai thác tốt\n• Giá trị sử dụng và gia tăng lâu dài\n\nĐây là nền tảng quan trọng quyết định chất lượng và giá trị của toàn bộ dự án."
     },
     {
         id: 2,
         title: 'LÊN Ý TƯỞNG THIẾT KẾ',
-        desc: 'Dựa trên đặc điểm khu đất và nhu cầu sử dụng thực tế, Latelia xây dựng ý tưởng kiến trúc tổng thể cho công trình:\n\n• Phong cách hiện đại, tinh tế\n• Định hướng công năng rõ ràng\n• Tối ưu án sáng và không gian sống'
+        desc: "Dựa trên đặc điểm khu đất và nhu cầu sử dụng thực tế, L'atelia xây dựng ý tưởng kiến trúc tổng thể cho công trình:\n\n• Phong cách hiện đại, tinh tế\n• Định hướng công năng rõ ràng\n• Tối ưu án sáng và không gian sống"
     },
     {
         id: 3,
         title: 'THIẾT KẾ LAYOUT CÔNG NĂNG',
-        desc: 'Từ ý tưởng ban đầu, đội ngũ Latelia triển khai bản vẽ layout chi tiết, sắp xếp không gian hợp lý:\n\n• Phòng ốc khoa học\n• Lưu thông tiện lợi\n• Đảm bảo sự riêng tư và thoải mái cho gia chủ'
+        desc: "Từ ý tưởng ban đầu, đội ngũ L'atelia triển khai bản vẽ layout chi tiết, sắp xếp không gian hợp lý:\n\n• Phòng ốc khoa học\n• Lưu thông tiện lợi\n• Đảm bảo sự riêng tư và thoải mái cho gia chủ"
     },
     {
         id: 4,
         title: 'XIN GIẤY PHÉP XÂY DỰNG',
-        desc: 'Latelia thực hiện đầy đủ các thủ tục pháp lý cần thiết:\n\n• Xin giấy phép xây dựng theo đúng quy định\n• Đảm bảo hồ sơ pháp lý rõ ràng, minh bạch\n• Giúp khách hàng an tâm trước khi triển khai dự án'
+        desc: "L'atelia thực hiện đầy đủ các thủ tục pháp lý cần thiết:\n\n• Xin giấy phép xây dựng theo đúng quy định\n• Đảm bảo hồ sơ pháp lý rõ ràng, minh bạch\n• Giúp khách hàng an tâm trước khi triển khai dự án"
     },
     {
         id: 5,
         title: 'TRIỂN KHAI THIẾT KẾ 3D',
-        desc: 'Sau khi hoàn tất pháp lý, Latelia xây dựng bản vẽ phối cảnh 3D chi tiết, thể hiện:\n\n• Hình dáng kiến trúc\n• Không gian nội – ngoại thất\n• Cảm xúc và trải nghiệm sống thực tế\n\nKhách hàng có thể hình dung chính xác ngôi nhà tương lai của mình.'
+        desc: "Sau khi hoàn tất pháp lý, L'atelia xây dựng bản vẽ phối cảnh 3D chi tiết, thể hiện:\n\n• Hình dáng kiến trúc\n• Không gian nội – ngoại thất\n• Cảm xúc và trải nghiệm sống thực tế\n\nKhách hàng có thể hình dung chính xác ngôi nhà tương lai của mình."
     },
     {
         id: 6,
         title: 'TRIỂN KHAI BÁN HÀNG & ĐIỀU CHỈNH THEO NHU CẦU KHÁCH',
-        desc: 'Trong giai đoạn này:\n\n• Latelia giới thiệu sản phẩm đến khách hàng\n• Khách hàng được quyền điều chỉnh thiết kế nội thất theo nhu cầu và phong cách riêng\n• Hai bên thống nhất phương án tối ưu nhất'
+        desc: "Trong giai đoạn này:\n\n• L'atelia giới thiệu sản phẩm đến khách hàng\n• Khách hàng được quyền điều chỉnh thiết kế nội thất theo nhu cầu và phong cách riêng\n• Hai bên thống nhất phương án tối ưu nhất"
     },
     {
         id: 7,
@@ -122,12 +122,12 @@ const PROCESS_STEPS = [
     {
         id: 8,
         title: 'KÝ HỢP ĐỒNG & TRIỂN KHAI XÂY DỰNG',
-        desc: 'Latelia và khách hàng tiến hành:\n\n• Ký kết hợp đồng thi công\n• Cam kết xây dựng đúng thiết kế đã chốt\n• Quản lý tiến độ, chất lượng và kỹ thuật trong suốt quá trình thi công'
+        desc: "L'atelia và khách hàng tiến hành:\n\n• Ký kết hợp đồng thi công\n• Cam kết xây dựng đúng thiết kế đã chốt\n• Quản lý tiến độ, chất lượng và kỹ thuật trong suốt quá trình thi công"
     },
     {
         id: 9,
         title: 'HOÀN THIỆN & BÀN GIAO NHÀ',
-        desc: 'Sau khi công trình hoàn tất:\n\n• Latelia nghiệm thu theo đúng bản vẽ đã cam kết\n• Bàn giao nhà cho khách hàng\n• Đảm bảo chất lượng, thẩm mỹ và công năng đúng như thiết kế ban đầu\n\nKhách hàng nhận nhà đúng cam kết – đúng chất lượng – đúng kỳ vọng.'
+        desc: "Sau khi công trình hoàn tất:\n\n• L'atelia nghiệm thu theo đúng bản vẽ đã cam kết\n• Bàn giao nhà cho khách hàng\n• Đảm bảo chất lượng, thẩm mỹ và công năng đúng như thiết kế ban đầu\n\nKhách hàng nhận nhà đúng cam kết – đúng chất lượng – đúng kỳ vọng."
     }
 ];
 const GALLERY_IMAGES = [gl1,gl2,gl3, gl4,gl5,gl6,gl7,gl8,gl9,gl10,gl11,gl12,gl13,gl14,gl15]
@@ -175,10 +175,10 @@ function About() {
                         Lựa chọn đất - Nền tảng của giá trị lâu dài
                         </h1>
                         <p className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2 sm:mt-3 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
-                        Đằng sau mỗi ngôi nhà Art Latelia không chỉ là bản vẽ hay vật liệu, mà là một quá trình được tính toán kỹ lưỡng ngay từ viên gạch đầu tiên.
+                        Đằng sau mỗi ngôi nhà Art L'atelia không chỉ là bản vẽ hay vật liệu, mà là một quá trình được tính toán kỹ lưỡng ngay từ viên gạch đầu tiên.
                         </p>
                         <p className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-2 sm:mt-3 px-2 sm:px-0" style={{fontFamily:'Nunito Sans'}}>
-                        Art Latelia không chọn đất theo số lượng. Chúng tôi chọn theo các tiêu chí cốt lõi: vị trí thuận tiện cho sinh hoạt, kết nối tốt. Pháp lý rõ ràng, phù hợp với phát triển lâu dài. Phù hợp để tạo nên không gian sống chất lượng, không chỉ để ở mà còn để giữ gìn giá trị tài sản. Đất tốt là điều kiện tiên quyết để một ngôi nhà trở nên đáng sống và đáng đầu tư.
+                        Art L'atelia không chọn đất theo số lượng. Chúng tôi chọn theo các tiêu chí cốt lõi: vị trí thuận tiện cho sinh hoạt, kết nối tốt. Pháp lý rõ ràng, phù hợp với phát triển lâu dài. Phù hợp để tạo nên không gian sống chất lượng, không chỉ để ở mà còn để giữ gìn giá trị tài sản. Đất tốt là điều kiện tiên quyết để một ngôi nhà trở nên đáng sống và đáng đầu tư.
                         </p>
                     </div>
                 </FadeUpSection>
@@ -227,7 +227,7 @@ function About() {
                     <div className='mt-12 sm:mt-14 lg:mt-20 text-center'>
                         <div className='inline-block p-5 sm:p-6 lg:p-8 bg-white rounded-lg shadow-sm border border-gray-100 max-w-2xl w-full sm:w-auto'>
                             <h3 className='text-[18px] sm:text-[20px] lg:text-[24px]  text-txt-secondary mb-4 sm:mb-6 font-subtitle'>
-                                CAM KẾT CỦA LATELIA
+                                CAM KẾT CỦA L'ATELIA
                             </h3>
                             <div className='space-y-3 sm:space-y-4 text-left mb-4 sm:mb-6' style={{fontFamily:'Nunito Sans'}}>
                                 <p className='text-[14px] sm:text-[15px] lg:text-[16px] flex items-start'>
@@ -257,7 +257,7 @@ function About() {
                 <FadeUpSection>
                     <div className="mx-auto max-w-[1000px] w-full sm:w-11/12 md:w-9/12 lg:w-10/12 text-center">
                         <h1 className="text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary " style={{lineHeight:1.2}} >
-                        Một đơn vị thiết kế và thi công, phát triển bất động sản và tập hợp thương hiệu phong cách sống, tất cả nằm trong Latelia
+                        Một đơn vị thiết kế và thi công, phát triển bất động sản và tập hợp thương hiệu phong cách sống, tất cả nằm trong L'atelia
                         </h1>
                     </div>
                 </FadeUpSection>
@@ -273,7 +273,7 @@ function About() {
                         </h1>
 
                         <p style={{ fontFamily: 'Nunito Sans' }} className=" text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px] text-bg-secondary mt-3 sm:mt-4 px-2 sm:px-0">
-                            Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại Latelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
+                            Chúng tôi tin rằng một ngôi nhà đẹp không nằm ở việc phô trương, mà ở cảm giác khi sống trong đó. Tại L'atelia, thiết kế không bắt đầu từ bản vẽ, mà bắt đầu từ con người sẽ ở trong ngôi nhà ấy.
                         </p>
                         <p className="text-[18px] sm:text-[19px] md:text-[20px] lg:text-[25px] text-bg-secondary mt-10 " >
                             Mỗi công trình được hình thành dựa trên 3 giá trị cốt lõi:
@@ -283,7 +283,7 @@ function About() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 md:gap-8 lg:gap-20 mt-12 sm:mt-10 text-left">
                             <CoreValue
                                 title="Cá nhân hoá"
-                                descLines={["Mỗi ngôi nhà là một dấu ấn riêng."," Latelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."]}
+                                descLines={["Mỗi ngôi nhà là một dấu ấn riêng."," L'atelia không sao chép thiết kế. Chúng tôi lắng nghe thói quen sống, gu thẩm mỹ và mong muốn dài hạn của chủ nhân để tạo nên không gian phù hợp – vừa vặn – có hồn."]}
                             />
                             <CoreValue
                                 title="Kiến trúc hiện đại"
@@ -291,7 +291,7 @@ function About() {
                             />
                             <CoreValue
                                 title="Nghệ thuật trong sự tinh giản"
-                                descLines={["Art Latelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."]}
+                                descLines={["Art L'atelia theo đuổi vẻ đẹp không rườm rà, không chạy theo xu hướng ngắn hạn, tinh tế trong từng chi tiết nhỏ. Để mỗi ngày trở về nhà là một trải nghiệm dễ chịu, thư thái và tự hào."]}
                             />
                         </div>
 

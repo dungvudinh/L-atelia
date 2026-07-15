@@ -92,7 +92,7 @@ function JoinNewsletter() {
                 leading-[1.15] max-w-[1000px] mx-auto mb-6 sm:mb-8 md:mb-10 
                 px-2 sm:px-0"
             >
-                Kết nối cùng Art Latelia để bắt đầu hành trình kiến tạo không gian sống của riêng bạn
+                Kết nối cùng Art L'atelia để bắt đầu hành trình kiến tạo không gian sống của riêng bạn
             </h2>
 
             {/* Form */}
