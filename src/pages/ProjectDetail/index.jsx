@@ -341,7 +341,7 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ① HERO BANNER
             ════════════════════════════════════════ */}
-            <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative overflow-hidden ">
+            <div className="w-full h-screen relative overflow-hidden ">
                 <OptimizedImage
                     src={`${BASE_CDN_URL}${project?.gallery?.[0]?.key}`} 
                     alt={project.name}

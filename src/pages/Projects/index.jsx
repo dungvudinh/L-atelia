@@ -276,7 +276,7 @@ function Projects() {
                                     <LocalizedLink
                                         to={`/projects/${project.id}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
-                                        
+                                        style={{ fontFamily: 'Nunito Sans' }}
                                     >
                                         View Project
                                         <ChevronRight size={16} />
@@ -306,6 +306,7 @@ function Projects() {
                                     <a
                                         href={`/projects/${convertToSlug(project.title)}`}
                                         className="mt-4 inline-flex items-center justify-center gap-1 text-[14px] font-bold hover:gap-2 transition-all duration-200"
+                                        style={{ fontFamily: 'Nunito Sans' }}
                                     >
                                         View Project
                                         <ChevronRight size={16} />
