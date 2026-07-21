@@ -108,11 +108,9 @@ function ProjectCarousel({ excludeProjectId = null }) {
 
                             {/* Title */}
                             <h3
-                                className="text-bg-secondary mb-2"
+                                className="text-bg-secondary mb-2 text-[20px]  xs:text-[24px]  md:text-[28px]  lg:text-[32px]"
                                 style={{
-                                    fontFamily: 'Georgia, serif',
                                     fontSize: 'clamp(24px, 2.5vw, 32px)',
-                                    fontWeight: 400,
                                     lineHeight: 1.2,
                                 }}
                             >
@@ -121,7 +119,7 @@ function ProjectCarousel({ excludeProjectId = null }) {
 
                             {/* Description */}
                             <p
-                                className="text-[#4a5050] mb-4"
+                                className="text-[#4a5050] mb-4 text-[14px] leading-[20px] sm:text-[16px]"
                                 style={{
                                     fontFamily: 'Nunito Sans',
                                     fontSize: '14px',
