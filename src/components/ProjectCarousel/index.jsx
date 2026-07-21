@@ -12,36 +12,7 @@ import aboutUs5 from '../../assets/images/about-us/about-us-5.webp'
 import { projectsService } from "../../services/projectsService";
 import {LocalizedLink} from '../../components/LocalizedLink';
 import { ArrowRight} from 'lucide-react';
-const PROJECTS = [
-    {
-        id: 1,
-        src: aboutUs2,
-        title: 'Cantonada',
-        desc: 'Nestled in the heart of Sóller, Cantonada is a century-old townhouse reimagined for modern living.',
-        link: '/projects/cantonada',
-    },
-    {
-        id: 2,
-        src: aboutUs3,
-        title: 'Vistavall',
-        desc: 'Set atop Valldemossa, offering panoramic views and year-round sunshine.',
-        link: '/projects/vistavall',
-    },
-    {
-        id: 3,
-        src: aboutUs4,
-        title: 'Mon Cor',
-        desc: 'Built in 1903 during the most prosperous time in Mallorca\'s modern history, Mon Cor was an architectural marvel that set the benchmark...',
-        link: '/projects/mon-cor',
-    },
-    {
-        id: 4,
-        src: aboutUs5,
-        title: 'Sa M...',
-        desc: 'Where the story of Berrow began...',
-        link: '/projects/sa-m',
-    },
-]
+
 const getImageUrl = (imagePath) => {
     if (!imagePath) return '';
     return `https://cdn.latelia.com/latelia/${imagePath}`;
@@ -96,7 +67,9 @@ function ProjectCarousel({ excludeProjectId = null }) {
             }
         }
     }, [projects, excludeProjectId]);
-    console.log(projects)
+    if (!filteredProjects || filteredProjects.length === 0) {
+        return null;
+    }
     return (
         <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
             <Swiper

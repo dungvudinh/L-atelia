@@ -46,7 +46,7 @@ const Footer = () => {
 
             <div className="text-left md:text-right text-white/80 text-[18px] md:text-[20px] leading-[1.6]">
               <p className="cursor-pointer hover:opacity-70 transition-opacity duration-300">Đà Nẵng</p>
-              <p className="hover:opacity-70 transition-opacity duration-300">+84 12345678</p>
+              <p className="hover:opacity-70 transition-opacity duration-300">0964282298</p>
               <p className="mb-4 hover:opacity-70 transition-opacity duration-300">latelia.sale@gmail.com</p>
               {/* <a
                 href="https://instagram.com/berrowprojects"

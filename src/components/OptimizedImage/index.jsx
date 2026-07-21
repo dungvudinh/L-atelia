@@ -3,7 +3,7 @@ const OptimizedImage = ({ src, alt, className, priority = false, width, height, 
     <img 
       src={src} 
       alt={alt}
-      className={`block ${className}`}
+      className={className}
       loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : "auto"}
       decoding="async"

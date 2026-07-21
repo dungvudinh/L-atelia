@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { ChevronRight, ChevronDown, Check, Scale } from "lucide-react"
-import { motion, AnimatePresence, useInView,useScroll,useTransform  } from "framer-motion"
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion"
 import { useParams } from "react-router-dom"
 import { LocalizedLink } from "../../components/LocalizedLink"
 import OptimizedImage from "../../components/OptimizedImage"
@@ -33,14 +33,14 @@ const FadeUpSection = ({ children, delay = 0 }) => {
 }
 
 // ── 2. FadeImage — ảnh animate khi scroll ─────────────────────────────────
-const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0,aspectRatio = "4/5" }) => {
+const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0, aspectRatio = "4/5" }) => {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: "-60px" })
     return (
         <motion.div
             ref={ref}
             className={`overflow-hidden ${className} rounded-3xl`}
-            style={{aspectRatio, ...style}}
+            style={{ aspectRatio, ...style }}
             initial={{ opacity: 0, y: 36 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay }}
@@ -56,41 +56,32 @@ const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0,aspect
         </motion.div>
     )
 }
-const ScaleImage = ({
-    src,
-    alt = "",
-    className = "",
-    style = {},
-  }) => {
+
+const ScaleImage = ({ src, alt = "", className = "", style = {} }) => {
     const ref = useRef(null)
-  
+
     const { scrollYProgress } = useScroll({
-      target: ref,
-      // progress = 0: mép trên ảnh chạm đáy viewport (ảnh vừa xuất hiện)
-      // progress = 1: ảnh đã nằm giữa viewport (đã cuộn tới)
-      offset: ["start end", "center center"],
+        target: ref,
+        offset: ["start end", "center center"],
     })
-  
+
     const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1])
     const y = useTransform(scrollYProgress, [0, 1], [60, 0])
-  
+
     return (
-      <div
-        ref={ref}
-        className={`overflow-hidden ${className} rounded-3xl`}
-        style={{ ...style }}
-      >
-        <motion.div style={{ scale, y }} className="w-full">
-          <OptimizedImage
-            src={src}
-            alt={alt}
-            className=" object-cover rounded-3xl "
-          />
-        </motion.div>
-      </div>
+        <div ref={ref} className={` ${className}`} style={{ ...style }}>
+            <motion.div style={{ scale, y }} className="w-full rounded-2xl md:rounded-3xl">
+                <OptimizedImage
+                    src={src}
+                    alt={alt}
+                    className=" object-cover rounded-3xl w-full h-full"
+                />
+            </motion.div>
+        </div>
     )
-  }
-// ── 3. BrochureLink — nút View Brochure tái sử dụng ──────────────────────
+}
+
+// ── 3. BrochureLink ────────────────────────────────────────────────────
 const BrochureLink = ({ to, light = false, className = "" }) => (
     <LocalizedLink
         to={to}
@@ -108,27 +99,28 @@ const BrochureLink = ({ to, light = false, className = "" }) => (
     </LocalizedLink>
 )
 
-// ── 4. SpecBadge — pill specification ────────────────────────────────────
+// ── 4. SpecBadge ──────────────────────────────────────────────────────
 const SpecBadge = ({ spec }) => (
     <span
-        className="inline-block px-3 py-1.5 text-sm border border-bg-secondary/20 rounded-full text-bg-secondary"
+        className="inline-block px-2.5 py-1 sm:px-3 sm:py-1.5 text-sm border border-bg-secondary/20 rounded-full text-bg-secondary
+        text-[13px] leading-[18px] xs:text-[14px] sm:text-[16px] sm:leading-[22px]"
         style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(12px, 1vw, 14px)' }}
     >
         {spec.text}
     </span>
 )
 
-// ── 5. SectionAccordion — phần đặc biệt với Read More ────────────────────
+// ── 5. SectionAccordion ───────────────────────────────────────────────
 const SectionAccordion = ({ section }) => {
     const [open, setOpen] = useState(false)
     return (
         <FadeUpSection>
-            <div className="pb-10 md:pb-14">
-                <div className="max-w-[820px] mx-auto px-4 text-center">
+            <div className="pb-8 sm:pb-10 md:pb-14">
+                <div className="max-w-[820px] mx-auto px-4 sm:px-6 text-center">
                     <h3
-                        className="text-bg-secondary mb-6 md:mb-8 tracking-wide"
+                        className="text-bg-secondary mb-4 sm:mb-6 md:mb-8 tracking-wide"
                         style={{
-                            fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2,
+                            fontSize: 'clamp(24px, 3.5vw, 46px)', lineHeight: 1.2,
                             letterSpacing: '0.02em',
                         }}
                     >
@@ -139,15 +131,14 @@ const SectionAccordion = ({ section }) => {
                         <p
                             className="text-bg-secondary/70"
                             style={{
-                                fontSize: 'clamp(15px, 1.3vw, 18px)',
-                                lineHeight: 1.9,
-                                fontFamily:'Nunito Sans'
+                                fontSize: 'clamp(15px, 1.3vw, 19px)',
+                                lineHeight: 1.8,
+                                fontFamily: 'Nunito Sans'
                             }}
                         >
                             {section.shortDescription}
                         </p>
 
-                        {/* Read More expand */}
                         <AnimatePresence>
                             {open && (
                                 <motion.div
@@ -159,24 +150,13 @@ const SectionAccordion = ({ section }) => {
                                 >
                                     <p
                                         className="text-bg-secondary/70 mt-4"
-                                        style={{ fontSize: 'clamp(15px, 1.1vw, 20px)', letterSpacing: '0.2px' }}
+                                        style={{ fontSize: 'clamp(14px, 1.1vw, 20px)', letterSpacing: '0.2px' }}
                                     >
                                         {section.fullDescription}
                                     </p>
                                 </motion.div>
                             )}
                         </AnimatePresence>
-
-                        {/* <button
-                            onClick={() => setOpen(o => !o)}
-                            className="flex items-center gap-1.5 mt-5 mx-auto text-bg-secondary font-medium group"
-                            style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(13px, 1vw, 15px)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-                        >
-                            {open ? 'Read less' : 'Read more'}
-                            <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                                <ChevronDown size={14} />
-                            </motion.span>
-                        </button> */}
                     </div>
                 </div>
             </div>
@@ -190,22 +170,19 @@ function ProjectDetail() {
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+
     const fetchProjectDetail = async () => {
         try {
             setLoading(true);
             setError(null);
-            
-            
+
             if (!projectId) {
                 throw new Error('Project ID is required');
             }
 
             const response = await projectsService.getProjectById(projectId);
-            const galleryUrls = response.data?.gallery?.map(item => `${BASE_CDN_URL}${item.key}`) || [];
-            // Set project data
             setProject(response.data || response);
-            
+
         } catch (err) {
             console.error('❌ Failed to fetch project detail:', err);
             setError(err.message || 'Failed to load project details');
@@ -214,13 +191,12 @@ function ProjectDetail() {
         }
     };
 
-    
     useEffect(() => {
         if (projectId) {
             fetchProjectDetail();
         }
     }, [projectId]);
-    // Loading state
+
     if (loading) {
         return (
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
@@ -232,7 +208,6 @@ function ProjectDetail() {
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
@@ -240,7 +215,7 @@ function ProjectDetail() {
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
                         <h2 className="text-xl">Error</h2>
                         <p>{error}</p>
-                        <button 
+                        <button
                             onClick={fetchProjectDetail}
                             className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700"
                         >
@@ -252,7 +227,6 @@ function ProjectDetail() {
         );
     }
 
-    // Project not found
     if (!project) {
         return (
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
@@ -270,18 +244,14 @@ function ProjectDetail() {
             </div>
         );
     }
-
-    // TODO: thay bằng fetch thực tế
-    // const project = MOCK_PROJECT
-
     return (
         <div>
             {/* ════════════════════════════════════════
                 ① HERO BANNER
             ════════════════════════════════════════ */}
-            <div className="w-full h-screen relative overflow-hidden ">
+            <div className="w-full h-screen relative overflow-hidden">
                 <OptimizedImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[0]?.key}`} 
+                    src={`${BASE_CDN_URL}${project?.gallery?.[0]?.key}`}
                     alt={project.name}
                     className="object-cover w-full h-full object-center"
                     style={{ filter: 'brightness(0.68)' }}
@@ -291,51 +261,46 @@ function ProjectDetail() {
                     className="absolute inset-0"
                     style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5) 100%, transparent 60%)' }}
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 sm:px-6">
 
-                    {/* Project name */}
                     <motion.h1
                         initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                        style={{ fontSize: 'clamp(40px, 7vw, 72px)', fontWeight: 400, lineHeight: 1.05, marginBottom: '16px' }}
+                        style={{ fontSize: 'clamp(32px, 7vw, 72px)', fontWeight: 400, lineHeight: 1.05, marginBottom: '14px' }}
                     >
                         {project.name}
                     </motion.h1>
 
-                    {/* Features row — từ project.features */}
                     <motion.div
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-                        className="flex flex-wrap items-center justify-center gap-0 mb-6"
-                        style={{ fontSize: 'clamp(15px, 1.1vw, 22px)', letterSpacing: '0.2px' }}
+                        className="flex flex-wrap items-center justify-center gap-x-0 gap-y-2 mb-5 sm:mb-6"
+                        style={{ fontSize: 'clamp(14px, 1.1vw, 22px)', letterSpacing: '0.2px' }}
                     >
-                        
                         {project?.propertyFeatures?.length > 0 && project.propertyFeatures.map((feature, i) => (
                             <span key={feature._id || i} className="flex items-center opacity-90">
                                 {feature.text}
-                                {i < project.propertyFeatures.length - 1 && <span className="mx-3 opacity-40">|</span>}
+                                {i < project.propertyFeatures.length - 1 && <span className="mx-2 sm:mx-3 opacity-40">|</span>}
                             </span>
                         ))}
                     </motion.div>
 
-                    {/* Status badge */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.85 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1], delay: 0.55 }}
-                        className="mb-5"
+                        className="mb-4 sm:mb-5"
                     >
                         <span
-                            className="inline-block px-4 py-1.5 rounded-lg bg-white text-bg-secondary font-medium"
-                            style={{ fontSize: 'clamp(20px, 1vw, 25px)' }}
+                            className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-lg bg-white text-bg-secondary font-medium"
+                            style={{ fontSize: 'clamp(16px, 1vw, 25px)' }}
                         >
                             {project.type === 'sale' ? 'For Sale' : 'For Rent'}
                         </span>
                     </motion.div>
 
-                    {/* Brochure CTA */}
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -349,23 +314,23 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ② INTRO TEXT
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-40 mb-16 xl:mb-32 flex justify-center px-6">
+            <div className="mt-14 sm:mt-20 md:mt-28 xl:mt-40 mb-8 sm:mb-10 md:mb-16 xl:mb-32 flex justify-center px-5 sm:px-6">
                 <FadeUpSection>
                     <div className="max-w-[760px] text-center">
                         <h2
                             className="text-bg-secondary"
-                            style={{ fontSize: 'clamp(26px, 3.5vw, 46px)', lineHeight: 1.2 }}
+                            style={{ fontSize: 'clamp(24px, 3.5vw, 46px)', lineHeight: 1.2 }}
                         >
                             {project.title}
                         </h2>
                         <p
-                            className="text-bg-secondary/70 mt-8"
-                            style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(16px, 1.3vw, 20px)', lineHeight: 1.7 }}
+                            className="text-bg-secondary/70 mt-5 sm:mt-6 md:mt-8"
+                            style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(15px, 1.3vw, 20px)', lineHeight: 1.7 }}
                         >
                             {project.description}
                         </p>
-                        <div className="mt-10 flex justify-center">
-                            <BrochureLink to={`/view-brochure/${project._id}`}  />
+                        <div className="mt-6 sm:mt-8 md:mt-10 flex justify-center">
+                            <BrochureLink to={`/view-brochure/${project._id}`} />
                         </div>
                     </div>
                 </FadeUpSection>
@@ -374,174 +339,156 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ③ PHOTO GALLERY — BLOCK 1-3
             ════════════════════════════════════════ */}
-            <div className="px-4 md:px-8 xl:px-14  flex items-center justify-center">
+            <div className="px-4 md:px-8 xl:px-14 flex items-center justify-center">
                 <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] space-y-3 flex flex-col items-center">
                     {/* Ảnh 1 — full width */}
                     <ScaleImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
-                        className="w-[80%] h-full"
-                        // style={{ height: 'clamp(200px, 40vw, 660px)' }}
+                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`}
+                        className="w-full sm:w-[85%] md:w-[80%] h-full"
                     />
 
-                    {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
-                    <div className="flex w-full mt-20 gap-20 flex-row items-center justify-center">
+                    {/* Ảnh 2 + 3 — dọc trên mobile, ngang từ sm trở lên */}
+                    <div className="flex flex-col sm:flex-row w-full mt-6 sm:mt-10 xl:mt-16 mb-4 sm:mb-5 gap-4 sm:gap-8 md:gap-12 xl:gap-20 items-center justify-center">
                         <ScaleImage
-                              src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
-                            className="flex-1 w-full"
+                            src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`}
+                            className="w-full sm:flex-1"
                             delay={0}
                         />
                         <ScaleImage
-                            src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
-                            className="flex-1 w-full "
+                            src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`}
+                            className="w-full sm:flex-1"
                             delay={0.1}
                         />
                     </div>
-                    
                 </div>
-
             </div>
 
             {/* ════════════════════════════════════════
                 ④ SPECIFICATIONS
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-36 px-6">
-                <div className="max-w-[900px] mx-auto">
+            <div className="mt-14 sm:mt-20 md:mt-28 xl:mt-36 px-5 sm:px-6 flex items-center justify-center">
+                <div className="w-full xl:max-w-screen-xl lg:max-w-[900px]">
                     <FadeUpSection>
                         {/* Property Features grid */}
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4 mb-14 pb-14 border-b border-bg-secondary/10">
-                        {project?.propertyFeatures?.map(({ text, _id }, index) => (
-                            <div key={_id || index}>
-                                <p className="text-bg-secondary/40 text-sm uppercase tracking-widest mb-1"
-                                    style={{ fontFamily: 'Nunito Sans' }}>
-                                    {text}
-                                </p>
-                                {/* <p className="text-bg-secondary font-medium"
-                                        style={{ fontSize: 'clamp(15px, 1.2vw, 18px)' }}>
-                                        {value}
-                                    </p> */}
-                            </div>
-                        ))}
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 sm:gap-x-6 md:gap-x-8 gap-y-3 sm:gap-y-4 mb-8 sm:mb-10 md:mb-14 pb-8 sm:pb-10 md:pb-14 border-b border-bg-secondary/10">
+                            {project?.propertyFeatures?.map(({ text, _id }, index) => (
+                                <div key={_id || index} className="border-l border-bg-secondary/20 pl-3 sm:pl-4">
+                                    <p className="text-bg-secondary text-[14px] xs:text-[15px] sm:text-[18px] md:text-[20px] uppercase tracking-widest">
+                                        {text}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
 
                         {/* Property Highlights */}
-                        <div className="mb-10">
-                            <h3 className="text-bg-secondary font-medium mb-5"
-                                style={{ fontSize: 'clamp(13px, 1vw, 15px)', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.5 }}>
-                                Property Highlights
-                            </h3>
-                            {/* <ul className="space-y-2">
-                                {project?.propertyHighlights.map((h, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-bg-secondary/70"
-                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}>
-                                        <Check size={16} className="mt-0.5 flex-shrink-0 text-bg-secondary" />
-                                        {h}
-                                    </li>
-                                ))}
-                            </ul> */}
-                            <div className="space-y-10">
-                                {project?.propertyHighlights.map((highlight, i) => {
-                                    const features = highlight.featureSections?.filter(
-                                        (f) => f.name?.trim() || f.description?.trim()
-                                    );
+                        {project?.propertyHighlights?.length > 0 && (
+                            <div className="mb-8 sm:mb-10">
+                                <h3 className="text-bg-secondary font-medium mb-4 sm:mb-5"
+                                    style={{ fontSize: 'clamp(13px, 1vw, 15px)', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.5 }}>
+                                    Property Highlights
+                                </h3>
+                                <div className="space-y-6 sm:space-y-8 md:space-y-10">
+                                    {project?.propertyHighlights.map((highlight, i) => {
+                                        const features = highlight.featureSections?.filter(
+                                            (f) => f.name?.trim() || f.description?.trim()
+                                        );
 
-                                    return (
-                                        <div key={highlight._id ?? i} className="space-y-3">
-                                            {/* Title */}
-                                            {highlight.title && (
-                                                <h3
-                                                    className="text-bg-secondary flex items-start gap-3"
-                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(18px, 1.6vw, 22px)' }}
-                                                >
-                                                    <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
-                                                    {highlight.title}
-                                                </h3>
-                                            )}
+                                        return (
+                                            <div key={highlight._id ?? i} className="space-y-2 sm:space-y-3">
+                                                {highlight.title && (
+                                                    <h3
+                                                        className="text-bg-secondary flex items-start gap-2 sm:gap-3"
+                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(17px, 1.6vw, 22px)' }}
+                                                    >
+                                                        <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
+                                                        {highlight.title}
+                                                    </h3>
+                                                )}
 
-                                            {/* Description */}
-                                            {highlight.description && (
-                                                <p
-                                                    className="text-bg-secondary/70 pl-8 whitespace-pre-line"
-                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(15px, 1.2vw, 17px)' }}
-                                                >
-                                                    {highlight.description}
-                                                </p>
-                                            )}
+                                                {highlight.description && (
+                                                    <p
+                                                        className="text-bg-secondary/70 pl-6 sm:pl-7 md:pl-8 whitespace-pre-line"
+                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(14px, 1.2vw, 17px)' }}
+                                                    >
+                                                        {highlight.description}
+                                                    </p>
+                                                )}
 
-                                            {/* Feature sections */}
-                                            {features?.length > 0 && (
-                                                <ul className="pl-8 space-y-2 border-l border-bg-secondary/15">
-                                                    {features.map((f) => (
-                                                        <li key={f._id} className="pl-4">
-                                                            {f.name && (
-                                                                <span
-                                                                    className="block text-bg-secondary/90"
-                                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(14px, 1.1vw, 16px)' }}
-                                                                >
-                                                                    {f.name}
-                                                                </span>
-                                                            )}
-                                                            {f.description && (
-                                                                <span
-                                                                    className="block text-bg-secondary/60"
-                                                                    style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(13px, 1vw, 15px)' }}
-                                                                >
-                                                                    {f.description}
-                                                                </span>
-                                                            )}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                        </div>
-                                    );
-                                })}
+                                                {features?.length > 0 && (
+                                                    <ul className="pl-6 sm:pl-7 md:pl-8 space-y-2 border-l border-bg-secondary/15">
+                                                        {features.map((f) => (
+                                                            <li key={f._id} className="pl-3 sm:pl-4">
+                                                                {f.name && (
+                                                                    <span
+                                                                        className="block text-bg-secondary/90"
+                                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(13px, 1.1vw, 16px)' }}
+                                                                    >
+                                                                        {f.name}
+                                                                    </span>
+                                                                )}
+                                                                {f.description && (
+                                                                    <span
+                                                                        className="block text-bg-secondary/60"
+                                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(12px, 1vw, 15px)' }}
+                                                                    >
+                                                                        {f.description}
+                                                                    </span>
+                                                                )}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Specifications pills */}
-                        <div>
-                            <h3 className="text-bg-secondary font-medium mb-4"
-                                style={{ fontSize: 'clamp(13px, 1vw, 15px)', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.5 }}>
-                                Specifications
-                            </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {project.specifications.map((spec, i) => (
-                                    <SpecBadge key={i} spec={spec} />
-                                ))}
+                        {project?.specifications?.length > 0 && (
+                            <div>
+                                <h3 className="text-bg-secondary mb-3 sm:mb-4 text-[14px] leading-[20px] xs:text-[15px] sm:text-[18px] sm:leading-[26px]"
+                                    style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                                    Specifications
+                                </h3>
+                                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                    {project?.specifications.map((spec, i) => (
+                                        <SpecBadge key={i} spec={spec} />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </FadeUpSection>
                 </div>
             </div>
 
             {/* ════════════════════════════════════════
-                ⑤ GALLERY — BLOCK 4-5 + TEXT XEN
+                ⑤ GALLERY — BLOCK 4-5
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 flex justify-center">
+            <div className="mt-8 sm:mt-10 md:mt-14 xl:mt-16 px-4 md:px-8 xl:px-14 flex justify-center">
                 <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] flex flex-col items-center">
-                    {/* Block 4: full-width */}
-                    <ScaleImage src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`}  className="w-[80%] h-full"
-                        // style={{ height: 'clamp(280px, 52vw, 840px)' }} 
-                        />
+                    <ScaleImage
+                        src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`}
+                        className="w-full sm:w-[85%] md:w-[80%] h-full"
+                    />
                 </div>
             </div>
 
             {/* ════════════════════════════════════════
                 ⑥ CÁC PHẦN ĐẶC BIỆT — Accordion
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-36 flex items-center justify-center">
+            <div className="mt-8 sm:mt-10 md:mt-14 xl:mt-16 flex items-center justify-center">
                 <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px]">
 
                     {project?.specialSections && project?.gallery && (() => {
                         const sections = project.specialSections;
                         const images = project.gallery;
-                        let imageIndex = 5; // Bắt đầu từ gallery[8]
+                        let imageIndex = 5;
                         const elements = [];
 
-                        // Hàm lấy 3 ảnh tiếp theo
                         const getNextThreeImages = () => {
                             if (imageIndex >= images.length) return null;
-                            
                             const result = [];
                             for (let i = 0; i < 3 && imageIndex < images.length; i++) {
                                 result.push(images[imageIndex]);
@@ -550,53 +497,60 @@ function ProjectDetail() {
                             return result;
                         };
 
-                        // Lặp qua từng section và thêm 3 ảnh sau mỗi section
+                        const renderImageGroup = (key, nextImages) => (
+                            <div key={key} className="px-4 md:px-8 xl:px-14 space-y-3 flex flex-col items-center pb-10 sm:pb-14 md:pb-20">
+                                <ScaleImage
+                                    src={`${BASE_CDN_URL}${nextImages[0]?.key}`}
+                                    className="w-full sm:w-[85%] md:w-[80%] h-full"
+                                    delay={0}
+                                />
+
+                                {(nextImages[1] || nextImages[2]) && (
+                                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 md:gap-12 xl:gap-20 mt-6 sm:mt-10 md:mt-14 xl:mt-20 items-center justify-center">
+                                        {nextImages[1] && (
+                                            <ScaleImage
+                                                src={`${BASE_CDN_URL}${nextImages[1].key}`}
+                                                className="w-full sm:flex-1 h-full"
+                                                delay={0}
+                                            />
+                                        )}
+                                        {nextImages[2] && (
+                                            <ScaleImage
+                                                src={`${BASE_CDN_URL}${nextImages[2].key}`}
+                                                className="w-full sm:flex-1"
+                                                delay={0.1}
+                                            />
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        );
+
                         sections.forEach((section, index) => {
-                            // Thêm Section
                             elements.push(
                                 <SectionAccordion key={`section-${index}`} section={section} />
                             );
 
-                            // Thêm 3 ảnh sau section (nếu còn ảnh)
                             const nextImages = getNextThreeImages();
                             if (nextImages && nextImages.length > 0) {
-                                elements.push(
-                                    <div key={`images-${index}`} className="px-4 md:px-8 xl:px-14 space-y-3 flex flex-col items-center pb-20">
-                                        {/* Ảnh 1 — full width */}
-                                        <ScaleImage
-                                            src={`${BASE_CDN_URL}${nextImages[0]?.key}`}
-                                            className="w-[80%] h-full"
-                                            // style={{ height: 'clamp(200px, 40vw, 560px)' }}
-                                            delay={0}
-                                        />
-
-                                        {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
-                                        <div className="flex gap-20 mt-20 flex-row items-center justify-center">
-                                            {nextImages[1] && (
-                                                <ScaleImage
-                                                    src={`${BASE_CDN_URL}${nextImages[1].key}`}
-                                                    className="flex-1 w-full h-full"
-                                                    delay={0}
-                                                />
-                                            )}
-                                            {nextImages[2] && (
-                                                <ScaleImage
-                                                    src={`${BASE_CDN_URL}${nextImages[2].key}`}
-                                                    className="flex-1 w-full"
-                                                    delay={0.1}
-                                                />
-                                            )}
-                                        </div>
-                                    </div>
-                                );
+                                elements.push(renderImageGroup(`images-${index}`, nextImages));
                             }
                         });
+
+                        let extraIndex = 0;
+                        let remainingImages = getNextThreeImages();
+                        while (remainingImages && remainingImages.length > 0) {
+                            elements.push(renderImageGroup(`extra-images-${extraIndex}`, remainingImages));
+                            extraIndex++;
+                            remainingImages = getNextThreeImages();
+                        }
 
                         return elements;
                     })()}
                 </div>
             </div>
-            <ProjectCarousel excludeProjectId={projectId}/>
+
+            <ProjectCarousel excludeProjectId={projectId} />
             <JoinNewsletter />
             <FollowUs />
             <Footer withContact={false} />
