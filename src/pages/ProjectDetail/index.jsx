@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
-import { ChevronRight, ChevronDown, Check } from "lucide-react"
-import { motion, AnimatePresence, useInView } from "framer-motion"
+import { ChevronRight, ChevronDown, Check, Scale } from "lucide-react"
+import { motion, AnimatePresence, useInView,useScroll,useTransform  } from "framer-motion"
 import { useParams } from "react-router-dom"
 import { LocalizedLink } from "../../components/LocalizedLink"
 import OptimizedImage from "../../components/OptimizedImage"
@@ -13,6 +13,7 @@ import JoinNewsletter from "../../components/JoinNewsletter"
 import FollowUs from "../../components/FollowUs"
 import ProjectCarousel from "../../components/ProjectCarousel"
 import { projectsService } from "../../services/projectsService"
+import PageTransition from "../../components/PageTransition"
 const BASE_CDN_URL = 'https://cdn.latelia.com/latelia/'
 
 // ── 1. FadeUpSection ──────────────────────────────────────────────────────
@@ -32,14 +33,14 @@ const FadeUpSection = ({ children, delay = 0 }) => {
 }
 
 // ── 2. FadeImage — ảnh animate khi scroll ─────────────────────────────────
-const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0 }) => {
+const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0,aspectRatio = "4/5" }) => {
     const ref = useRef(null)
     const isInView = useInView(ref, { once: true, margin: "-60px" })
     return (
         <motion.div
             ref={ref}
             className={`overflow-hidden ${className} rounded-3xl`}
-            style={style}
+            style={{aspectRatio, ...style}}
             initial={{ opacity: 0, y: 36 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay }}
@@ -55,7 +56,40 @@ const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0 }) => 
         </motion.div>
     )
 }
-
+const ScaleImage = ({
+    src,
+    alt = "",
+    className = "",
+    style = {},
+  }) => {
+    const ref = useRef(null)
+  
+    const { scrollYProgress } = useScroll({
+      target: ref,
+      // progress = 0: mép trên ảnh chạm đáy viewport (ảnh vừa xuất hiện)
+      // progress = 1: ảnh đã nằm giữa viewport (đã cuộn tới)
+      offset: ["start end", "center center"],
+    })
+  
+    const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1])
+    const y = useTransform(scrollYProgress, [0, 1], [60, 0])
+  
+    return (
+      <div
+        ref={ref}
+        className={`overflow-hidden ${className} rounded-3xl`}
+        style={{ ...style }}
+      >
+        <motion.div style={{ scale, y }} className="w-full">
+          <OptimizedImage
+            src={src}
+            alt={alt}
+            className=" object-cover rounded-3xl "
+          />
+        </motion.div>
+      </div>
+    )
+  }
 // ── 3. BrochureLink — nút View Brochure tái sử dụng ──────────────────────
 const BrochureLink = ({ to, light = false, className = "" }) => (
     <LocalizedLink
@@ -89,7 +123,7 @@ const SectionAccordion = ({ section }) => {
     const [open, setOpen] = useState(false)
     return (
         <FadeUpSection>
-            <div className="py-10 md:py-14">
+            <div className="pb-10 md:pb-14">
                 <div className="max-w-[820px] mx-auto px-4 text-center">
                     <h3
                         className="text-bg-secondary mb-6 md:mb-8 tracking-wide"
@@ -156,17 +190,7 @@ function ProjectDetail() {
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const imgs = project?.images;  // alias ngắn
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: ''
-    });
-    const [formErrors, setFormErrors] = useState({});
-    const [submitting, setSubmitting] = useState(false);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
-    // Fetch project detail from API
+    
     const fetchProjectDetail = async () => {
         try {
             setLoading(true);
@@ -178,7 +202,7 @@ function ProjectDetail() {
             }
 
             const response = await projectsService.getProjectById(projectId);
-            
+            const galleryUrls = response.data?.gallery?.map(item => `${BASE_CDN_URL}${item.key}`) || [];
             // Set project data
             setProject(response.data || response);
             
@@ -190,98 +214,12 @@ function ProjectDetail() {
         }
     };
 
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [id]: value
-        }));
-        
-        // Clear error for this field when user types
-        if (formErrors[id]) {
-            setFormErrors(prev => ({
-                ...prev,
-                [id]: ''
-            }));
-        }
-    };
-        const validateForm = () => {
-        const errors = {};
-        
-        if (!formData.firstName.trim()) {
-            errors.firstName = 'First name is required';
-        }
-        if (!formData.lastName.trim()) {
-            errors.lastName = 'Last name is required';
-        }
-        if (!formData.email.trim()) {
-            errors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            errors.email = 'Email is invalid';
-        }
-        if (!formData.phone.trim()) {
-            errors.phone = 'Phone number is required';
-        }
-        
-        return errors;
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        const errors = validateForm();
-        if (Object.keys(errors).length > 0) {
-            setFormErrors(errors);
-            return;
-        }
-        
-        try {
-            setSubmitting(true);
-            setFormErrors({});
-            
-            // Gửi chỉ 5 trường: 4 từ form + projectTitle
-            const requestData = {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                phone: formData.phone,
-                projectTitle: project?.title || 'Unknown Project'
-            };
-            
-            
-            const response = await projectsService.submitProjectContactForm(
-                projectId, 
-                requestData
-            );
-            
-            if (response.success) {
-                setSubmitSuccess(true);
-                // Reset form
-                setFormData({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    phone: ''
-                });
-                
-                setTimeout(() => {
-                    setSubmitSuccess(false);
-                }, 5000);
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setFormErrors({
-                submit: error.response?.data?.message || 'Failed to submit form. Please try again.'
-            });
-        } finally {
-            setSubmitting(false);
-        }
-    };
+    
     useEffect(() => {
         if (projectId) {
             fetchProjectDetail();
         }
     }, [projectId]);
-    console.log(project)
     // Loading state
     if (loading) {
         return (
@@ -347,6 +285,7 @@ function ProjectDetail() {
                     alt={project.name}
                     className="object-cover w-full h-full object-center"
                     style={{ filter: 'brightness(0.68)' }}
+                    priority
                 />
                 <div
                     className="absolute inset-0"
@@ -435,28 +374,29 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ③ PHOTO GALLERY — BLOCK 1-3
             ════════════════════════════════════════ */}
-            <div className="px-4 md:px-8 xl:px-14 space-y-3">
-                {/* Ảnh 1 — full width */}
-                <FadeImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
-                    className="w-full"
-                    style={{ height: 'clamp(200px, 40vw, 560px)' }}
-                />
+            <div className="px-4 md:px-8 xl:px-14  flex items-center justify-center">
+                <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] space-y-3 flex flex-col items-center">
+                    {/* Ảnh 1 — full width */}
+                    <ScaleImage
+                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
+                        className="w-[80%] h-full"
+                        // style={{ height: 'clamp(200px, 40vw, 660px)' }}
+                    />
 
-                {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
-                <div className="flex gap-3">
-                    <FadeImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
-                    className="flex-1"
-                    style={{ height: 'clamp(140px, 26vw, 380px)' }}
-                    delay={0}
-                    />
-                    <FadeImage
-                    src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
-                    className="flex-1"
-                    style={{ height: 'clamp(140px, 26vw, 380px)' }}
-                    delay={0.1}
-                    />
+                    {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
+                    <div className="flex w-full mt-20 gap-20 flex-row items-center justify-center">
+                        <ScaleImage
+                              src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
+                            className="flex-1 w-full"
+                            delay={0}
+                        />
+                        <ScaleImage
+                            src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
+                            className="flex-1 w-full "
+                            delay={0.1}
+                        />
+                    </div>
+                    
                 </div>
 
             </div>
@@ -577,143 +517,85 @@ function ProjectDetail() {
             {/* ════════════════════════════════════════
                 ⑤ GALLERY — BLOCK 4-5 + TEXT XEN
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 space-y-3">
-
-                {/* Block 4: full-width */}
-                <FadeImage src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`}  className="w-full"
-                    style={{ height: 'clamp(280px, 52vw, 740px)' }} />
-
-                {/* Text xen giữa ảnh */}
-                {/* <div className="py-20 xl:py-32 flex justify-center px-6">
-                    <FadeUpSection>
-                        <div className="max-w-[600px] text-center">
-                            <p className="text-bg-secondary"
-                                style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.65 }}>
-                                Living spaces unfold across a single level, where generous openings frame the mountains and establish a seamless relationship between indoors and out.
-                            </p>
-                            <p className="text-bg-secondary mt-6"
-                                style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(18px, 1.8vw, 24px)', lineHeight: 1.65 }}>
-                                Private, peaceful and immersed in nature, Miracalma offers a rare opportunity to live within one of Mallorca's most distinguished settings.
-                            </p>
-                        </div>
-                    </FadeUpSection>
-                </div> */}
-
-                {/* Block 5: portrait (2/5) + landscape (3/5) */}
-                {/* <div className="px-4 md:px-8 xl:px-14 space-y-3">
-                    <FadeImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
-                        className="w-full"
-                        style={{ height: 'clamp(200px, 40vw, 560px)' }}
-                    />
-
-                    <div className="flex gap-3">
-                        <FadeImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
-                        className="flex-1"
-                        style={{ height: 'clamp(140px, 26vw, 380px)' }}
-                        delay={0}
+            <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 flex justify-center">
+                <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] flex flex-col items-center">
+                    {/* Block 4: full-width */}
+                    <ScaleImage src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`}  className="w-[80%] h-full"
+                        // style={{ height: 'clamp(280px, 52vw, 840px)' }} 
                         />
-                        <FadeImage
-                        src={`${BASE_CDN_URL}${project?.gallery?.[7]?.key}`} 
-                        className="flex-1"
-                        style={{ height: 'clamp(140px, 26vw, 380px)' }}
-                        delay={0.1}
-                        />
-                    </div>
-
-                </div> */}
+                </div>
             </div>
 
             {/* ════════════════════════════════════════
                 ⑥ CÁC PHẦN ĐẶC BIỆT — Accordion
             ════════════════════════════════════════ */}
-            <div className="mt-20 xl:mt-36">
-                {project?.specialSections && project?.gallery && (() => {
-                    const sections = project.specialSections;
-                    const images = project.gallery;
-                    let imageIndex = 5; // Bắt đầu từ gallery[8]
-                    const elements = [];
+            <div className="mt-20 xl:mt-36 flex items-center justify-center">
+                <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px]">
 
-                    // Hàm lấy 3 ảnh tiếp theo
-                    const getNextThreeImages = () => {
-                        if (imageIndex >= images.length) return null;
-                        
-                        const result = [];
-                        for (let i = 0; i < 3 && imageIndex < images.length; i++) {
-                            result.push(images[imageIndex]);
-                            imageIndex++;
-                        }
-                        return result;
-                    };
+                    {project?.specialSections && project?.gallery && (() => {
+                        const sections = project.specialSections;
+                        const images = project.gallery;
+                        let imageIndex = 5; // Bắt đầu từ gallery[8]
+                        const elements = [];
 
-                    // Lặp qua từng section và thêm 3 ảnh sau mỗi section
-                    sections.forEach((section, index) => {
-                        // Thêm Section
-                        elements.push(
-                            <SectionAccordion key={`section-${index}`} section={section} />
-                        );
+                        // Hàm lấy 3 ảnh tiếp theo
+                        const getNextThreeImages = () => {
+                            if (imageIndex >= images.length) return null;
+                            
+                            const result = [];
+                            for (let i = 0; i < 3 && imageIndex < images.length; i++) {
+                                result.push(images[imageIndex]);
+                                imageIndex++;
+                            }
+                            return result;
+                        };
 
-                        // Thêm 3 ảnh sau section (nếu còn ảnh)
-                        const nextImages = getNextThreeImages();
-                        if (nextImages && nextImages.length > 0) {
+                        // Lặp qua từng section và thêm 3 ảnh sau mỗi section
+                        sections.forEach((section, index) => {
+                            // Thêm Section
                             elements.push(
-                                <div key={`images-${index}`} className="px-4 md:px-8 xl:px-14 space-y-3">
-                                    {/* Ảnh 1 — full width */}
-                                    <FadeImage
-                                        src={`${BASE_CDN_URL}${nextImages[0]?.key}`}
-                                        className="w-full"
-                                        style={{ height: 'clamp(200px, 40vw, 560px)' }}
-                                        delay={0}
-                                    />
-
-                                    {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
-                                    <div className="flex gap-3">
-                                        {nextImages[1] && (
-                                            <FadeImage
-                                                src={`${BASE_CDN_URL}${nextImages[1].key}`}
-                                                className="flex-1"
-                                                style={{ height: 'clamp(140px, 26vw, 380px)' }}
-                                                delay={0}
-                                            />
-                                        )}
-                                        {nextImages[2] && (
-                                            <FadeImage
-                                                src={`${BASE_CDN_URL}${nextImages[2].key}`}
-                                                className="flex-1"
-                                                style={{ height: 'clamp(140px, 26vw, 380px)' }}
-                                                delay={0.1}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
+                                <SectionAccordion key={`section-${index}`} section={section} />
                             );
-                        }
-                    });
 
-                    return elements;
-                })()}
-            </div>
+                            // Thêm 3 ảnh sau section (nếu còn ảnh)
+                            const nextImages = getNextThreeImages();
+                            if (nextImages && nextImages.length > 0) {
+                                elements.push(
+                                    <div key={`images-${index}`} className="px-4 md:px-8 xl:px-14 space-y-3 flex flex-col items-center pb-20">
+                                        {/* Ảnh 1 — full width */}
+                                        <ScaleImage
+                                            src={`${BASE_CDN_URL}${nextImages[0]?.key}`}
+                                            className="w-[80%] h-full"
+                                            // style={{ height: 'clamp(200px, 40vw, 560px)' }}
+                                            delay={0}
+                                        />
 
-            {/* ════════════════════════════════════════
-                ⑦ GALLERY CUỐI + CTA
-            ════════════════════════════════════════ */}
-            {/* <div className="mt-20 xl:mt-36 px-4 md:px-8 xl:px-14 space-y-3">
+                                        {/* Ảnh 2 + 3 — 2 cột bằng nhau */}
+                                        <div className="flex gap-20 mt-20 flex-row items-center justify-center">
+                                            {nextImages[1] && (
+                                                <ScaleImage
+                                                    src={`${BASE_CDN_URL}${nextImages[1].key}`}
+                                                    className="flex-1 w-full h-full"
+                                                    delay={0}
+                                                />
+                                            )}
+                                            {nextImages[2] && (
+                                                <ScaleImage
+                                                    src={`${BASE_CDN_URL}${nextImages[2].key}`}
+                                                    className="flex-1 w-full"
+                                                    delay={0.1}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        });
 
-                <div className="flex gap-3">
-                    {[imgs[9], imgs[10], imgs[11]].map((img, i) => (
-                        <FadeImage key={i} src={img?.src} className="flex-1"
-                            style={{ height: 'clamp(160px, 26vw, 380px)' }} delay={i * 0.08} />
-                    ))}
+                        return elements;
+                    })()}
                 </div>
-
-                <FadeUpSection>
-                    <div className="py-20 text-center">
-                        <BrochureLink to={project.brochureUrl} />
-                    </div>
-                </FadeUpSection>
-            </div> */}
-
+            </div>
             <ProjectCarousel excludeProjectId={projectId}/>
             <JoinNewsletter />
             <FollowUs />
