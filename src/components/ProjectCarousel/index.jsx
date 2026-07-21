@@ -67,11 +67,13 @@ function ProjectCarousel({ excludeProjectId = null }) {
             }
         }
     }, [projects, excludeProjectId]);
+    console.log(filteredProjects)
     if (!filteredProjects || filteredProjects.length === 0) {
         return null;
     }
     return (
         <section ref={ref} className="w-full py-16 xl:py-24 overflow-hidden">
+            {
             <Swiper
                 modules={[FreeMode]}
                 freeMode={{ enabled: true, momentum: true, momentumRatio: 0.8 }}
@@ -88,12 +90,9 @@ function ProjectCarousel({ excludeProjectId = null }) {
                     >
                         <motion.div
                             initial={{ opacity: 0, x: 80 }}
-                            animate={isInView ? { opacity: 1, x: 0 } : {}}
-                            transition={{
-                                duration: 0.8,
-                                delay: i * 0.15,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, margin: '-80px' }}
+                            transition={{ duration: 0.8, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
                         >
                             {/* Image */}
                             <LocalizedLink to={`/projects/${project.id}`}>
@@ -152,6 +151,7 @@ function ProjectCarousel({ excludeProjectId = null }) {
                     </SwiperSlide>
                 ))}
             </Swiper>
+            }
         </section>
     )
 }
