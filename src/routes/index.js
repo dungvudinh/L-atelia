@@ -9,7 +9,7 @@ import MediaDetail from '../pages/MediaDetail';
 import About from '../pages/About';
 import Brochure from '../pages/Brochure';
 import Contact from '../pages/Contact';
-
+import BrochureDetail from '../pages/BrochureDetail'
 const publicRoutes = [
   {
     path: routes.landingPage,
@@ -49,7 +49,8 @@ const publicRoutes = [
   }, 
   {
     path:routes.brochure, 
-    component:Brochure
+    component:Brochure,
+    layout:null
   }, 
   {
     path:routes.propertiesForRentDetail,
@@ -58,6 +59,11 @@ const publicRoutes = [
   {
     path:routes.contact, 
     component:Contact
+  }, 
+  {
+    path:routes.brochureDetail,
+    component:BrochureDetail,
+    layout:null
   }
 ];
 

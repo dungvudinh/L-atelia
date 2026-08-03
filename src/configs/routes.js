@@ -10,7 +10,8 @@ const routes = {
     mediaDetail:'media/:mediaId', 
     about:'about',
     brochure:'view-brochure/:projectId',
-    contact:'/contact'
+    contact:'/contact',
+    brochureDetail:'/view-brochure/:projectId/detail',
   };
   
   export default routes;
