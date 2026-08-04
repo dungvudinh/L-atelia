@@ -143,7 +143,7 @@ function MediaDetail() {
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-6 bg-red-50 border border-red-200 text-red-700 rounded-lg max-w-md">
-                        <h2 className="text-xl font-semibold mb-2">Error Loading Content</h2>
+                        <h2 className="text-xl mb-2">Error Loading Content</h2>
                         <p className="mb-4">{error}</p>
                         <button 
                             onClick={() => navigate('/media')}
@@ -160,10 +160,10 @@ function MediaDetail() {
     // Media not found state
     if (!media) {
         return (
-            <div className="mt-20 flex justify-center items-center min-h-screen px-4">
+            <div className="flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-6 bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-lg max-w-md">
-                        <h2 className="text-xl font-semibold mb-2">Media Not Found</h2>
+                        <h2 className="text-xl mb-2">Media Not Found</h2>
                         <p className="mb-4">The requested media content could not be found.</p>
                         <button 
                             onClick={() => navigate('/media')}
@@ -178,9 +178,9 @@ function MediaDetail() {
     }
 
     return ( 
-        <div className="mt-20">
+        <div className="">
             {/* Featured Image */}
-            <div className='w-full xl:h-screen h-[300px] md:h-[500px]'>
+            <div className='w-full h-screen '>
                 <OptimizedImage 
                     src={getMediaImage(media)} 
                     alt={media.title} 
@@ -188,7 +188,7 @@ function MediaDetail() {
                 />
             </div>
 
-            <div className='flex flex-col items-center mt-8 md:mt-16 lg:mt-30 px-4'>
+            <div className='flex flex-col items-center mt-8 md:mt-16 lg:mt-30 px-12'>
                 {/* Content Field */}
                 <div className='w-full flex justify-center'>
                     <div 
@@ -208,7 +208,7 @@ function MediaDetail() {
                             className={`text-center group ${previousMedia ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                             onClick={handlePreviousClick}
                         >
-                            <p className='mb-3 md:mb-4 lg:mb-5 font-subtitle uppercase text-base md:text-lg lg:text-xl font-semibold text-txt-gray'>
+                            <p className='mb-3 md:mb-4 lg:mb-5 font-subtitle uppercase text-base md:text-lg lg:text-xl text-txt-gray'>
                                 PREVIOUS
                             </p>
                             
@@ -224,7 +224,7 @@ function MediaDetail() {
                                     <p className='my-3 md:my-4 text-sm md:text-base text-txt-gray'>
                                         {getMediaType(previousMedia)}
                                     </p>
-                                    <p className='text-base md:text-lg lg:text-xl font-subtitle text-txt-secondary font-semibold line-clamp-2 min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center px-2'>
+                                    <p className='text-base md:text-lg lg:text-xl font-subtitle text-txt-secondary line-clamp-2 min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center px-2'>
                                         {previousMedia.title}
                                     </p>
                                     <button className='mt-3 md:mt-4 rounded-full p-2 duration-200 ease-in hover:bg-stone-200 cursor-pointer'>
@@ -245,7 +245,7 @@ function MediaDetail() {
                             className={`text-center group ${nextMedia ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                             onClick={handleNextClick}
                         >
-                            <p className='mb-3 md:mb-4 lg:mb-5 font-subtitle uppercase text-base md:text-lg lg:text-xl font-semibold text-txt-gray'>
+                            <p className='mb-3 md:mb-4 lg:mb-5 font-subtitle uppercase text-base md:text-lg lg:text-xl text-txt-gray'>
                                 NEXT
                             </p>
                             
@@ -261,7 +261,7 @@ function MediaDetail() {
                                     <p className='my-3 md:my-4 text-sm md:text-base text-txt-gray'>
                                         {getMediaType(nextMedia)}
                                     </p>
-                                    <p className='text-base md:text-lg lg:text-xl font-subtitle text-txt-secondary font-semibold line-clamp-2 min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center px-2'>
+                                    <p className='text-base md:text-lg lg:text-xl font-subtitle text-txt-secondary line-clamp-2 min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center px-2'>
                                         {nextMedia.title}
                                     </p>
                                     <button className='mt-3 md:mt-4 rounded-full p-2 duration-200 ease-in hover:bg-stone-200 cursor-pointer'>
@@ -283,7 +283,7 @@ function MediaDetail() {
                         <div className='xl:max-w-screen-xl lg:max-w-[900px] h-[1px] bg-txt-gray opacity-50 w-full my-8 md:my-16 lg:my-30'></div>
 
                         <div className='xl:max-w-screen-xl lg:max-w-[900px] mb-8 md:mb-16 lg:mb-30 w-full'>
-                            <h4 className='text-xl md:text-2xl lg:text-4xl font-subtitle text-txt-secondary text-center font-semibold mb-6 md:mb-8 lg:mb-12'>
+                            <h4 className='text-xl md:text-2xl lg:text-4xl font-subtitle text-txt-secondary text-center mb-6 md:mb-8 lg:mb-12'>
                                 Related Stories
                             </h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
@@ -305,7 +305,7 @@ function MediaDetail() {
                                                 {getMediaType(item)}
                                             </h4>
                                             
-                                            <h4 className='text-base md:text-lg lg:text-xl font-subtitle text-txt-secondary font-semibold mb-2 md:mb-3 line-clamp-2 min-h-[2.5rem] md:min-h-[3rem]'>
+                                            <h4 className='text-base md:text-lg lg:text-xl font-subtitle text-txt-secondary mb-2 md:mb-3 line-clamp-2 min-h-[2.5rem] md:min-h-[3rem]'>
                                                 {item.title}
                                             </h4>
                                             

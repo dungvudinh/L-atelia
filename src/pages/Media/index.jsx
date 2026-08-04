@@ -120,7 +120,7 @@ function Media() {
       <div className="mt-20 flex justify-center items-center min-h-screen px-4">
         <div className="text-center">
           <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            <h2 className="text-xl font-semibold">Error</h2>
+            <h2 className="text-xl">Error</h2>
             <p>{error}</p>
             <button 
               onClick={() => fetchMedia(selectedCategory)}
@@ -137,12 +137,13 @@ function Media() {
     <div>
       <div className="mt-20 flex justify-center mb-10 lg:mb-20 px-4">
         <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mt-10 lg:mt-20 text-center">
-          <h1 className="text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle font-semibold text-txt-secondary leading-tight">
+          <h1 className="text-[25px] lg:text-[32px] xl:text-[45px] font-subtitle text-txt-secondary leading-tight">
             Media
           </h1>
           
           {/* FILTER */}
-          <div className="flex flex-col lg:flex-row justify-center items-center mt-6 lg:mt-0 text-[16px] lg:text-[18px] text-txt-gray">
+          <div className="flex flex-col lg:flex-row justify-center items-center mt-6 lg:mt-4 text-[16px] lg:text-[18px] text-txt-gray"
+          >
             <p className="mb-2 lg:mb-0">Filter by:</p>
             <ul className="flex flex-wrap justify-center lg:ml-2 gap-2 lg:gap-0">
               {CATEGORIES.map(category => (
@@ -150,7 +151,7 @@ function Media() {
                   key={category}
                   className={`px-4 lg:px-8 py-1 lg:py-0 cursor-pointer transition-colors duration-200 ${
                     selectedCategory === category 
-                      ? 'text-black font-semibold' 
+                      ? 'text-black' 
                       : 'hover:text-txt-secondary'
                   }`}
                   onClick={() => handleCategoryChange(category)}
@@ -187,10 +188,10 @@ function Media() {
                     <h4 className='text-[14px] lg:text-[16px] xl:text-[18px] text-txt-gray mb-2 lg:mb-4'>
                       {formatCategory(item.category).toUpperCase()}
                     </h4>
-                    <h4 className='text-[20px]  xl:text-[25px] font-subtitle text-txt-secondary font-semibold mb-3 lg:mb-4 line-clamp-2 leading-tight'>
+                    <h4 className='text-[20px]  xl:text-[25px] font-subtitle text-txt-secondary mb-3 lg:mb-4 line-clamp-2 leading-tight'>
                       {item.title}
                     </h4>
-                    <p className='text-[14px] lg:text-[16px] xl:text-[18px] mb-4 line-clamp-2  lg:line-clamp-3 leading-relaxed'>
+                    <p className='text-[14px] lg:text-[16px] xl:text-[18px] mb-4 line-clamp-2  lg:line-clamp-3 leading-relaxed' style={{fontFamily:'Nunito Sans'}}>
                       {getMediaExcerpt(item)}
                     </p>
                     {/* <LocalizedLink to={`/media/${item._id}`}> */}

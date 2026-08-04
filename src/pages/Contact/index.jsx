@@ -1,61 +1,96 @@
-import { useState } from 'react';
-import contact from '../../assets/images/contact.webp'
+import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check, Dot } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import Footer from '../../layouts/components/Footer';
-import OptimizedImage from '../../components/OptimizedImage';
+import { useInView, motion } from "framer-motion";
+import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
+import aboutUs3 from '../../assets/images/about-us/about-us-3.webp'
+import aboutUs4 from '../../assets/images/about-us/about-us-4.webp'
+import { LocalizedLink } from '../../components/LocalizedLink';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import JoinNewsletter from '../../components/JoinNewsletter';
+import FollowUs from '../../components/FollowUs';
 
-const PRICE_RANGES = [
-  "5 tỉ VND trở xuống",
-  "5 tỉ VND - 10 tỉ VND",
-  "10 tỉ VND - 15 tỉ VND",
-  "15 tỉ VND - 20 tỉ VND",
-  "Trên 20 tỉ VND",
-  "Không muốn đề cập",
-];
+const LIFESTYLE_ITEMS = [
+    {
+        id: 1,
+        src: aboutUs2,
+        title: 'Sóller Tennis Club',
+        desc: 'A wellness and lifestyle community for local neighbours, international friends and touring pros.',
+        linkText: 'Visit Sóller Tennis Club',
+        link: '/soller-tennis-club',
+    },
+    {
+        id: 2,
+        src: aboutUs3,
+        title: 'Patiki Beach',
+        desc: 'An extension of home, a beach shack for us all. You are invited to eat, drink and just be.',
+        linkText: 'Visit Patiki Beach',
+        link: '/patiki-beach',
+    },
+    {
+        id: 3,
+        src: aboutUs4,
+        title: 'Pueblo',
+        desc: 'A modern bistro for the heart of Sóller, serving fresh, seasonal produce sustainably sourced.',
+        linkText: 'Visit Pueblo',
+        link: '/pueblo',
+    },
+]
 
 function Contact() {
-    const [consent, setConsent] = useState(true);
-    const {t} = useTranslation('footer');
-    const [selectedPriceRange, setSelectedPriceRange] = useState(null);
+    return ( 
+        <div className="w-full overflow-x-hidden">
+            <ContactForm />
+            <FollowUs />
+            <Footer withContact={false}/>
+        </div>
+    );
+}
+
+function ContactForm() {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-80px' })
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        message: ''
-    });
-    const [loading, setLoading] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null);
+        firstName: '', lastName: '', email: '', phone: '', budget: '', description: ''
+    })
+    const [loading, setLoading] = useState(false)
+    const [submitStatus, setSubmitStatus] = useState(null)
 
-    const handlePriceRangeSelect = (range, index) => {
-        setSelectedPriceRange(prev => prev === range ? null : range);
-    };
+    const fadeUp = (delay) => ({
+        initial: { opacity: 0, y: 30 },
+        animate: isInView ? { opacity: 1, y: 0 } : {},
+        transition: { duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] },
+    })
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+    const inputStyle = {
+        width: '100%',
+        padding: '14px 16px',
+        background: '#f0f2f1',
+        border: 'none',
+        borderRadius: '8px',
+        fontSize: '15px',
+        color: '#1a3a3a',
+        outline: 'none',
+        fontFamily: 'Nunito Sans',
+    }
+
+    const handleChange = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        // Validation
-        if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
-            setSubmitStatus({ type: 'error', message: 'Please fill in all required fields.' });
-            return;
+        e.preventDefault()
+
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.description) {
+            setSubmitStatus({ type: 'error', message: 'Please fill in all required fields.' })
+            return
         }
 
-        if (!consent) {
-            setSubmitStatus({ type: 'error', message: 'Please agree to the privacy policy.' });
-            return;
-        }
-
-        setLoading(true);
-        setSubmitStatus(null);
+        setLoading(true)
+        setSubmitStatus(null)
 
         try {
             const response = await fetch('https://api.latelia.com/v1/contact', {
@@ -64,205 +99,294 @@ function Contact() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    ...formData,
-                    budget: selectedPriceRange,
-                    consent: consent
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    phone: formData.phone,
+                    budget: formData.budget,
+                    message: formData.description,
                 })
-            });
+            })
 
-            const result = await response.json();
+            const result = await response.json()
 
             if (response.ok) {
-                setSubmitStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' });
-                // Reset form
+                setSubmitStatus({ type: 'success', message: 'Thank you! Your message has been sent successfully.' })
                 setFormData({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    phone: '',
-                    message: ''
-                });
-                setSelectedPriceRange(null);
+                    firstName: '', lastName: '', email: '', phone: '', budget: '', description: ''
+                })
             } else {
-                throw new Error(result.message || 'Failed to send message');
+                throw new Error(result.message || 'Failed to send message')
             }
         } catch (error) {
-            console.error('Error submitting form:', error);
-            setSubmitStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' });
+            console.error('Error submitting form:', error)
+            setSubmitStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' })
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
-    return ( 
-        <div className="mt-20">
-            <div className="h-[300px] md:h-[500px] lg:h-[840px] relative">
-                <OptimizedImage src={contact} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/40"></div>
-                <div className='absolute z-40 top-1/3 md:top-2/5 left-1/2 text-bg-primary text-[32px] md:text-[45px] lg:text-[45px] font-subtitle transform translate-x-[-50%] xl:max-w-screen-xl w-full lg:max-w-[900px] !px-4 md:px-0'>
-                    <div className='w-full'>
-                        <h1>Bắt đầu câu chuyện</h1>
-                        <h1>Tạo nên điều kỳ diệu</h1>
+    return (
+        <section ref={ref} className="w-full pb-20 pt-40 sm:py-16 md:pt-50 xl:py-32 px-4">
+            <div className="mx-auto w-full max-w-[560px]">
+
+                {/* Header */}
+                <motion.div {...fadeUp(0)} className="text-center mb-8 sm:mb-10">
+                    <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                        <div style={{ width: '30px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
+                        <span style={{ fontSize: '16px', letterSpacing: '2px', color: '#1a3a3a', opacity: 0.7 }}>
+                            Contact
+                        </span>
+                        <div style={{ width: '30px', height: '1px', background: '#1a3a3a', opacity: 0.5 }} />
                     </div>
-                </div>
-            </div>
+                    <h2 className="text-bg-secondary text-[32px] sm:text-[40px] md:text-[48px] lg:text-[60px]" 
+                        style={{ lineHeight: 1.1, marginBottom: '12px' }}>
+                        Liên hệ với chúng tôi
+                    </h2>
+                </motion.div>
 
-            <div className='flex justify-center absolute xl:max-w-screen-xl lg:max-w-[900px] w-full left-1/2 transform translate-y-[35%] md:translate-y-[0] translate-x-[-50%] z-50 -mt-20 md:-mt-32 lg:top-230 px-4 md:px-0'>
-                <div className='w-full flex justify-center'>
-                    <div className='bg-txt-primary text-bg-primary px-6 md:px-8 py-6 md:py-4 w-full md:w-auto'>
-                        <h1 className='text-[28px] md:text-[36px] lg:text-[40px] font-subtitle'>Giờ làm việc</h1>
-                        <p className='mt-4 text-[14px] md:text-[15px] font-light'>
-                            <span>Thứ 2</span>
-                            <span> - </span>
-                            <span>Thứ 6</span>
-                        </p>
-                        <p className='mt-2 font-light text-[14px] md:text-[15px]'>
-                            <span>10.00h</span>
-                            <span> - </span>
-                            <span>14.00h</span>
-                        </p>
-                        <p className='mt-2 font-light text-[14px] md:text-[15px]'>
-                            <span>16.00h</span>
-                            <span> - </span>
-                            <span>20.00h</span>
-                        </p>
-                        <p className='mt-8 md:mt-12 font-light text-[14px] md:text-[15px]'>
-                            <span>Thứ 7</span>
-                            <span> - </span>
-                            <span>Chủ nhật</span>
-                        </p>
-                        <p className='mt-2 text-[14px] md:text-[15px]'>Chỉ dành cho hẹn trước</p>
-                    </div>
-                </div>
-            </div>
+                {/* Status Message */}
+                {submitStatus && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-4 p-3 rounded-lg text-[13px] sm:text-[14px] text-center"
+                        style={{
+                            background: submitStatus.type === 'success' ? '#e6f4ef' : '#fdecea',
+                            color: submitStatus.type === 'success' ? '#1a3a3a' : '#a3342c',
+                            fontFamily: 'Nunito Sans',
+                        }}
+                    >
+                        {submitStatus.message}
+                    </motion.div>
+                )}
 
-            <div className='w-full bg-bg-primary text-center pt-75 md:pt-60 lg:pt-100  flex justify-center px-4 md:px-0'>
-                <div className='md:max-w-[500px] xl:max-w-[440px] mx-auto'>
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
 
-                    <form onSubmit={handleSubmit} className='flex flex-col justify-start w-full text-[16px] md:text-[18px] px-4'>
-                        <h1 className='text-[32px] md:text-[45px] lg:text-[45px] font-subtitle font-semibold text-txt-secondary mb-6 md:mb-8 lg:mb-10'>Liên hệ với chúng tôi</h1>
-                        
-                        {/* Status Message */}
-                        {submitStatus && (
-                            <div className={`p-3 md:p-4 mb-4 md:mb-6 rounded text-[14px] md:text-[16px] ${
-                                submitStatus.type === 'success' 
-                                    ? 'bg-green-100 text-green-700 border border-green-300' 
-                                    : 'bg-red-100 text-red-700 border border-red-300'
-                            }`}>
-                                {submitStatus.message}
-                            </div>
-                        )}
+                    {/* Row 1: First + Last Name */}
+                    <motion.div {...fadeUp(0.1)} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input
+                            name="firstName"
+                            placeholder="First Name"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            style={inputStyle}
+                            required
+                        />
+                        <input
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            style={inputStyle}
+                            required
+                        />
+                    </motion.div>
 
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="firstName" className='text-[14px] md:text-[16px] lg:text-[18px]'>First Name *</label>
-                            <input 
-                                type="text" 
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleInputChange}
-                                placeholder='First Name' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                                required
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="lastName" className='text-[14px] md:text-[16px] lg:text-[18px]'>Last Name *</label>
-                            <input 
-                                type="text" 
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleInputChange}
-                                placeholder='Last Name' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                                required
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="email" className='text-[14px] md:text-[16px] lg:text-[18px]'>Email *</label>
-                            <input 
-                                type="email" 
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                placeholder='Email Address' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                                required
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="phone" className='text-[14px] md:text-[16px] lg:text-[18px]'>Phone</label>
-                            <input 
-                                type="tel" 
-                                name="phone"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                placeholder='Mobile phone number' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300'
-                            />
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="budget" className='text-[14px] md:text-[16px] lg:text-[18px]'>Dự kiến Budget đầu tư *</label>
-                            <ul className='flex flex-col mt-3 md:mt-4 text-[14px] md:text-[16px] lg:text-[18px] w-full'>
-                                {PRICE_RANGES.map((range, index) => (
-                                    <li 
-                                        key={index} 
-                                        className='flex items-center mb-2 cursor-pointer p-2 rounded transition-colors hover:bg-gray-50'
-                                        onClick={() => handlePriceRangeSelect(range, index)}
-                                    >
-                                        <div className={`w-[18px] h-[18px] md:w-[20px] md:h-[20px] border-2 rounded-full border-txt-primary relative mr-2 md:mr-3 flex items-center justify-center `}>
-                                            <Dot className={`absolute text-txt-primary ${selectedPriceRange === range ? '' : 'hidden'}`} size={40} />
-                                        </div>
-                                        <p className='text-[14px] md:text-[16px] lg:text-[18px]'>
-                                            {range}
-                                        </p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        
-                        <div className='flex flex-col items-start mb-6 md:mb-8 lg:mb-10'>
-                            <label htmlFor="message" className='text-[14px] md:text-[16px] lg:text-[18px]'>Message *</label>
-                            <textarea 
-                                name="message"
-                                value={formData.message}
-                                onChange={handleInputChange}
-                                placeholder='Write your message here ...' 
-                                className='w-full p-2 md:p-3 mt-2 text-[14px] md:text-[16px] lg:text-[18px] focus:outline-none focus:ring-0 focus:border-txt-gray bg-white border border-gray-300 h-24 md:h-32'
-                                required
-                            ></textarea>
-                        </div>
-                        
-                        <div className="flex flex-row items-start mt-2 text-txt-primary mt-4 md:mt-6">
-                            <div 
-                                className="border mt-1 mr-2 md:mr-3 cursor-pointer w-[30px] h-[15px] md:w-[34px] md:h-[17px] flex items-center justify-center border-gray-400"
-                                onClick={() => setConsent(!consent)}
-                            >
-                                {consent && (
-                                    <Check width={13} className="h-[15px] md:w-[15px] md:h-[17px] text-txt-primary"/>
-                                )}
-                            </div>
-                            <p className="text-[13px] md:text-[14px] lg:text-[15px] text-left">
-                                {t('footer:policy')}
-                            </p>
-                        </div>
-                        
-                        <button 
-                            type="submit" 
-                            disabled={loading && !consent}
-                            className={`mt-4 md:mt-6 w-full rounded-sm bg-txt-secondary uppercase text-[14px] md:text-[16px] lg:text-[18px] text-bg-primary py-3 md:py-4 cursor-pointer transition-colors`}
+                    {/* Row 2: Email + Phone */}
+                    <motion.div {...fadeUp(0.2)} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Email Address"
+                            value={formData.email}
+                            onChange={handleChange}
+                            style={inputStyle}
+                            required
+                        />
+                        <input
+                            name="phone"
+                            type="tel"
+                            placeholder="Phone Number"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            style={inputStyle}
+                        />
+                    </motion.div>
+
+                    {/* Row 3: Select Service */}
+                    <motion.div {...fadeUp(0.3)} className="relative">
+                        <select
+                            name="budget"
+                            value={formData.budget}
+                            onChange={handleChange}
+                            style={{
+                                ...inputStyle,
+                                appearance: 'none',
+                                WebkitAppearance: 'none',
+                                cursor: 'pointer',
+                                color: formData.budget ? '#1a3a3a' : '#9aaeae',
+                            }}
                         >
-                            {loading ? 'Sending...' : 'Submit Message'}
+                            <option value="" disabled hidden>Dự kiến Budget đầu tư</option>
+                            <option value="5 tỉ VND trở xuống">5 tỉ VND trở xuống</option>
+                            <option value="5 tỉ VND - 10 tỉ VND">5 tỉ VND - 10 tỉ VND</option>
+                            <option value="10 tỉ VND - 15 tỉ VND">10 tỉ VND - 15 tỉ VND</option>
+                            <option value="15 tỉ VND - 20 tỉ VND">15 tỉ VND - 20 tỉ VND</option>
+                            <option value="Trên 20 tỉ VND">Trên 20 tỉ VND</option>
+                            <option value="Không muốn đề cập">Không muốn đề cập</option>
+                        </select>
+                        <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                            <ChevronDown size={16} color="#1a3a3a" opacity={0.5} />
+                        </div>
+                    </motion.div>
+
+                    {/* Row 4: Textarea */}
+                    <motion.div {...fadeUp(0.4)}>
+                        <textarea
+                            name="description"
+                            placeholder="Message"
+                            value={formData.description}
+                            onChange={handleChange}
+                            rows={4}
+                            style={{
+                                ...inputStyle,
+                                resize: 'none',
+                                lineHeight: 1.6,
+                            }}
+                            required
+                        />
+                    </motion.div>
+
+                    {/* Submit */}
+                    <motion.div {...fadeUp(0.5)} className="flex justify-center mt-2">
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            style={{
+                                background: loading ? '#4a5f5f' : '#1a3a3a',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '8px',
+                                padding: '14px 32px',
+                                fontSize: '16px',
+                                letterSpacing: '0.5px',
+                                cursor: loading ? 'not-allowed' : 'pointer',
+                                transition: 'background 0.3s ease, transform 0.2s ease',
+                            }}
+                            onMouseEnter={e => !loading && (e.currentTarget.style.background = '#2a4f4f')}
+                            onMouseLeave={e => !loading && (e.currentTarget.style.background = '#1a3a3a')}
+                            onMouseDown={e => !loading && (e.currentTarget.style.transform = 'scale(0.97)')}
+                            onMouseUp={e => !loading && (e.currentTarget.style.transform = 'scale(1)')}
+                        >
+                            {loading ? 'Sending...' : 'Submit'}
                         </button>
-                    </form>
-                </div>
+                    </motion.div>
+                </form>
             </div>
-            <Footer withContact={false}/>
+        </section>
+    )
+}
+
+function LifestyleSection() {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+    return (
+        <section ref={ref} className="w-full py-12 sm:py-16 md:py-20 xl:py-24 px-4 sm:px-6 xl:px-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8">
+                {LIFESTYLE_ITEMS.map((item, i) => (
+                    <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{
+                            duration: 0.8,
+                            delay: i * 0.15,
+                            ease: [0.22, 1, 0.36, 1],
+                        }}
+                    >
+                        <LifestyleCard item={item} />
+                    </motion.div>
+                ))}
+            </div>
+        </section>
+    )
+}
+
+function LifestyleCard({ item }) {
+    const [hovered, setHovered] = useState(false)
+
+    return (
+        <div>
+            {/* Image */}
+            <LocalizedLink to={item.link}>
+                <div
+                    className="w-full overflow-hidden rounded-2xl mb-4 sm:mb-5"
+                    style={{ height: '280px' }}
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                >
+                    <img
+                        src={item.src}
+                        alt={item.title}
+                        draggable={false}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            transform: hovered ? 'scale(1.06)' : 'scale(1)',
+                            transition: 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
+                        }}
+                    />
+                </div>
+            </LocalizedLink>
+
+            {/* Title */}
+            <h3
+                className="mb-2 text-[20px] sm:text-[22px] md:text-[24px] lg:text-[26px]"
+                style={{
+                    fontFamily: 'Georgia, serif',
+                    fontWeight: 400,
+                    color: '#1a3a3a',
+                    lineHeight: 1.2,
+                }}
+            >
+                {item.title}
+            </h3>
+
+            {/* Description */}
+            <p
+                className="mb-4 text-[13px] sm:text-[14px]"
+                style={{
+                    fontFamily: 'Nunito Sans',
+                    color: '#4a5050',
+                    lineHeight: 1.7,
+                }}
+            >
+                {item.desc}
+            </p>
+
+            {/* Link */}
+            <LocalizedLink
+                to={item.link}
+                className="inline-flex items-center gap-1 group"
+                style={{
+                    fontFamily: 'Nunito Sans',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: '#1a3a3a',
+                    textDecoration: 'none',
+                }}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >
+                {item.linkText}
+                <span
+                    style={{
+                        display: 'inline-block',
+                        transform: hovered ? 'translateX(5px)' : 'translateX(0px)',
+                        transition: 'transform 0.3s ease',
+                        marginLeft: '4px',
+                    }}
+                >
+                    <ArrowRight size={14} />
+                </span>
+            </LocalizedLink>
         </div>
-    );
+    )
 }
 
 export default Contact;

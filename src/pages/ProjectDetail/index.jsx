@@ -1,44 +1,188 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { ArrowRight, ChevronRight } from "lucide-react";
-import Footer from "../../layouts/components/Footer";
-import OptimizedImage from "../../components/OptimizedImage";
-import CustomAccordion from "../../components/Accordion";
-import { LocalizedLink } from "../../components/LocalizedLink";
-import { projectsService } from "../../services/projectsService";
+import { useState, useRef, useEffect } from "react"
+import { ChevronRight, ChevronDown, Check, Scale } from "lucide-react"
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion"
+import { useParams } from "react-router-dom"
+import { LocalizedLink } from "../../components/LocalizedLink"
+import OptimizedImage from "../../components/OptimizedImage"
+import Footer from "../../layouts/components/Footer"
+import aboutUs2 from '../../assets/images/about-us/about-us-2.webp'
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import JoinNewsletter from "../../components/JoinNewsletter"
+import FollowUs from "../../components/FollowUs"
+import ProjectCarousel from "../../components/ProjectCarousel"
+import { projectsService } from "../../services/projectsService"
+import PageTransition from "../../components/PageTransition"
 const BASE_CDN_URL = 'https://cdn.latelia.com/latelia/'
+
+// ── 1. FadeUpSection ──────────────────────────────────────────────────────
+const FadeUpSection = ({ children, delay = 0 }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-80px" })
+    return (
+        <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 50 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1], delay }}
+        >
+            {children}
+        </motion.div>
+    )
+}
+
+// ── 2. FadeImage — ảnh animate khi scroll ─────────────────────────────────
+const FadeImage = ({ src, alt = "", className = "", style = {}, delay = 0, aspectRatio = "4/5" }) => {
+    const ref = useRef(null)
+    const isInView = useInView(ref, { once: true, margin: "-60px" })
+    return (
+        <motion.div
+            ref={ref}
+            className={`overflow-hidden ${className} rounded-3xl`}
+            style={{ aspectRatio, ...style }}
+            initial={{ opacity: 0, y: 36 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay }}
+        >
+            <motion.div
+                className="w-full h-full rounded-3xl"
+                initial={{ scale: 1.07 }}
+                animate={isInView ? { scale: 1 } : {}}
+                transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1], delay }}
+            >
+                <OptimizedImage src={src} alt={alt} className="w-full h-full object-cover rounded-3xl" />
+            </motion.div>
+        </motion.div>
+    )
+}
+
+const ScaleImage = ({ src, alt = "", className = "", style = {} }) => {
+    const ref = useRef(null)
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "center center"],
+    })
+
+    const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1])
+    const y = useTransform(scrollYProgress, [0, 1], [60, 0])
+
+    return (
+        <div ref={ref} className={` ${className}`} style={{ ...style }}>
+            <motion.div style={{ scale, y }} className="w-full rounded-2xl md:rounded-3xl">
+                <OptimizedImage
+                    src={src}
+                    alt={alt}
+                    className=" object-cover rounded-3xl w-full h-full"
+                />
+            </motion.div>
+        </div>
+    )
+}
+
+// ── 3. BrochureLink ────────────────────────────────────────────────────
+const BrochureLink = ({ to, light = false, className = "" }) => (
+    <LocalizedLink
+        to={to}
+        className={`inline-flex items-center gap-2 group font-bold ${className}`}
+        style={{
+            fontFamily: 'Nunito Sans',
+            fontSize: 'clamp(14px, 1.2vw, 16px)',
+            color: light ? '#fff' : 'var(--color-bg-secondary, #1a1a1a)',
+            textDecoration: 'none',
+            letterSpacing: '0.3px',
+        }}
+    >
+        View Brochure
+        <ChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+    </LocalizedLink>
+)
+
+// ── 4. SpecBadge ──────────────────────────────────────────────────────
+const SpecBadge = ({ spec }) => (
+    <span
+        className="inline-block px-2.5 py-1 sm:px-3 sm:py-1.5 text-sm border border-bg-secondary/20 rounded-full text-bg-secondary
+        text-[13px] leading-[18px] xs:text-[14px] sm:text-[16px] sm:leading-[22px]"
+        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(12px, 1vw, 14px)' }}
+    >
+        {spec.text}
+    </span>
+)
+
+// ── 5. SectionAccordion ───────────────────────────────────────────────
+const SectionAccordion = ({ section }) => {
+    const [open, setOpen] = useState(false)
+    return (
+        <FadeUpSection>
+            <div className="pb-8 sm:pb-10 md:pb-14">
+                <div className="max-w-[820px] mx-auto px-4 sm:px-6 text-center">
+                    <h3
+                        className="text-bg-secondary mb-4 sm:mb-6 md:mb-8 tracking-wide"
+                        style={{
+                            fontSize: 'clamp(24px, 3.5vw, 46px)', lineHeight: 1.2,
+                            letterSpacing: '0.02em',
+                        }}
+                    >
+                        {section.title}
+                    </h3>
+
+                    <div className="w-full mx-auto">
+                        <p
+                            className="text-bg-secondary/70"
+                            style={{
+                                fontSize: 'clamp(15px, 1.3vw, 19px)',
+                                lineHeight: 1.8,
+                                fontFamily: 'Nunito Sans'
+                            }}
+                        >
+                            {section.shortDescription}
+                        </p>
+
+                        <AnimatePresence>
+                            {open && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                    className="overflow-hidden"
+                                >
+                                    <p
+                                        className="text-bg-secondary/70 mt-4"
+                                        style={{ fontSize: 'clamp(14px, 1.1vw, 20px)', letterSpacing: '0.2px' }}
+                                    >
+                                        {section.fullDescription}
+                                    </p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </div>
+            </div>
+        </FadeUpSection>
+    )
+}
+
+// ── 6. MAIN COMPONENT ─────────────────────────────────────────────────────
 function ProjectDetail() {
     const { projectId } = useParams();
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: ''
-    });
-    const [formErrors, setFormErrors] = useState({});
-    const [submitting, setSubmitting] = useState(false);
-    const [submitSuccess, setSubmitSuccess] = useState(false);
-    // Fetch project detail from API
     const fetchProjectDetail = async () => {
         try {
             setLoading(true);
             setError(null);
-            
-            
+
             if (!projectId) {
                 throw new Error('Project ID is required');
             }
 
             const response = await projectsService.getProjectById(projectId);
-            
-            // Set project data
             setProject(response.data || response);
-            
+
         } catch (err) {
             console.error('❌ Failed to fetch project detail:', err);
             setError(err.message || 'Failed to load project details');
@@ -47,99 +191,12 @@ function ProjectDetail() {
         }
     };
 
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [id]: value
-        }));
-        
-        // Clear error for this field when user types
-        if (formErrors[id]) {
-            setFormErrors(prev => ({
-                ...prev,
-                [id]: ''
-            }));
-        }
-    };
-     const validateForm = () => {
-        const errors = {};
-        
-        if (!formData.firstName.trim()) {
-            errors.firstName = 'First name is required';
-        }
-        if (!formData.lastName.trim()) {
-            errors.lastName = 'Last name is required';
-        }
-        if (!formData.email.trim()) {
-            errors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            errors.email = 'Email is invalid';
-        }
-        if (!formData.phone.trim()) {
-            errors.phone = 'Phone number is required';
-        }
-        
-        return errors;
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        const errors = validateForm();
-        if (Object.keys(errors).length > 0) {
-            setFormErrors(errors);
-            return;
-        }
-        
-        try {
-            setSubmitting(true);
-            setFormErrors({});
-            
-            // Gửi chỉ 5 trường: 4 từ form + projectTitle
-            const requestData = {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                phone: formData.phone,
-                projectTitle: project?.title || 'Unknown Project'
-            };
-            
-            
-            const response = await projectsService.submitProjectContactForm(
-                projectId, 
-                requestData
-            );
-            
-            if (response.success) {
-                setSubmitSuccess(true);
-                // Reset form
-                setFormData({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    phone: ''
-                });
-                
-                setTimeout(() => {
-                    setSubmitSuccess(false);
-                }, 5000);
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setFormErrors({
-                submit: error.response?.data?.message || 'Failed to submit form. Please try again.'
-            });
-        } finally {
-            setSubmitting(false);
-        }
-    };
     useEffect(() => {
         if (projectId) {
             fetchProjectDetail();
         }
     }, [projectId]);
 
-    // Loading state
     if (loading) {
         return (
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
@@ -151,15 +208,14 @@ function ProjectDetail() {
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <h2 className="text-xl font-semibold">Error</h2>
+                        <h2 className="text-xl">Error</h2>
                         <p>{error}</p>
-                        <button 
+                        <button
                             onClick={fetchProjectDetail}
                             className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700"
                         >
@@ -171,13 +227,12 @@ function ProjectDetail() {
         );
     }
 
-    // Project not found
     if (!project) {
         return (
             <div className="mt-20 flex justify-center items-center min-h-screen px-4">
                 <div className="text-center">
                     <div className="p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
-                        <h2 className="text-xl font-semibold">Project Not Found</h2>
+                        <h2 className="text-xl">Project Not Found</h2>
                         <p>The requested project could not be found.</p>
                         <LocalizedLink to="/projects">
                             <button className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700">
@@ -189,348 +244,317 @@ function ProjectDetail() {
             </div>
         );
     }
-
-    // Debug info
-
     return (
-        <div className="mt-16 lg:mt-20">
-            {/* BANNER */}
-            <div className="w-full h-[300px] md:h-[500px] xl:h-screen relative">
-                <OptimizedImage 
-                    src={project && `${BASE_CDN_URL}${project.heroImage.key}`} 
-                    alt="" 
-                    className="object-cover w-full h-full object-[25%_75%] filter brightness-75"
+        <div>
+            {/* ════════════════════════════════════════
+                ① HERO BANNER
+            ════════════════════════════════════════ */}
+            <div className="w-full h-screen relative overflow-hidden">
+                <OptimizedImage
+                    src={`${BASE_CDN_URL}${project?.gallery?.[0]?.key}`}
+                    alt={project.name}
+                    className="object-cover w-full h-full object-center"
+                    style={{ filter: 'brightness(0.68)' }}
+                    priority
                 />
-                <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4 flex flex-col items-center">
-                    <h1 className="font-subtitle text-[30px] lg:text-[40px] xl:text-[45px]">FOR SALE</h1>
-                    <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
-                        <button className="border border-bg-primary px-4 py-2 flex justify-between items-center
-                            text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer 
-                            hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary mt-4">
-                            VIEW BROCHURE
-                            <ArrowRight size={18} className="md:ml-10 ml-2" />
-                        </button>
-                    </LocalizedLink>
+                <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.5) 100%, transparent 60%)' }}
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4 sm:px-6">
+
+                    <motion.h1
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                        style={{ fontSize: 'clamp(32px, 7vw, 72px)', fontWeight: 400, lineHeight: 1.05, marginBottom: '14px' }}
+                    >
+                        {project.name}
+                    </motion.h1>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+                        className="flex flex-wrap items-center justify-center gap-x-0 gap-y-2 mb-5 sm:mb-6"
+                        style={{ fontSize: 'clamp(14px, 1.1vw, 22px)', letterSpacing: '0.2px' }}
+                    >
+                        {project?.propertyFeatures?.length > 0 && project.propertyFeatures.map((feature, i) => (
+                            <span key={feature._id || i} className="flex items-center opacity-90">
+                                {feature.text}
+                                {i < project.propertyFeatures.length - 1 && <span className="mx-2 sm:mx-3 opacity-40">|</span>}
+                            </span>
+                        ))}
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1], delay: 0.55 }}
+                        className="mb-4 sm:mb-5"
+                    >
+                        <span
+                            className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-lg bg-white text-bg-secondary font-medium"
+                            style={{ fontSize: 'clamp(16px, 1vw, 25px)' }}
+                        >
+                            {project.type === 'sale' ? 'For Sale' : 'For Rent'}
+                        </span>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.7 }}
+                    >
+                        <BrochureLink to={`/view-brochure/${project._id}`} light />
+                    </motion.div>
                 </div>
             </div>
-            
-            {/* Project Details */}
-            <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
-                <div className="flex flex-col lg:flex-row xl:max-w-screen-xl lg:max-w-[900px] gap-8 lg:gap-20 w-full lg:px-4">
-                    {/* LEFT */}
-                    <div className="flex-basis lg:basis-1/2 mt-0 lg:mt-7 order-2 lg:order-1">
-                        <h1 className="text-[30px] lg:text-[35px] xl:text-[45px] text-txt-secondary font-subtitle leading-tight">
-                            {project.title || 'Patiki Townhouse'}
-                        </h1>
-                        <p className="mt-6 lg:mt-10 text-[16px] md:text-[18px] lg:text-[18px] leading-relaxed">
-                            {project.description || 'An architectural gem immaculately restored and modernized from its 1896 creation with no compromise on luxury. The mission in reforming the historic mansion was to create a home with an uncompromised year round living experience, while ensuring the heritage not only lived on but enhanced its lavish style.'}
+
+            {/* ════════════════════════════════════════
+                ② INTRO TEXT
+            ════════════════════════════════════════ */}
+            <div className="mt-14 sm:mt-20 md:mt-28 xl:mt-40 mb-8 sm:mb-10 md:mb-16 xl:mb-32 flex justify-center px-5 sm:px-6">
+                <FadeUpSection>
+                    <div className="max-w-[760px] text-center">
+                        <h2
+                            className="text-bg-secondary"
+                            style={{ fontSize: 'clamp(24px, 3.5vw, 46px)', lineHeight: 1.2 }}
+                        >
+                            {project.title}
+                        </h2>
+                        <p
+                            className="text-bg-secondary/70 mt-5 sm:mt-6 md:mt-8"
+                            style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(15px, 1.3vw, 20px)', lineHeight: 1.7 }}
+                        >
+                            {project.description}
                         </p>
+                        <div className="mt-6 sm:mt-8 md:mt-10 flex justify-center">
+                            <BrochureLink to={`/view-brochure/${project._id}`} />
+                        </div>
                     </div>
-                    {/* RIGHT */}
-                    <div className="flex-basis lg:basis-1/2 order-1 lg:order-2">
-                        <OptimizedImage 
-                            src={project && `${BASE_CDN_URL}${project.gallery[0].key}`} 
-                            alt={project.title} 
-                            className="w-full xl:h-auto h-full"
+                </FadeUpSection>
+            </div>
+
+            {/* ════════════════════════════════════════
+                ③ PHOTO GALLERY — BLOCK 1-3
+            ════════════════════════════════════════ */}
+            <div className="px-4 md:px-8 xl:px-14 flex items-center justify-center">
+                <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] space-y-3 flex flex-col items-center">
+                    {/* Ảnh 1 — full width */}
+                    <ScaleImage
+                        src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`}
+                        className="w-full sm:w-[85%] md:w-[80%] h-full"
+                    />
+
+                    {/* Ảnh 2 + 3 — dọc trên mobile, ngang từ sm trở lên */}
+                    <div className="flex flex-col sm:flex-row w-full mt-6 sm:mt-10 xl:mt-16 mb-4 sm:mb-5 gap-4 sm:gap-8 md:gap-12 xl:gap-20 items-center justify-center">
+                        <ScaleImage
+                            src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`}
+                            className="w-full sm:flex-1"
+                            delay={0}
+                        />
+                        <ScaleImage
+                            src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`}
+                            className="w-full sm:flex-1"
+                            delay={0.1}
                         />
                     </div>
                 </div>
             </div>
 
-            {/* PROPERTY FEATURES */}
-            <div className="bg-bg-primary mt-10 lg:mt-20 flex justify-center px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] mt-10 lg:mt-20 w-full lg:px-4">
-                    <ul className="flex flex-col md:flex-row justify-start gap-8 md:gap-10 lg:gap-30">
-                        <li className="lg:mr-10 xl:mr-30">
-                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary font-semibold">PROPERTY FEATURES</h4>
-                            <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
-                                {
-                                    project?.propertyFeatures?.length > 0 && project.propertyFeatures.map(propertyFeature=>(
-                                        <span key={propertyFeature._id}>{propertyFeature.text}</span>
-                                    ))
-                                }
-                            </p>
-                        </li>
-                        <li className="lg:mr-10 xl:mr-30">
-                            <h4 className="text-[20px]  lg:text-[22px] font-subtitle text-txt-secondary font-semibold">SPECIFICATION</h4>
-                            <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray space-y-2">
-                                {
-                                    project?.specifications?.length > 0 && project.specifications.map(specification=>(
-                                        <span key={specification._id}>{specification.text}</span>
-                                    ))
-                                }
-                            </p>
-                        </li>
-                        <li>
-                            <h4 className="text-[20px] md:text-[22px] lg:text-[22px] font-subtitle text-txt-secondary font-semibold">LOCATION</h4>
-                            <p className="flex flex-col text-[16px] lg:text-[18px] mt-3 lg:mt-4 text-txt-gray">
-                                <span>{project?.location}</span>
-                            </p>
-                        </li>
-                    </ul>
-                    <div className="mt-10 lg:mt-20 flex flex-col lg:flex-row gap-8 lg:gap-20">
-                        {/* LEFT */}
-                        <div className="flex-basis lg:basis-1/2">
-                            <h4 className="text-[20px]  lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
-                                {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].title}
-                            </h4>
-                            <p className="mt-6 lg:mt-10 text-txt-gray text-[16px] lg:text-[18px] xl:text-[20px] leading-relaxed">
-                                {project?.propertyHighlights?.length > 0 && project.propertyHighlights[0].description}
-                            </p>
-                            {
-                                project?.propertyHighlights?.[0]?.featureSections?.length > 0 && (
-                                    <div className="mt-6 lg:mt-10">
-                                        <CustomAccordion data={project.propertyHighlights[0].featureSections}/>
-                                    </div>
-                                )
+            {/* ════════════════════════════════════════
+                ④ SPECIFICATIONS
+            ════════════════════════════════════════ */}
+            <div className="mt-14 sm:mt-20 md:mt-28 xl:mt-36 px-5 sm:px-6 flex items-center justify-center">
+                <div className="w-full xl:max-w-screen-xl lg:max-w-[900px]">
+                    <FadeUpSection>
+                        {/* Property Features grid */}
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 sm:gap-x-6 md:gap-x-8 gap-y-3 sm:gap-y-4 mb-8 sm:mb-10 md:mb-14 pb-8 sm:pb-10 md:pb-14 border-b border-bg-secondary/10">
+                            {project?.propertyFeatures?.map(({ text, _id }, index) => (
+                                <div key={_id || index} className="border-l border-bg-secondary/20 pl-3 sm:pl-4">
+                                    <p className="text-bg-secondary text-[14px] xs:text-[15px] sm:text-[18px] md:text-[20px] uppercase tracking-widest">
+                                        {text}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Property Highlights */}
+                        {project?.propertyHighlights?.length > 0 && (
+                            <div className="mb-8 sm:mb-10">
+                                <h3 className="text-bg-secondary font-medium mb-4 sm:mb-5"
+                                    style={{ fontSize: 'clamp(13px, 1vw, 15px)', letterSpacing: '0.1em', textTransform: 'uppercase', opacity: 0.5 }}>
+                                    Property Highlights
+                                </h3>
+                                <div className="space-y-6 sm:space-y-8 md:space-y-10">
+                                    {project?.propertyHighlights.map((highlight, i) => {
+                                        const features = highlight.featureSections?.filter(
+                                            (f) => f.name?.trim() || f.description?.trim()
+                                        );
+
+                                        return (
+                                            <div key={highlight._id ?? i} className="space-y-2 sm:space-y-3">
+                                                {highlight.title && (
+                                                    <h3
+                                                        className="text-bg-secondary flex items-start gap-2 sm:gap-3"
+                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(17px, 1.6vw, 22px)' }}
+                                                    >
+                                                        <Check size={18} className="mt-1 flex-shrink-0 text-bg-secondary" />
+                                                        {highlight.title}
+                                                    </h3>
+                                                )}
+
+                                                {highlight.description && (
+                                                    <p
+                                                        className="text-bg-secondary/70 pl-6 sm:pl-7 md:pl-8 whitespace-pre-line"
+                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(14px, 1.2vw, 17px)' }}
+                                                    >
+                                                        {highlight.description}
+                                                    </p>
+                                                )}
+
+                                                {features?.length > 0 && (
+                                                    <ul className="pl-6 sm:pl-7 md:pl-8 space-y-2 border-l border-bg-secondary/15">
+                                                        {features.map((f) => (
+                                                            <li key={f._id} className="pl-3 sm:pl-4">
+                                                                {f.name && (
+                                                                    <span
+                                                                        className="block text-bg-secondary/90"
+                                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(13px, 1.1vw, 16px)' }}
+                                                                    >
+                                                                        {f.name}
+                                                                    </span>
+                                                                )}
+                                                                {f.description && (
+                                                                    <span
+                                                                        className="block text-bg-secondary/60"
+                                                                        style={{ fontFamily: 'Nunito Sans', fontSize: 'clamp(12px, 1vw, 15px)' }}
+                                                                    >
+                                                                        {f.description}
+                                                                    </span>
+                                                                )}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Specifications pills */}
+                        {project?.specifications?.length > 0 && (
+                            <div>
+                                <h3 className="text-bg-secondary mb-3 sm:mb-4 text-[14px] leading-[20px] xs:text-[15px] sm:text-[18px] sm:leading-[26px]"
+                                    style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                                    Specifications
+                                </h3>
+                                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                    {project?.specifications.map((spec, i) => (
+                                        <SpecBadge key={i} spec={spec} />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </FadeUpSection>
+                </div>
+            </div>
+
+            {/* ════════════════════════════════════════
+                ⑤ GALLERY — BLOCK 4-5
+            ════════════════════════════════════════ */}
+            <div className="mt-8 sm:mt-10 md:mt-14 xl:mt-16 px-4 md:px-8 xl:px-14 flex justify-center">
+                <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px] flex flex-col items-center">
+                    <ScaleImage
+                        src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`}
+                        className="w-full sm:w-[85%] md:w-[80%] h-full"
+                    />
+                </div>
+            </div>
+
+            {/* ════════════════════════════════════════
+                ⑥ CÁC PHẦN ĐẶC BIỆT — Accordion
+            ════════════════════════════════════════ */}
+            <div className="mt-8 sm:mt-10 md:mt-14 xl:mt-16 flex items-center justify-center">
+                <div className="w-full xl:max-w-screen-2xl lg:max-w-[900px]">
+
+                    {project?.specialSections && project?.gallery && (() => {
+                        const sections = project.specialSections;
+                        const images = project.gallery;
+                        let imageIndex = 5;
+                        const elements = [];
+
+                        const getNextThreeImages = () => {
+                            if (imageIndex >= images.length) return null;
+                            const result = [];
+                            for (let i = 0; i < 3 && imageIndex < images.length; i++) {
+                                result.push(images[imageIndex]);
+                                imageIndex++;
                             }
-                        </div>
-                        {/* RIGHT */}
-                        <div className="flex-basis lg:basis-1/2 h-[300px] md:h-[400px] lg:h-150">
-                            <OptimizedImage 
-                            src={`${BASE_CDN_URL}${project?.gallery?.[1]?.key}`} 
-                            alt="" className="h-full w-full object-cover"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            return result;
+                        };
 
-            {/* ARCHITECTURE SECTION */}
-            <div className="relative mt-5 lg:mt-0">
-                <OptimizedImage 
-                    src={`${BASE_CDN_URL}${project?.gallery?.[2]?.key}`} 
-                    alt="" className="w-full h-full object-cover"
-                />
-                <OptimizedImage 
-                    src={`${BASE_CDN_URL}${project?.gallery?.[3]?.key}`} 
-                    alt="" className="w-full h-full object-cover"/>
-                <div className="absolute top-1/2 left-1/2 lg:left-50 transform -translate-x-1/2 lg:-translate-x-1/4 -translate-y-1/2  bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[20px] lg:text-[22px] xl:text-[25px] font-subtitle text-txt-secondary font-semibold">
-                        {project?.specialSections?.[0]?.title}
-                    </h4>
-                    <p className="mt-3 lg:mt-4 text-[14px] lg:text-[18px] xl:text-[20px] text-txt-gray leading-relaxed">
-                        {project?.specialSections?.[0]?.shortDescription}
-                    </p>
-                    {
-                        project?.specialSections?.[0]?.isExpandable && (
-                            <div className="mt-4">
-                                <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[0].fullDescription}]} />
-                            </div>
-                        )
-                    }
-                </div>
-            </div>
-
-            {/* HISTORY SECTION */}
-            <div className="flex flex-col lg:flex-row">
-                <div className="flex-basis lg:basis-1/2">
-                    <OptimizedImage 
-                    src={`${BASE_CDN_URL}${project?.gallery?.[4]?.key}`} 
-                    alt="" className="w-full h-[250px] md:h-[400px] lg:h-auto object-cover" />
-                </div>
-                <div className="p-6 xl:p-10 lg:p-10 flex-basis lg:basis-1/2">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
-                        {project?.specialSections?.[1]?.title}
-                    </h4>
-                    <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
-                        {project?.specialSections?.[1]?.shortDescription}
-                    </p>
-                    {
-                        project?.specialSections?.[1]?.isExpandable && (
-                            <div className="mt-4">
-                                <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[1].fullDescription}]} />
-                            </div>
-                        )
-                    }
-                </div>
-            </div>
-
-            {/* DETAILS SECTION */}
-            <div className="relative mt-0">
-                <OptimizedImage 
-                src={`${BASE_CDN_URL}${project?.gallery?.[5]?.key}`} 
-                alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
-                <OptimizedImage 
-                src={`${BASE_CDN_URL}${project?.gallery?.[6]?.key}`} 
-                alt="" className="w-full h-[250px] md:h-[400px] lg:h-150 xl:h-full object-cover"/>
-                <div className="absolute top-1/2 right-1/2 lg:right-50 transform translate-x-1/2 lg:translate-x-1/4 -translate-y-1/2   bg-white p-2 md:p-6 lg:p-8 w-[90%] md:w-[80%] lg:w-150">
-                    <h4 className="text-[18px] md:text-[22px] lg:text-[25px] font-subtitle text-txt-secondary font-semibold">
-                         {project?.specialSections?.[2]?.title}
-                    </h4>
-                    <p className="mt-3 lg:mt-4 text-[14px] md:text-[16px] lg:text-[18px] text-txt-gray leading-relaxed">
-                        {project?.specialSections?.[2]?.shortDescription}
-                    </p>
-                    {
-                        project?.specialSections?.[2]?.isExpandable && (
-                            <div className="mt-4">
-                                <CustomAccordion data={[{name:'READ MORE', description:project.specialSections[2].fullDescription}]} />
-                            </div>
-                        )
-                    }
-                </div>
-            </div>
-
-            {/* CONTACT US & TRACKING */}
-            <div className="flex justify-center mt-10 lg:mt-20 px-4 lg:px-0">
-                <div className="xl:max-w-screen-xl lg:max-w-[900px] flex flex-col lg:flex-row w-full gap-8 lg:gap-30 lg:px-4">
-                    {/* LEFT - TRACKING */}
-                    <div className="flex-basis lg:basis-1/2 order-2 lg:order-1 mb-4">
-                        <h1 className="text-[32px] lg:text-[35px] xl:text-[40px] font-subtitle text-txt-secondary leading-tight">Theo Dõi Dự Án</h1>
-                        <ul className="mt-8 lg:mt-15">
-                            <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Brochure</p>
-                                <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
-                                    <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
-                                        READ MORE
-                                    </button>
-                                </LocalizedLink>
-                            </li>
-                            <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Tiến độ xây dựng</p>
-                                <LocalizedLink to={`/view-brochure/${project._id}?filter=1`}>
-                                    <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
-                                        READ MORE
-                                    </button>
-                                </LocalizedLink>
-                            </li>
-                            <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
-                                <p className="font-subtitle font-semibold">Hình ảnh Concept</p>
-                                <LocalizedLink to={`/view-brochure/${project._id}?filter=2`}>
-                                    <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
-                                        READ MORE
-                                    </button>
-                                </LocalizedLink>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    {/* RIGHT - CONTACT FORM */}
-                    <div className="flex-basis lg:basis-1/2 mb-10 lg:mb-40  order-1 lg:order-2">
-                <h1 className="text-[32px] lg:text-[35px] xl:text-[40px] font-subtitle text-txt-secondary leading-tight">
-                    Liên Hệ Ngay
-                </h1>
-                
-                {/* <p className="mt-4 text-txt-gray text-[16px] lg:text-[18px]">
-                    Quan tâm đến dự án <span className="font-semibold text-txt-secondary">
-                        {project?.title || 'này'}
-                    </span>? Để lại thông tin, chúng tôi sẽ liên hệ tư vấn cho bạn.
-                </p> */}
-                
-                {submitSuccess && (
-                    <div className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-                        <p className="font-semibold">✓ Cảm ơn bạn đã liên hệ!</p>
-                        <p>Chúng tôi đã nhận được thông tin của bạn và sẽ liên hệ trong thời gian sớm nhất.</p>
-                        <p className="text-sm mt-2">Email xác nhận đã được gửi đến {formData.email}</p>
-                    </div>
-                )}
-                
-                {formErrors.submit && (
-                    <div className="mt-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-                        <p className="font-semibold">Lỗi:</p>
-                        <p>{formErrors.submit}</p>
-                    </div>
-                )}
-                
-                <div className="mt-6 lg:mt-10 text-[16px] lg:text-[18px]">
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex flex-col">
-                                <label htmlFor="firstName" className="mb-2">
-                                    Tên *
-                                    {formErrors.firstName && (
-                                        <span className="text-red-500 text-sm ml-2">{formErrors.firstName}</span>
-                                    )}
-                                </label>
-                                <input 
-                                    type="text" 
-                                    id="firstName"
-                                    value={formData.firstName}
-                                    onChange={handleInputChange}
-                                    placeholder="Tên của bạn" 
-                                    className={`border p-3 md:p-4 ${formErrors.firstName ? 'border-red-500' : 'border-txt-gray'} outline-none`}
-                                    disabled={submitting}
+                        const renderImageGroup = (key, nextImages) => (
+                            <div key={key} className="px-4 md:px-8 xl:px-14 space-y-3 flex flex-col items-center pb-10 sm:pb-14 md:pb-20">
+                                <ScaleImage
+                                    src={`${BASE_CDN_URL}${nextImages[0]?.key}`}
+                                    className="w-full sm:w-[85%] md:w-[80%] h-full"
+                                    delay={0}
                                 />
-                            </div>
-                             <div className="flex flex-col  mt-6">
-                                <label htmlFor="lastName" className="mb-2">
-                                    Họ *
-                                    {formErrors.lastName && (
-                                        <span className="text-red-500 text-sm ml-2">{formErrors.lastName}</span>
-                                    )}
-                                </label>
-                                <input 
-                                    type="text" 
-                                    id="lastName"
-                                    value={formData.lastName}
-                                    onChange={handleInputChange}
-                                    placeholder="Họ của bạn" 
-                                    className={`border p-3 md:p-4 ${formErrors.lastName ? 'border-red-500' : 'border-txt-gray'} outline-none`}
-                                    disabled={submitting}
-                                />
-                            </div>
-                        
-                        
-                        {/* Email */}
-                        <div className="flex flex-col mt-6">
-                            <label htmlFor="email" className="mb-2">
-                                Email *
-                                {formErrors.email && (
-                                    <span className="text-red-500 text-sm ml-2">{formErrors.email}</span>
+
+                                {(nextImages[1] || nextImages[2]) && (
+                                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 md:gap-12 xl:gap-20 mt-6 sm:mt-10 md:mt-14 xl:mt-20 items-center justify-center">
+                                        {nextImages[1] && (
+                                            <ScaleImage
+                                                src={`${BASE_CDN_URL}${nextImages[1].key}`}
+                                                className="w-full sm:flex-1 h-full"
+                                                delay={0}
+                                            />
+                                        )}
+                                        {nextImages[2] && (
+                                            <ScaleImage
+                                                src={`${BASE_CDN_URL}${nextImages[2].key}`}
+                                                className="w-full sm:flex-1"
+                                                delay={0.1}
+                                            />
+                                        )}
+                                    </div>
                                 )}
-                            </label>
-                            <input 
-                                type="email" 
-                                id="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                placeholder="email@example.com" 
-                                className={`border p-3 md:p-4 ${formErrors.email ? 'border-red-500' : 'border-txt-gray'} outline-none`}
-                                disabled={submitting}
-                            />
-                        </div>
-                        
-                        {/* Phone */}
-                        <div className="flex flex-col mt-6">
-                            <label htmlFor="phone" className="mb-2">
-                                Số điện thoại *
-                                {formErrors.phone && (
-                                    <span className="text-red-500 text-sm ml-2">{formErrors.phone}</span>
-                                )}
-                            </label>
-                            <input 
-                                type="tel" 
-                                id="phone"
-                                value={formData.phone}
-                                onChange={handleInputChange}
-                                placeholder="0987 654 321" 
-                                className={`border p-3 md:p-4 ${formErrors.phone ? 'border-red-500' : 'border-txt-gray'} outline-none `}
-                                disabled={submitting}
-                            />
-                        </div>
-                        
-                        {/* Project Info (read-only) */}
-                        <div className="mt-6 p-4 bg-gray-50 border border-gray-200 ">
-                            <p className="text-sm text-gray-600 mb-2">Dự án bạn quan tâm:</p>
-                            <p className="font-semibold text-txt-secondary">
-                                {project?.title || 'Loading...'}
-                            </p>
-                        </div>
-                        
-                        <button 
-                            type="submit"
-                            disabled={submitting}
-                            className={`cursor-pointer mt-8 lg:mt-10  bg-txt-secondary text-white w-full py-3 md:py-4 transition-colors duration-300 text-[16px] md:text-[18px] ${submitting && 'opacity-50 cursor-not-allowed'}`}
-                        >
-                            {submitting ? 'ĐANG GỬI...' : 'GỬI THÔNG TIN'}
-                        </button>
-                    </form>
+                            </div>
+                        );
+
+                        sections.forEach((section, index) => {
+                            elements.push(
+                                <SectionAccordion key={`section-${index}`} section={section} />
+                            );
+
+                            const nextImages = getNextThreeImages();
+                            if (nextImages && nextImages.length > 0) {
+                                elements.push(renderImageGroup(`images-${index}`, nextImages));
+                            }
+                        });
+
+                        let extraIndex = 0;
+                        let remainingImages = getNextThreeImages();
+                        while (remainingImages && remainingImages.length > 0) {
+                            elements.push(renderImageGroup(`extra-images-${extraIndex}`, remainingImages));
+                            extraIndex++;
+                            remainingImages = getNextThreeImages();
+                        }
+
+                        return elements;
+                    })()}
                 </div>
             </div>
-                </div>
-            </div>
-            
-            <Footer withContact={false}/>
+
+            <ProjectCarousel excludeProjectId={projectId} />
+            <JoinNewsletter />
+            <FollowUs />
+            <Footer withContact={false} />
         </div>
-    );
+    )
 }
-
-export default ProjectDetail;
+export default ProjectDetail
