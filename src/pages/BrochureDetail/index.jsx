@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 import { projectsService } from "../../services/projectsService";
-
+import logo from '../../assets/images/logo.png'
 // ============================================================
 // Sidebar chỉ hiển thị đúng 2 asset cố định: "Brochure" và "Tiến độ xây dựng".
 // - Ảnh nền mỗi asset = ảnh đầu tiên của mảng tương ứng (project.brochure[0] / project.constructionProgress[0])
@@ -28,6 +28,26 @@ const getThumbnailUrl = (image) => {
     const imageKey = image.thumbnailKey || image.key || '';
     if (!imageKey) return '';
     return `https://cdn.latelia.com/latelia/${imageKey}`;
+};
+
+// Nếu CDN chưa bật CORS (như lỗi bạn đang gặp), set biến này trỏ tới endpoint proxy
+// ảnh phía backend, ví dụ '/posts/proxy-image?url=' (xem gợi ý route ở dưới cuối file).
+// Để '' nếu CDN đã cho phép CORS trực tiếp — khi đó tải ảnh thẳng từ cdn.latelia.com.
+const IMAGE_PROXY_BASE = '';
+
+// Ảnh có thể đã được browser cache lại từ lần load trước KHÔNG có crossOrigin
+// (ví dụ khi hiển thị thumbnail bình thường) — cache đó không có "annotation" CORS,
+// nên dù server đã trả đúng access-control-allow-origin, trình duyệt vẫn phục vụ
+// lại bản cache cũ và báo lỗi CORS. Thêm 1 query param cố định để buộc trình duyệt
+// coi đây là request khác, load lại từ server (vẫn tận dụng được cache của Cloudflare).
+const appendCacheBust = (url) => {
+    if (!url) return url;
+    return url.includes('?') ? `${url}&cors=1` : `${url}?cors=1`;
+};
+
+const resolveDownloadUrl = (url) => {
+    const bustedUrl = appendCacheBust(url);
+    return IMAGE_PROXY_BASE ? `${IMAGE_PROXY_BASE}${encodeURIComponent(bustedUrl)}` : bustedUrl;
 };
 
 // Load 1 ảnh thành HTMLImageElement (cần CDN bật CORS — trả header
@@ -45,7 +65,7 @@ const loadImage = (url) => new Promise((resolve, reject) => {
 const generatePdfFromImages = async (imageUrls, filename = 'document.pdf') => {
     if (!imageUrls || imageUrls.length === 0) return;
 
-    const images = await Promise.all(imageUrls.map(loadImage));
+    const images = await Promise.all(imageUrls.map(url => loadImage(resolveDownloadUrl(url))));
 
     const pdf = new jsPDF({
         orientation: images[0].width >= images[0].height ? 'landscape' : 'portrait',
@@ -98,22 +118,42 @@ function AssetListItem({ asset, active, progress, onClick }) {
         <button
             type="button"
             onClick={onClick}
-            className={`w-full flex items-start gap-3 px-4 py-3 text-left border-r-2 transition-colors duration-200 ${
+            className={`w-full flex items-start gap-2.5 lg:gap-3 px-3 lg:px-4 py-2.5 lg:py-3 text-left border-r-2 transition-colors duration-200 ${
                 active ? 'border-txt-secondary bg-txt-secondary/5' : 'border-transparent hover:bg-gray-50'
             }`}
         >
-            <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 border border-black/5 bg-gray-100">
+            <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-lg overflow-hidden flex-shrink-0 border border-black/5 bg-gray-100">
                 <img src={asset.thumbnailUrl} alt={asset.title} className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 min-w-0">
-                <p className={`text-sm truncate ${active ? 'font-semibold text-txt-primary' : 'text-txt-primary'}`}>
+                <p className={`text-xs lg:text-sm truncate ${active ? 'font-semibold text-txt-primary' : 'text-txt-primary'}`}>
                     {asset.title}
                 </p>
-                <p className="text-xs text-txt-gray mt-0.5 truncate">
+                <p className="text-[11px] lg:text-xs text-txt-gray mt-0.5 truncate">
                     {asset.images.length} images
                 </p>
             </div>
             <ProgressRing progress={progress} />
+        </button>
+    );
+}
+
+// Thumbnail vuông dùng cho dải cuộn ngang trên mobile — thay thế cho sidebar dọc
+function MobileAssetThumb({ asset, active, onClick }) {
+    return (
+        <button type="button" onClick={onClick} className="flex-shrink-0 flex flex-col items-center gap-2">
+            <span
+                className={`block w-16 h-16 rounded-xl overflow-hidden border-2 transition-colors duration-200 ${
+                    active ? 'border-txt-secondary' : 'border-transparent'
+                }`}
+            >
+                <img src={asset.thumbnailUrl} alt={asset.title} className="w-full h-full object-cover" />
+            </span>
+            <span
+                className={`block h-[2px] w-8 rounded-full transition-colors duration-200 ${
+                    active ? 'bg-txt-secondary' : 'bg-transparent'
+                }`}
+            ></span>
         </button>
     );
 }
@@ -169,18 +209,18 @@ function DocumentViewer() {
             id: 'brochure',
             title: 'Brochure',
             thumbnailUrl: getThumbnailUrl(brochureList[0]),
-            images: brochureList.map(img=>`https://cdn.latelia.com/latelia/${img.key}`).filter(Boolean),
+            images: brochureList.map(brochure=>`https://cdn.latelia.com/latelia/${brochure.key}`).filter(Boolean),
         };
         const progressAsset = {
             id: 'construction-progress',
             title: 'Tiến độ xây dựng',
             thumbnailUrl: getThumbnailUrl(progressList[0]),
-            images: progressList.map(img=>`https://cdn.latelia.com/latelia/${img.key}`).filter(Boolean),
+            images: progressList.map(progress => `https://cdn.latelia.com/latelia/${progress.key}`).filter(Boolean),
         };
 
         return [brochureAsset, progressAsset].filter(asset => asset.images.length > 0);
     }, [project]);
-    console.log(assets)
+
     // Chọn asset theo query param ?doc=<id> nếu có, mặc định item đầu tiên
     useEffect(() => {
         if (assets.length === 0) return;
@@ -294,14 +334,22 @@ function DocumentViewer() {
 
     return (
         <div className="h-screen flex flex-col bg-white" style={{ fontFamily: 'Nunito Sans' }}>
-            {/* ===== HEADER ===== */}
-            <header className="h-16 flex items-center justify-between px-4 lg:px-6 border-b border-gray-200 flex-shrink-0">
-                <div className="flex items-center gap-4 min-w-0">
+            {/* ===== HEADER (mobile: gọn, chỉ back + logo) ===== */}
+            <header className="h-14 md:h-16 flex items-center justify-between px-4 md:px-6 border-b border-gray-200 flex-shrink-0">
+                <button onClick={() => navigate(-1)} className="text-txt-primary hover:opacity-70 transition-opacity flex-shrink-0 md:hidden">
+                    <ArrowLeft size={20} />
+                </button>
+                <img src={logo} style={{width:'50px'}} className="select-none md:hidden"/>
+
+                {/* <span className="font-subtitle text-lg text-txt-secondary select-none md:hidden" style={{fontFamily:'PangaiaUltralight'}}>L'atelia</span> */}
+
+                {/* ===== HEADER (tablet/desktop: đầy đủ info + share/download) ===== */}
+                <div className="hidden md:flex items-center gap-3 lg:gap-4 min-w-0">
                     <button onClick={() => navigate(-1)} className="text-txt-primary hover:opacity-70 transition-opacity flex-shrink-0">
                         <ArrowLeft size={20} />
                     </button>
                     {/* Thay bằng <Logo /> asset thật nếu site đã có sẵn */}
-                    <span className="font-subtitle text-xl text-txt-secondary flex-shrink-0 select-none">Berrow</span>
+                    <img src={logo} style={{width:'50px'}} className="select-none"/>
                     <span className="h-6 w-px bg-gray-200 flex-shrink-0"></span>
                     <div className="min-w-0">
                         <div className="flex items-center gap-1.5">
@@ -313,11 +361,7 @@ function DocumentViewer() {
                         </p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                    {/* <button className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors">
-                        <Share2 size={16} className="text-txt-primary" />
-                    </button> */}
-                    
+                <div className="hidden md:flex items-center gap-2 flex-shrink-0">
                     <button
                         onClick={handleDownload}
                         disabled={isDownloading || !activeAsset || activeAsset.images.length === 0}
@@ -333,12 +377,54 @@ function DocumentViewer() {
                 </div>
             </header>
 
+            {/* ===== MOBILE-ONLY: badge + dải thumbnail cuộn ngang thay cho sidebar dọc ===== */}
+            <div className="md:hidden flex-shrink-0 border-b border-gray-200">
+                <div className="px-4 pt-4">
+                    <span className="inline-block bg-txt-secondary text-white text-sm font-medium px-4 py-1.5 rounded-full">
+                        Brochure & Tiến độ xây dựng
+                    </span>
+                </div>
+                <div className="flex gap-3 overflow-x-auto px-4 py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    {assets.map((asset, index) => (
+                        <MobileAssetThumb
+                            key={asset.id}
+                            asset={asset}
+                            active={index === activeIndex}
+                            onClick={() => handleSelectAsset(index)}
+                        />
+                    ))}
+                </div>
+                <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
+                    <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                            <p className="text-sm font-semibold text-txt-primary truncate">{activeAsset?.title}</p>
+                            <Info size={14} className="text-txt-gray flex-shrink-0" />
+                        </div>
+                        <p className="text-xs text-txt-gray">
+                            {pages.length ? `${pages.length} images` : ''}
+                        </p>
+                    </div>
+                    <button
+                        onClick={handleDownload}
+                        disabled={isDownloading || !activeAsset || activeAsset.images.length === 0}
+                        className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+                        aria-label="Download as PDF"
+                    >
+                        {isDownloading ? (
+                            <div className="w-4 h-4 border-2 border-txt-secondary border-t-transparent rounded-full animate-spin"></div>
+                        ) : (
+                            <Download size={16} className="text-txt-primary" />
+                        )}
+                    </button>
+                </div>
+            </div>
+
             <div className="flex flex-1 min-h-0 relative">
-                {/* ===== SIDEBAR ===== */}
-                <aside className="w-64 border-r border-gray-200 flex-shrink-0 flex flex-col min-h-0">
+                {/* ===== SIDEBAR (ẩn trên mobile — thay bằng dải thumbnail ngang phía trên) ===== */}
+                <aside className="hidden md:flex md:w-56 lg:w-64 border-r border-gray-200 flex-shrink-0 flex-col min-h-0">
                     <div className="px-4 py-4 flex items-center justify-between flex-shrink-0">
                         <div>
-                            <p className="text-sm font-semibold text-txt-secondary">Brochure & Plans</p>
+                            <p className="text-sm font-semibold text-txt-secondary">Brochure & Tiến độ xây dựng</p>
                             <p className="text-xs text-txt-gray mt-0.5">{assets.length} Assets</p>
                         </div>
                         <button
@@ -376,8 +462,8 @@ function DocumentViewer() {
 
                 {/* ===== MAIN VIEWER ===== */}
                 <main className="flex-1 relative bg-gray-100 overflow-hidden">
-                    <div ref={viewerRef} onScroll={handleViewerScroll} className="h-full overflow-y-auto py-8 px-4 lg:px-10">
-                        <div className="mx-auto flex flex-col gap-6" style={{ maxWidth: `${BASE_MAX_WIDTH_REM * zoom}rem` }}>
+                    <div ref={viewerRef} onScroll={handleViewerScroll} className="h-full overflow-y-auto py-4 px-0 sm:px-4 lg:py-8 lg:px-10">
+                        <div className="mx-auto flex flex-col gap-3 lg:gap-6" style={{ maxWidth: `${BASE_MAX_WIDTH_REM * zoom}rem` }}>
                             {pages.length === 0 && (
                                 <div className="text-center text-txt-gray py-20">No preview available.</div>
                             )}
@@ -399,24 +485,25 @@ function DocumentViewer() {
                         </div>
                     </div>
 
-                    {/* Thanh điều hướng trang nổi */}
+                    {/* Thanh điều hướng trang nổi — mobile chỉ giữ điều hướng trang cốt lõi,
+                        zoom/fullscreen hiện từ sm trở lên để tránh quá chật trên màn hình nhỏ */}
                     {pages.length > 0 && (
-                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-txt-secondary text-white rounded-full shadow-lg flex items-center gap-3 px-4 py-2 text-sm">
-                            <span className="opacity-80">Page</span>
+                        <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 bg-txt-secondary text-white rounded-full shadow-lg flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm">
+                            <span className="opacity-80 hidden sm:inline">Page</span>
                             <input
                                 type="number"
                                 min={1}
                                 max={pages.length}
                                 value={currentPage}
                                 onChange={handlePageInputChange}
-                                className="w-10 bg-transparent text-center border-b border-white/40 focus:outline-none"
+                                className="w-8 sm:w-10 bg-transparent text-center border-b border-white/40 focus:outline-none"
                             />
                             <span className="opacity-80">of {pages.length}</span>
-                            <span className="h-4 w-px bg-white/30 mx-1"></span>
-                            <button onClick={handleZoomOut} className="hover:opacity-70 transition-opacity" aria-label="Zoom out">
+                            <span className="h-4 w-px bg-white/30 mx-1 hidden sm:block"></span>
+                            <button onClick={handleZoomOut} className="hover:opacity-70 transition-opacity hidden sm:inline-flex" aria-label="Zoom out">
                                 <ZoomOut size={16} />
                             </button>
-                            <button onClick={handleZoomIn} className="hover:opacity-70 transition-opacity" aria-label="Zoom in">
+                            <button onClick={handleZoomIn} className="hover:opacity-70 transition-opacity hidden sm:inline-flex" aria-label="Zoom in">
                                 <ZoomIn size={16} />
                             </button>
                             <button onClick={handlePrevPage} className="hover:opacity-70 transition-opacity" aria-label="Previous page">
@@ -425,15 +512,13 @@ function DocumentViewer() {
                             <button onClick={handleNextPage} className="hover:opacity-70 transition-opacity" aria-label="Next page">
                                 <ChevronDown size={16} />
                             </button>
-                            <button onClick={handleFullscreen} className="hover:opacity-70 transition-opacity" aria-label="Fullscreen">
+                            <button onClick={handleFullscreen} className="hover:opacity-70 transition-opacity hidden sm:inline-flex" aria-label="Fullscreen">
                                 <Maximize2 size={16} />
                             </button>
                         </div>
                     )}
                 </main>
             </div>
-
-            
         </div>
     );
 }
