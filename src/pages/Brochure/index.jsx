@@ -112,7 +112,7 @@ function Brochure() {
             </div>
         );
     }
-
+    console.log(project)
     return ( 
         <>
 
@@ -177,16 +177,37 @@ function Brochure() {
                             {project?.constructionProgress.length > 0 && (
                                 <div className="cursor-pointer">
                                     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-black/5 bg-gray-100 shadow-sm  transition-transform duration-300 hover:-translate-y-2">
-                                        <img
-                                            src={getThumbnailUrl(project.constructionProgress[0])}
-                                            alt="Tiến độ xây dựng"
-                                            loading="lazy"
-                                            className="w-full h-full object-cover"
+                                         <LocalizedLink
+                                            to={`/view-brochure/${projectId}/detail?doc=construction-progress`}
+                                            >
+                                                <img
+                                                src={getThumbnailUrl(project.constructionProgress[0])}
+                                                alt="Tiến độ xây dựng"
+                                                loading="lazy"
+                                                className="w-full h-full object-cover"
                                         />
+                                        </LocalizedLink>
+                                        
                                         
                                     </div>
                                     <p className="mt-3 text-sm md:text-base font-medium">Tiến độ xây dựng</p>
-                                    
+                                </div>
+                            )}
+                            {project?.designImages.length > 0 && (
+                                <div className="cursor-pointer">
+                                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-black/5 bg-gray-100 shadow-sm  transition-transform duration-300 hover:-translate-y-2">
+                                         <LocalizedLink
+                                            to={`/view-brochure/${projectId}/detail?doc=design-images`}
+                                            >
+                                                <img
+                                                src={getThumbnailUrl(project.designImages[0])}
+                                                alt="Hình ảnh thiết kế"
+                                                loading="lazy"
+                                                className="w-full h-full object-cover"
+                                        />
+                                        </LocalizedLink>
+                                    </div>
+                                    <p className="mt-3 text-sm md:text-base font-medium">Hình ảnh thiết kế</p>
                                 </div>
                             )}
                         </div>

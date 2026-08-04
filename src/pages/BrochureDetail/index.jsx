@@ -198,13 +198,13 @@ function DocumentViewer() {
         if (projectId) fetchProjectData();
     }, [projectId, fetchProjectData]);
 
-    // Chỉ 2 asset cố định: Brochure & Tiến độ xây dựng
+    // Chỉ 3 asset cố định: Brochure, Tiến độ xây dựng, Hình ảnh thiết kế
     const assets = useMemo(() => {
         if (!project) return [];
 
         const brochureList = Array.isArray(project.brochure) ? project.brochure : [];
         const progressList = Array.isArray(project.constructionProgress) ? project.constructionProgress : [];
-
+        const designList = Array.isArray(project.designImages) ? project.designImages : [];
         const brochureAsset = {
             id: 'brochure',
             title: 'Brochure',
@@ -217,8 +217,13 @@ function DocumentViewer() {
             thumbnailUrl: getThumbnailUrl(progressList[0]),
             images: progressList.map(progress => `https://cdn.latelia.com/latelia/${progress.key}`).filter(Boolean),
         };
-
-        return [brochureAsset, progressAsset].filter(asset => asset.images.length > 0);
+        const designAsset = {
+            id: 'design-images',
+            title: 'Hình ảnh thiết kế',
+            thumbnailUrl: getThumbnailUrl(designList[0]),
+            images: designList.map(design => `https://cdn.latelia.com/latelia/${design.key}`).filter(Boolean),
+        }
+        return [brochureAsset, progressAsset, designAsset].filter(asset => asset.images.length > 0);
     }, [project]);
 
     // Chọn asset theo query param ?doc=<id> nếu có, mặc định item đầu tiên
@@ -472,7 +477,7 @@ function DocumentViewer() {
                                     key={index}
                                     data-page={index + 1}
                                     ref={el => (pageRefs.current[index] = el)}
-                                    className="w-full shadow-md rounded-sm overflow-hidden bg-white"
+                                    className="w-full shadow-md overflow-hidden bg-white"
                                 >
                                     <img
                                         src={pageUrl}
