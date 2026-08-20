@@ -203,7 +203,7 @@ function ProjectDetail() {
                 />
                 <div className="absolute left-1/2 -translate-x-1/2 top-[50%] text-bg-primary text-center w-full px-4 flex flex-col items-center">
                     <h1 className="font-subtitle text-[30px] lg:text-[40px] xl:text-[45px]">FOR SALE</h1>
-                    <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
+                    <LocalizedLink to={`/view-brochure/${project._id}`}>
                         <button className="border border-bg-primary px-4 py-2 flex justify-between items-center
                             text-[14px] md:text-[18px] uppercase transition-all duration-300 cursor-pointer 
                             hover:bg-txt-secondary hover:text-bg-primary hover:border-txt-secondary mt-4">
@@ -379,7 +379,7 @@ function ProjectDetail() {
                         <ul className="mt-8 lg:mt-15">
                             <li className="text-[18px] md:text-[22px] lg:text-[25px] mt-8 lg:mt-15">
                                 <p className="font-subtitle ">Brochure</p>
-                                <LocalizedLink to={`/view-brochure/${project._id}?filter=0`}>
+                                <LocalizedLink to={`/view-brochure/${project._id}`}>
                                     <button className="text-[14px] md:text-[16px] lg:text-[18px] border border-txt-gray text-txt-gray px-4 py-2 mt-3 lg:mt-4 w-full lg:w-auto">
                                         READ MORE
                                     </button>
