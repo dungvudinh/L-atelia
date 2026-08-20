@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import slide2 from '../../assets/images/slides/slide2.jpg';
-
-import {  ChevronRight } from "lucide-react";
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import {  ChevronRight,ChevronDown } from "lucide-react";
 import Footer from "../../layouts/components/Footer";
 import { LocalizedLink } from "../../components/LocalizedLink";
 import { motion, AnimatePresence,useScroll,useTransform  } from 'framer-motion'
@@ -245,10 +243,39 @@ const Banner = () => {
             <div className="absolute inset-0 bg-black/25" />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-4xl gap-12 z-10">
               <div className="flex items-center gap-12 relative">
-                <LocalizedLink to="/projects" className="hidden md:block link-underline cursor-pointer absolute left-[-300px]
-                text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
-                  Dự án
-                </LocalizedLink>
+              <NavigationMenu.Root
+                  className="hidden md:block absolute left-[-300px]"
+                >
+                  <NavigationMenu.List className="list-none m-0 p-0">
+                    <NavigationMenu.Item>
+                      <NavigationMenu.Trigger
+                        className="link-underline cursor-pointer text-underline
+                        text-[32px] leading-[38px] md:text-[24px] md:leading-[30px]
+                        lg:text-[28px] lg:leading-[32px] outline-none bg-transparent"
+                      >
+                        <LocalizedLink to={"/projects"}>
+                          Dự án
+                        </LocalizedLink>
+                      </NavigationMenu.Trigger>
+
+                      <NavigationMenu.Content
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3
+                        bg-black/35 backdrop-blur-md border border-white/20 rounded-md
+                        px-7 py-4 whitespace-nowrap"
+                      >
+                        <NavigationMenu.Link asChild className="flex items-center">
+                          <LocalizedLink
+                            to="/properties-for-rent"
+                            className="link-underline text-underline text-[#f0e6de]
+                            text-[16px] font-light tracking-wide"
+                          >
+                            Homestay
+                          </LocalizedLink>
+                        </NavigationMenu.Link>
+                      </NavigationMenu.Content>
+                    </NavigationMenu.Item>
+                  </NavigationMenu.List>
+                </NavigationMenu.Root>
                 <LocalizedLink to="/media" className="hidden md:block link-underline cursor-pointer absolute left-[-140px]
                 text-underline text-[32px] leading-[38px] md:text-[24px] md:leading-[30px] lg:text-[28px] lg:leading-[32px]">
                   Media

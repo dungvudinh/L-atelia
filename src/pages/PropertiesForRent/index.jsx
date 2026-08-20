@@ -15,17 +15,19 @@ import rentService from "../../services/rentService";
 import bookingService from "../../services/bookingService";
 
 const LOCATION_ITEMS = [
-  {id:1, name:'Ho Chi Minh City', country:'Viet Nam'},
-  {id:2, name:'Nha Trang', country:'Viet Nam'},
-  {id:3, name:'Ha Noi', country:'Viet Nam'},
-  {id:4, name:'Vung Tau', country:'Viet Nam'},
-  {id:5, name:'Sapa', country:'Viet Nam'},
+  {id:1, name:'Quận Hải Châu', country:'Việt Nam'},
+  {id:2, name:'Quận Thanh Khê', country:'Việt Nam'},
+  {id:3, name:'Quận Sơn Trà', country:'Việt Nam'},
+  {id:4, name:'Quận Ngũ Hành Sơn', country:'Việt Nam'},
+  {id:5, name:'Quận Liên Chiểu', country:'Việt Nam'},
+  {id:6, name:'Quận Cẩm Lệ', country:'Việt Nam'},
+
 ]
 
 // THAY ĐỔI: Chỉ 2 option sort mới
 const SORTING_ITEMS = [
-  {id:1, name:'Per Room Per Night', value: 'per_room_per_night', icon:<Payments />},
-  {id:2, name:'Total Price', value: 'total_price', icon:<Payments />},
+  {id:1, name:'Giá mỗi phòng mỗi đêm', value: 'per_room_per_night', icon:<Payments />},
+  {id:2, name:'Tổng giá', value: 'total_price', icon:<Payments />},
 ]
 
 // Hàm tính giá theo từng loại
@@ -531,10 +533,10 @@ function PropertiesForRent() {
 
   const formatGuestDisplay = () => {
     const { adults, children } = tempFilters;
-    let display = `${adults} adult${adults !== 1 ? 's' : ''}`;
+    let display = `${adults} Người lớn`;
     
     if (children > 0) {
-      display += `, ${children} child${children !== 1 ? 'ren' : ''}`;
+      display += `, ${children} Trẻ em`;
     }
     
     return display;
@@ -564,9 +566,17 @@ function PropertiesForRent() {
   }, [filteredAndSortedProperties]);
 
   const formatPrice = (price, priceUnit) => {
-    return `$${price} ${priceUnit || 'per night'}`;
+    
+    return `${price} VND ${formatPriceUnitVND(priceUnit)}`;
   };
-
+  const formatPriceUnitVND = (priceUnit)=>
+  {
+    var priceUnitVND = 'Mỗi đêm';
+    if(priceUnit === 'for 2 nights') priceUnitVND = 'Cho 2 đêm';
+    else if(priceUnit === 'per week') priceUnitVND = 'Mỗi tuần';
+    else if(priceUnit === 'per month') priceUnitVND = 'Mỗi tháng';
+    return priceUnitVND;
+  }
   // Hàm hiển thị giá đã tính toán (cho debug)
   const getCalculatedPriceDisplay = (property, calculationType) => {
     const calculated = calculatePrice(property.price, property.priceUnit, calculationType);
@@ -636,7 +646,7 @@ function PropertiesForRent() {
   return ( 
     <div className="mt-20">
       {!params.propertyId && (
-        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
+        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto px-4" style={{fontFamily:'Nunito Sans'}}>
           {/* GROUP FILTER - MOBILE RESPONSIVE */}
           <div className="pt-10 flex flex-col lg:flex-row w-full mb-6 gap-4">
             {/* CHECK IN */}
@@ -645,7 +655,7 @@ function PropertiesForRent() {
                   onClick={() => setShowCheckInDate(!showCheckInDate)}>
                 <div className="flex items-center">
                   <CalendarClock className='mr-2 w-4 h-4'/>
-                  <span className={'text-[14px]'}>
+                  <span className={'text-[16px]'}>
                   {formatDisplayDate(tempFilters.checkIn, 'checkin')}
                   </span>
                 </div>
@@ -705,7 +715,7 @@ function PropertiesForRent() {
                     <li className="flex justify-between border-b border-b-txt-primary p-3 hover:bg-stone-200">
                       <div className="flex items-center">
                         <Group className="mr-4 w-4 h-4"/>
-                        <span className="text-[14px]">Adults</span>
+                        <span className="text-[14px]">Người lớn</span>
                       </div>
                       <div className="flex items-center">
                         <button 
@@ -730,7 +740,7 @@ function PropertiesForRent() {
                     <li className="flex justify-between p-3 hover:bg-stone-200">
                       <div className="flex items-center">
                         <Face className="mr-4 w-4 h-4"/>
-                        <span className="text-[14px]">Children</span>
+                        <span className="text-[14px]">Trẻ em</span>
                       </div>
                       <div className="flex items-center">
                         <button 
@@ -762,21 +772,21 @@ function PropertiesForRent() {
               className="bg-txt-secondary text-white cursor-pointer py-3 text-[16px] lg:flex-1"
               onClick={handleSearch}
             >
-              Search
+              Tìm kiếm
             </button>
           </div>
 
-          <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary  mb-6 leading-tight'>
-            CÁC DỰ ÁN CHO THUÊ
+          <h1 className='uppercase text-[24px] lg:text-[32px] font-subtitle text-txt-secondary  mb-6 leading-tight' style={{fontFamily:'PangaiaUltralight'}}>
+            CÁC CĂN HỘ HOMESTAY
           </h1>
           
           {/* Active Filters Display */}
           {(selectedLocation || searchFilters.checkIn || selectedSorting.value !== 'per_room_per_night') && (
             <div className="flex items-center mb-4 gap-2 flex-wrap">
-              <span className="text-[14px] ">Active Filters:</span>
+              <span className="text-[14px] ">Bộ lọc:</span>
               {selectedLocation && (
                 <div className="flex items-center bg-txt-secondary text-white px-2 py-1 rounded-full">
-                  <span className="text-[12px] mr-1">Location: {selectedLocation.name}</span>
+                  <span className="text-[12px] mr-1">Địa chỉ: {selectedLocation.name}</span>
                   <button 
                     onClick={clearLocationFilter}
                     className="text-white hover:text-gray-200 text-[12px]"
@@ -811,9 +821,9 @@ function PropertiesForRent() {
               )}
               <button 
                 onClick={clearAllFilters}
-                className="text-txt-secondary hover:text-blue-700 text-[12px] "
+                className="text-txt-secondary  text-[14px] cursor-pointer "
               >
-                Clear All
+                Xoá tất cả
               </button>
             </div>
           )}
@@ -827,10 +837,10 @@ function PropertiesForRent() {
                   <div className="flex items-center text-[16px] mr-2">
                     <AddLocation className='mr-2 w-4 h-4'/>
                     <div className="max-w-[200px] flex-1 truncate">
-                      {selectedLocation ? selectedLocation.name : 'Select your location'}
+                      {selectedLocation ? selectedLocation.name : 'Chọn địa chỉ'}
                     </div>
                   </div>
-                  <ArrowDown className="w-4 h-4" />
+                  <ArrowDown className="w-3 h-3" />
                 </div>
                 {showSelectLocation && (
                   <div className="absolute top-full mt-1 z-50 bg-white shadow-lg select-none w-full left-0 right-0 lg:left-auto lg:right-auto">
@@ -839,11 +849,11 @@ function PropertiesForRent() {
                         <li className="flex justify-between border-b border-b-txt-primary p-3 cursor-pointer hover:bg-gray-200" 
                             key={locationItem.id}
                             onClick={() => handleLocationSelect(locationItem)}>
-                            <div className="flex items-start">
-                              <Distance className="mr-3 w-4 h-4"/>
+                            <div className="flex items-center">
+                              <Distance className="mr-3 w-5 h-5"/>
                               <div>
-                                <p className="text-[14px] ">{locationItem.name}</p>
-                                <p className="text-[12px]">{locationItem.country}</p>
+                                <p className="text-[16px] ">{locationItem.name}</p>
+                                <p className="text-[14px]">{locationItem.country}</p>
                               </div>
                             </div>
                         </li>
@@ -854,7 +864,7 @@ function PropertiesForRent() {
               </div>
               
               {/* SORTING */}
-              <div className="relative w-full lg:w-[210px]" ref={sortingRef}>
+              <div className="relative w-full lg:w-[250px]" ref={sortingRef}>
                 <div className="flex items-center justify-between border border-txt-primary p-3 cursor-pointer select-none w-full"  
                     onClick={() => setShowSortingOptions(!showSortingOptions)}>
                   <div className="flex items-center text-[16px]">
@@ -875,7 +885,7 @@ function PropertiesForRent() {
                             <div className="flex items-start">
                               {sortingItem.icon}
                               <div className="ml-2">
-                                <p className="text-[14px] ">{sortingItem.name}</p>
+                                <p className="text-[16px] ">{sortingItem.name}</p>
                               </div>
                             </div>
                         </li>
@@ -892,17 +902,17 @@ function PropertiesForRent() {
       
       {/* LIST ITEM */}
       {!params.propertyId ? (
-        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
+        <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto px-4" style={{fontFamily:'Nunito Sans'}}>
           {/* Results Count */}
           <div className="mb-6">
             <p className="text-[16px] text-txt-gray">
-              Found {rentProperties.length} propert{rentProperties.length !== 1 ? 'ies' : 'y'}
+              Tìm thấy {rentProperties.length} phòng phù hợp
               {selectedLocation && ` in ${selectedLocation.name}`}
               {searchFilters.checkIn && searchFilters.checkOut && ` for selected dates`}
             </p>
             {/* Hiển thị loại sort đang được áp dụng */}
-            <p className="text-sm text-txt-secondary mt-1">
-              Sorting by: <strong>{selectedSorting.name}</strong>
+            <p className="text-[16px] text-txt-secondary mt-1">
+              Sắp xếp theo: <strong>{selectedSorting.name}</strong>
             </p>
             {/* Hiển thị thông tin guests đang được áp dụng */}
             {searchFilters.checkIn && searchFilters.checkOut && (
@@ -924,18 +934,18 @@ function PropertiesForRent() {
                     />
                   </div>
                   <div className="p-4">
-                    <h1 className="mt-3 text-[20px] lg:text-[24px] font-subtitle  text-txt-secondary leading-tight">
+                    <h1 className="mt-3 text-[20px] lg:text-[24px]   text-txt-secondary"  style={{fontFamily:'PangaiaUltralight'}}>
                       {property.title}
                     </h1>
                     <p className="mt-2 text-[14px]">{property.location}</p>
                     <div className="flex items-center mt-2 flex-wrap gap-1">
-                      <p className="text-[13px] ">
+                      <p className="text-[14px] ">
                         {formatPrice(property.price, property.priceUnit)}
                       </p>
                       <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
-                      <p className="text-[13px]">{property.bedrooms || property.beds} Bedrooms</p>
+                      <p className="text-[14px]">{property.bedrooms || property.beds} Bedrooms</p>
                       <div className="w-[6px] h-[6px] rounded-full bg-dot mx-1"></div>
-                      <p className="text-[13px]">{property.bathrooms} Bathrooms</p>
+                      <p className="text-[14px]">{property.bathrooms} Bathrooms</p>
                     </div>
                     {searchFilters.checkIn && searchFilters.checkOut && (
                       <div className="mt-2 text-green-600 text-[12px] ">
@@ -943,7 +953,8 @@ function PropertiesForRent() {
                       </div>
                     )}
                     <button 
-                      className="text-[14px] uppercase border border-txt-primary flex items-center justify-center p-2 mt-3 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer w-full"
+                      className="text-[16px] uppercase border border-txt-primary flex items-center justify-center p-2 mt-3 hover:bg-txt-secondary hover:text-bg-primary cursor-pointer w-full"
+                      style={{fontFamily:'PangaiaUltralight'}}
                       onClick={() => navigate(`/en/properties-for-rent/${property._id}`)}
                     >
                       view more
@@ -965,7 +976,7 @@ function PropertiesForRent() {
                     onClick={clearAllFilters}
                     className="mt-4 px-4 py-2 bg-txt-secondary text-white rounded hover:bg-blue-700 text-sm"
                   >
-                    Clear All Filters
+                    Xoá bộ lọc
                   </button>
                 )}
               </div>
@@ -975,10 +986,10 @@ function PropertiesForRent() {
       ) : (
         <div className="mb-20">
           {currentProperty && (
-            <div className="bg-bg-primary pb-10">
-              <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
+            <div className=" pb-10">
+              <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto px-4 pt-22">
                 {/* Property Detail Content - Cập nhật để click vào ảnh mở popup */}
-                <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex flex-col lg:flex-row gap-2">
                   {/* Ảnh lớn bên trái - có thể click */}
                   <div 
                     className="lg:flex-1 cursor-pointer"
@@ -993,10 +1004,10 @@ function PropertiesForRent() {
                     <OptimizedImage 
                       src={getPropertyImage(currentProperty)} 
                       alt={currentProperty.title} 
-                      className="w-full object-cover h-[300px] lg:h-[400px]" 
+                      className="w-full object-cover h-full" 
                     />
                   </div>
-                  <div className="grid grid-cols-1 gap-4 lg:w-1/3">
+                  <div className="grid grid-cols-1 gap-2 lg:w-1/3">
                     {currentProperty.gallery && currentProperty.gallery.slice(0, 2).map((image, index) => (
                       <div 
                         key={image._id || index}
@@ -1010,16 +1021,15 @@ function PropertiesForRent() {
                         <OptimizedImage 
                           src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`} 
                           alt={currentProperty.title} 
-                          className="w-full h-[150px] lg:h-[190px] object-cover"
+                          className="w-full aspect-[4/3] object-cover"
                         />
                       </div>
                     ))}
                   </div>
                 </div>
                 
-                {/* Gallery Slider - Cập nhật để click vào ảnh mở popup */}
                 {currentProperty.gallery && currentProperty.gallery.length > 0 && (
-                  <div className="mt-4 relative select-none">
+                  <div className="mt-2 relative select-none">
                     <Swiper
                       modules={[Autoplay, Pagination, Navigation]}
                       spaceBetween={10}
@@ -1053,7 +1063,7 @@ function PropertiesForRent() {
                               <OptimizedImage
                                 src={`https://cdn.latelia.com/latelia/${image.thumbnailKey || image.key}`}
                                 alt={currentProperty.title}
-                                className="w-full h-[120px] lg:h-[150px] object-cover"
+                                className="w-full aspect-[4/3] object-cover"
                               />
                             </div>
                           </SwiperSlide>
@@ -1089,24 +1099,24 @@ function PropertiesForRent() {
                     </div> */}
                     
                     <div className="flex items-center mt-6 flex-wrap gap-2">
-                      <p className="text-[14px]">{currentProperty.beds || currentProperty.bedrooms} Beds</p>
-                      <div className="bg-dot w-[6px] h-[6px] rounded-full"></div>
-                      <p className="text-[14px]">{currentProperty.bathrooms} Bathrooms</p>
+                      <p className="text-[14px]" style={{fontFamily:'Nunito Sans'}}>{currentProperty.beds || currentProperty.bedrooms} Beds</p>
+                      <div className="bg-dot w-[6px] h-[6px] rounded-full" ></div>
+                      <p className="text-[14px]" style={{fontFamily:'Nunito Sans'}}>{currentProperty.bathrooms} Bathrooms</p>
                     </div>
                     <div className="mt-6 flex items-center">
                       <h1 className="text-[24px] text-txt-secondary">
-                        {currentProperty.price}
+                        {currentProperty.price} VND
                       </h1>
                       <h1 className="text-[18px] text-txt-secondary ml-2">
-                        {currentProperty.priceUnit || 'per night'}
+                        {formatPriceUnitVND(currentProperty.priceUnit)}
                       </h1>
                     </div>
                     <div className="w-full h-[1px] bg-txt-primary my-6"></div>
-                    <p className="text-[16px] lg:text-[18px] leading-relaxed whitespace-pre-line">{currentProperty.descriptionShort}</p>
+                    <p className="text-[16px] lg:text-[18px] leading-relaxed whitespace-pre-line" style={{fontFamily:'Nunito Sans'}}>{currentProperty.descriptionShort}</p>
                     
                     {/* THÊM: Phần description với show more */}
                     {currentProperty.description && (
-                      <div className="mt-4">
+                      <div className="mt-4" style={{fontFamily:'Nunito Sans'}}>
                         {showFullDescription && (
                           <p className={`text-[14px] lg:text-[16px] leading-relaxed whitespace-pre-line ${!showFullDescription ? 'line-clamp-3' : ''} `}>
                             {currentProperty.description}
@@ -1116,7 +1126,7 @@ function PropertiesForRent() {
                           className="underline  text-[14px] mt-3 cursor-pointer hover:text-txt-secondary"
                           onClick={handleShowMoreClick}
                         >
-                          {showFullDescription ? 'Show less' : 'Show more'}
+                          {showFullDescription ? 'Thu gọn' : 'Xem thêm'}
                         </button>
                       </div>
                     )}
@@ -1125,7 +1135,7 @@ function PropertiesForRent() {
                     
                     {/* Highlights */}
                     {currentProperty.highlights && currentProperty.highlights.length > 0 && (
-                      <ul>
+                      <ul style={{fontFamily:'Nunito Sans'}}>
                         {currentProperty.highlights.map((highlight, index) => {
                           let Icon =  Highlighter;
                           if(index === 0) // outdoor entertainment 
@@ -1137,7 +1147,7 @@ function PropertiesForRent() {
                           return (
                             <li className="flex items-start mb-6" key={highlight._id || index}>
                               <Icon className="w-5 h-5 mt-1 flex-shrink-0" />
-                              <div className="ml-3 text-[14px]">
+                              <div className="ml-3 text-[16px]">
                                 <h4 className="">{highlight.title}</h4>
                                 <p className="mt-1">{highlight.description}</p>
                               </div>
@@ -1154,14 +1164,14 @@ function PropertiesForRent() {
                     
                     {/* Amenities */}
                     {currentProperty.amenities && currentProperty.amenities.length > 0 && (
-                      <ul className="grid grid-cols-1 lg:grid-cols-2 mt-4 gap-3">
+                      <ul className="grid grid-cols-1 lg:grid-cols-2 mt-4 gap-3" style={{fontFamily:'Nunito Sans'}}>
                         {currentProperty.amenities.map((amenity, index) => (
                           <li className="flex items-center" key={index}>
                             <div 
                               className="w-4 h-4 flex items-center justify-center"
                               dangerouslySetInnerHTML={{ __html: amenity.icon || getDefaultIcon() }}
                             />
-                            <p className="ml-2 text-[14px]">{amenity.name}</p>
+                            <p className="ml-2 text-[16px]">{amenity.name}</p>
                           </li>
                         ))}
                       </ul>
@@ -1187,7 +1197,7 @@ function PropertiesForRent() {
                         </div>
                       )}
                       
-                      <form onSubmit={handleFormSubmit}>
+                      <form onSubmit={handleFormSubmit} style={{fontFamily:'Nunito Sans'}}>
                         <input 
                           type="text" 
                           name="firstName"
@@ -1242,7 +1252,7 @@ function PropertiesForRent() {
                                 <Check className="w-[12px] h-[12px]" />
                               )}
                             </div>
-                            <p className="text-[12px] text-left">
+                            <p className="text-[14px] text-left" >
                               {t('footer:policy')}
                             </p>
                         </div>
@@ -1250,6 +1260,7 @@ function PropertiesForRent() {
                         <button 
                           type="submit"
                           disabled={formLoading}
+                          style={{fontFamily:'PangaiaUltralight'}}
                           className="cursor-pointer text-[16px] uppercase w-full py-3 bg-txt-secondary text-bg-primary mt-6 rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {formLoading ? 'Đang Gửi' : 'Gửi Yêu Cầu Đặt Phòng'}
@@ -1282,7 +1293,7 @@ function PropertiesForRent() {
           <div>
             <div className="xl:max-w-screen-xl lg:max-w-[900px] w-full mx-auto mt-10 px-4">
               <h1 className="text-[24px] font-subtitle  text-txt-secondary">
-                You might also like this
+              Có thể bạn cũng thích
               </h1>
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 mt-6 mb-20">
                 {getRelatedProperties().length > 0 ? (

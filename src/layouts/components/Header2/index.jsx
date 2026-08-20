@@ -5,14 +5,15 @@ import { useDispatch, useSelector} from "react-redux";
 import { Menu, X } from "lucide-react";
 import logo from '../../../assets/images/logo.png';
 import {setLanguage} from '../../../redux/actions/languageActions';
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import {LocalizedLink} from '../../../components/LocalizedLink';
 import { useLocation } from "react-router-dom";
 const MENU_ITEMS = [
-    {id:1, title:'Dự án', to:'/projects'},
+    {id:1, title:'Dự án', to:'/projects', children: [
+        {id:11, title:'Homestay', to:'/properties-for-rent'}
+    ]},
     {id:2, title:'media', to:'/media'},
-    // {id:3, title:'properties for rent', to:'/properties-for-rent'}, 
     {id:4, title:'Về chúng tôi', to:'/about'}, 
-    // {id:5, title:'media', to:'/media'}, 
     {id:6, title:'Liên hệ', to:'/contact'}
 ]
 
@@ -31,6 +32,7 @@ function Header() {
     const isBrochurePage = location.pathname.includes('/view-brochure');
     const isMediaPage = location.pathname.includes('/media');
     const isHomePage = location.pathname === '/vi' || location.pathname === '/en' || location.pathname === '/';
+    const isRentPage = location.pathname.includes('/properties-for-rent');
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
@@ -91,7 +93,7 @@ function Header() {
         if (e.target === e.currentTarget) setIsMenuOpen(false);
     };
 
-    const textColor = isContactPage || isBrochurePage || isMediaPage || isPastScreen ? "bg-secondary" : "white"
+    const textColor = isRentPage || isContactPage || isBrochurePage || isMediaPage || isPastScreen ? "bg-secondary" : "white"
     
     return ( 
         <div className={`bg-transparent flex justify-center items-center fixed top-0 left-0 z-100 w-full
@@ -118,20 +120,56 @@ function Header() {
 
                 {/* Desktop menu */}
                 <div className="hidden md:flex">
-                    <ul className={`flex transition-colors duration-300 text-${textColor}`}>
-                        {MENU_ITEMS.map(menuItem => (
-                            <li key={menuItem.id} className={`ml-7 cursor-pointer relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-current after:transition-all after:duration-300 
-                                ${currentItem === menuItem.id ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}>
-                                <LocalizedLink 
-                                    to={menuItem.to} 
-                                    onClick={() => setCurrentItem(menuItem.id)} 
-                                    className={`text-[20px] transition-colors duration-300 text-${textColor}`}
-                                >
-                                    {t(`${menuItem.title}`)}
-                                </LocalizedLink>
-                            </li>
-                        ))}
-                    </ul>
+                    <NavigationMenu.Root>
+                        <NavigationMenu.List className={`flex list-none m-0 p-0 transition-colors duration-300 text-${textColor}`}>
+                            {MENU_ITEMS.map(menuItem => (
+                                <NavigationMenu.Item key={menuItem.id} className="ml-7 relative">
+                                    {menuItem.children ? (
+                                        <>
+                                            <NavigationMenu.Trigger
+                                                onClick={() => setCurrentItem(menuItem.id)}
+                                                className={`bg-transparent text-[20px] cursor-pointer relative transition-colors duration-300 text-${textColor}
+                                                after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-current after:transition-all after:duration-300
+                                                ${currentItem === menuItem.id ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}
+                                            >
+                                            <LocalizedLink to={menuItem.to} >
+                                                {t(`${menuItem.title}`)}
+                                            </LocalizedLink>
+                                            </NavigationMenu.Trigger>
+
+                                            <NavigationMenu.Content
+                                                className="absolute top-full left-1/2 -translate-x-1/2 mt-3
+                                                bg-black/35 backdrop-blur-md border border-white/20
+                                                px-6 py-3 whitespace-nowrap"
+                                            >
+                                                {menuItem.children.map(child => (
+                                                    <NavigationMenu.Link asChild key={child.id}>
+                                                        <LocalizedLink
+                                                            to={child.to}
+                                                            onClick={() => setCurrentItem(menuItem.id)}
+                                                            className="block text-[16px] font-light text-[#f0e6de] hover:opacity-70 transition-opacity"
+                                                        >
+                                                            {t(`${child.title}`)}
+                                                        </LocalizedLink>
+                                                    </NavigationMenu.Link>
+                                                ))}
+                                            </NavigationMenu.Content>
+                                        </>
+                                    ) : (
+                                        <LocalizedLink 
+                                            to={menuItem.to} 
+                                            onClick={() => setCurrentItem(menuItem.id)} 
+                                            className={`text-[20px] relative transition-colors duration-300 text-${textColor}
+                                            after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-current after:transition-all after:duration-300
+                                            ${currentItem === menuItem.id ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}
+                                        >
+                                            {t(`${menuItem.title}`)}
+                                        </LocalizedLink>
+                                    )}
+                                </NavigationMenu.Item>
+                            ))}
+                        </NavigationMenu.List>
+                    </NavigationMenu.Root>
                 </div>
 
                 {/* Mobile overlay */}
